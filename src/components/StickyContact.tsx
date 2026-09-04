@@ -27,14 +27,13 @@ export function StickyContact() {
         >
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
-        <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-sound ring-2 ring-rag" />
       </span>
       <span className="flex flex-col items-start leading-none">
         <span className="font-plex-sans text-[0.82rem] font-medium tracking-tight text-iron">
           Message the crew
         </span>
         <span className="mt-0.5 font-plex-mono text-[0.62rem] text-ink/70 group-hover:text-ink/70">
-          online · replies in a day
+          replies within one business day
         </span>
       </span>
     </Link>

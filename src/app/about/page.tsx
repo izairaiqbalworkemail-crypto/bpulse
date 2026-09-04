@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { brand } from "@/config/brand";
 import { specialists } from "@/content/specialists";
@@ -31,6 +32,29 @@ const principles = [
   },
 ];
 
+const beliefs = [
+  {
+    title: "Done means deployed",
+    description:
+      "Not a staging URL that looks finished. Real users, a real URL, and a product you can show someone without a screenshot.",
+  },
+  {
+    title: "The people who scope it ship it",
+    description:
+      "The seniors who meet you are the ones on the keyboard all the way through. No juniors learning at your expense.",
+  },
+  {
+    title: "No hostage codebases",
+    description:
+      "You walk away with a codebase you can actually run and support yourself. You're never locked into us.",
+  },
+  {
+    title: "Stays until it's live",
+    description:
+      "We're paid to reach production, not to send an invoice and disappear.",
+  },
+];
+
 const timeline = [
   {
     year: "The Check",
@@ -57,31 +81,22 @@ export default function AboutPage() {
     <>
       <BreadcrumbJsonLd items={[{ name: "About", url: `${brand.url}/about` }]} />
 
+      <PageHero
+        kicker="About"
+        title="We are the last twenty percent."
+        dek={
+          <>
+            Everyone can demo. Ship is harder. {brand.legalName} is a senior
+            studio in {brand.address.street}. {specialists.length} named
+            specialists. {lots.length} lots. One rule: no invented proof.
+          </>
+        }
+      />
+
       <section className="w-full bg-rag">
-        <div className="h-px w-full bg-iron/15" />
-
-        <div className="pt-40 pb-16 md:pt-48 md:pb-20">
-          <div className="grid-container">
-            <h1 className="font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-              We are the last twenty percent.
-            </h1>
-            <p className="mt-5 max-w-[560px] font-newsreader text-reading leading-reading text-ink">
-              Everyone can demo. Ship is harder. We are the studio that takes
-              products stuck at 80% and carries them into production — with the
-              honesty to say when something is already fine as it is.
-            </p>
-
-            <p className="mt-6 max-w-[520px] font-newsreader text-reading leading-reading text-ink/70">
-              <strong className="text-iron">{brand.legalName}</strong> is a
-              senior software studio in {brand.address.street},{" "}
-              {brand.address.countryName}. {specialists.length} named specialists.
-              {lots.length} lots shipped. One rule: no invented proof.
-            </p>
-          </div>
-        </div>
 
         {/* Principles */}
-        <div className="grid-container">
+        <div className="grid-container pt-16 md:pt-20">
           <div className="border-t border-iron/15 pt-6">
             <p className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-ink/70">
               How we work
@@ -97,6 +112,33 @@ export default function AboutPage() {
                 <p className="mt-3 max-w-[44ch] font-newsreader text-reading leading-reading text-ink/70">
                   {p.description}
                 </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* The four rules */}
+        <div className="grid-container mt-20">
+          <div className="border-t border-iron/15 pt-6">
+            <p className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-ink/70">
+              Four rules we&apos;d rather lose a deal for than break
+            </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2">
+            {beliefs.map((b, i) => (
+              <div key={b.title} className="flex items-start gap-4">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-signal/30 bg-signal/10 font-plex-mono text-sm font-medium text-signal">
+                  {i + 1}
+                </span>
+                <div>
+                  <h2 className="font-newsreader text-lot-title leading-title text-iron">
+                    {b.title}
+                  </h2>
+                  <p className="mt-2 max-w-[48ch] font-newsreader text-reading leading-reading text-ink/70">
+                    {b.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

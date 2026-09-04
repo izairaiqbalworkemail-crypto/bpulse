@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { Lot } from "@/components/primitives/Lot";
 import { Credit } from "@/components/primitives/Credit";
@@ -17,23 +18,14 @@ export const metadata: Metadata = buildMetadata({
 export default function WorkPage() {
   return (
     <section className="w-full bg-rag">
-      <div className="h-px w-full bg-iron/15" />
-
-      <div className="pt-40 pb-16 md:pt-48 md:pb-20">
-        <div className="grid-container">
-          <h1 className="font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-            Catalogue of work
-          </h1>
-          <p className="mt-4 max-w-[560px] font-newsreader text-reading leading-reading text-ink">
-            Every lot is a real engagement. Real client, real condition on
-            arrival, real outcome. No invented proof. Where a number does not
-            exist, we say so.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        kicker="Catalogue"
+        title="Catalogue of work"
+        dek="Every lot is a real engagement. Real client, real condition on arrival, real outcome. No invented proof. Where a number does not exist, we say so."
+      />
 
       {/* Field logs per project — filterable grid */}
-      <div className="grid-container">
+      <div className="grid-container pt-16 md:pt-20">
         <div className="mb-8">
           <h2 className="font-plex-mono text-data tracking-[0.08em] text-ink/70 uppercase">
             Field logs

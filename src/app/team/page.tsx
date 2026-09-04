@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { specialists } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
@@ -13,24 +14,14 @@ export const metadata: Metadata = buildMetadata({
 export default function TeamPage() {
   return (
     <section className="w-full bg-rag">
-      <div className="h-px w-full bg-iron/15" />
-
-      <div className="pt-40 pb-16 md:pt-48 md:pb-20">
-        <div className="grid-container">
-          <h1 className="font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-            The crew
-          </h1>
-          <p className="mt-4 max-w-[560px] font-newsreader text-reading leading-reading text-ink">
-            The named specialists who do the work. No subcontracting to
-            strangers mid-build. If a specialist without a portrait is named, it
-            is because we do not have a usable photograph of them yet — not
-            because they are not real.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        kicker="The crew"
+        title="The people who ship it"
+        dek="Named specialists. No subcontracting to strangers mid-build. A missing portrait means we do not have a usable photograph yet — not that the person is not real."
+      />
 
       {/* ── Leadership ── */}
-      <div className="grid-container">
+      <div className="grid-container pt-16 md:pt-20">
         <div className="border-t border-iron/15 pt-6">
           <p className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-ink/70">
             Leadership

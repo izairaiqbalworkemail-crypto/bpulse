@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { FAQPageJsonLd } from "@/lib/JsonLd";
 import { Notice } from "@/components/primitives/Notice";
 import { notices } from "@/content/notices";
@@ -22,23 +23,17 @@ export default function NoticesPage() {
         }))}
       />
 
+      <PageHero
+        kicker="Notices"
+        title="Questions, answered plainly."
+        dek="Every answer is visible. No accordion, no chevron, no plus sign — a catalogue does not hide its conditions."
+        actionHref="/contact"
+        actionLabel="Get in touch"
+      />
+
       <section className="w-full bg-rag">
-        <div className="h-px w-full bg-iron/15" />
 
-        <div className="pt-40 pb-24 md:pt-48 md:pb-32">
-          <div className="grid-container">
-            <h1 className="font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-              Notices
-            </h1>
-            <p className="mt-4 max-w-[560px] font-newsreader text-reading leading-reading text-ink">
-              Questions we get asked, answered plainly. Every answer is visible.
-              No accordion, no chevron, no plus sign — a catalogue does not hide
-              its conditions.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid-container">
+        <div className="grid-container pt-16 md:pt-20">
           {notices.map((notice) => (
             <Notice
               key={notice.id}

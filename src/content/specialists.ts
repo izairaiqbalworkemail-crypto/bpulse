@@ -33,18 +33,27 @@ export const specialists: Specialist[] = [
       "Reads spec docs for fun",
       "Killed 30+ weekend build tasks nobody asked for",
     ],
+    hobbies: [
+      "Deep-diving LLM agent architecture",
+      "Killing weekend build tasks nobody asked for",
+      "Reading indie-hacker teardowns",
+    ],
+    genzLine: "Founder-eng. I ship, so you don't have to babysit a build.",
+    linkedin: "https://www.linkedin.com/in/aneebiqbal",
     reviews: [
       {
         quote:
           "Aneeb read every line of the spec before quoting - and it is exactly why we signed. He cared about production more than the invoice.",
         name: "Sully.ai",
         role: "co-founder",
+        source: "client engagement",
       },
       {
         quote:
           "The first dev lead who told us what would fail before it did, then fixed it before launch.",
         name: "myUsta",
         role: "founder",
+        source: "client engagement",
       },
     ],
   },

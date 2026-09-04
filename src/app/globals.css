@@ -862,3 +862,19 @@ p,
     width: 100%;
   }
 }
+
+/* ──────────────────────────────────────────────
+   Focus on dark surfaces — 2px signal outline
+
+   The global :focus-visible outline is iron, which is
+   invisible on iron backgrounds. Anything inside a
+   dark (.on-iron) surface gets the signal colour so a
+   focused link stays visible. Higher specificity than
+   the global rule; the iron outline keeps the light
+   paper surfaces unchanged.
+   ────────────────────────────────────────────── */
+
+.on-iron :focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}

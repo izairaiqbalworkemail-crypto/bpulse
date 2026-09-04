@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = buildMetadata({
@@ -60,22 +61,16 @@ const values = [
 export default function CareersPage() {
   return (
     <section className="w-full bg-rag">
-      <div className="h-px w-full bg-iron/15" />
-
-      <div className="pt-40 pb-24 md:pt-48 md:pb-32">
-        <div className="grid-container">
-          <h1 className="font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-            Two paths
-          </h1>
-          <p className="mt-4 max-w-[560px] font-newsreader text-reading leading-reading text-ink">
-            You can join the crew, or you can found your own studio. We help
-            with both — and we&apos;re honest about which one fits.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        kicker="Careers"
+        title="Two paths"
+        dek="Join the crew, or found your own studio. We help with both — and we are honest about which one fits."
+        actionHref="/contact"
+        actionLabel="Contact the crew"
+      />
 
       {/* Two paths */}
-      <div className="grid-container">
+      <div className="grid-container pt-16 md:pt-20">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Path 1: Join */}
           <div className="rounded-surface border border-iron/10 p-8 md:p-10">

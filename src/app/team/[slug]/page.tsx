@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PersonJsonLd, BreadcrumbJsonLd } from "@/lib/JsonLd";
+import { PageHero } from "@/components/PageHero";
 import { specialists, getSpecialist } from "@/content/specialists";
 import { lots } from "@/content/lots";
-import { IntakeForm } from "@/components/IntakeForm";
+import { CrewSession } from "@/components/intake/CrewSession";
 import { brand } from "@/config/brand";
 
 type PageProps = {
@@ -48,49 +49,23 @@ export default async function SpecialistPage({ params }: PageProps) {
         ]}
       />
 
+      <PageHero
+        kicker={specialist.role}
+        title={specialist.name}
+        dek={<>&ldquo;{specialist.funTitle}&rdquo;</>}
+        actionHref="#intake"
+        actionLabel="Work with them"
+      />
+
       <section className="w-full bg-rag">
-        <div className="h-px w-full bg-iron/15" />
-
-        <div className="pt-40 pb-24 md:pt-48 md:pb-32">
-          <div className="grid-container">
-            {/* Breadcrumb */}
-            <nav className="mb-6 flex flex-wrap items-center gap-x-2 gap-y-1.5">
-              <Link
-                href="/"
-                className="font-plex-mono text-[0.66rem] uppercase tracking-[0.14em] text-ink/70 transition-colors hover:text-iron"
-              >
-                Home
-              </Link>
-              <span className="text-iron/25">/</span>
-              <Link
-                href="/team"
-                className="font-plex-mono text-[0.66rem] uppercase tracking-[0.14em] text-ink/70 transition-colors hover:text-iron"
-              >
-                Crew
-              </Link>
-              <span className="text-iron/25">/</span>
-              <span className="font-plex-mono text-[0.66rem] uppercase tracking-[0.14em] text-iron">
-                {specialist.name.split(" ")[0]}
-              </span>
-            </nav>
-
+        <div className="grid-container pt-16 pb-24 md:pt-20 md:pb-32">
             {/* Split layout: bio left, intake right */}
             <div className="grid grid-cols-1 gap-x-12 gap-y-16 lg:grid-cols-[1fr_0.95fr] lg:gap-14">
               {/* Left: Bio */}
               <div>
-                <p className="font-plex-mono text-[0.75rem] font-semibold tracking-[0.08em] text-ink/60 uppercase">
-                  {specialist.role}
-                </p>
-                <h1 className="mt-4 font-newsreader text-[clamp(2.3rem,6vw,4rem)] leading-[1.04] tracking-tight text-iron">
-                  {specialist.name.split(" ")[0]}
-                </h1>
 
-                <p className="mt-5 max-w-[46ch] font-newsreader text-reading leading-reading text-ink italic">
-                  &ldquo;{specialist.funTitle}&rdquo;
-                </p>
-
-                {/* Photo + status */}
-                <div className="mt-6 flex items-center gap-4">
+                {/* Photo + commitment */}
+                <div className="flex items-center gap-4">
                   {isAbsent ? (
                     <div className="relative h-[104px] w-[104px] shrink-0 rounded-2xl bg-iron/5 ring-1 ring-iron/10" />
                   ) : (
@@ -105,14 +80,10 @@ export default async function SpecialistPage({ params }: PageProps) {
                           className="h-full w-full object-cover grayscale"
                         />
                       </div>
-                      <span className="absolute -bottom-1 -right-1 grid h-5 w-5 place-items-center rounded-full border-2 border-rag bg-sound">
-                        <span className="h-2 w-2 rounded-full bg-rag" />
-                      </span>
                     </div>
                   )}
                   <div className="flex items-center gap-2 rounded-lg border border-iron/10 bg-rag/40 px-3 py-2 font-plex-mono text-[0.6rem] tracking-[0.12em] text-iron">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-sound" />
-                    online now · replies within a day
+                    replies within one business day
                   </div>
                 </div>
 
@@ -256,7 +227,7 @@ export default async function SpecialistPage({ params }: PageProps) {
               </div>
 
               {/* Right: Intake form as chat-like widget */}
-              <div>
+              <div id="intake">
                 <div className="mb-4 flex items-center gap-2">
                   <span className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-ink/60">
                     Direct line
@@ -268,14 +239,10 @@ export default async function SpecialistPage({ params }: PageProps) {
                 </div>
 
                 <div className="overflow-hidden rounded-surface border border-iron/10 bg-rag">
-                  <IntakeForm
-                    variant="specialist"
-                    specialistName={specialist.name}
-                  />
+                  <CrewSession type="work" workWith={specialist.id} />
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </section>
 

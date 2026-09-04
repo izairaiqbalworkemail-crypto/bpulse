@@ -37,9 +37,13 @@ export const lots: Lot[] = [
     },
     outcome:
       "A live verification platform handling KYC, liveness, deepfake screening, and fraud checks as a cohesive product, with the compliance path carried toward production.",
+    detail:
+      "Agentic compliance suite, n8n automation, Shopify integrations, AWS ownership.",
+    highlights: ["KYC + liveness", "deepfake defense", "fraud workflows"],
     limits: [
       "Reach and latency figures are client-reported on deepidv.com (unreachable at study time; per STUDY.md).",
       "Arrival date not recorded in the source; Aug 2026 is the earliest verifiable reference (ledger field note), not a confirmed arrival date.",
+      "Detail and highlights above come from the studio's prior portfolio data (bpulse projects.json), not from a fresh re-audit.",
     ],
     specialistId: "mehak",
     specialistCapability: "Intelligence",
@@ -75,9 +79,13 @@ export const lots: Lot[] = [
     },
     outcome:
       "An AI employee platform in real use by medical teams, under role-based access, real-time clinical dashboards, and production-grade model work.",
+    detail:
+      "Role-based access control under HIPAA, real-time clinical dashboards, model fine-tuning.",
+    highlights: ["HIPAA access control", "clinical dashboards", "EHR integrations"],
     limits: [
       "Reach and clinical-task figures are client-reported on sully.ai; we did not independently audit the counts.",
       "Arrival date not recorded in the source; Jul 2026 is the earliest verifiable reference (handover field note), not a confirmed arrival date.",
+      "Detail and highlights above come from the studio's prior portfolio data (bpulse projects.json), not from a fresh re-audit.",
     ],
     specialistId: "aneeb",
     specialistCapability: "Delivery",

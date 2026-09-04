@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { Mark } from "@/components/primitives/Mark";
 import { DataLine } from "@/components/primitives/DataLine";
 import { Grade } from "@/components/primitives/Grade";
@@ -73,14 +74,14 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export default function DesignPage() {
   return (
-    <div className="grid-container py-24 md:py-16">
-      <h1 className="max-w-measure font-newsreader text-h1 leading-title tracking-tighter text-iron">
-        Design
-      </h1>
-      <p className="mt-6 max-w-measure font-newsreader text-reading leading-reading text-ink">
-        Every token, primitive, and motion behaviour. This is the reference for
-        how the work gets reviewed.
-      </p>
+    <>
+      <PageHero
+        kicker="Design"
+        title="The system"
+        dek="Every token, primitive, and motion behaviour. This is the reference for how the work gets reviewed."
+        hideAction
+      />
+    <div className="grid-container py-16 md:py-24">
 
       {/* Colours */}
       <section className="mt-24">
@@ -318,5 +319,6 @@ export default function DesignPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

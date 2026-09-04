@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { IntakeForm } from "@/components/IntakeForm";
 import { brand } from "@/config/brand";
 import { addressLine } from "@/config/site";
@@ -14,22 +15,16 @@ export const metadata: Metadata = buildMetadata({
 export default function ContactPage() {
   return (
     <section className="w-full bg-rag">
-      <div className="h-px w-full bg-iron/15" />
-
-      <div className="pt-40 pb-24 md:pt-48 md:pb-32">
-        <div className="grid-container">
-          <h1 className="font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-            Contact
-          </h1>
-          <p className="mt-4 max-w-[560px] font-newsreader text-reading leading-reading text-ink">
-            A real person replies within one business day. No chatbot, no
-            auto-responder, no support ticket queue.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        kicker="Contact"
+        title="A real person replies."
+        dek="Within one business day. No chatbot, no auto-responder, no support ticket queue."
+        actionHref="#intake"
+        actionLabel="Write to us"
+      />
 
       {/* Real address and response commitment */}
-      <section className="w-full bg-rag py-8 md:py-12">
+      <section className="w-full bg-rag pt-16 pb-8 md:pt-20 md:pb-12">
         <div className="grid-container">
           <div className="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-12">
             <div className="md:col-span-6">
@@ -60,7 +55,7 @@ export default function ContactPage() {
       </section>
 
       {/* Intake */}
-      <section className="w-full bg-rag py-24 md:py-40">
+      <section id="intake" className="w-full bg-rag py-24 md:py-40">
         <div className="grid-container">
           <IntakeForm variant="general" />
         </div>

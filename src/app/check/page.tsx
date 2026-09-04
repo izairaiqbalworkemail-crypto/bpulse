@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/lib/JsonLd";
+import { PageHero } from "@/components/PageHero";
 import { DataLine } from "@/components/primitives/DataLine";
-import { IntakeForm } from "@/components/IntakeForm";
+import {
+  PulseCheckIntake,
+  type PulseCheckSituation,
+} from "@/components/intake/PulseCheckIntake";
 import { offer } from "@/content/offer";
 
 export const metadata: Metadata = buildMetadata({
@@ -53,31 +57,31 @@ type CheckPageProps = {
   }>;
 };
 
-function prettyArrivalState(state?: string) {
-  if (!state) return undefined;
-  if (state === "integration-blocked") return "Integration-blocked on arrival";
-  if (state === "incomplete") return "Incomplete on arrival";
-  if (state === "stalled") return "Stalled on arrival";
-  if (state === "unstable") return "Unstable on arrival";
-  return undefined;
+function arrivalSituation(state?: string): PulseCheckSituation | undefined {
+  switch (state) {
+    case "stalled":
+      return "stalled";
+    case "incomplete":
+      return "almost";
+    case "integration-blocked":
+    case "unstable":
+      return "fragile";
+    default:
+      return undefined;
+  }
 }
 
 export default async function CheckPage({ searchParams }: CheckPageProps) {
   const params = await searchParams;
-  const stateLabel = prettyArrivalState(params.state);
   const blocking = params.symptoms
     ? params.symptoms.split("|").map((part) => part.trim()).filter(Boolean)
     : [];
   const prefill = {
-    ...(stateLabel ? { currentState: stateLabel } : {}),
+    ...(arrivalSituation(params.state) ? { situation: arrivalSituation(params.state) } : {}),
     ...(blocking.length > 0
       ? {
-          whatsBlocking: `From hero self-check: ${blocking.join("; ")}`,
+          stuckNote: `From hero self-check: ${blocking.join("; ")}`,
         }
-      : {}),
-    ...(params.source ? { source: params.source } : {}),
-    ...(params.source === "hero-self-check"
-      ? { sourceHint: "Hero self-check" }
       : {}),
   };
 
@@ -89,54 +93,37 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
         price={offer.check.price}
       />
 
+      <PageHero
+        kicker="The Check"
+        title={
+          <>
+            Verdict of keep,
+            <br />
+            repair, or rebuild.
+          </>
+        }
+        dek={
+          <>
+            ${offer.check.price.toLocaleString()} · {offer.check.duration}.
+            Credited in full against a build within 30 days. The Check may
+            conclude that you don&apos;t need us — the fee is still credited.
+          </>
+        }
+        actionHref="#intake"
+        actionLabel="Start the Check"
+      />
+
       <section className="w-full bg-rag">
-        <div className="h-px w-full bg-iron/15" />
-
-        <div className="pt-40 pb-24 md:pt-48 md:pb-32">
-          <div className="grid-container">
-            <div className="grid grid-cols-1 gap-x-12 gap-y-12 md:grid-cols-12">
-              <div className="md:col-span-7">
-                <p className="font-plex-mono text-data tracking-[0.08em] text-ink/70 uppercase">
-                  The Check
-                </p>
-                <h1 className="mt-4 font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-                  Verdict of keep,
-                  <br />
-                  repair, or rebuild.
-                </h1>
-                <p className="mt-2 font-plex-mono text-hero-lot leading-none tracking-tight text-signal">
-                  ${offer.check.price.toLocaleString()}
-                </p>
-                <p className="mt-2 font-plex-mono text-data text-ink/70">
-                  {offer.check.duration} · credited in full against a build
-                  within 30 days
-                </p>
-
-                <p className="mt-8 max-w-[560px] font-newsreader text-reading leading-reading text-ink">
-                  {offer.check.description}
-                </p>
-
-                <p className="mt-6 max-w-[560px] font-newsreader text-reading leading-reading text-ink/70">
-                  The Check may conclude that you don&apos;t need us. The fee
-                  is still credited. You walk away with a condition report on
-                  your product — what arrived, what&apos;s wrong, what it would
-                  take to hold. That is worth the price alone.
-                </p>
-              </div>
-
-              <div className="md:col-span-5">
-                <div className="flex flex-col gap-6">
-                  <DataLine label="Duration" value={offer.check.duration} />
-                  <DataLine
-                    label="Price"
-                    value={`$${offer.check.price.toLocaleString()} USD`}
-                  />
-                  <DataLine label="Credit" value="30 days" />
-                  <DataLine label="Deliverable" value="Condition report" />
-                  <DataLine label="Verdict" value="Keep · Repair · Rebuild" />
-                </div>
-              </div>
-            </div>
+        <div className="grid-container py-16 md:py-24">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+            <DataLine label="Duration" value={offer.check.duration} />
+            <DataLine
+              label="Price"
+              value={`$${offer.check.price.toLocaleString()} USD`}
+            />
+            <DataLine label="Credit" value="30 days" />
+            <DataLine label="Deliverable" value="Condition report" />
+            <DataLine label="Verdict" value="Keep · Repair · Rebuild" />
           </div>
         </div>
       </section>
@@ -194,9 +181,9 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
       </section>
 
       {/* Intake */}
-      <section className="w-full bg-rag py-24 md:py-40">
+      <section id="intake" className="w-full bg-rag py-24 md:py-40">
         <div className="grid-container">
-          <IntakeForm variant="check" prefill={prefill} />
+          <PulseCheckIntake prefill={prefill} />
         </div>
       </section>
     </>

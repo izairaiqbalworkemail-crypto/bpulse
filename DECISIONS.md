@@ -201,3 +201,22 @@ Nearly everything arrives "unsound" in the sense of not-shippable. The two-colou
 - red (`unsound`) = a structural piece was missing or not production-ready on arrival (integration-blocked, unstable).
 
 This keeps the existing two token colours and never invents a third.
+
+---
+
+## Frame pass: Header, Hero, Footer (Sep 2026)
+
+### Contrast — computed on the current tokens
+
+- Nav link `#EFEAE0` @ 75% over pill `#151C25` → effective `#B9B7B1`, **8.18:1** (AA).
+- Nav link hover/focus `#EFEAE0` over `#151C25` → **14.15:1** (AAA).
+- Pill `Menu` mono control `#EFEAE0` @ 75% over `#151C25` → **8.18:1** (AA).
+- "Book a call" iron text `#0D1218` on signal `#F2C230` → **11.22:1** (AA).
+- Pain statement unselected `#EFEAE0` @ 70% over `#0D1218` → effective `#ABA9A4`, **7.61:1** (AA).
+- Pain statement selected `#EFEAE0` over `#0D1218` → **15.68:1** (AAA).
+- Footer column labels/colophon `#EFEAE0` @ 70% (bumped from 60%) over `#0D1218` → **7.61:1** (AA).
+- Nothing renders below 70% text opacity after the footer colophon bump (`text-rag/60` → `text-rag/70`).
+
+### Fix: entrance animations were freezing in real Chrome
+
+Found by capture inspection, not asserted: with the panel spring's `settled` state gating only the `transition.delay` (60s/999s while pending), motion never restarted the already-in-flight child animations when `settled` flipped — the pain list stayed at `opacity: 0` and the 80% bar never filled, in both dev and prod. Fixed by flipping the `animate` **targets** through `revealed = reduceMotion || settled` (0 → shown / `width: 0` → `"80%"`), so motion starts a new value animation on settle. Verified by pixel scan: the bar fill run spans 101–1058 of the 1200px track ≈ **79.8%** after settle.

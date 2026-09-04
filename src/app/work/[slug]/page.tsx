@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { DataLine } from "@/components/primitives/DataLine";
 import { Grade } from "@/components/primitives/Grade";
 import { Credit } from "@/components/primitives/Credit";
@@ -47,25 +48,11 @@ export default async function LotPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="w-full bg-rag">
-        <div className="h-px w-full bg-iron/15" />
-
-        <div className="pt-40 pb-24 md:pt-48 md:pb-32">
-          <div className="grid-container">
-            <p className="font-plex-mono text-data tracking-[0.08em] text-ink/70 uppercase">
-              {lot.lotNumber}
-            </p>
-
-            <h1 className="mt-4 font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-iron">
-              {lot.client}
-            </h1>
-
-            <p className="mt-2 max-w-[560px] font-newsreader text-reading leading-reading text-ink/70">
-              {lot.title}
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        kicker={lot.lotNumber}
+        title={lot.client}
+        dek={lot.title}
+      />
 
       {/* Image */}
       {lot.imageUrl && (

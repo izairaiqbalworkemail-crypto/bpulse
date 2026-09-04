@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { brand } from "@/config/brand";
 
 const legalPages = [
@@ -52,33 +53,22 @@ export default async function LegalPage({ params }: PageProps) {
 
   return (
     <section className="w-full bg-rag">
-      <div className="h-px w-full bg-iron/15" />
+      <PageHero
+        kicker="Legal · Draft"
+        title={page.title}
+        dek={`Pending legal review. Not yet in force. Last updated September 2026 · ${brand.legalName}.`}
+        actionHref="/contact"
+        actionLabel="Questions"
+      />
 
-      {/* Draft banner */}
-      <div className="w-full bg-signal/15 py-3">
-        <div className="grid-container">
-          <p className="font-plex-mono text-caption text-iron">
-            Draft — pending legal review. Not yet in force.
-          </p>
-        </div>
-      </div>
-
-      <div className="pt-16 pb-24 md:pt-24 md:pb-32">
-        <div className="grid-container">
+      <div className="pb-24 md:pb-32">
+        <div className="grid-container pt-16">
           <Link
             href="/"
             className="font-plex-sans text-sm text-ink/60 underline-offset-4 hover:underline"
           >
             ← Back to catalogue
           </Link>
-
-          <h1 className="mt-8 font-newsreader text-[clamp(1.75rem,3vw+0.75rem,2.5rem)] leading-title tracking-tight text-iron">
-            {page.title}
-          </h1>
-
-          <p className="mt-2 font-plex-mono text-caption text-ink/60">
-            Last updated: September 2026 · {brand.legalName}
-          </p>
 
           <div className="mt-12 max-w-[66ch]">
             {slug === "terms-of-service" && <TermsOfService />}

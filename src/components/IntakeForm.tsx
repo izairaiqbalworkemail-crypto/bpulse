@@ -98,22 +98,6 @@ const steps = [
   },
 ];
 
-function checkDeliveryConfig(): boolean {
-  if (typeof window === "undefined") return true;
-  const endpoint = process.env.NEXT_PUBLIC_INTAKE_ENDPOINT;
-  return !!endpoint;
-}
-
-function TypingIndicator() {
-  return (
-    <div className="flex items-center gap-1.5 py-3">
-      <span className="h-1.5 w-1.5 rounded-full bg-iron/30 animate-bounce" style={{ animationDelay: "0ms" }} />
-      <span className="h-1.5 w-1.5 rounded-full bg-iron/30 animate-bounce" style={{ animationDelay: "150ms" }} />
-      <span className="h-1.5 w-1.5 rounded-full bg-iron/30 animate-bounce" style={{ animationDelay: "300ms" }} />
-    </div>
-  );
-}
-
 export function IntakeForm({
   variant = "general",
   specialistName,
@@ -138,7 +122,8 @@ export function IntakeForm({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [customInput, setCustomInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [requestId] = useState(() => globalThis.crypto.randomUUID());
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
@@ -156,63 +141,44 @@ export function IntakeForm({
     }
   }, [currentStep]);
 
-  const simulateTyping = (callback: () => void) => {
-    setIsTyping(true);
-    setTimeout(() => {
-      setIsTyping(false);
-      callback();
-    }, 600);
-  };
-
   const handleTextAnswer = (value: string) => {
     if (!value.trim()) return;
     setAnswers((prev) => ({ ...prev, [step.key]: value.trim() }));
     setCustomInput("");
-    simulateTyping(() => {
-      if (!isLast) {
-        setCurrentStep((s) => s + 1);
-      }
-    });
+    if (!isLast) {
+      setCurrentStep((s) => s + 1);
+    }
   };
 
   const handleOptionAnswer = (value: string) => {
     setAnswers((prev) => ({ ...prev, [step.key]: value }));
-    simulateTyping(() => {
-      if (!isLast) {
-        setCurrentStep((s) => s + 1);
-      }
-    });
+    if (!isLast) {
+      setCurrentStep((s) => s + 1);
+    }
   };
 
   const handleSubmit = async () => {
-    if (!checkDeliveryConfig()) {
-      setError(
-        "The intake form is not configured to deliver messages yet. Please email us directly at contact@bpulse.dev."
-      );
-      return;
-    }
-
     setSubmitting(true);
     setError(null);
 
     try {
       const payload = {
-        variant,
+        type: variant === "check" ? "pulse-check-form" : variant === "specialist" ? "specialist-intake" : "general-intake",
+        website: honeypot,
+        requestId,
         specialistName,
         ...answers,
         submittedAt: new Date().toISOString(),
       };
 
-      const res = await fetch(
-        process.env.NEXT_PUBLIC_INTAKE_ENDPOINT!,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-      if (!res.ok) throw new Error("Submission failed");
+      const data = (await res.json()) as { ok?: boolean };
+      if (!res.ok || !data.ok) throw new Error("Submission failed");
       setSubmitted(true);
     } catch {
       setError(
@@ -265,6 +231,16 @@ export function IntakeForm({
 
   return (
     <div className="p-6 md:p-8">
+      <input
+        type="text"
+        name="website"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+      />
       <div className="flex items-center justify-between">
         <p className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-ink/70">
           {variantLabel}
@@ -306,22 +282,11 @@ export function IntakeForm({
           </div>
         ))}
 
-        {/* Typing indicator */}
-        {isTyping && (
-          <div className="flex flex-col gap-1.5">
-            <p className="font-newsreader text-[0.85rem] leading-reading text-ink/70">
-              {step.prompt}
-            </p>
-            <TypingIndicator />
-          </div>
-        )}
-
         {/* Current prompt */}
-        {!isTyping && (
-          <div className="flex flex-col gap-3">
-            <p className="font-newsreader text-reading leading-reading text-iron">
-              {step.prompt}
-            </p>
+        <div className="flex flex-col gap-3">
+          <p className="font-newsreader text-reading leading-reading text-iron">
+            {step.prompt}
+          </p>
 
             {step.type === "text" || step.type === "email" ? (
               <form
@@ -383,13 +348,12 @@ export function IntakeForm({
               </div>
             )}
           </div>
-        )}
-      </div>
+        </div>
 
-      <div ref={endRef} />
+        <div ref={endRef} />
 
       {/* Summary and submit — show after last step */}
-      {isLast && answers[step.key] && !isTyping && (
+      {isLast && answers[step.key] && (
         <div className="mt-8 border-t border-iron/10 pt-6">
           <h3 className="font-newsreader text-lot-title leading-title text-iron">
             Before you submit
