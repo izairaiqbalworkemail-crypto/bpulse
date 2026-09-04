@@ -9,6 +9,19 @@ Contrast ratios are computed, not asserted.
 
 Computed from the settled tokens.
 
+### Checkpoint 1 hero pairs (Sep 2026)
+
+- `#EFEAE0` on `#0D1218` (primary hero text): **15.68:1**.
+- `rgba(239,234,224,0.72)` on `#0D1218` (quiet lead-in): effective `#B0AEA8`, **8.48:1**.
+- `rgba(239,234,224,0.70)` on `#0D1218` (secondary mono): effective `#ABA9A4`, **8.01:1**.
+- `#0D1218` on `#F2C230` (hero CTA): **11.22:1**.
+
+All pass WCAG AA; secondary text stays at or above 70% opacity.
+
+### Dependency decisions (Sep 2026)
+
+- Added `motion` (`motion/react`) for spring-driven and path-morph animation in the hero because the brief explicitly requires Motion as the animation runtime.
+
 ### Iron on Rag (primary text / headings)
 
 - Foreground: `#10161C` (iron)

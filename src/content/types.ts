@@ -69,6 +69,19 @@ export type Lot = {
   specialistId: string;
   specialistCapability: string;
   sources: SourceRef[];
+  /**
+   * Poured back from the portfolio source: what the work changed. Client-
+   * reported, never invented.
+   */
+  impact?: string;
+  /**
+   * Poured back from the portfolio source: the short list of what was shipped.
+   */
+  highlights?: string[];
+  /**
+   * Poured back from the portfolio source: the operational detail line.
+   */
+  detail?: string;
 };
 
 export type Specialist = {
@@ -82,6 +95,7 @@ export type Specialist = {
     org: string;
     line: string;
     url?: string;
+    metric?: string;
   }[];
   photo?: string;
   photoStatus: "Photo" | "Photo pending";
@@ -93,7 +107,17 @@ export type Specialist = {
     quote: string;
     name: string;
     role: string;
+    source?: string;
   }[];
+  /**
+   * Contact and colour poured back from the old team source. Empty strings
+   * are "not published" — same meaning as in the source.
+   */
+  linkedin?: string;
+  github?: string;
+  upwork?: string;
+  hobbies?: string[];
+  genzLine?: string;
 };
 
 export type Notice = {

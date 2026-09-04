@@ -8,7 +8,8 @@
   /* ── Surfaces ── */
   --color-rag: #efeae0;
   --color-rag-card: #f7f4ee;
-  --color-iron: #10161c;
+  --color-iron: #0d1218;
+  --color-iron-2: #151c25;
   --color-iron-card: #1a222b;
   --color-ink: #38424e;
   --color-rag-mute: rgba(239, 234, 224, 0.75);
@@ -709,5 +710,155 @@ p,
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* ============================================================
+   Conversation intake (CrewSession — ported from bpulse)
+   ============================================================ */
+
+/* Chat bubble entrance — fade + 5px rise */
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.msg-in {
+  animation: msg-in 0.3s cubic-bezier(0.16, 0.7, 0.3, 1) both;
+}
+
+/* Brief drawer row entrance */
+@keyframes brief-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.brief-in {
+  animation: brief-in 0.28s cubic-bezier(0.16, 0.7, 0.3, 1) both;
+}
+
+/* Field error shake */
+@keyframes shake-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+.animate-shake {
+  animation: shake-x 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Success check draw */
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.check-ring {
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  animation: draw-line 0.5s cubic-bezier(0.6, 0.2, 0.2, 1) forwards;
+}
+.check-stroke {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw-line 0.35s cubic-bezier(0.6, 0.2, 0.2, 1) 0.24s forwards;
+}
+
+/* Filmed divider — label between hairlines */
+.dc-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+.dc-divider::before,
+.dc-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(16, 22, 28, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg-in,
+  .brief-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .check-ring,
+  .check-stroke {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none !important;
+  }
+  .animate-shake {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   Printable brief record — single landscape PDF
+   Hidden offscreen on screen, full-bleed on print.
+   ============================================================ */
+
+.print-cert-page {
+  position: absolute;
+  left: 0;
+  top: -10000px;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media print {
+  @page {
+    size: 297mm 210mm landscape;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #151c25 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body * {
+    visibility: hidden !important;
+  }
+  .print-cert-page,
+  .print-cert-page * {
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-cert-page {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100%;
   }
 }

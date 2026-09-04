@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },
   "dependencies": {
+    "motion": "^13.2.0",
     "next": "latest",
     "react": "^19",
     "react-dom": "^19"
