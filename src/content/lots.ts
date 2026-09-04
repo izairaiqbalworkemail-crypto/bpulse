@@ -369,6 +369,48 @@ export function figureDisclaimer(lot: Lot): string | null {
   return null;
 }
 
+export type FieldLogFigure = {
+  label: string;
+  value: string;
+  source: string;
+};
+
+function fieldLogRow(
+  lot: Lot,
+  dataLabel: string,
+  displayLabel: string
+): FieldLogFigure {
+  const row = lot.dataLines.find((line) => line.label === dataLabel);
+  if (!row) {
+    throw new Error(`Lot ${lot.slug} is missing data line "${dataLabel}"`);
+  }
+  const host = lot.attribution.sourceUrl
+    ? lot.attribution.sourceUrl.replace(/^https?:\/\//, "")
+    : lot.client;
+  return {
+    label: displayLabel,
+    value: row.value,
+    source: `${lot.attribution.type} · ${host}`,
+  };
+}
+
+/** Homepage FieldLog — client-listing lots only. */
+export function getFieldLogFigures(): FieldLogFigure[] {
+  const sully = lots.find((lot) => lot.slug === "sully");
+  const deepidv = lots.find((lot) => lot.slug === "deepidv");
+  const myusta = lots.find((lot) => lot.slug === "myusta");
+  if (!sully || !deepidv || !myusta) {
+    throw new Error("Field log lots are missing from the catalogue");
+  }
+  return [
+    fieldLogRow(sully, "Reach", "Sully.ai reach"),
+    fieldLogRow(sully, "Clinical tasks", "Clinical tasks run"),
+    fieldLogRow(deepidv, "Verdict latency", "DeepIDV verdict latency"),
+    fieldLogRow(deepidv, "Reach", "DeepIDV reach"),
+    fieldLogRow(myusta, "Platform", "myUsta platforms"),
+  ];
+}
+
 const lotMap = new Map(lots.map((lot) => [lot.slug, lot]));
 
 export function getLot(slug: string): Lot {

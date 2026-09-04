@@ -24,9 +24,10 @@ export default function HowItWorksPage() {
 
       <section className="grid-container py-16 md:py-24">
         <p className="max-w-measure font-newsreader text-reading leading-reading text-ink">
-          The portal exists so you are in charge of the engagement — stage,
-          documents, locked scope, findings, and the access revocation log —
-          without waiting on a status email. What follows is the same six
+          The sample portal is how you see those stages before anyone is paid
+          — stage, documents, locked scope, findings, and the access
+          revocation log. A live, authed portal is not built yet; it gets
+          built for the first actual client. What follows is the same six
           stages the sample is built on.
         </p>
 

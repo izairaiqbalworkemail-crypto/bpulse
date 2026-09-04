@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { brand } from "@/config/brand";
+import { lots } from "@/content/lots";
+import { specialists } from "@/content/specialists";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = brand.url;
@@ -22,12 +24,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/legal/cookie-policy",
     "/legal/accessibility-statement",
     "/legal/complaints",
+    ...lots.map((lot) => `/work/${lot.slug}`),
+    ...specialists.map((person) => `/team/${person.id}`),
   ];
 
   return indexedRoutes.map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: path === "/" ? 1 : 0.8,
+    changeFrequency: "weekly" as const,
+    priority: path === "/" ? 1 : path.startsWith("/work/") || path.startsWith("/team/") ? 0.6 : 0.8,
   }));
 }

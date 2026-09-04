@@ -54,9 +54,9 @@ const capabilities = [
 ];
 
 const stats = [
-  { value: "9", label: "builds pushed past the last 20%" },
-  { value: "12", label: "senior hands scoping and shipping" },
-  { value: "5 days", label: "pulse check, honest verdict on your build" },
+  { value: String(lots.length), label: "builds pushed past the last 20%" },
+  { value: String(specialists.length), label: "senior hands scoping and shipping" },
+  { value: offer.check.duration, label: "the Check — verdict on your build" },
   { value: "In-house", label: "ship happens here, no handoff" },
 ];
 
@@ -64,7 +64,7 @@ const processSteps = [
   {
     step: "01",
     title: "The Check",
-    duration: "5 business days",
+    duration: offer.check.duration,
     description:
       "We read your product, map its condition, and hand you a verdict: keep, repair, or rebuild. Credited in full against a build within 30 days.",
   },
@@ -288,8 +288,8 @@ export default function Home() {
                 ${offer.check.price.toLocaleString()}
               </p>
               <p className="mt-2 font-plex-mono text-data text-ink/60">
-                {offer.check.duration} · credited in full against a build within
-                30 days
+                {offer.check.duration} · credited on a Close invoice within 30
+                days
               </p>
 
               <p className="mt-8 max-w-[560px] font-newsreader text-reading leading-reading text-ink">

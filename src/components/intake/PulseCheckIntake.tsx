@@ -5,7 +5,10 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 
 import { BUDGET_BANDS } from "@/content/budgets";
+import { offer } from "@/content/offer";
 import { getSpecialist } from "@/content/specialists";
+
+const checkPrice = `$${offer.check.price.toLocaleString("en-US")}`;
 
 /**
  * Pulse check — ported intact from bpulse (pulse-check-intake.tsx), with
@@ -94,12 +97,12 @@ export function PulseCheckIntake({ prefill }: { prefill?: PulseCheckPrefill }) {
         </span>
         <p className="mt-5 font-newsreader text-2xl tracking-tight text-ink">Audit requested. Smart move.</p>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink/70">
-          A senior reserves your slot and follows up within a day with how we&apos;d start the
-          five-day review. The $1,800 comes straight off the build if we take it on.
+          A senior replies within one business day with how we&apos;d start the
+          five-day review. The {checkPrice} is credited against a Close invoice
+          within 30 days if we take the build — by hand, not by this form.
         </p>
         <div className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-iron/10 bg-rag-card px-4 py-2.5 text-xs text-ink/60">
-          <span className="h-2 w-2 rounded-full bg-ok" aria-hidden />
-          no charge today · invoice only confirms the slot
+          This form does not take payment.
         </div>
         <Link href="/" className="mt-6 inline-flex font-plex-mono text-xs uppercase tracking-[0.14em] text-signal hover:text-ink">
           back to home
@@ -234,7 +237,7 @@ export function PulseCheckIntake({ prefill }: { prefill?: PulseCheckPrefill }) {
             <motion.div key="verdict" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -12 }} transition={{ duration: 0.24 }}>
               <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-signal/30 bg-signal/[0.06] px-4 py-3">
                 <div>
-                  <p className="font-newsreader text-lg font-semibold tracking-tight text-ink">$1,800</p>
+                  <p className="font-newsreader text-lg font-semibold tracking-tight text-ink">{checkPrice}</p>
                   <p className="text-xs text-ink/55">five-day audit · credited to your build</p>
                 </div>
                 <p className="flex items-center gap-1.5 text-right text-[0.68rem] leading-snug text-ink/60">
@@ -252,7 +255,7 @@ export function PulseCheckIntake({ prefill }: { prefill?: PulseCheckPrefill }) {
 
               <button type="button" onClick={book} disabled={!ready}
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-signal px-5 py-3.5 text-sm font-semibold text-signal-ink transition-all hover:opacity-90 disabled:opacity-35">
-                {save === "saving" ? "Reserving your slot…" : "Reserve my audit · $1,800"}
+                {save === "saving" ? "Sending…" : `Request the Check · ${checkPrice}`}
                 <svg viewBox="0 0 24 24" className="h-[0.95em] w-[0.95em]" fill="none" aria-hidden>
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

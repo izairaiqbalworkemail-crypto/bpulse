@@ -1,12 +1,10 @@
 "use client";
 
 import { DataLine } from "@/components/primitives/DataLine";
-
-type FieldLogFigure = {
-  label: string;
-  value: string;
-  source: string;
-};
+import {
+  getFieldLogFigures,
+  type FieldLogFigure,
+} from "@/content/lots";
 
 type FieldLogProps = {
   /**
@@ -15,34 +13,6 @@ type FieldLogProps = {
   density?: "compact" | "full";
   figures?: FieldLogFigure[];
 };
-
-const defaultFigures: FieldLogFigure[] = [
-  {
-    label: "Sully.ai reach",
-    value: "450+ healthcare orgs",
-    source: "client-reported · sully.ai",
-  },
-  {
-    label: "Clinical tasks run",
-    value: "5M+",
-    source: "client-reported · sully.ai",
-  },
-  {
-    label: "DeepIDV verdict latency",
-    value: "sub-150ms",
-    source: "client-reported · deepidv.com · checked 5 Sep 2026",
-  },
-  {
-    label: "DeepIDV reach",
-    value: "211+ countries",
-    source: "client-reported · deepidv.com · checked 5 Sep 2026",
-  },
-  {
-    label: "myUsta platforms",
-    value: "iOS + Android",
-    source: "client-engagement · myusta.al",
-  },
-];
 
 /**
  * The field log — sourced figures only, rendered as DataLine rows. Appears
@@ -53,7 +23,7 @@ const defaultFigures: FieldLogFigure[] = [
  * No untraceable claims. No logo marquee.
  */
 export function FieldLog({ density = "full", figures }: FieldLogProps) {
-  const items = figures ?? defaultFigures;
+  const items = figures ?? getFieldLogFigures();
 
   return (
     <div

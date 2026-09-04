@@ -32,7 +32,7 @@ export const brand = {
       currency: "USD",
       duration: "5 business days",
       description:
-        "Verdict of keep, repair, or rebuild. Credited in full against a build within 30 days.",
+        "Verdict of keep, repair, or rebuild. Credited on a Close invoice within 30 days.",
     },
     close: {
       name: "The Close",

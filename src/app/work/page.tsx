@@ -21,7 +21,7 @@ export default function WorkPage() {
       <PageHero
         kicker="Catalogue"
         title="Catalogue of work"
-        dek="Every lot is a real engagement. Real client, real condition on arrival, real outcome. No invented proof. Where a number does not exist, we say so."
+        dek="Lots from work we did. Figures are tagged with how they were sourced — six lots are still crew-reported, unverified. Where a number does not exist, we say so."
       />
 
       {/* Field logs per project — filterable grid */}

@@ -216,9 +216,12 @@ function PrivacyPolicy() {
           1. What we collect
         </h2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-          When you use the intake form, we collect the information you provide:
-          your name, email address, product description, budget, timeline, and
-          how you found us. That is all. We do not collect anything else.
+          When you use an intake form, we store the fields you type: name,
+          email, product description, budget, timeline, and how you found us.
+          To stop abuse of the form we also briefly store the request IP in
+          Redis for a one-minute rate limit. Private report pages log a
+          timestamp and a slug — no IP, no cookie. We do not run analytics,
+          pixels, or session recording.
         </p>
       </section>
 
@@ -238,10 +241,10 @@ function PrivacyPolicy() {
           3. Where your data goes
         </h2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-          Intake form submissions are delivered to our internal team via the
-          configured endpoint. They are read by the team members named on the
-          specialist page for the relevant engagement. Your data is not shared
-          with third parties, sold, or used for marketing.
+          Submissions are written to our Postgres database and emailed to the
+          studio inbox through Resend. Rate limits and report view counts use
+          Upstash Redis. Those are infrastructure vendors, not marketing
+          lists. We do not sell your data or use it for advertising.
         </p>
       </section>
 
@@ -250,10 +253,10 @@ function PrivacyPolicy() {
           4. How long we keep it
         </h2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-          Intake submissions are retained for 12 months from the date of
-          submission. After that, they are deleted. If an engagement proceeds,
-          relevant data is retained for the duration of the engagement plus 3
-          years for record-keeping.
+          There is no automated deletion job yet. Submissions stay in the
+          database until we delete them by hand. Email{" "}
+          {brand.contact.email} and we will delete your row. A retention
+          schedule will be published here once it is real.
         </p>
       </section>
 
@@ -273,9 +276,10 @@ function PrivacyPolicy() {
           6. International data transfers
         </h2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-          Our operations are based in Lahore, Pakistan. If you are in the EU,
-          UK, or US, your data will be transferred to Pakistan for processing.
-          By using the intake form, you consent to this transfer.
+          The studio operates from Lahore, Pakistan. The database and mail
+          region is set when those accounts are provisioned — it is not
+          published on this page yet. Ask {brand.contact.email} if you need
+          the region before you submit.
         </p>
       </section>
 
@@ -356,14 +360,23 @@ function AccessibilityStatement() {
           2. What we have done
         </h2>
         <ul className="mt-4 list-inside list-disc font-newsreader text-reading leading-reading text-ink">
-          <li>All text meets WCAG AA contrast ratios (verified computationally).</li>
-          <li>The site is keyboard navigable — all interactive elements are focusable and operable with a keyboard.</li>
           <li>
-            <code>prefers-reduced-motion</code> is respected — all animations
-            and transitions are disabled when the OS setting is enabled.
+            Type tokens were chosen for WCAG AA contrast on paper and iron.
+            Individual pages have not had a full contrast audit.
           </li>
-          <li>Semantic HTML: landmarks, one h1 per page, real article elements for lots.</li>
-          <li>All images have descriptive alt text. Decorative images use empty alt attributes.</li>
+          <li>
+            Interactive elements are in the tab order. A full keyboard pass
+            of every route is still on the founder checklist.
+          </li>
+          <li>
+            <code>prefers-reduced-motion</code> is read in the hero and the
+            conversation intakes. Ambient motion should be off; that has not
+            been visually signed off.
+          </li>
+          <li>Semantic HTML: landmarks and one h1 per page on the routes we ship.</li>
+          <li>
+            Content images carry alt text. Decorative images use empty alt.
+          </li>
         </ul>
       </section>
 
@@ -372,9 +385,8 @@ function AccessibilityStatement() {
           3. What we have not tested
         </h2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-          A formal screen-reader audit has not been run. We have tested with
-          VoiceOver and NVDA basics, but not a comprehensive assistive
-          technology review. This is on our list.
+          A formal screen-reader audit has not been run. Do not treat this
+          page as evidence that one has.
         </p>
       </section>
 

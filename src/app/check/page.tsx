@@ -12,7 +12,7 @@ import { offer } from "@/content/offer";
 export const metadata: Metadata = buildMetadata({
   title: "The Check",
   description:
-    "A $1,500 diagnostic on your product. Five business days. Verdict of keep, repair, or rebuild. Credited in full against a build within 30 days.",
+    `A $${offer.check.price.toLocaleString("en-US")} diagnostic. ${offer.check.duration}. Verdict of keep, repair, or rebuild. Credited on a Close invoice within 30 days.`,
   path: "/check",
 });
 
@@ -105,8 +105,9 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
         dek={
           <>
             ${offer.check.price.toLocaleString()} · {offer.check.duration}.
-            Credited in full against a build within 30 days. The Check may
-            conclude that you don&apos;t need us — the fee is still credited.
+            If we take a Close within 30 days, the fee is credited on that
+            invoice by hand — not by this site. The Check may conclude that
+            you don&apos;t need us. The fee is still credited.
           </>
         }
         actionHref="#intake"

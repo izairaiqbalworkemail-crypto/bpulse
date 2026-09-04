@@ -1,8 +1,47 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { brand } from "@/config/brand";
+import { specialists } from "@/content/specialists";
+import { CrewSession, type FieldConfig } from "@/components/intake/CrewSession";
+
+const careerFields: FieldConfig[] = [
+  {
+    name: "mode",
+    label: "Which door?",
+    type: "radio",
+    options: ["Join the studio", "Pitch an idea"],
+    required: true,
+  },
+  {
+    name: "name",
+    label: "Your name",
+    type: "input",
+    required: true,
+    autoComplete: "name",
+  },
+  {
+    name: "email",
+    label: "Email",
+    type: "input",
+    input: "email",
+    required: true,
+    autoComplete: "email",
+  },
+  {
+    name: "link",
+    label: "A link to work you shipped",
+    type: "input",
+    required: false,
+    placeholder: "Optional",
+  },
+  {
+    name: "detail",
+    label: "What you'd bring, or the idea",
+    type: "textarea",
+    required: true,
+  },
+];
 
 export const metadata: Metadata = buildMetadata({
   title: "Careers",
@@ -49,7 +88,7 @@ const values = [
   {
     title: "Small crew, senior hands",
     description:
-      "Twelve specialists. No interns. No automated screening. Every hire is a conversation.",
+      `${specialists.length} specialists. No interns. No automated screening. Every hire is a conversation.`,
   },
   {
     title: "Location is flexible, standards are not",
@@ -65,8 +104,8 @@ export default function CareersPage() {
         kicker="Careers"
         title="Two paths"
         dek="Join the crew, or found your own studio. We help with both — and we are honest about which one fits."
-        actionHref="/contact"
-        actionLabel="Contact the crew"
+        actionHref="#intake"
+        actionLabel="Start the conversation"
       />
 
       {/* Two paths */}
@@ -221,23 +260,18 @@ export default function CareersPage() {
             No cover letters. No resumes on file. Just tell us what you&apos;ve
             shipped and what you&apos;d want to work on next.
           </p>
-          <div className="mt-6 flex items-center gap-4">
-            <Link
-              href="/contact"
-              className="inline-block rounded-full bg-iron px-8 py-4 font-plex-sans text-sm font-medium text-rag transition-colors duration-200 hover:bg-iron/80"
-            >
-              Contact the crew
-            </Link>
-            <span className="font-plex-mono text-[0.66rem] text-ink/70">
-              or email{" "}
-              <a
-                  href={`mailto:${brand.contact.email}`}
-                  className="underline-offset-4 hover:underline"
-                >
-                  {brand.contact.email}
-                </a>
-            </span>
+          <div id="intake" className="mt-8">
+            <CrewSession type="careers" fields={careerFields} />
           </div>
+          <p className="mt-6 font-plex-mono text-[0.66rem] text-ink/70">
+            or email{" "}
+            <a
+              href={`mailto:${brand.contact.email}`}
+              className="underline-offset-4 hover:underline"
+            >
+              {brand.contact.email}
+            </a>
+          </p>
         </div>
       </div>
     </section>
