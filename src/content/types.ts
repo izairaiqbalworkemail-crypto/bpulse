@@ -82,6 +82,19 @@ export type Lot = {
    * Poured back from the portfolio source: the operational detail line.
    */
   detail?: string;
+  /**
+   * How the figures on this lot were sourced. Do not infer `confirmedOn`.
+   * Founder must confirm each lot — see FOUNDER-CONFIRM.md.
+   */
+  attribution: {
+    type:
+      | "client-listing"
+      | "public-case-study"
+      | "client-confirmed"
+      | "crew-asserted";
+    sourceUrl?: string;
+    confirmedOn?: string;
+  };
 };
 
 export type Specialist = {

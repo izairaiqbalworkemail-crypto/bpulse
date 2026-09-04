@@ -30,12 +30,12 @@ const defaultFigures: FieldLogFigure[] = [
   {
     label: "DeepIDV verdict latency",
     value: "sub-150ms",
-    source: "client-reported · deepidv.com",
+    source: "client-reported · deepidv.com · checked 5 Sep 2026",
   },
   {
     label: "DeepIDV reach",
     value: "211+ countries",
-    source: "client-reported · deepidv.com",
+    source: "client-reported · deepidv.com · checked 5 Sep 2026",
   },
   {
     label: "myUsta platforms",

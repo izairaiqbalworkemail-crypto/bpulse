@@ -182,7 +182,7 @@ Implementation: `ArrivalGrade` in `src/content/types.ts`; the `Grade` primitive 
 
 ### Arrival-state vocabulary
 
-Four states, proposed from the source language and mapped onto the two existing token colours (no third colour). Three are in use across the six lots; `unstable` is reserved and unspent because no source supports "arrived broken."
+Four states, proposed from the source language and mapped onto the two existing token colours (no third colour). Three are in use across the nine lots; `unstable` is reserved and unspent because no source supports "arrived broken."
 
 | State | Colour | Meaning | Anchored in source | Lots |
 |---|---|---|---|---|

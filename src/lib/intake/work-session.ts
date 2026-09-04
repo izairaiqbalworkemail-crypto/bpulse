@@ -1,4 +1,5 @@
 import type { FieldConfig, SessionCopy } from "@/components/intake/CrewSession";
+import { BUDGET_BANDS } from "@/content/budgets";
 import type { Specialist } from "@/content/types";
 
 const AI_RE = /ai|ml|model|rag|llm|gpt|agent|bot|gen\s*ai|automat/i;
@@ -9,7 +10,8 @@ const TIMELINES = [
   "next quarter",
   "just exploring",
 ];
-const BUDGETS = ["< $10k", "$10k - $30k", "$30k - $75k", "$75k+"];
+
+const BUDGETS = [...BUDGET_BANDS];
 
 function firstDisplay(member: Specialist) {
   return member.name.trim().split(/\s+/)[0] ?? member.id;

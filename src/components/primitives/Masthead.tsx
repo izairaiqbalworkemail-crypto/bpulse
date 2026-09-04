@@ -24,6 +24,11 @@ const nav = [
     href: "/check",
     detail: `$${offer.check.price.toLocaleString()} diagnostic`,
   },
+  {
+    label: "How",
+    href: "/how-it-works",
+    detail: "Six stages, written down",
+  },
   { label: "Notices", href: "/notices", detail: "Read before booking" },
 ] as const;
 

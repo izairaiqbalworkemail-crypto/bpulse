@@ -1,0 +1,8 @@
+SAMPLE STUB — not a live change order.
+
+Northline Payroll · Change order 01
+Dated 28 Aug 2026 · signed 28 Aug 2026 · $4,200
+
+Invalidate reset tokens on first success, 15-minute expiry.
+
+This file exists so the sample portal has a downloadable document.

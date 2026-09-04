@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     request.headers.get("x-real-ip") ??
     "unknown";
-  if (isRateLimited(ip)) {
+  if (await isRateLimited(ip)) {
     return fail("too many requests, try again shortly", 429);
   }
 
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         ? body.clientId
         : crypto.randomUUID();
 
-  const cached = getCachedSubmission(requestId);
+  const cached = await getCachedSubmission(requestId);
   if (cached) {
     return NextResponse.json({ ok: true, id: cached });
   }
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
       });
       if (!existing) throw new Error("conflict with no existing row");
       submissionId = existing.id;
-      cacheSubmission(requestId, submissionId);
+      await cacheSubmission(requestId, submissionId);
       return NextResponse.json({ ok: true, id: submissionId });
     }
   } catch (err) {
@@ -105,6 +105,6 @@ export async function POST(request: Request) {
     return fail("saved, but the notification email failed to send", 500);
   }
 
-  cacheSubmission(requestId, submissionId);
+  await cacheSubmission(requestId, submissionId);
   return NextResponse.json({ ok: true, id: submissionId });
 }

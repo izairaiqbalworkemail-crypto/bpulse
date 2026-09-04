@@ -13,8 +13,8 @@ function required(name: string): string | undefined {
   const value = process.env[name];
   if (!value && isProduction) {
     throw new Error(
-      `[boot] ${name} is not set. bpulse refuses to start in production without a working ` +
-        `lead-delivery channel — see AGENTS.md Phase 1. Set ${name} and rebuild.`
+      `[boot] ${name} is not set. bpulse refuses to start in production without ` +
+        `delivery and shared serverless state configured. Set ${name} and rebuild.`
     );
   }
   if (!value) {
@@ -28,6 +28,8 @@ function required(name: string): string | undefined {
 export const env = {
   DATABASE_URL: required("DATABASE_URL"),
   RESEND_API_KEY: required("RESEND_API_KEY"),
+  UPSTASH_REDIS_REST_URL: required("UPSTASH_REDIS_REST_URL"),
+  UPSTASH_REDIS_REST_TOKEN: required("UPSTASH_REDIS_REST_TOKEN"),
   RESEND_FROM: process.env.RESEND_FROM ?? "bpulse <intake@bpulse.dev>",
   FOUNDER_EMAIL: process.env.FOUNDER_EMAIL ?? "contact@bpulse.dev",
 };

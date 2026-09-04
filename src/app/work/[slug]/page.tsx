@@ -7,7 +7,7 @@ import { DataLine } from "@/components/primitives/DataLine";
 import { Grade } from "@/components/primitives/Grade";
 import { Credit } from "@/components/primitives/Credit";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
-import { lots, getLot } from "@/content/lots";
+import { lots, getLot, figureDisclaimer } from "@/content/lots";
 import { getSpecialist } from "@/content/specialists";
 import { brand } from "@/config/brand";
 
@@ -104,6 +104,11 @@ export default async function LotPage({ params }: PageProps) {
               <DataLine key={line.label} {...line} />
             ))}
           </dl>
+          {figureDisclaimer(lot) ? (
+            <p className="mt-4 font-plex-mono text-caption text-ink/60">
+              {figureDisclaimer(lot)}
+            </p>
+          ) : null}
         </div>
       </section>
 

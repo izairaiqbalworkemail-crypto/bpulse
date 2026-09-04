@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 
+import { BUDGET_BANDS } from "@/content/budgets";
 import { getSpecialist } from "@/content/specialists";
 
 /**
@@ -24,7 +25,7 @@ const SITUATIONS = [
 ] as const;
 
 const TIMELINES = ["ASAP", "This quarter", "Next quarter", "Just scouting"] as const;
-const BUDGETS = ["< $10k", "$10k - $30k", "$30k - $75k", "$75k+"] as const;
+const BUDGETS = BUDGET_BANDS;
 
 const STEPS = ["Your situation", "Your build", "Your verdict"];
 

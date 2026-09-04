@@ -1,0 +1,38 @@
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { demoBanner, demoViews } from "@/content/demo";
+import { PageHero } from "@/components/PageHero";
+
+export default function DemoLayout({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <div className="bg-signal px-4 py-2 text-center font-plex-mono text-[13px] text-iron">
+        {demoBanner}
+      </div>
+      <PageHero
+        kicker="Sample portal"
+        title="You would be in charge."
+        dek="A click-through of what a locked Close looks like before anyone pays. Every number here is sample data."
+        actionHref="/check"
+        actionLabel="Start with a Check"
+      />
+      <nav
+        aria-label="Demo views"
+        className="border-b border-iron/15 bg-rag"
+      >
+        <div className="grid-container flex flex-wrap gap-x-6 gap-y-2 py-4">
+          {demoViews.map((view) => (
+            <Link
+              key={view.slug}
+              href={view.slug === "overview" ? "/demo" : `/demo/${view.slug}`}
+              className="font-plex-sans text-sm text-ink/70 underline-offset-4 hover:text-iron hover:underline"
+            >
+              {view.label}
+            </Link>
+          ))}
+        </div>
+      </nav>
+      {children}
+    </>
+  );
+}

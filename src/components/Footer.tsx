@@ -7,8 +7,12 @@ import pkg from "../../package.json";
 const workLinks = [{ label: "The catalogue", href: "/work" }];
 
 const studioLinks = [
+  { label: "How it works", href: "/how-it-works" },
   { label: "The crew", href: "/team" },
+  { label: "The standard", href: "/standard" },
+  { label: "Edpulse", href: "/edpulse" },
   { label: "The Check", href: "/check" },
+  { label: "Sample portal", href: "/demo" },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },
   { label: "Notices", href: "/notices" },

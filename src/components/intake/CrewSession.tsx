@@ -548,6 +548,12 @@ function quoteOf(text: string, max = 44) {
  * EMAIL / AI / LEGAL branching, option chips, progress bar, the capture-sheet
  * brief drawer, the satisfaction capture, and the printable record.
  *
+ * Re-read against old crew-session.tsx 541–960 (the runtime engine). Kept:
+ * skip-optional, EMAIL_RE, 10-character floors on build/detail/idea, chip
+ * retry, reduced-motion timer scale. Left out on purpose: typing simulation,
+ * 3.2s fake read receipts, PostHog identify/track, named presence. Those
+ * lines are simulated presence — the brief forbids them.
+ *
  * Stripped: typing indicator and simulated typing delays, green presence
  * dots, a named crew member appearing to reply in real time, and the
  * "online · replies in a day" claim. Replaced by a plain label at the top:

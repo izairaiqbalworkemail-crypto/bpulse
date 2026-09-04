@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { BUDGET_BANDS } from "@/content/budgets";
 
 type IntakeVariant = "general" | "check" | "specialist";
 
@@ -50,14 +51,7 @@ const steps = [
     key: "budget" as const,
     prompt: "What is the budget range?",
     type: "options" as const,
-    options: [
-      "Under $5,000",
-      "$5,000 – $18,000",
-      "$18,000 – $50,000",
-      "$50,000 – $95,000",
-      "Over $95,000",
-      "Not sure yet",
-    ],
+    options: [...BUDGET_BANDS],
   },
   {
     key: "timeline" as const,

@@ -1,30 +1,56 @@
-/**
- * In-memory rate limiter, keyed by IP.
- *
- * Caveat: this state lives in the function's memory, not a shared store. On
- * Vercel, each serverless instance has its own map and cold starts clear it,
- * so this is a soft limit — it slows a single warm instance, not a hard
- * ceiling across the deployment. Fine for deterring casual abuse of a
- * low-traffic contact endpoint; swap for Upstash Redis if the endpoint ever
- * sees traffic where that gap matters.
- */
+import { Ratelimit } from "@upstash/ratelimit";
+import { getRedis } from "@/lib/redis";
 
-type Bucket = { count: number; windowStart: number };
+/**
+ * Sliding window: 5 requests per minute per IP.
+ * Production uses Upstash (shared across invocations).
+ * Local dev falls back to an in-memory map — never in production.
+ */
 
 const WINDOW_MS = 60_000;
 const MAX_REQUESTS_PER_WINDOW = 5;
 
-const buckets = new Map<string, Bucket>();
+type Bucket = { count: number; windowStart: number };
+const localBuckets =
+  process.env.NODE_ENV === "production"
+    ? null
+    : new Map<string, Bucket>();
 
-export function isRateLimited(key: string): boolean {
-  const now = Date.now();
-  const bucket = buckets.get(key);
+let limiter: Ratelimit | null | undefined;
 
-  if (!bucket || now - bucket.windowStart > WINDOW_MS) {
-    buckets.set(key, { count: 1, windowStart: now });
-    return false;
+function getLimiter(): Ratelimit | null {
+  if (limiter !== undefined) return limiter;
+  const redis = getRedis();
+  if (!redis) {
+    limiter = null;
+    return null;
+  }
+  limiter = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(MAX_REQUESTS_PER_WINDOW, "1 m"),
+    prefix: "rl:intake",
+  });
+  return limiter;
+}
+
+export async function isRateLimited(key: string): Promise<boolean> {
+  const redisLimiter = getLimiter();
+  if (redisLimiter) {
+    const { success } = await redisLimiter.limit(key);
+    return !success;
   }
 
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("[rate-limit] Redis required in production");
+  }
+
+  if (!localBuckets) return false;
+  const now = Date.now();
+  const bucket = localBuckets.get(key);
+  if (!bucket || now - bucket.windowStart > WINDOW_MS) {
+    localBuckets.set(key, { count: 1, windowStart: now });
+    return false;
+  }
   bucket.count += 1;
   return bucket.count > MAX_REQUESTS_PER_WINDOW;
 }

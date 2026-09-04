@@ -13,7 +13,7 @@ is a Christie's evening-sale catalogue page, not an agency marketing site.
 - Tailwind CSS v4, CSS-first `@theme`, no `tailwind.config.js`
 - `next/font/google`, self-hosted, `display: swap`
 - **No UI library.** Every primitive written here.
-- **No animation library.** CSS transitions plus one `IntersectionObserver` hook.
+- Motion: `motion` ^13.2.0 for intake step transitions. CSS transitions plus `useInView` elsewhere. Reduced-motion is respected.
 - ESLint + Prettier, `pnpm`
 
 ## Setup

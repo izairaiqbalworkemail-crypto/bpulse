@@ -1,26 +1,59 @@
+import { getRedis } from "@/lib/redis";
+
 /**
- * In-memory idempotency cache for submission request IDs. Same restart
- * caveat as rate-limit.ts: this map is per-instance and clears on cold
- * start, so a retry that lands on a fresh instance after a restart will
- * re-submit rather than dedupe. Acceptable for a five-minute window on a
- * low-traffic endpoint — the risk is an occasional duplicate lead email,
- * not a correctness failure.
+ * Submission request-id cache. Production: Redis key, 5-minute TTL.
+ * Local dev: in-memory map. Never the in-memory path in production.
  */
 
-const WINDOW_MS = 5 * 60_000;
+const WINDOW_SECONDS = 5 * 60;
+const KEY_PREFIX = "idemp:intake:";
 
-const seen = new Map<string, { id: string; expiresAt: number }>();
+const localSeen =
+  process.env.NODE_ENV === "production"
+    ? null
+    : new Map<string, { id: string; expiresAt: number }>();
 
-export function getCachedSubmission(requestId: string): string | null {
-  const entry = seen.get(requestId);
+export async function getCachedSubmission(
+  requestId: string
+): Promise<string | null> {
+  const redis = getRedis();
+  if (redis) {
+    const value = await redis.get<string>(`${KEY_PREFIX}${requestId}`);
+    return value ?? null;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("[idempotency] Redis required in production");
+  }
+
+  if (!localSeen) return null;
+  const entry = localSeen.get(requestId);
   if (!entry) return null;
   if (Date.now() > entry.expiresAt) {
-    seen.delete(requestId);
+    localSeen.delete(requestId);
     return null;
   }
   return entry.id;
 }
 
-export function cacheSubmission(requestId: string, submissionId: string): void {
-  seen.set(requestId, { id: submissionId, expiresAt: Date.now() + WINDOW_MS });
+export async function cacheSubmission(
+  requestId: string,
+  submissionId: string
+): Promise<void> {
+  const redis = getRedis();
+  if (redis) {
+    await redis.set(`${KEY_PREFIX}${requestId}`, submissionId, {
+      ex: WINDOW_SECONDS,
+    });
+    return;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("[idempotency] Redis required in production");
+  }
+
+  localSeen?.set(requestId, {
+    id: submissionId,
+    expiresAt: Date.now() + WINDOW_SECONDS * 1000,
+  });
 }

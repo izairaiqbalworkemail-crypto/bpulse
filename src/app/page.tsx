@@ -54,7 +54,7 @@ const capabilities = [
 ];
 
 const stats = [
-  { value: "10+", label: "builds pushed past the last 20%" },
+  { value: "9", label: "builds pushed past the last 20%" },
   { value: "12", label: "senior hands scoping and shipping" },
   { value: "5 days", label: "pulse check, honest verdict on your build" },
   { value: "In-house", label: "ship happens here, no handoff" },
@@ -119,7 +119,7 @@ export default function Home() {
       </section>
 
       {/* ── Section 5: The problem ── */}
-      <section className="w-full bg-rag py-24 md:py-40 atmo-dots">
+      <section className="w-full bg-rag py-24 md:py-40">
         <div className="grid-container relative z-10">
           <div className="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-12">
             <div className="md:col-span-8">
@@ -346,7 +346,7 @@ export default function Home() {
 
       {/* ── Section 10: The crew ── */}
       <section
-        className="w-full bg-rag py-24 md:py-40 atmo-dots"
+        className="w-full bg-rag py-24 md:py-40"
         aria-labelledby="crew"
       >
         <div className="grid-container relative z-10">
@@ -439,7 +439,7 @@ export default function Home() {
       </section>
 
       {/* ── Section 12: Close and colophon ── */}
-      <section className="w-full bg-iron py-24 md:py-40 atmo-glow">
+      <section className="w-full bg-iron py-24 md:py-40">
         <div className="grid-container relative z-10">
           <div className="flex flex-col items-start gap-8">
             <h2 className="max-w-[20ch] font-newsreader text-[clamp(2rem,4vw+0.5rem,3.5rem)] leading-title tracking-tight text-rag">

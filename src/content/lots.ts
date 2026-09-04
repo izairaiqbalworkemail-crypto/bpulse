@@ -1,7 +1,7 @@
 import type { Lot } from "./types";
 
 /**
- * Six lots, curated from the studio's own portfolio source. Every figure is
+ * Nine lots, curated from the studio's own portfolio source. Every figure is
  * client-reported and traceable via `sources`. Where the source is silent on
  * a number or a date, `limits` says so — nothing is invented.
  *
@@ -41,10 +41,14 @@ export const lots: Lot[] = [
       "Agentic compliance suite, n8n automation, Shopify integrations, AWS ownership.",
     highlights: ["KYC + liveness", "deepfake defense", "fraud workflows"],
     limits: [
-      "Reach and latency figures are client-reported on deepidv.com (unreachable at study time; per STUDY.md).",
+      "Reach and latency figures are client-reported on deepidv.com (checked 5 September 2026: 211+ countries, decision in under 150ms).",
       "Arrival date not recorded in the source; Aug 2026 is the earliest verifiable reference (ledger field note), not a confirmed arrival date.",
       "Detail and highlights above come from the studio's prior portfolio data (bpulse projects.json), not from a fresh re-audit.",
     ],
+    attribution: {
+      type: "client-listing",
+      sourceUrl: "https://deepidv.com",
+    },
     specialistId: "mehak",
     specialistCapability: "Intelligence",
     sources: [
@@ -89,6 +93,10 @@ export const lots: Lot[] = [
     ],
     specialistId: "aneeb",
     specialistCapability: "Delivery",
+    attribution: {
+      type: "client-listing",
+      sourceUrl: "https://sully.ai",
+    },
     sources: [
       { kind: "client-engagement", org: "Sully.ai", url: "https://sully.ai" },
       { kind: "review", org: "Sully.ai" },
@@ -124,6 +132,10 @@ export const lots: Lot[] = [
     ],
     specialistId: "aneeb",
     specialistCapability: "Delivery",
+    attribution: {
+      type: "client-listing",
+      sourceUrl: "https://app.myusta.al",
+    },
     sources: [
       { kind: "client-engagement", org: "myUsta", url: "https://app.myusta.al" },
       { kind: "review", org: "myUsta" },
@@ -161,6 +173,7 @@ export const lots: Lot[] = [
     ],
     specialistId: "fizza",
     specialistCapability: "Integration",
+    attribution: { type: "crew-asserted" },
     sources: [
       { kind: "client-engagement", org: "WearMeOut.ai" },
       { kind: "field-note", org: "WearMeOut.ai" },
@@ -199,6 +212,7 @@ export const lots: Lot[] = [
     ],
     specialistId: "fizza",
     specialistCapability: "Intelligence",
+    attribution: { type: "crew-asserted" },
     sources: [
       { kind: "client-engagement", org: "Mythos Archive" },
       { kind: "field-note", org: "Mythos Archive" },
@@ -235,6 +249,7 @@ export const lots: Lot[] = [
     ],
     specialistId: "fizza",
     specialistCapability: "Delivery",
+    attribution: { type: "crew-asserted" },
     sources: [
       { kind: "client-engagement", org: "SBA 504 Loan Hub" },
       { kind: "review", org: "SBA 504 Lead-Gen Site" },
@@ -270,6 +285,7 @@ export const lots: Lot[] = [
     ],
     specialistId: "najiullah",
     specialistCapability: "Intelligence",
+    attribution: { type: "crew-asserted" },
     sources: [
       { kind: "client-engagement", org: "Clearance.ai" },
     ],
@@ -304,6 +320,7 @@ export const lots: Lot[] = [
     ],
     specialistId: "fizza",
     specialistCapability: "Delivery",
+    attribution: { type: "crew-asserted" },
     sources: [
       { kind: "client-engagement", org: "Evidero" },
     ],
@@ -338,11 +355,19 @@ export const lots: Lot[] = [
     ],
     specialistId: "mehak",
     specialistCapability: "Integration",
+    attribution: { type: "crew-asserted" },
     sources: [
       { kind: "client-engagement", org: "Fullscript" },
     ],
   },
 ];
+
+export function figureDisclaimer(lot: Lot): string | null {
+  if (lot.attribution.type === "crew-asserted") {
+    return "crew-reported, unverified";
+  }
+  return null;
+}
 
 const lotMap = new Map(lots.map((lot) => [lot.slug, lot]));
 

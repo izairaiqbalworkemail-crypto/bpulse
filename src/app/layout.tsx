@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { rootMetadata } from "@/lib/seo";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/JsonLd";
-import { StickyContact } from "@/components/StickyContact";
-import { Footer } from "@/components/Footer";
+import { SiteChrome } from "@/components/SiteChrome";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -41,9 +40,7 @@ export default function RootLayout({
       <body className="bg-rag text-ink">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
-        <main>{children}</main>
-        <StickyContact />
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

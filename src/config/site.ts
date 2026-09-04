@@ -3,6 +3,7 @@ import { brand } from "@/config/brand";
 export const siteNav = [
   { label: "Work", href: "/work" },
   { label: "Check", href: "/check" },
+  { label: "How it works", href: "/how-it-works" },
   { label: "Team", href: "/team" },
   { label: "Careers", href: "/careers" },
   { label: "About", href: "/about" },
@@ -18,7 +19,11 @@ export const cta = {
 export const edition = {
   /** Catalogue edition line, e.g. "No. 1". */
   no: "No. 1",
-  /** Publication date of this edition. */
+  /**
+   * Publication month of this edition.
+   * Update when a lot, specialist, offer, or public claim changes.
+   * Month + year of that content edit — not the deploy date, not "today".
+   */
   date: "September 2026",
   /** The catalogue's one-sentence remit. */
   description:

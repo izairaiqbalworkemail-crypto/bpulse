@@ -310,7 +310,27 @@ write. Revisit if a real delivery channel replaces the log.
 - **Satisfaction survey**: the old crew-session phrasing was never located
   (`satisf` grep found nothing in the old repo). The ported component does not fabricate
   one — noted as a gap, not implemented.
-- **Old source fidelity**: `crew-session.tsx` lines 541–960 and the tail of old
-  `work-session.ts` remain unread in full; the ports were reconstructed from structure
-  and pass typecheck + build. A read-through against the originals is advisable before
-  shipping the chat intake.
+- **Old source fidelity**: `crew-session.tsx` lines 541–960 re-read in Phase E.
+  Runtime engine kept (skip-optional, EMAIL_RE, 10-character floors, chip retry,
+  reduced-motion timer scale). Typing simulation, 3.2s read receipts, and PostHog
+  left out — simulated presence.
+
+---
+
+## 9. Phase E dispositions — 5 September 2026
+
+| Item | Disposition |
+|---|---|
+| OG cards 404 | `brand.ogImage` now `/opengraph-image` so `buildMetadata` uses the generator |
+| Icons | `apple-icon.png` 180×180, `favicon.png` 32×32, `icon.svg` added. `logo.png` unchanged |
+| Heavy portraits | `madiha` / `najiullah` / `suhaib` → WebP under 40KB. `moiz` downscaled to 800 WebP |
+| `atmo-dots` / `atmo-glow` | Removed from `page.tsx` and `globals.css` |
+| `ConditionRoom` / `ScrollProgress` / `HeroArtifact` | Deleted |
+| "10+ builds" | Now `9` — the catalogue count |
+| "six lots" | `lots.ts` and `DECISIONS.md` say nine |
+| README animation library | Documents `motion` ^13.2.0 |
+| Hero "helping hands" | Already absent from current Hero — no roster line to fix |
+| Edition date | `site.ts` documents: update when content changes, month + year of that edit |
+| Lot `attribution` | Schema added. Six lots `crew-asserted` (figures tagged). Sully, myUsta, DeepIDV `client-listing`. `confirmedOn` empty — founder list in `FOUNDER-CONFIRM.md` |
+| DeepIDV | Retried 5 Sep 2026 — site resolves; 211+ and sub-150ms still stated. Figures stay on FieldLog and the lot, sourced |
+| Budget scale | Canonical set in `src/content/budgets.ts`; CrewSession/work-session, PulseCheck, IntakeForm all use it |

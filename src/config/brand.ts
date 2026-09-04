@@ -6,7 +6,7 @@ export const brand = {
     "Senior software studio. We take over products stuck at 80% and ship them to production.",
   url: "https://bpulse.dev",
   logo: "/logo.png",
-  ogImage: "https://bpulse.dev/og.png",
+  ogImage: "/opengraph-image",
 
   address: {
     street: "Lahore",
