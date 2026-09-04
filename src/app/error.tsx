@@ -24,7 +24,7 @@ export default function Error({
         </h1>
         <p className="mt-8 max-w-measure font-newsreader text-reading leading-reading text-ink">
           The page hit an error before it could render. This was not your fault.
-          You can try again, or contact bpulse for a new private link.
+          You can try again, or go back to the catalogue.
         </p>
         <div className="mt-12 flex gap-4">
           <button
@@ -35,10 +35,10 @@ export default function Error({
             Try again
           </button>
           <Link
-            href="mailto:contact@bpulse.dev"
+            href="/"
             className="inline-block rounded-button border border-iron/15 px-8 py-4 font-plex-sans text-sm font-medium text-iron transition-colors duration-200 hover:border-iron/40"
           >
-            Contact bpulse
+            Back to the catalogue
           </Link>
         </div>
       </section>

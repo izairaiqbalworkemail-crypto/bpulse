@@ -4,9 +4,9 @@ export const brand = {
   tagline: "We finish what starts.",
   description:
     "Senior software studio. We take over products stuck at 80% and ship them to production.",
-  url: "https://report.bpulse.dev",
+  url: "https://bpulse.dev",
   logo: "/logo.png",
-  ogImage: "https://report.bpulse.dev/og.png",
+  ogImage: "https://bpulse.dev/og.png",
 
   address: {
     street: "Lahore",

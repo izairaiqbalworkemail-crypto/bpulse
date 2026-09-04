@@ -6,7 +6,7 @@ type PageSEO = {
   description: string;
   path: string;
   /** Override to exclude from indexing */
-  robots?: Metadata["robots"];
+  robots?: string;
   /** Override OG image */
   image?: string;
 };
@@ -72,9 +72,5 @@ export const rootMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-  },
-  robots: {
-    index: false,
-    follow: false,
   },
 };
