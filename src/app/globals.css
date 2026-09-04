@@ -1,0 +1,713 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────
+   Design tokens — Tailwind v4 CSS-first @theme
+   ────────────────────────────────────────────── */
+
+@theme inline {
+  /* ── Surfaces ── */
+  --color-rag: #efeae0;
+  --color-rag-card: #f7f4ee;
+  --color-iron: #10161c;
+  --color-iron-card: #1a222b;
+  --color-ink: #38424e;
+  --color-rag-mute: rgba(239, 234, 224, 0.75);
+
+  /* ── Accent ── */
+  --color-signal: #f2c230;
+  --color-signal-ink: #10161c;
+
+  /* ── Grades ── */
+  --color-partial: #4a8f6f;
+  --color-blocked: #b03a28;
+  /* compatibility aliases used by existing content */
+  --color-sound: #4a8f6f;
+  --color-unsound: #b03a28;
+
+  /* ── Fonts ── */
+  --font-newsreader: var(--font-newsreader);
+  --font-plex-sans: var(--font-plex-sans);
+  --font-plex-mono: var(--font-plex-mono);
+
+  /* ── Spacing (8px base) ── */
+  --spacing-0: 0px;
+  --spacing-px: 1px;
+  --spacing-0\.5: 2px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-24: 96px;
+  --spacing-28: 112px;
+  --spacing-30: 120px;
+  --spacing-36: 144px;
+
+  /* ── Radii ── */
+  --radius-surface: 16px;
+  --radius-input: 8px;
+  --radius-pill: 999px;
+  --radius-button: var(--radius-pill);
+
+  /* ── Grid ── */
+  --size-grid: 1180px;
+  --spacing-gutter: 32px;
+
+  /* ── Headings ── */
+  --text-h1: var(--text-lead-title);
+  --text-h2: var(--text-lot-title);
+  --text-h3: var(--text-reading);
+
+  /* ── Hero ── */
+  --text-hero-lot: clamp(3.5rem, 8vw + 0.5rem, 7.5rem);
+  --text-hero-client: clamp(2.5rem, 4.5vw + 0.5rem, 4.5rem);
+}
+
+/* ──────────────────────────────────────────────
+   Grade colours — OUTSIDE @theme so Tailwind
+   generates no bg-sound / bg-unsound utilities.
+   These are applied via plain CSS only.
+   ────────────────────────────────────────────── */
+
+:root {
+  --color-partial: #4a8f6f;
+  --color-blocked: #b03a28;
+  --color-sound: var(--color-partial);
+  --color-unsound: var(--color-blocked);
+
+  /* Paper-ground shadow system (brand-tinted, no pure black) */
+  --shadow-card:
+    0 1px 2px -1px rgba(16, 22, 28, 0.06),
+    0 10px 24px -18px rgba(16, 22, 28, 0.16),
+    0 22px 42px -30px rgba(16, 22, 28, 0.12);
+  --shadow-raised:
+    0 1px 2px -1px rgba(16, 22, 28, 0.08),
+    0 14px 28px -18px rgba(16, 22, 28, 0.2),
+    0 28px 52px -32px rgba(16, 22, 28, 0.14);
+  --shadow-artifact:
+    0 2px 6px -2px rgba(16, 22, 28, 0.08),
+    0 18px 34px -20px rgba(16, 22, 28, 0.22),
+    0 36px 68px -40px rgba(16, 22, 28, 0.16);
+}
+
+/* ──────────────────────────────────────────────
+   Base reset and typography
+   ────────────────────────────────────────────── */
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: var(--text-reading);
+  line-height: 1.6;
+  color: var(--color-ink);
+  background: var(--color-rag);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Newsreader is a variable font with an opsz axis (6–72).
+   Lock it to the TEXT optical size so it never renders as the
+   high-contrast display serif. font-optical-sizing: auto makes the
+   browser pick the opsz from the rendered size, so a 36px heading
+   still renders at a reading-like optical size rather than display. */
+h1,
+h2,
+h3,
+p,
+.font-newsreader {
+  font-optical-sizing: auto;
+  font-variation-settings:
+    "opsz" 16,
+    "wght" 400;
+}
+
+/* ──────────────────────────────────────────────
+   Type scale — responsive via clamp()
+   Desktop  ≥1024px | Tablet 768–1023px | Mobile <768px
+
+   Clamp formula: clamp(mobile, preferred, desktop)
+   The preferred value scales linearly between breakpoints.
+   ────────────────────────────────────────────── */
+
+:root {
+  /* Lead title: 72 → 52 → 36 */
+  --text-lead-title: clamp(2.25rem, 4.5vw + 0.5rem, 4.5rem);
+
+  /* Lot title: 34 → 30 → 26 */
+  --text-lot-title: clamp(1.625rem, 1.25vw + 1.125rem, 2.125rem);
+
+  /* Section label: 15 → 15 → 14 */
+  --text-label: clamp(0.875rem, 0.3vw + 0.75rem, 0.9375rem);
+
+  /* Reading: 18 → 18 → 16 */
+  --text-reading: clamp(1rem, 0.5vw + 0.8rem, 1.125rem);
+
+  /* Data / mono: 14 → 14 → 13 */
+  --text-data: clamp(0.8125rem, 0.3vw + 0.6875rem, 0.875rem);
+
+  /* Caption: 13 → 13 → 12 */
+  --text-caption: clamp(0.75rem, 0.3vw + 0.625rem, 0.8125rem);
+
+  /* Line heights */
+  --leading-title: 1.1;
+  --leading-reading: 1.6;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-tighter: -0.03em;
+}
+
+/* ──────────────────────────────────────────────
+   Utility classes
+   ────────────────────────────────────────────── */
+
+/* Measure cap — 66 characters via ch units */
+.max-w-measure {
+  max-width: 66ch;
+}
+
+/* Grid container */
+.grid-container {
+  width: 100%;
+  max-width: var(--size-grid);
+  margin-inline: auto;
+  padding-inline: var(--spacing-8);
+}
+
+/* Section rhythm */
+.section-shell {
+  padding-block: 120px;
+}
+
+.section-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* Surface primitives */
+.paper-card {
+  border: 1px solid color-mix(in srgb, var(--color-iron) 12%, transparent);
+  border-radius: var(--radius-surface);
+  background: var(--color-rag-card);
+  box-shadow: var(--shadow-card);
+}
+
+.paper-card-raised {
+  border: 1px solid color-mix(in srgb, var(--color-iron) 14%, transparent);
+  border-radius: var(--radius-surface);
+  background: var(--color-rag-card);
+  box-shadow: var(--shadow-raised);
+}
+
+.paper-artifact {
+  border: 1px solid color-mix(in srgb, var(--color-iron) 12%, transparent);
+  border-radius: var(--radius-surface);
+  background: var(--color-rag-card);
+  box-shadow: var(--shadow-artifact);
+}
+
+.iron-card {
+  border: 1px solid color-mix(in srgb, var(--color-rag) 14%, transparent);
+  border-radius: var(--radius-surface);
+  background: var(--color-iron-card);
+}
+
+/* Hero mounted stage */
+.hero-stage {
+  min-height: 100svh;
+  padding-inline: 0;
+  padding-block: 0 32px;
+}
+
+.hero-shell {
+  width: min(1380px, calc(100% - 24px));
+  margin-inline: auto;
+}
+
+.hero-top-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(239, 234, 224, 0.18);
+  background: transparent;
+  padding: 20px 0 18px;
+}
+
+.hero-top-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.hero-blackbox {
+  position: relative;
+  margin-top: 0;
+  min-height: 100svh;
+  border-radius: 0;
+  background: var(--color-iron);
+  box-shadow: none;
+  padding: 0 0 56px;
+  overflow: clip;
+}
+
+.hero-blackbox-content {
+  margin-top: 32px;
+}
+
+@keyframes hero-symptom-hit {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 194, 48, 0.35);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgba(242, 194, 48, 0);
+  }
+}
+
+.hero-symptom-active {
+  animation: hero-symptom-hit 240ms ease-out;
+}
+
+.hero-report-card {
+  transform: rotate(1.5deg);
+  transform-origin: 75% 20%;
+  transition: transform 340ms cubic-bezier(0.69, 0, 0, 1);
+}
+
+.hero-report-card--straight {
+  transform: rotate(0deg);
+}
+
+@keyframes hero-panel-settle {
+  from {
+    opacity: 0;
+    transform: scale(0.985) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.hero-panel-settle {
+  animation: hero-panel-settle 480ms cubic-bezier(0.69, 0, 0, 1) both;
+}
+
+@keyframes hero-report-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-report-row {
+  animation: hero-report-row-in 200ms ease-out both;
+}
+
+@media (max-width: 767px) {
+  .grid-container {
+    padding-inline: var(--spacing-4);
+  }
+
+  .section-shell {
+    padding-block: 56px;
+  }
+
+  .section-stack {
+    gap: 56px;
+  }
+
+  .hero-stage {
+    padding-inline: 0;
+    padding-top: 0;
+  }
+
+  .hero-shell {
+    width: min(1380px, calc(100% - 24px));
+  }
+
+  .hero-top-pill {
+    padding: 14px 0;
+  }
+
+  .hero-top-nav {
+    display: none;
+  }
+
+  .hero-blackbox {
+    min-height: auto;
+    padding: 0 0 40px;
+  }
+
+  .hero-blackbox-content {
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .section-shell {
+    padding-block: 80px;
+  }
+
+  .hero-stage {
+    padding-inline: 0;
+  }
+
+  .hero-shell {
+    width: min(1380px, calc(100% - 40px));
+  }
+
+  .hero-blackbox {
+    min-height: 70vh;
+    padding: 0 0 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-stage {
+    padding-inline: 0;
+  }
+
+  .hero-shell {
+    width: min(1380px, calc(100% - 64px));
+  }
+
+  .hero-blackbox {
+    padding: 0 0 56px;
+  }
+}
+
+/* Hairline separator — iron at 15% opacity */
+.hairline {
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--color-iron) 15%, transparent);
+}
+
+/* ──────────────────────────────────────────────
+   Focus styles — 2px iron outline with offset
+   Never outline: none
+   ────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-iron);
+  outline-offset: 2px;
+}
+
+/* ──────────────────────────────────────────────
+   Reduced motion — per-behaviour, NOT global
+
+   Disables: mark strike, rule draw-on, transform hovers
+   Keeps: colour transitions, border transitions,
+          focus transitions, height changes on interaction
+   ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Mark strike on load */
+  .mark-strike {
+    animation: none !important;
+  }
+
+  .hero-panel-settle {
+    animation: none !important;
+  }
+
+  /* Rules draw on as Lot enters viewport */
+  .lot-rule {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  /* Transform-based hovers — disable scale/lift, keep colour */
+  .hover-lift {
+    transform: none !important;
+    transition:
+      color 200ms,
+      border-color 200ms,
+      background-color 200ms !important;
+  }
+}
+
+/* ──────────────────────────────────────────────
+   Mark strike animation (default: plays)
+   320ms, scale 1.04 → 1.00, cubic-bezier(.69, 0, 0, 1)
+   ────────────────────────────────────────────── */
+
+@keyframes mark-strike {
+  0% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.mark-strike {
+  animation: mark-strike 320ms cubic-bezier(0.69, 0, 0, 1) forwards;
+}
+
+/* ──────────────────────────────────────────────
+   Rule draw-on animation (triggered by JS)
+   Left to right, 400ms, 60ms stagger
+   ────────────────────────────────────────────── */
+
+.lot-rule {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.69, 0, 0, 1);
+}
+
+.lot-rule.is-visible {
+  transform: scaleX(1);
+}
+
+/* Reusable draw-on keyframe for the styleguide replay */
+@keyframes rule-draw-on {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ──────────────────────────────────────────────
+   Tabular figures for mono text
+   ────────────────────────────────────────────── */
+
+.font-mono,
+.font-plex-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ──────────────────────────────────────────────
+   Sentence case helper — applied via Tailwind
+   text-transform: capitalize would be wrong.
+   Copy is written in sentence case; this is a reminder.
+   ────────────────────────────────────────────── */
+
+/* ──────────────────────────────────────────────
+   Atmosphere effects — subtle, adapted to rag
+
+   These are visual texture layers, not decorations.
+   They add depth without breaking the catalogue metaphor.
+   ────────────────────────────────────────────── */
+
+/* Dot grid — iron at very low opacity */
+.atmo-dots {
+  background-image: radial-gradient(
+    rgba(16, 22, 28, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+}
+
+/* Lime-tinted glow — adapted from bpulse.dev's atmo-glint */
+.atmo-glow {
+  position: relative;
+}
+.atmo-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 20% 30%,
+    rgba(242, 194, 48, 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Section surface — subtle elevation */
+.section-elevated {
+  background: linear-gradient(
+    180deg,
+    var(--color-rag) 0%,
+    #f0ebe2 100%
+  );
+}
+
+/* ──────────────────────────────────────────────
+   Hero artifact — the condition report stack
+
+   Three granted exceptions (Part 8):
+   1. --artifact-shadow: contact shadow on bottom leaf only
+   2. --artifact-sheen: specular gradient across top leaf
+   3. 3D transform for settle and tilt
+
+   These appear ONLY here. No other codebase element
+   may reference these variables or this component's classes.
+   ────────────────────────────────────────────── */
+
+.artifact-stack {
+  --artifact-shadow: 0 2px 8px -2px rgba(16, 22, 28, 0.18);
+  --artifact-sheen: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.08) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 200ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform;
+}
+
+.artifact-leaf {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--color-rag);
+  border: 1px solid rgba(16, 22, 28, 0.12);
+  border-radius: var(--radius-surface);
+  padding: clamp(20px, 4vw, 32px);
+  z-index: var(--leaf-index);
+  transform-origin: center center;
+
+  /* Initial state — tighter stack */
+  transform:
+    rotate(0deg)
+    translate(0, 0);
+  opacity: 0.92;
+  transition:
+    transform 520ms cubic-bezier(0.69, 0, 0, 1),
+    opacity 300ms ease;
+
+  /* Settle stagger */
+  transition-delay: var(--leaf-stagger, 0ms);
+}
+
+/* Settled state — offset positions */
+.artifact-leaf--settled {
+  transform:
+    rotate(var(--leaf-rotate, 0deg))
+    translate(var(--leaf-offset-x, 0), var(--leaf-offset-y, 0));
+  opacity: 1;
+}
+
+.artifact-leaf-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.artifact-leaf-content--bg {
+  opacity: 0.6;
+}
+
+/* Specular sheen — material property, not decoration */
+.artifact-sheen {
+  position: absolute;
+  inset: 0;
+  background: var(--artifact-sheen);
+  pointer-events: none;
+  border-radius: var(--radius-surface);
+}
+
+/* Contact shadow on bottom leaf only */
+.artifact-shadow {
+  position: absolute;
+  bottom: -4px;
+  left: 5%;
+  right: 5%;
+  height: 12px;
+  background: var(--artifact-shadow);
+  border-radius: 50%;
+  filter: blur(6px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Reduced motion — disable settle and tilt */
+@media (prefers-reduced-motion: reduce) {
+  .artifact-leaf {
+    transition: none !important;
+    transform:
+      rotate(var(--leaf-rotate, 0deg))
+      translate(var(--leaf-offset-x, 0), var(--leaf-offset-y, 0)) !important;
+    opacity: 1 !important;
+  }
+
+  .artifact-stack {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   Condition Room — chat reconstruction (landing hero)
+   ============================================================ */
+
+/*
+   Typing dots: reuse the Tailwind `animate-bounce` utility with staggered
+   delays (same pattern as IntakeForm's TypingIndicator). No custom keyframe.
+*/
+
+/* Message / row entrance — fade + slide + subtle scale */
+@keyframes room-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.room-pop {
+  animation: room-pop 0.28s cubic-bezier(0.16, 0.7, 0.3, 1) both;
+}
+
+/* "Shot" card burst — artifact styling, no transform beyond granted */
+@keyframes room-shot {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.room-shot {
+  animation: room-shot 0.32s cubic-bezier(0.16, 0.7, 0.3, 1) both;
+}
+
+/* Pulse verdict fill — signal sweeps the bar across */
+@keyframes room-pulse-fill {
+  from {
+    width: 8%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Reduced motion — freeze chat entrance */
+@media (prefers-reduced-motion: reduce) {
+  .room-pop,
+  .room-shot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
