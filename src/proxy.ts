@@ -1,12 +1,41 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { checkRateLimit } from "@/lib/security/rate-limit";
+
 function isReportHost(host: string): boolean {
   return host.startsWith("report.");
 }
 
-export function proxy(request: NextRequest) {
+function clientIp(request: NextRequest): string {
+  return (
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    request.headers.get("x-real-ip") ??
+    "unknown"
+  );
+}
+
+export async function proxy(request: NextRequest) {
   const host = request.headers.get("host") ?? "";
   const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/api/")) {
+    const { limited, retryAfterSeconds } = await checkRateLimit(
+      pathname,
+      clientIp(request)
+    );
+    if (limited) {
+      return new NextResponse(
+        JSON.stringify({ ok: false, error: "too many requests" }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": String(retryAfterSeconds),
+          },
+        }
+      );
+    }
+  }
 
   if (!isReportHost(host)) {
     return NextResponse.next();

@@ -8,6 +8,13 @@
       "when": 1788560475710,
       "tag": "0000_wise_silver_centurion",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788563409339,
+      "tag": "0001_flimsy_photon",
+      "breakpoints": true
     }
   ]
 }
