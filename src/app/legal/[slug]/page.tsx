@@ -4,6 +4,93 @@ import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { brand } from "@/config/brand";
 
+function slugify(label: string) {
+  return label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function LegalH2({ children }: { children: string }) {
+  return (
+    <h2
+      id={slugify(children)}
+      className="scroll-mt-28 font-newsreader text-[24px] leading-title text-iron"
+    >
+      {children}
+    </h2>
+  );
+}
+
+const LEGAL_INDEX: Record<string, string[]> = {
+  "terms-of-service": [
+    "1. Who we are",
+    "2. What we do",
+    "3. The Check",
+    "4. The Close and Standing",
+    "5. Your obligations",
+    "6. Intellectual property",
+    "7. Limitation of liability",
+    "8. Governing law",
+    "9. Changes to these terms",
+  ],
+  "privacy-policy": [
+    "1. What we collect",
+    "2. What we do not collect",
+    "3. Where your data goes",
+    "4. How long we keep it",
+    "5. Your rights",
+    "6. International data transfers",
+    "7. Contact",
+  ],
+  "cookie-policy": [
+    "1. We set no cookies",
+    "2. No cookie banner",
+    "3. Third-party links",
+  ],
+  "accessibility-statement": [
+    "1. Our commitment",
+    "2. What we have done",
+    "3. What we have not tested",
+    "4. Known issues",
+    "5. Feedback",
+  ],
+  complaints: [
+    "1. How to complain",
+    "2. How we handle it",
+    "3. Escalation",
+    "4. Payment disputes",
+    "5. Contact",
+  ],
+};
+
+function LegalIndex({ slug }: { slug: string }) {
+  const items = LEGAL_INDEX[slug] ?? [];
+  if (items.length === 0) return null;
+  return (
+    <nav
+      aria-label="On this page"
+      className="mb-10 hidden lg:block lg:sticky lg:top-8 lg:mb-0"
+    >
+      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+        On this page
+      </p>
+      <ol className="mt-3 flex flex-col gap-2">
+        {items.map((item) => (
+          <li key={item}>
+            <a
+              href={`#${slugify(item)}`}
+              className="font-plex-sans text-[14px] text-iron underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+            >
+              {item}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  );
+}
+
 const legalPages = [
   { slug: "terms-of-service", title: "Terms of Service" },
   { slug: "privacy-policy", title: "Privacy Policy" },
@@ -70,12 +157,15 @@ export default async function LegalPage({ params }: PageProps) {
             ← Back to catalogue
           </Link>
 
-          <div className="mt-12 max-w-[66ch]">
-            {slug === "terms-of-service" && <TermsOfService />}
-            {slug === "privacy-policy" && <PrivacyPolicy />}
-            {slug === "cookie-policy" && <CookiePolicy />}
-            {slug === "accessibility-statement" && <AccessibilityStatement />}
-            {slug === "complaints" && <Complaints />}
+          <div className="mt-12 lg:grid lg:grid-cols-[14rem_minmax(0,66ch)] lg:items-start lg:gap-16">
+            <LegalIndex slug={slug} />
+            <div className="max-w-[66ch] font-newsreader text-[18px] leading-[1.7] text-ink">
+              {slug === "terms-of-service" && <TermsOfService />}
+              {slug === "privacy-policy" && <PrivacyPolicy />}
+              {slug === "cookie-policy" && <CookiePolicy />}
+              {slug === "accessibility-statement" && <AccessibilityStatement />}
+              {slug === "complaints" && <Complaints />}
+            </div>
           </div>
 
           <div className="mt-16 border-t border-iron/15 pt-8">
@@ -100,9 +190,7 @@ function TermsOfService() {
   return (
     <div className="flex flex-col gap-8">
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          1. Who we are
-        </h2>
+        <LegalH2>1. Who we are</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           {brand.legalName} (&ldquo;bpulse&rdquo;, &ldquo;we&rdquo;,
           &ldquo;us&rdquo;) is a software studio registered in Lahore, Punjab,
@@ -112,9 +200,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          2. What we do
-        </h2>
+        <LegalH2>2. What we do</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           We take over products stuck at the last twenty percent and carry them
           into production. We offer three service tiers: The Check (a diagnostic
@@ -124,9 +210,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          3. The Check
-        </h2>
+        <LegalH2>3. The Check</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           The Check is a $1,500 USD diagnostic delivered in five business days.
           You receive a condition report on your product. The fee is credited in
@@ -137,9 +221,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          4. The Close and Standing
-        </h2>
+        <LegalH2>4. The Close and Standing</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           The Close is a fixed-scope build priced between $18,000 and $95,000
           USD. Standing is post-launch support priced between $2,000 and $6,000
@@ -149,9 +231,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          5. Your obligations
-        </h2>
+        <LegalH2>5. Your obligations</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           You must provide accurate information in the intake form and grant
           access to the codebase, deployment environment, and documentation
@@ -161,9 +241,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          6. Intellectual property
-        </h2>
+        <LegalH2>6. Intellectual property</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           Upon full payment, you own the code we write for your product. We do
           not claim ownership of your existing codebase. We may publish an
@@ -173,9 +251,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          7. Limitation of liability
-        </h2>
+        <LegalH2>7. Limitation of liability</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           Our liability is limited to the fees paid for the specific engagement.
           We are not liable for indirect, incidental, or consequential damages.
@@ -185,9 +261,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          8. Governing law
-        </h2>
+        <LegalH2>8. Governing law</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           These terms are governed by the laws of Pakistan. Any disputes will be
           resolved in the courts of Lahore, Punjab. For international clients,
@@ -196,9 +270,7 @@ function TermsOfService() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          9. Changes to these terms
-        </h2>
+        <LegalH2>9. Changes to these terms</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           We may update these terms. The version in force at the time of your
           engagement applies. We will notify you of material changes.
@@ -212,9 +284,7 @@ function PrivacyPolicy() {
   return (
     <div className="flex flex-col gap-8">
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          1. What we collect
-        </h2>
+        <LegalH2>1. What we collect</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           When you use an intake form, we store the fields you type: name,
           email, product description, budget, timeline, and how you found us.
@@ -226,9 +296,7 @@ function PrivacyPolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          2. What we do not collect
-        </h2>
+        <LegalH2>2. What we do not collect</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           We do not use analytics. We do not use tracking pixels. We do not use
           advertising cookies. We do not use session recording. We do not use
@@ -237,9 +305,7 @@ function PrivacyPolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          3. Where your data goes
-        </h2>
+        <LegalH2>3. Where your data goes</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           Submissions are written to our Postgres database and emailed to the
           studio inbox through Resend. Rate limits and report view counts use
@@ -249,9 +315,7 @@ function PrivacyPolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          4. How long we keep it
-        </h2>
+        <LegalH2>4. How long we keep it</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           There is no automated deletion job yet. Submissions stay in the
           database until we delete them by hand. Email{" "}
@@ -261,9 +325,7 @@ function PrivacyPolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          5. Your rights
-        </h2>
+        <LegalH2>5. Your rights</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           You can request access to, correction of, or deletion of your personal
           data at any time by emailing {brand.contact.email}. We will respond
@@ -272,9 +334,7 @@ function PrivacyPolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          6. International data transfers
-        </h2>
+        <LegalH2>6. International data transfers</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           The studio operates from Lahore, Pakistan. The database and mail
           region is set when those accounts are provisioned — it is not
@@ -284,9 +344,7 @@ function PrivacyPolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          7. Contact
-        </h2>
+        <LegalH2>7. Contact</LegalH2>
           <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           For privacy questions, email {brand.contact.email}. For complaints,
           see our{" "}
@@ -307,9 +365,7 @@ function CookiePolicy() {
   return (
     <div className="flex flex-col gap-8">
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          1. We set no cookies
-        </h2>
+        <LegalH2>1. We set no cookies</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           This site sets zero cookies. There are no analytics cookies, no
           advertising cookies, no social media cookies, no session recording
@@ -318,9 +374,7 @@ function CookiePolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          2. No cookie banner
-        </h2>
+        <LegalH2>2. No cookie banner</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           Because we set no cookies, there is no cookie banner. A consent banner
           for cookies we do not set would be theatre. We do not do theatre.
@@ -328,9 +382,7 @@ function CookiePolicy() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          3. Third-party links
-        </h2>
+        <LegalH2>3. Third-party links</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           Some pages link to client sites and external references. Those sites
           may set their own cookies. We do not control them and this policy does
@@ -345,9 +397,7 @@ function AccessibilityStatement() {
   return (
     <div className="flex flex-col gap-8">
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          1. Our commitment
-        </h2>
+        <LegalH2>1. Our commitment</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           We want everyone to be able to use this site. We have made efforts to
           ensure the site is usable by people with disabilities, but we
@@ -356,9 +406,7 @@ function AccessibilityStatement() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          2. What we have done
-        </h2>
+        <LegalH2>2. What we have done</LegalH2>
         <ul className="mt-4 list-inside list-disc font-newsreader text-reading leading-reading text-ink">
           <li>
             Type tokens were chosen for WCAG AA contrast on paper and iron.
@@ -381,9 +429,7 @@ function AccessibilityStatement() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          3. What we have not tested
-        </h2>
+        <LegalH2>3. What we have not tested</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           A formal screen-reader audit has not been run. Do not treat this
           page as evidence that one has.
@@ -391,9 +437,7 @@ function AccessibilityStatement() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          4. Known issues
-        </h2>
+        <LegalH2>4. Known issues</LegalH2>
         <ul className="mt-4 list-inside list-disc font-newsreader text-reading leading-reading text-ink">
           <li>
             Some team member photos may not meet optimal contrast when rendered
@@ -407,9 +451,7 @@ function AccessibilityStatement() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          5. Feedback
-        </h2>
+        <LegalH2>5. Feedback</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           If you encounter an accessibility barrier, please email{" "}
           {brand.contact.email}. We will respond within one business day and
@@ -424,9 +466,7 @@ function Complaints() {
   return (
     <div className="flex flex-col gap-8">
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          1. How to complain
-        </h2>
+        <LegalH2>1. How to complain</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           If you are unhappy with our work, our conduct, or anything about the
           engagement, email {brand.contact.email} with the subject line
@@ -436,9 +476,7 @@ function Complaints() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          2. How we handle it
-        </h2>
+        <LegalH2>2. How we handle it</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           A senior member of the team (not the person the complaint is about)
           will review it. We will give you a substantive response within 10
@@ -447,9 +485,7 @@ function Complaints() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          3. Escalation
-        </h2>
+        <LegalH2>3. Escalation</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           If you are not satisfied with our response, you may escalate to
           mediation. We prefer mediation over litigation — it is faster and
@@ -459,9 +495,7 @@ function Complaints() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          4. Payment disputes
-        </h2>
+        <LegalH2>4. Payment disputes</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           If you have a payment dispute, contact us before initiating a
           chargeback. We are reasonable people and would rather resolve it
@@ -470,9 +504,7 @@ function Complaints() {
       </section>
 
       <section>
-        <h2 className="font-newsreader text-lot-title leading-title text-iron">
-          5. Contact
-        </h2>
+        <LegalH2>5. Contact</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           {brand.contact.email} · {brand.legalName} · Lahore, Punjab, Pakistan
         </p>

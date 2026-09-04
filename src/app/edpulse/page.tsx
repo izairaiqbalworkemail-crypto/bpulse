@@ -2,55 +2,51 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { edpulseJoinNote, edpulseTracks } from "@/content/process";
+import { TierTable } from "@/components/TierTable";
+import { edpulseTracks, edpulseJoinNote } from "@/content/process";
 
 export const metadata: Metadata = buildMetadata({
   title: "Edpulse",
   description:
-    "Explorer $0, Accelerator $4,900, Mastery custom. The crew path — graduates who clear the gates join.",
+    "Explorer is free. Accelerator is the offer. Mastery is custom. Graduates who clear the gates join the crew.",
   path: "/edpulse",
 });
 
+const tiers = edpulseTracks.map((track) => ({
+  name: track.name,
+  price: track.price,
+  body: track.body,
+  featured: track.name === "Accelerator",
+}));
+
 export default function EdpulsePage() {
   return (
-    <>
+    <section className="w-full bg-rag">
       <PageHero
         kicker="Edpulse"
-        title="The crew path"
-        dek="Three tracks. None of them sell a shortcut around the gates. Graduates who clear them join."
-        actionHref="/standard"
-        actionLabel="Read the gates"
+        title="The crew path."
+        dek="Practice for the gates. Completing a track does not skip them."
+        hideAction
       />
 
-      <section className="grid-container py-16 md:py-24">
-        <ol className="flex flex-col gap-14">
-          {edpulseTracks.map((track) => (
-            <li key={track.name} className="border-t border-iron/15 pt-8">
-              <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
-                {track.price}
-              </p>
-              <h2 className="mt-3 font-newsreader text-[clamp(1.75rem,3vw,2.5rem)] leading-title text-iron">
-                {track.name}
-              </h2>
-              <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-ink">
-                {track.body}
-              </p>
-            </li>
-          ))}
-        </ol>
+      <div className="grid-container pb-24 pt-6 md:pb-32">
+        <TierTable tiers={tiers} />
 
-        <p className="mt-16 max-w-measure font-newsreader text-reading leading-reading text-iron">
+        <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-ink">
           {edpulseJoinNote}
         </p>
 
-        <p className="mt-8 font-newsreader text-reading text-ink">
-          Handover training for a paying Close lives on{" "}
-          <Link href="/how-it-works" className="underline-offset-4 hover:underline">
-            How it works
+        <p className="mt-8 font-newsreader text-[16px] text-ink/80">
+          Read the gates on{" "}
+          <Link
+            href="/standard"
+            className="underline decoration-iron/40 underline-offset-4 hover:decoration-iron"
+          >
+            /standard
           </Link>
-          . It is already in the engagement.
+          .
         </p>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

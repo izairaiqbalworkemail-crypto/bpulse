@@ -212,7 +212,7 @@ export default function DesignPage() {
           <Mark size={32} mono />
         </div>
         <p className="mt-6 font-plex-mono text-caption text-ink/60">
-          200 / 64 / 32 / 16 px — public/logo.png
+          200 / 64 / 32 / 16 px — cream face, signal sides
         </p>
       </section>
 

@@ -131,6 +131,35 @@ export type Specialist = {
   upwork?: string;
   hobbies?: string[];
   genzLine?: string;
+  /**
+   * Ported from the old crew dossier. Journey = what they built.
+   * Attach / expectations = how a client works with them.
+   */
+  journey?: string;
+  attach?: string[];
+  expectations?: string;
+};
+
+export type EntryState =
+  | "taken over mid-flight"
+  | "entered unfinished"
+  | "from blank canvas";
+
+export type IndexProject = {
+  id: string;
+  client: string;
+  line: string;
+  stack: string;
+  entryState: EntryState;
+  url?: string;
+  year?: string;
+};
+
+export type RailStage = {
+  id: string;
+  label: string;
+  status: "complete" | "current" | "upcoming";
+  detail?: string;
 };
 
 export type Notice = {

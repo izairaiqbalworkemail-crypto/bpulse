@@ -93,36 +93,51 @@ export const progress = {
     { hash: "a91c2e", message: "rate-limit register by ip + email", date: "1 Sep" },
     { hash: "b33f01", message: "reject disposable signup domains", date: "2 Sep" },
     { hash: "c08aa4", message: "reset token one-shot (staging)", date: "3 Sep" },
+    { hash: "d14b77", message: "lock session cookie to host-only", date: "3 Sep" },
+    { hash: "e2aa01", message: "staging health check on /readyz", date: "4 Sep" },
+    { hash: "f09c18", message: "strip reset-token from server logs", date: "4 Sep" },
   ],
   deploys: [
     { env: "staging", status: "green", at: "3 Sep 16:12" },
+    { env: "preview", status: "not connected", at: "—" },
     { env: "production", status: "not connected", at: "—" },
   ],
   burndown: "11 of 21 locked days used. Sample.",
 };
 
+const finding = (
+  status: "open" | "closed" | "deferred",
+  owner: string,
+  date: string,
+  observed: string,
+  closing: string
+) => ({ status, owner, date, observed, closing });
+
 export const demoFindings = [
-  {
-    status: "closed" as const,
-    owner: "Hassan Saulat",
-    date: "2 Sep 2026",
-    observed: "Signup POST had no sliding window.",
-    closing: "Per-IP and per-email limit shipped on staging.",
-  },
-  {
-    status: "open" as const,
-    owner: "Hassan Saulat",
-    date: "3 Sep 2026",
-    observed: "Reset token still valid after first use in production.",
-    closing: "Fix is on staging. Production deploy is the next milestone.",
-  },
-  {
-    status: "deferred" as const,
-    owner: "Aneeb Iqbal",
-    date: "28 Aug 2026",
-    observed: "Marketing hero still says coming this quarter.",
-    closing: "Copy change sits with the client. Not in locked scope.",
-  },
+  finding("closed", "Hassan Saulat", "2 Sep 2026", "Signup POST had no sliding window.", "Per-IP and per-email limit shipped on staging."),
+  finding("open", "Hassan Saulat", "3 Sep 2026", "Reset token still valid after first use in production.", "Fix is on staging. Production deploy is the next milestone."),
+  finding("deferred", "Aneeb Iqbal", "28 Aug 2026", "Marketing hero still says coming this quarter.", "Copy change sits with the client. Not in locked scope."),
+  finding("closed", "Hassan Saulat", "19 Aug 2026", "Register accepted disposable mail hosts.", "Domain denylist on staging."),
+  finding("closed", "Hassan Saulat", "20 Aug 2026", "Session cookie missing Secure on staging HTTPS.", "Flag set. Sample."),
+  finding("closed", "Aneeb Iqbal", "21 Aug 2026", "Password reset email used a shared from-address.", "From-domain aligned to the sample tenant."),
+  finding("closed", "Hassan Saulat", "22 Aug 2026", "Rate-limit key was only the IP.", "Key is now IP + email."),
+  finding("closed", "Hassan Saulat", "23 Aug 2026", "/readyz returned 200 with a dead database.", "Check now fails closed."),
+  finding("closed", "Aneeb Iqbal", "24 Aug 2026", "Invite tokens lived for 30 days.", "Cut to 24 hours on staging."),
+  finding("closed", "Hassan Saulat", "25 Aug 2026", "Error page leaked stack frames.", "Generic 500 copy in staging."),
+  finding("closed", "Hassan Saulat", "26 Aug 2026", "CORS allow-list included localhost in the staging build.", "Removed."),
+  finding("closed", "Aneeb Iqbal", "27 Aug 2026", "Admin route had no audit line.", "Write path now logs actor + time. Sample."),
+  finding("open", "Hassan Saulat", "1 Sep 2026", "Production TLS cert is the client's — we cannot rotate it.", "Not connected. Waiting on their DNS."),
+  finding("open", "Hassan Saulat", "2 Sep 2026", "Backup restore has not been rehearsed on staging.", "In the remaining locked days."),
+  finding("open", "Aneeb Iqbal", "3 Sep 2026", "One-time reset is on staging only.", "Production remains not connected."),
+  finding("open", "Hassan Saulat", "4 Sep 2026", "Sentry DSN is not connected.", "Unwired integration. Shows as not connected."),
+  finding("open", "Aneeb Iqbal", "4 Sep 2026", "Status page is not connected.", "Unwired. Will stay labelled until they plug it in."),
+  finding("open", "Hassan Saulat", "5 Sep 2026", "WAF ruleset is not connected.", "Unwired."),
+  finding("deferred", "Aneeb Iqbal", "20 Aug 2026", "SSO against their IdP is out of lock.", "Change order if they want it."),
+  finding("deferred", "Hassan Saulat", "22 Aug 2026", "SMS second factor is out of lock.", "Client to decide after handover."),
+  finding("deferred", "Aneeb Iqbal", "25 Aug 2026", "Public changelog was requested after sign-off.", "Not in v2.1."),
+  finding("deferred", "Hassan Saulat", "28 Aug 2026", "Office IP allow-list on admin.", "Client network work. Deferred."),
+  finding("deferred", "Aneeb Iqbal", "30 Aug 2026", "Arabic locale on the register form.", "Copy sits with the client."),
+  finding("deferred", "Hassan Saulat", "1 Sep 2026", "Custom SMTP they already pay for.", "Not connected. Their call after Close."),
 ];
 
 export const updates = [
@@ -178,3 +193,45 @@ export const demoViews = [
 ] as const;
 
 export type DemoView = (typeof demoViews)[number]["slug"];
+
+/**
+ * Shared snapshot for the hero window and /demo Overview.
+ * Change a seed field above — both surfaces update.
+ */
+export function getDemoOverview() {
+  const open = demoFindings.filter((item) => item.status === "open").length;
+  const closed = demoFindings.filter((item) => item.status === "closed").length;
+  const deferred = demoFindings.filter((item) => item.status === "deferred").length;
+  const signedDocs = documents.filter((item) => item.status === "signed").length;
+  const lastUpdate = updates.at(-1);
+  if (!lastUpdate) {
+    throw new Error("demo updates seed is empty");
+  }
+  const staging = progress.deploys.find((item) => item.env === "staging");
+  const production = progress.deploys.find((item) => item.env === "production");
+  const usedRatio = demoClock.daysElapsed / demoClock.lockedDays;
+
+  return {
+    client: demoClient.name,
+    engagement: demoClient.engagement,
+    band: demoClient.band,
+    scopeVersion: demoClient.lockedScopeVersion,
+    daysElapsed: demoClock.daysElapsed,
+    daysRemaining: demoClock.daysRemaining,
+    lockedDays: demoClock.lockedDays,
+    nextMilestone: demoClock.nextMilestone,
+    currentStage: demoClock.currentStage,
+    stages,
+    views: demoViews,
+    findings: { open, closed, deferred },
+    signedDocs,
+    documentCount: documents.length,
+    lastUpdate,
+    staging,
+    production,
+    usedRatio,
+    usedPct: Math.round(usedRatio * 100),
+    latestCommit: progress.commits[progress.commits.length - 1],
+    crew: demoCrew,
+  };
+}

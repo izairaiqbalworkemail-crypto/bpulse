@@ -1,77 +1,51 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
+import { GateCard } from "@/components/GateCard";
+import { BeliefBlock } from "@/components/BeliefBlock";
 import {
-  crewCommitments,
   crewGates,
-  passRateNote,
   standingReview,
+  passRateNote,
 } from "@/content/process";
+import { crewBeliefs } from "@/content/beliefs";
 
 export const metadata: Metadata = buildMetadata({
   title: "The standard",
   description:
-    "The four crew gates, the quarterly standing review, and three public commitments. No invented pass rate.",
+    "Four gates before anyone is client-facing. No candidate fee. No multiple-choice pass/fail.",
   path: "/standard",
 });
 
 export default function StandardPage() {
   return (
-    <>
+    <section className="w-full bg-rag">
       <PageHero
-        kicker="The crew"
-        title="The standard"
-        dek="Four gates before anyone is client-facing. The same rubric every time. Urgency is not a reason to skip one."
-        actionHref="/careers"
-        actionLabel="See open seats"
+        kicker="The standard"
+        title="Four gates. Then standing review."
+        dek="Nobody is client-facing before Gate 4. No exceptions for urgency."
+        hideAction
       />
 
-      <section className="grid-container py-16 md:py-24">
-        <ol className="flex flex-col gap-14">
-          {crewGates.map((gate) => (
-            <li key={gate.n} className="border-t border-iron/15 pt-8">
-              <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
-                Gate {gate.n}
-              </p>
-              <h2 className="mt-3 font-newsreader text-[clamp(1.75rem,3vw,2.5rem)] leading-title text-iron">
-                {gate.title}
-              </h2>
-              <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-ink">
-                {gate.body}
-              </p>
-            </li>
+      <div className="grid-container pb-24 pt-6 md:pb-32">
+        {crewGates.map((gate) => (
+          <GateCard key={gate.n} {...gate} />
+        ))}
+
+        <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+          {standingReview}
+        </p>
+
+        <div className="mt-16">
+          {crewBeliefs.map((belief) => (
+            <BeliefBlock key={belief.statement} {...belief} />
           ))}
-        </ol>
-
-        <div className="mt-16 border-t border-iron/15 pt-8">
-          <h2 className="font-newsreader text-lot-title text-iron">
-            After the gates
-          </h2>
-          <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-ink">
-            {standingReview}
-          </p>
         </div>
 
-        <div className="mt-16 border-t border-iron/15 pt-8">
-          <h2 className="font-newsreader text-lot-title text-iron">
-            Three public commitments
-          </h2>
-          <ul className="mt-6 flex flex-col gap-4">
-            {crewCommitments.map((line) => (
-              <li
-                key={line}
-                className="max-w-measure font-newsreader text-reading leading-reading text-iron"
-              >
-                {line}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <p className="mt-16 max-w-measure font-newsreader text-reading leading-reading text-ink">
+        <p className="mt-16 font-newsreader text-[16px] text-ink/80">
           {passRateNote}
         </p>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

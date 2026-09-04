@@ -2,90 +2,87 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
+import { StageRail } from "@/components/StageRail";
 import { closeStages } from "@/content/process";
 
 export const metadata: Metadata = buildMetadata({
   title: "How it works",
   description:
-    "The six stages of a Close — what happens, what you receive, what you sign, and what you can see in the portal.",
+    "Six stages, written down. What happens, what you receive, what you sign, and what you can see in the portal.",
   path: "/how-it-works",
 });
 
 export default function HowItWorksPage() {
+  const rail = closeStages.map((stage, index) => ({
+    id: stage.id,
+    label: stage.label,
+    status:
+      index === 0 ? ("current" as const) : ("upcoming" as const),
+  }));
+
   return (
-    <>
+    <section className="w-full bg-rag">
       <PageHero
-        kicker="The Close"
-        title="How it works"
-        dek="Six stages, written down. The sample portal is the proof — click through it before anyone is paid."
-        actionHref="/demo"
-        actionLabel="Open the sample portal"
+        kicker="How it works"
+        title="You can see the work."
+        dek="Until the founder’s portal screenshots land here, each stage links to the live sample view."
+        hideAction
       />
 
-      <section className="grid-container py-16 md:py-24">
-        <p className="max-w-measure font-newsreader text-reading leading-reading text-ink">
-          The sample portal is how you see those stages before anyone is paid
-          — stage, documents, locked scope, findings, and the access
-          revocation log. A live, authed portal is not built yet; it gets
-          built for the first actual client. What follows is the same six
-          stages the sample is built on.
-        </p>
+      <div className="grid-container pb-24 pt-10 md:pb-32">
+        <StageRail stages={rail} />
 
-        <ol className="mt-16 flex flex-col gap-16">
-          {closeStages.map((stage, index) => (
-            <li key={stage.id} className="border-t border-iron/15 pt-8">
-              <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
-                {String(index + 1).padStart(2, "0")} · {stage.label}
-              </p>
-              <h2 className="mt-3 font-newsreader text-[clamp(1.75rem,3vw,2.5rem)] leading-title text-iron">
+        <ol className="mt-16 flex flex-col">
+          {closeStages.map((stage) => (
+            <li key={stage.id} className="border-t border-iron/20 py-10">
+              <h2 className="font-newsreader text-[24px] leading-[1.2] text-iron">
                 {stage.label}
               </h2>
-              <dl className="mt-8 grid gap-8 md:grid-cols-2">
+              <dl className="mt-6 grid gap-5 md:grid-cols-2">
                 <div>
-                  <dt className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/60">
+                  <dt className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
                     What happens
                   </dt>
-                  <dd className="mt-2 font-newsreader text-reading leading-reading text-ink">
+                  <dd className="mt-2 font-newsreader text-[16px] leading-[1.5] text-ink">
                     {stage.happens}
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/60">
+                  <dt className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
                     What you receive
                   </dt>
-                  <dd className="mt-2 font-newsreader text-reading leading-reading text-ink">
+                  <dd className="mt-2 font-newsreader text-[16px] leading-[1.5] text-ink">
                     {stage.receive}
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/60">
+                  <dt className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
                     What you sign
                   </dt>
-                  <dd className="mt-2 font-newsreader text-reading leading-reading text-ink">
+                  <dd className="mt-2 font-newsreader text-[16px] leading-[1.5] text-ink">
                     {stage.sign}
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/60">
+                  <dt className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
                     What you can see
                   </dt>
-                  <dd className="mt-2 font-newsreader text-reading leading-reading text-ink">
-                    {stage.see}
+                  <dd className="mt-2 font-newsreader text-[16px] leading-[1.5] text-ink">
+                    {stage.see}{" "}
+                    <Link
+                      href={stage.demoHref}
+                      className="underline decoration-iron/40 underline-offset-4 hover:decoration-iron"
+                    >
+                      Open the sample {stage.label.toLowerCase()} view
+                    </Link>
+                    .
                   </dd>
                 </div>
               </dl>
-              <p className="mt-6">
-                <Link
-                  href={stage.demoHref}
-                  className="font-plex-sans text-sm text-iron underline-offset-4 hover:underline"
-                >
-                  Open this stage in the sample →
-                </Link>
-              </p>
             </li>
           ))}
         </ol>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

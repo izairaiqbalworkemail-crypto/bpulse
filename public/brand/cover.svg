@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none" role="img" aria-label="bpulse cover">
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0d1218"/>
+      <stop offset="1" stop-color="#151c25"/>
+    </linearGradient>
+    <linearGradient id="b-face" x1="88" y1="160" x2="360" y2="470" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8ec"/>
+      <stop offset=".42" stop-color="#efeae0"/>
+      <stop offset="1" stop-color="#d4cbb8"/>
+    </linearGradient>
+    <linearGradient id="b-side" x1="220" y1="160" x2="250" y2="490" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f6d56a"/>
+      <stop offset=".55" stop-color="#f2c230"/>
+      <stop offset="1" stop-color="#c49212"/>
+    </linearGradient>
+    <filter id="b-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#f2c230" flood-opacity=".24"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#field)"/>
+  <rect x="0" y="626" width="1200" height="4" fill="#f2c230"/>
+
+  <g transform="translate(96 168)" filter="url(#b-glow)">
+    <g transform="scale(11.2)">
+      <path fill="url(#b-side)" fill-rule="evenodd" transform="translate(1.15 1.35)" d="M8 6.5h10.25c4.05 0 6.55 2.05 6.55 5.15 0 1.95-1.1 3.45-2.95 4.2 2.25.7 3.7 2.45 3.7 4.9 0 3.4-2.7 5.75-7.05 5.75H8V6.5Zm4.2 7.55h2.65c2.15 0 3.35-.95 3.35-2.4s-1.2-2.35-3.35-2.35H12.2v4.75Zm0 8.7h3.15c2.4 0 3.7-1.05 3.7-2.7s-1.3-2.6-3.7-2.6H12.2v5.3Z"/>
+      <path fill="url(#b-face)" fill-rule="evenodd" d="M8 6.5h10.25c4.05 0 6.55 2.05 6.55 5.15 0 1.95-1.1 3.45-2.95 4.2 2.25.7 3.7 2.45 3.7 4.9 0 3.4-2.7 5.75-7.05 5.75H8V6.5Zm4.2 7.55h2.65c2.15 0 3.35-.95 3.35-2.4s-1.2-2.35-3.35-2.35H12.2v4.75Zm0 8.7h3.15c2.4 0 3.7-1.05 3.7-2.7s-1.3-2.6-3.7-2.6H12.2v5.3Z"/>
+    </g>
+  </g>
+
+  <text x="500" y="278" fill="#efeae0" font-family="Newsreader, Georgia, serif" font-size="54" letter-spacing="-1.4">Everyone gets to 80%.</text>
+  <text x="500" y="348" fill="#f2c230" font-family="Newsreader, Georgia, serif" font-size="54" letter-spacing="-1.4">We ship the rest.</text>
+  <text x="500" y="430" fill="#efeae0" fill-opacity=".7" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="20" letter-spacing="0.4">bpulse  -  Lahore  -  worldwide</text>
+</svg>

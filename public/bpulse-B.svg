@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="bpulse">
+  <defs>
+    <linearGradient id="b-face" x1="128" y1="96" x2="384" y2="416" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8ec"/>
+      <stop offset=".42" stop-color="#efeae0"/>
+      <stop offset="1" stop-color="#d4cbb8"/>
+    </linearGradient>
+    <linearGradient id="b-side" x1="256" y1="96" x2="288" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f6d56a"/>
+      <stop offset=".55" stop-color="#f2c230"/>
+      <stop offset="1" stop-color="#c49212"/>
+    </linearGradient>
+    <filter id="b-glow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#f2c230" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#0d1218"/>
+  <rect x="16" y="16" width="480" height="480" rx="96" stroke="#f2c230" stroke-opacity=".14"/>
+  <g filter="url(#b-glow)" transform="translate(16 8)">
+    <path fill="url(#b-side)" fill-rule="evenodd" transform="translate(18 22)" d="M128 104h164c64.8 0 104.8 32.8 104.8 82.4 0 31.2-17.6 55.2-47.2 67.2 36 11.2 59.2 39.2 59.2 78.4C408.8 386.4 365.6 424 296 424H128V104Zm67.2 120.8h42.4c34.4 0 53.6-15.2 53.6-38.4s-19.2-37.6-53.6-37.6h-42.4v76Zm0 139.2h50.4c38.4 0 59.2-16.8 59.2-43.2s-20.8-41.6-59.2-41.6h-50.4v84.8Z"/>
+    <path fill="url(#b-face)" fill-rule="evenodd" d="M128 104h164c64.8 0 104.8 32.8 104.8 82.4 0 31.2-17.6 55.2-47.2 67.2 36 11.2 59.2 39.2 59.2 78.4C408.8 386.4 365.6 424 296 424H128V104Zm67.2 120.8h42.4c34.4 0 53.6-15.2 53.6-38.4s-19.2-37.6-53.6-37.6h-42.4v76Zm0 139.2h50.4c38.4 0 59.2-16.8 59.2-43.2s-20.8-41.6-59.2-41.6h-50.4v84.8Z"/>
+  </g>
+</svg>

@@ -156,6 +156,38 @@ This prevents regressions while the remaining routes are migrated to the same fl
 
 ---
 
+## Interior pages — one object, fourteen compositions (Sep 2026)
+
+Home is separate (headline · sub · buttons · cropped portal). Every other public page has one large object. No two pages share a composition.
+
+| Page | Large object |
+|---|---|
+| `/about` | Four full-width beliefs, each proven by a linked lot |
+| `/work` | Filtered catalogue: two full lots, then compact rows |
+| `/work/[slug]` | Project screenshot, full bleed under the masthead |
+| `/team` | Large `PortraitStrip` |
+| `/team/[slug]` | Portrait beside the philosophy at 40px |
+| `/careers` | The careers intake |
+| `/check` | `$1,500` on a full-bleed signal panel |
+| `/how-it-works` | Six stages, each linking to the live `/demo` view (screenshots wait on the founder) |
+| `/standard` | Four `GateCard`s in a vertical rail |
+| `/edpulse` | `TierTable` with Accelerator weighted |
+| `/contact` | Address + mailto, then `CrewSession` contact |
+| `/notices` | Jump index + two-column masonry, last notice is the limitation |
+| `/legal/[slug]` | 66ch measure + sticky section index. Draft banner stays |
+| `/demo` | Dense labelled sample (24 findings, 6 commits, 3 deploys) |
+
+### Better-than-brief
+
+- No street number for Lahore. Source has city/region/country only. Address is `Lahore, Punjab, Pakistan` plus `contact@bpulse.dev`.
+- Belief examples use lot facts on record (WearMeOut live, Sully scoped by Aneeb, SBA handover, myUsta stores). Not “Sully went live in 6 weeks” — that number is not in the source.
+- Fifteen index rows carry client, one line, stack, link, and year only where `projects.json` has them. No screenshots, no 15M-user figures on those rows.
+- Sample portal density is labelled sample throughout. Third deploy is `preview · not connected`. Revocation log stays empty because handover has not happened.
+- `GateCard` also appears on `/careers` so the component is used twice. `FilterBar` also filters `/demo` findings.
+- Check vs Close vs Standing is the `/check` `TierTable`. Edpulse keeps Explorer / Accelerator / Mastery.
+
+---
+
 ## Remaining Work after this prompt
 
 The four prompt pages build. Routes `/check`, `/work/[slug]`, `/team/[slug]`, `/notices`, `/contact`, `/report/[slug]` are wired in sitemap/robots/SEO but have no page files. The `/report` constraint (unguessable slugs, noindex) is documented in `SECURITY.md`.

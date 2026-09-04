@@ -1,65 +1,45 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
-import { PageHero } from "@/components/PageHero";
-import { IntakeForm } from "@/components/IntakeForm";
+import { CrewSession } from "@/components/intake/CrewSession";
 import { brand } from "@/config/brand";
 import { addressLine } from "@/config/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
   description:
-    "Get in touch. A real person replies within one business day.",
+    "Lahore. One business day. A mailto if you will not fill a form.",
   path: "/contact",
 });
 
 export default function ContactPage() {
   return (
     <section className="w-full bg-rag">
-      <PageHero
-        kicker="Contact"
-        title="A real person replies."
-        dek="Within one business day. No chatbot, no auto-responder, no support ticket queue."
-        actionHref="#intake"
-        actionLabel="Write to us"
-      />
+      <div className="grid-container pb-24 pt-16 md:pb-32 md:pt-24">
+        <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+          Studio
+        </p>
+        <p className="mt-3 font-newsreader text-[24px] leading-[1.25] text-iron">
+          {brand.legalName}
+          <br />
+          {addressLine}
+        </p>
+        <p className="mt-6 max-w-[48ch] font-newsreader text-[16px] leading-[1.5] text-ink">
+          A named person replies within one business day. No chatbot. If you
+          will not fill a form, write the address below.
+        </p>
+        <p className="mt-4">
+          <a
+            href={`mailto:${brand.contact.email}`}
+            className="font-plex-sans text-[16px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+          >
+            {brand.contact.email}
+          </a>
+        </p>
 
-      {/* Real address and response commitment */}
-      <section className="w-full bg-rag pt-16 pb-8 md:pt-20 md:pb-12">
-        <div className="grid-container">
-          <div className="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-12">
-            <div className="md:col-span-6">
-              <h2 className="font-plex-mono text-data tracking-[0.08em] text-ink/70 uppercase">
-                Address
-              </h2>
-              <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-                {brand.legalName}
-              </p>
-              <p className="font-newsreader text-reading leading-reading text-ink">
-                {addressLine}
-              </p>
-              <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-                {brand.contact.email}
-              </p>
-            </div>
-            <div className="md:col-span-6">
-              <h2 className="font-plex-mono text-data tracking-[0.08em] text-ink/70 uppercase">
-                Response commitment
-              </h2>
-              <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-                We reply within one business day. Usually sooner. If it is
-                urgent, say so in the intake and we will prioritise it.
-              </p>
-            </div>
-          </div>
+        <div id="intake" className="mt-16">
+          <CrewSession type="contact" />
         </div>
-      </section>
-
-      {/* Intake */}
-      <section id="intake" className="w-full bg-rag py-24 md:py-40">
-        <div className="grid-container">
-          <IntakeForm variant="general" />
-        </div>
-      </section>
+      </div>
     </section>
   );
 }

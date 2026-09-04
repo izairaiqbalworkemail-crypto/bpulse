@@ -65,22 +65,34 @@ export const crewGates = [
   {
     n: "01",
     title: "Structured technical interview",
-    body: "A senior human, same rubric every candidate. Not a vibe check. Not a puzzle for its own sake.",
+    mechanism:
+      "A senior human, same rubric every candidate. Live interview: system design, a broken codebase, a walkthrough of past work.",
+    costs: "Two senior hours per candidate, every time. We do not outsource the first filter.",
+    proves: "They can think in front of another senior. Not a vibe. Not a puzzle for its own sake.",
   },
   {
     n: "02",
     title: "Paid real-scope work sample",
-    body: "Paid. Real scope. The kind of work a Close actually contains. Candidates are never charged a fee at any stage.",
+    mechanism:
+      "Paid. Real scope. The kind of work a Close actually contains. Candidates are never charged a fee at any stage.",
+    costs: "We pay for the sample. That is cash out the door before anyone is on a client.",
+    proves: "They can ship a slice of the work we sell, not a toy repo.",
   },
   {
     n: "03",
     title: "Blind two-peer review",
-    body: "Two peers review independently. Both must agree. A single yes is not a pass.",
+    mechanism: "Two peers review the sample independently. Both must agree. A single yes is not a pass.",
+    costs: "Four more senior hours, and the right to lose a candidate we already paid.",
+    proves: "The work holds when the interviewer is not in the room.",
   },
   {
     n: "04",
     title: "Ninety days on live client work",
-    body: "Under supervision, before the person is client-facing. No exceptions for urgency.",
+    mechanism:
+      "Supervised live client work before the person is client-facing. No exceptions for urgency.",
+    costs:
+      "Ninety days of senior supervision on a paying Close. This is the expensive gate. That is why it is the credible one.",
+    proves: "They can hold a real engagement without becoming a risk to the client.",
   },
 ] as const;
 

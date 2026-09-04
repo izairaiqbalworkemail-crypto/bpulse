@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { Hero } from "@/components/Hero";
+import { HeroSelfCheck } from "@/components/HeroSelfCheck";
 import { FieldLog } from "@/components/FieldLog";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Notice } from "@/components/primitives/Notice";
@@ -89,8 +90,11 @@ export default function Home() {
 
   return (
     <>
-      {/* ── Section 1: Operable hero self-check ── */}
+      {/* ── Section 1: Four-element hero ── */}
       <Hero />
+
+      {/* ── Section 2: Arrival self-check ── */}
+      <HeroSelfCheck />
 
       {/* ── Section 3: Stats bar ── */}
       <section className="w-full bg-rag">

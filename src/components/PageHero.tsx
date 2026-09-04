@@ -6,7 +6,7 @@ import { EightyBar } from "@/components/EightyBar";
 type PageHeroProps = {
   kicker: string;
   title: ReactNode;
-  dek: ReactNode;
+  dek?: ReactNode;
   actionHref?: string;
   actionLabel?: string;
   hideAction?: boolean;
@@ -34,9 +34,11 @@ export function PageHero({
           <h1 className="mt-4 max-w-[16ch] font-newsreader text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.02] tracking-[-0.03em] text-rag">
             {title}
           </h1>
-          <div className="mt-5 max-w-[540px] font-newsreader text-[20px] leading-[1.35] text-rag/70 md:text-[22px]">
-            {dek}
-          </div>
+          {dek ? (
+            <div className="mt-5 max-w-[540px] font-newsreader text-[20px] leading-[1.35] text-rag/70 md:text-[22px]">
+              {dek}
+            </div>
+          ) : null}
         </div>
         {!hideAction ? (
           <Link

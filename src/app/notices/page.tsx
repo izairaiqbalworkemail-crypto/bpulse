@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
-import { PageHero } from "@/components/PageHero";
 import { FAQPageJsonLd } from "@/lib/JsonLd";
-import { Notice } from "@/components/primitives/Notice";
 import { notices } from "@/content/notices";
 
 export const metadata: Metadata = buildMetadata({
   title: "Notices",
   description:
-    "Questions we get asked, answered plainly. No accordion, no hiding.",
+    "Questions we get asked, answered plainly. No accordion. The last one is what we are bad at.",
   path: "/notices",
 });
 
 export default function NoticesPage() {
+  const last = notices[notices.length - 1];
+
   return (
     <>
       <FAQPageJsonLd
@@ -23,37 +23,54 @@ export default function NoticesPage() {
         }))}
       />
 
-      <PageHero
-        kicker="Notices"
-        title="Questions, answered plainly."
-        dek="Every answer is visible. No accordion, no chevron, no plus sign — a catalogue does not hide its conditions."
-        actionHref="/contact"
-        actionLabel="Get in touch"
-      />
-
       <section className="w-full bg-rag">
+        <div className="grid-container pb-24 pt-16 md:pb-32 md:pt-20">
+          <nav aria-label="Jump to a notice" className="border-b border-iron/20 pb-8">
+            <ol className="flex flex-col gap-2">
+              {notices.map((notice, index) => (
+                <li key={notice.id}>
+                  <a
+                    href={`#${notice.id}`}
+                    className="font-plex-sans text-[16px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+                  >
+                    {index + 1}. {notice.question}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
 
-        <div className="grid-container pt-16 md:pt-20">
-          {notices.map((notice) => (
-            <Notice
-              key={notice.id}
-              question={notice.question}
-              answer={notice.answer}
-            />
-          ))}
-
-          <div className="py-16 border-t border-iron/15">
-            <p className="font-newsreader text-reading leading-reading text-ink/70">
-              Still have questions?{" "}
-              <Link
-                href="/contact"
-                className="font-plex-sans text-sm font-medium text-iron underline-offset-4 hover:underline"
+          <div className="mt-12 columns-1 gap-x-16 md:columns-2">
+            {notices.map((notice) => (
+              <article
+                key={notice.id}
+                id={notice.id}
+                className={`mb-12 break-inside-avoid border-t pt-5 ${
+                  notice.id === last?.id
+                    ? "border-iron"
+                    : "border-iron/20"
+                }`}
               >
-                Get in touch
-              </Link>
-              .
-            </p>
+                <h2 className="font-newsreader text-[22px] leading-[1.25] text-iron">
+                  {notice.question}
+                </h2>
+                <p className="mt-3 font-newsreader text-[16px] leading-[1.55] text-ink">
+                  {notice.answer}
+                </p>
+              </article>
+            ))}
           </div>
+
+          <p className="mt-8 font-newsreader text-[16px] text-ink/80">
+            Still a question?{" "}
+            <Link
+              href="/contact"
+              className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+            >
+              Write to us
+            </Link>
+            .
+          </p>
         </div>
       </section>
     </>
