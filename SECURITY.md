@@ -1,35 +1,44 @@
-# SECURITY — Private Diagnostics
+# SECURITY — report.bpulse.dev private diagnostics
 
-## What `/report/[slug]` is
+This repository now serves **private per-prospect diagnostics** only.
 
-`/report/[slug]` pages are private per-prospect diagnostics. They name a real
-company and list what is wrong with its product. They are generated for a
-single recipient and are not meant to be found by search engines, other
-prospects, or the company itself.
+## Route model
 
-## The two threats
+- Private route: `/[slug]`
+- There is **no** public listing route.
+- There must never be an index that enumerates private reports.
 
-1. **Indexing.** If these pages are indexable, a prospect can google their own
-   company and find a stranger's public critique of their product. That is a
-   defamation and trust disaster.
+## Threat model
 
-2. **Enumeration.** If the slug scheme is predictable, one recipient can browse
-   every other recipient's report. That is a confidentiality breach.
+1. **Indexing risk**
+   - A report can contain a critical assessment of a named company's product.
+   - If indexed, prospects can discover each other and trust is broken.
 
-## The mitigations — do not undo these
+2. **Enumeration risk**
+   - If slugs are predictable, one recipient can browse other recipients' reports.
 
-- **Noindex, nofollow** on every `/report/[slug]` page (via `buildMetadata` robots).
-- Excluded from `sitemap.ts`.
-- `Disallow: /report/` in `robots.ts`.
-- **Unguessable slugs.** Slugs are `company-name-XyZ8aBc2`: the company name
-  plus a random 8-character suffix. They are treated as secrets, delivered to
-  the recipient directly, never linked from public pages.
-- **No `/report` index route may ever exist.** There is no page that lists
-  reports, and there must never be one. A list route is what makes
-  enumeration trivial.
+## Required controls (do not remove)
 
-## Verification
+1. **Unguessable slug format**
+   - `company-name-<8-char-random-suffix>`
+   - Example: `northline-finance-k4m2p8qz`
+   - Enforced by `reportSlugPattern` in `src/content/reports.ts`.
 
-- Confirm `robots.ts` still has `Disallow: /report/`.
-- Confirm no page and no link in the public tree points into `/report/`.
-- Confirm every report page sets `robots: "noindex, nofollow"`.
+2. **Noindex/nofollow per report**
+   - Every `/[slug]` page must set `robots: { index: false, follow: false }`.
+
+3. **Robots disallow**
+   - `src/app/robots.ts` must disallow crawling for this host.
+
+4. **Sitemap exclusion**
+   - `src/app/sitemap.ts` must not include private report URLs.
+
+5. **No index route listing reports**
+   - No `/` report list, no `/reports`, no API that dumps slugs.
+
+## Operational rules
+
+- Treat slugs as secrets.
+- Deliver slugs directly to the intended recipient.
+- Do not cross-link reports.
+- Do not expose report slugs in analytics dashboards or public logs.
