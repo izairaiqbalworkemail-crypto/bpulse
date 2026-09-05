@@ -6,6 +6,11 @@ import { PortraitStrip } from "@/components/PortraitStrip";
 import { PageClose } from "@/components/PageClose";
 import { specialists } from "@/content/specialists";
 import { crewCapability, crewCapabilityLine } from "@/content/crew-lines";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
+import { Reveal } from "@/components/landing/Reveal";
 
 export const metadata: Metadata = buildMetadata({
   title: "The crew",
@@ -26,19 +31,24 @@ export default function TeamPage() {
         hideAction
       />
 
-      <div className="pb-24">
-        <div className="w-full px-5 pt-8 md:px-8 md:pt-12">
+      <div className="relative overflow-hidden pb-24">
+        <Atmosphere kind="paper" opacity={0.16} />
+        <div className="relative w-full px-5 pt-8 md:px-8 md:pt-12">
           <PortraitStrip people={specialists} size="large" />
+          <div className="mt-4">
+            <AtmosphereNote />
+          </div>
         </div>
 
-        <div className="grid-container mt-20">
-          {groups.map((group) => {
+        <div className="relative grid-container mt-20">
+          {groups.map((group, index) => {
             const people = specialists.filter(
               (person) => crewCapability[person.id] === group
             );
             if (people.length === 0) return null;
             return (
-              <div key={group} className="border-t border-iron/15 py-8">
+              <Reveal key={group} delay={index * 0.06}>
+              <div className="border-t border-iron/15 py-8">
                 <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
                   {group}
                 </p>
@@ -63,6 +73,7 @@ export default function TeamPage() {
                   ))}
                 </ul>
               </div>
+              </Reveal>
             );
           })}
           <PageClose line="The name on the Check is the name on the Close." />

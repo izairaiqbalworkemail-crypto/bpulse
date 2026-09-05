@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useReducedMotion } from "motion/react";
 import type { Specialist } from "@/content/types";
-import { Lift } from "@/components/landing/Reveal";
+import { Lift, Reveal } from "@/components/landing/Reveal";
 
 type PortraitStripProps = {
   people: Specialist[];
@@ -31,10 +31,11 @@ export function PortraitStrip({
 
   return (
     <ul className="flex gap-6 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      {people.map((person) => {
+      {people.map((person, index) => {
         const absent = person.photoStatus === "Photo pending" || !person.photo;
         return (
           <li key={person.id} className="w-[9.5rem] shrink-0 md:w-44">
+          <Reveal delay={index * 0.05}>
             <Lift>
             <Link
               href={`/team/${person.id}`}
@@ -73,6 +74,7 @@ export function PortraitStrip({
               </p>
             </Link>
             </Lift>
+          </Reveal>
           </li>
         );
       })}

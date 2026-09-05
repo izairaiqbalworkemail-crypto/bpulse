@@ -4,12 +4,18 @@ import { PageHero } from "@/components/PageHero";
 import { GateCard } from "@/components/GateCard";
 import { BeliefBlock } from "@/components/BeliefBlock";
 import { PageClose } from "@/components/PageClose";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
 import {
   crewGates,
   standingReview,
   passRateNote,
 } from "@/content/process";
 import { crewBeliefs } from "@/content/beliefs";
+import { specialists } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
   title: "The standard",
@@ -28,7 +34,16 @@ export default function StandardPage() {
         hideAction
       />
 
-      <div className="grid-container pb-24 pt-6 md:pb-32">
+      <div className="relative overflow-hidden">
+        <Atmosphere kind="paper" opacity={0.16} />
+        <div className="relative grid-container pb-24 pt-6 md:pb-32">
+        <PeopleRail
+          people={specialists}
+          line="Client-facing only after Gate 4"
+        />
+        <div className="mt-3 mb-10">
+          <AtmosphereNote />
+        </div>
         {crewGates.map((gate) => (
           <GateCard key={gate.n} {...gate} />
         ))}
@@ -47,6 +62,7 @@ export default function StandardPage() {
           {passRateNote}
         </p>
         <PageClose line="The people who pass these gates are the ones on your Close." />
+        </div>
       </div>
     </section>
   );

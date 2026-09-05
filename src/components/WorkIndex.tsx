@@ -6,6 +6,7 @@ import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { FilterBar } from "@/components/FilterBar";
 import { ProofRow } from "@/components/ProofRow";
+import { Tilt } from "@/components/landing/Reveal";
 import { figureDisclaimer } from "@/content/lots";
 import {
   entryStates,
@@ -71,17 +72,19 @@ export function WorkIndex() {
                     {row.lot.title}
                   </p>
                   {row.lot.imageUrl ? (
-                    <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-[24px] bg-iron/5">
-                      <Image
-                        src={row.lot.imageUrl}
-                        alt=""
-                        fill
-                        className={`object-cover ${
-                          reduce ? "" : "transition-transform duration-700 group-hover:scale-[1.04]"
-                        }`}
-                        sizes="(max-width: 768px) 100vw, 1180px"
-                      />
-                    </div>
+                    <Tilt>
+                      <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-[24px] bg-iron/5">
+                        <Image
+                          src={row.lot.imageUrl}
+                          alt=""
+                          fill
+                          className={`object-cover ${
+                            reduce ? "" : "transition-transform duration-700 group-hover:scale-[1.04]"
+                          }`}
+                          sizes="(max-width: 768px) 100vw, 820px"
+                        />
+                      </div>
+                    </Tilt>
                   ) : null}
                 </Link>
                 <div className="mt-6 max-w-[720px]">

@@ -3,6 +3,11 @@ import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { BeliefBlock } from "@/components/BeliefBlock";
 import { PortraitStrip } from "@/components/PortraitStrip";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
 import { CrewSession } from "@/components/intake/CrewSession";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
@@ -30,11 +35,18 @@ export default function AboutPage() {
         hideAction
       />
 
-      <section className="w-full bg-rag pb-24">
-        <div className="grid-container pt-10 md:pt-14">
-          <p className="max-w-[62ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+      <section className="relative w-full overflow-hidden bg-rag pb-24">
+        <Atmosphere kind="paper" opacity={0.18} />
+        <div className="relative grid-container pt-10 md:pt-14">
+          <p className="max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-ink">
             {studioOpening}
           </p>
+          <div className="mt-8">
+            <PeopleRail people={specialists} line="Lahore · named" />
+          </div>
+          <div className="mt-3">
+            <AtmosphereNote />
+          </div>
 
           <div className="mt-12 overflow-hidden rounded-[16px]">
             {/* SVG lockup — next/image is for raster. */}

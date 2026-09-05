@@ -19,6 +19,11 @@ import {
 
 export const landSpring = { type: "spring" as const, stiffness: 160, damping: 22 };
 
+/** Apple / Linear emphasized ease — opacity + 20px, ~700ms. */
+export const landEase = [0.16, 1, 0.3, 1] as const;
+const landDuration = 0.7;
+const view = { once: true, margin: "-12% 0px" } as const;
+
 type MotionBox = {
   children: ReactNode;
   delay?: number;
@@ -28,17 +33,80 @@ type MotionBox = {
 export function Reveal({ children, delay = 0, className }: Readonly<MotionBox>) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-12% 0px" });
+  const inView = useInView(ref, view);
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 28 }}
+      initial={reduce ? false : { opacity: 0, y: 20 }}
       animate={
-        inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }
+        inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
       }
-      transition={reduce ? { duration: 0 } : { ...landSpring, delay }}
+      transition={
+        reduce ? { duration: 0 } : { duration: landDuration, ease: landEase, delay }
+      }
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/**
+ * Parent orchestrates children. Use with Item — the Framer stagger pattern
+ * used on Linear, Stripe, and Apple marketing pages.
+ */
+export function Stagger({
+  children,
+  className,
+  delay = 0,
+  gap = 0.08,
+}: Readonly<MotionBox & { gap?: number }>) {
+  const reduce = useReducedMotion();
+
+  if (reduce) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={view}
+      variants={{
+        hidden: {},
+        show: {
+          transition: { staggerChildren: gap, delayChildren: delay },
+        },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function Item({
+  children,
+  className,
+}: Readonly<{ children: ReactNode; className?: string }>) {
+  const reduce = useReducedMotion();
+
+  if (reduce) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      className={className}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: landDuration, ease: landEase },
+        },
+      }}
     >
       {children}
     </motion.div>
@@ -57,7 +125,9 @@ export function Rise({ children, delay = 0, className }: Readonly<MotionBox>) {
         <motion.div
           initial={reduce ? false : { y: "112%" }}
           animate={inView || reduce ? { y: "0%" } : { y: "112%" }}
-          transition={reduce ? { duration: 0 } : { ...landSpring, delay }}
+          transition={
+            reduce ? { duration: 0 } : { duration: landDuration, ease: landEase, delay }
+          }
         >
           {children}
         </motion.div>
@@ -86,7 +156,9 @@ export function Wipe({ children, delay = 0, className }: Readonly<MotionBox>) {
           ? { clipPath: "inset(0% 0% 0% 0% round 32px)", scale: 1 }
           : { clipPath: "inset(10% 8% 10% 8% round 32px)", scale: 1.06 }
       }
-      transition={reduce ? { duration: 0 } : { ...landSpring, delay }}
+      transition={
+        reduce ? { duration: 0 } : { duration: 0.85, ease: landEase, delay }
+      }
     >
       {children}
     </motion.div>
@@ -104,8 +176,8 @@ export function Lift({
   function onMove(event: PointerEvent<HTMLDivElement>) {
     if (reduce) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    x.set((event.clientX - (rect.left + rect.width / 2)) * 0.14);
-    y.set((event.clientY - (rect.top + rect.height / 2)) * 0.14);
+    x.set((event.clientX - (rect.left + rect.width / 2)) * 0.06);
+    y.set((event.clientY - (rect.top + rect.height / 2)) * 0.06);
   }
 
   function reset() {
@@ -117,8 +189,8 @@ export function Lift({
     <motion.div
       className={className}
       style={reduce ? undefined : { x, y }}
-      whileHover={reduce ? undefined : { scale: 1.02 }}
-      whileTap={reduce ? undefined : { scale: 0.985 }}
+      whileHover={reduce ? undefined : { y: -2 }}
+      whileTap={reduce ? undefined : { y: 0 }}
       onPointerMove={onMove}
       onPointerLeave={reset}
       transition={landSpring}
@@ -131,7 +203,7 @@ export function Lift({
 export function Tilt({
   children,
   className,
-  intensity = 10,
+  intensity = 5,
 }: Readonly<{ children: ReactNode; className?: string; intensity?: number }>) {
   const reduce = useReducedMotion();
   const rotateX = useSpring(0, landSpring);

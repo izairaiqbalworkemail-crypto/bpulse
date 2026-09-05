@@ -5,6 +5,12 @@ import { PageHero } from "@/components/PageHero";
 import { TierTable } from "@/components/TierTable";
 import { PageClose } from "@/components/PageClose";
 import { edpulseTracks, edpulseJoinNote } from "@/content/process";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
+import { specialists } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
   title: "Edpulse",
@@ -30,7 +36,16 @@ export default function EdpulsePage() {
         hideAction
       />
 
-      <div className="grid-container pb-24 pt-6 md:pb-32">
+      <div className="relative overflow-hidden">
+        <Atmosphere kind="paper" opacity={0.16} />
+        <div className="relative grid-container pb-24 pt-6 md:pb-32">
+        <PeopleRail
+          people={specialists.slice(0, 6)}
+          line="Graduates who clear the gates join these hands"
+        />
+        <div className="mt-3 mb-10">
+          <AtmosphereNote />
+        </div>
         <TierTable tiers={tiers} />
 
         <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-ink">
@@ -48,6 +63,7 @@ export default function EdpulsePage() {
           .
         </p>
         <PageClose line="Hiring is a different door. The Check is for a product that is stuck." />
+        </div>
       </div>
     </section>
   );

@@ -9,9 +9,15 @@ import { ProofRow } from "@/components/ProofRow";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { lots, getLot, figureDisclaimer } from "@/content/lots";
 import { stagesForLot } from "@/content/catalogue";
-import { getSpecialist } from "@/content/specialists";
+import { getSpecialist, specialists } from "@/content/specialists";
 import { brand } from "@/config/brand";
 import { PageClose } from "@/components/PageClose";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
+import { Reveal, Wipe } from "@/components/landing/Reveal";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -57,8 +63,9 @@ export default async function LotPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="w-full bg-rag">
-        <div className="grid-container pt-10 md:pt-14">
+      <section className="relative w-full overflow-hidden bg-rag">
+        <Atmosphere kind="desk" opacity={0.12} />
+        <div className="relative grid-container pt-10 md:pt-14">
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
             {lot.lotNumber} · {lot.client}
             {disclaimer ? ` · ${disclaimer}` : null}
@@ -69,7 +76,7 @@ export default async function LotPage({ params }: PageProps) {
         </div>
 
         {lot.imageUrl ? (
-          <div className="mt-8 w-full">
+          <Wipe className="relative mt-8 w-full">
             <div className="relative aspect-[16/8] w-full overflow-hidden bg-iron/5">
               <Image
                 src={lot.imageUrl}
@@ -80,10 +87,17 @@ export default async function LotPage({ params }: PageProps) {
                 priority
               />
             </div>
-          </div>
+          </Wipe>
         ) : null}
 
-        <div className="grid-container pb-24 pt-12 md:pb-32 md:pt-16">
+        <div className="relative grid-container pb-24 pt-12 md:pb-32 md:pt-16">
+          <PeopleRail
+            people={specialists.filter((person) => person.id === specialist.id)}
+            line="The name on this lot"
+          />
+          <div className="mt-3 mb-10">
+            <AtmosphereNote />
+          </div>
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
             What arrived
           </p>
@@ -167,7 +181,7 @@ export default async function LotPage({ params }: PageProps) {
             </div>
           ) : null}
 
-          <div className="mt-14">
+          <Reveal className="mt-14">
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Crew
             </p>
@@ -181,7 +195,7 @@ export default async function LotPage({ params }: PageProps) {
                 />
               </Link>
             </div>
-          </div>
+          </Reveal>
 
           <PageClose line="This lot entered unfinished. Yours can too." />
         </div>

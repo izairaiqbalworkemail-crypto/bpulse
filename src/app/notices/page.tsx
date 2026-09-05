@@ -3,6 +3,8 @@ import { buildMetadata } from "@/lib/seo";
 import { FAQPageJsonLd } from "@/lib/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { PageClose } from "@/components/PageClose";
+import { Atmosphere } from "@/components/landing/Atmosphere";
+import { Reveal } from "@/components/landing/Reveal";
 import { notices } from "@/content/notices";
 
 export const metadata: Metadata = buildMetadata({
@@ -31,26 +33,30 @@ export default function NoticesPage() {
           dek="No accordion. The last one is what we are bad at."
           hideAction
         />
-        <div className="grid-container pb-24 pt-10 md:pb-32">
+        <div className="relative overflow-hidden">
+          <Atmosphere kind="light" opacity={0.22} />
+          <div className="relative grid-container pb-24 pt-10 md:pb-32">
           <nav aria-label="Jump to a notice" className="border-b border-iron/20 pb-8">
             <ol className="flex flex-col gap-2">
               {notices.map((notice, index) => (
                 <li key={notice.id}>
-                  <a
-                    href={`#${notice.id}`}
-                    className="font-plex-sans text-[16px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
-                  >
-                    {index + 1}. {notice.question}
-                  </a>
+                  <Reveal delay={index * 0.04}>
+                    <a
+                      href={`#${notice.id}`}
+                      className="font-plex-sans text-[16px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+                    >
+                      {index + 1}. {notice.question}
+                    </a>
+                  </Reveal>
                 </li>
               ))}
             </ol>
           </nav>
 
           <div className="mt-12 columns-1 gap-x-16 md:columns-2">
-            {notices.map((notice) => (
+            {notices.map((notice, index) => (
+              <Reveal key={notice.id} delay={index * 0.05}>
               <article
-                key={notice.id}
                 id={notice.id}
                 className={`mb-12 break-inside-avoid border-t pt-5 ${
                   notice.id === last?.id
@@ -65,10 +71,12 @@ export default function NoticesPage() {
                   {notice.answer}
                 </p>
               </article>
+              </Reveal>
             ))}
           </div>
 
           <PageClose line="Still a question? Five days, or write the studio." />
+          </div>
         </div>
       </section>
     </>

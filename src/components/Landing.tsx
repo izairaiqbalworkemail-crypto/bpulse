@@ -4,8 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import { useReducedMotion } from "motion/react";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
 import { PhotoFan } from "@/components/landing/PhotoFan";
-import { Count, Lift, Reveal, Rise, Tilt, Wipe } from "@/components/landing/Reveal";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Count,
+  Item,
+  Lift,
+  Reveal,
+  Rise,
+  Stagger,
+  Tilt,
+  Wipe,
+} from "@/components/landing/Reveal";
 import {
   PulseCheckIntake,
   type PulseCheckSituation,
@@ -39,8 +53,12 @@ function Episode({
   labelledBy,
 }: Readonly<{ children: ReactNode; labelledBy: string }>) {
   return (
-    <section aria-labelledby={labelledBy} className="bg-rag text-iron">
-      <div className="grid-container py-14 md:py-16">{children}</div>
+    <section
+      aria-labelledby={labelledBy}
+      className="relative overflow-hidden bg-rag text-iron"
+    >
+      <Atmosphere kind="light" opacity={0.22} />
+      <div className="relative grid-container py-14 md:py-16">{children}</div>
     </section>
   );
 }
@@ -80,9 +98,17 @@ function EpisodeHead({
             </p>
           </Reveal>
         ) : null}
-        {aside ? <div className="mt-4 sm:hidden">{aside}</div> : null}
+        {aside ? (
+          <Reveal delay={0.16} className="mt-4 sm:hidden">
+            {aside}
+          </Reveal>
+        ) : null}
       </div>
-      {aside ? <div className="hidden shrink-0 pb-1 sm:block">{aside}</div> : null}
+      {aside ? (
+        <Reveal delay={0.16} className="hidden shrink-0 pb-1 sm:block">
+          {aside}
+        </Reveal>
+      ) : null}
     </div>
   );
 }
@@ -195,8 +221,10 @@ export function Landing() {
   return (
     <>
       <Episode labelledBy="argument">
-        <div className={`overflow-hidden bg-rag-card p-6 shadow-[var(--shadow-card)] md:p-8 ${plate}`}>
-          <div className="grid items-center gap-8 sm:grid-cols-[1fr_1.1fr]">
+        <Reveal>
+        <div className={`relative overflow-hidden bg-rag-card p-6 shadow-[var(--shadow-card)] md:p-8 ${plate}`}>
+          <Atmosphere kind="paper" opacity={0.22} />
+          <div className="relative grid items-center gap-8 sm:grid-cols-[1fr_1.1fr]">
             <Reveal delay={0.06}>
               <PhotoFan
                 shots={lots.map((lot) => ({
@@ -217,8 +245,8 @@ export function Landing() {
               </EpisodeHead>
               <ul className="mt-6 space-y-2">
                 {homeLocks.map((lock, index) => (
-                  <Reveal key={lock.title} delay={0.12 + index * 0.04}>
-                    <li>
+                  <li key={lock.title}>
+                    <Reveal delay={0.18 + index * 0.07}>
                       <Lift>
                         <Link
                           href={lock.href}
@@ -228,13 +256,23 @@ export function Landing() {
                           <span aria-hidden="true">→</span>
                         </Link>
                       </Lift>
-                    </li>
-                  </Reveal>
+                    </Reveal>
+                  </li>
                 ))}
               </ul>
+              <Reveal delay={0.28} className="mt-6">
+                <PeopleRail
+                  people={crew.slice(0, 4)}
+                  line="The names on the Check"
+                />
+              </Reveal>
+              <div className="mt-4">
+                <AtmosphereNote />
+              </div>
             </div>
           </div>
         </div>
+        </Reveal>
       </Episode>
 
       <Episode labelledBy="fit">
@@ -246,7 +284,7 @@ export function Landing() {
         >
           One tap starts the Check with that situation on the record.
         </EpisodeHead>
-        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+        <Stagger className="mt-8 grid gap-3 sm:grid-cols-2" delay={0.12} gap={0.08}>
           {homeFits.map((card, index) => {
             const on = fit === card.id;
             const copy = (
@@ -273,7 +311,7 @@ export function Landing() {
                     src={card.image}
                     alt=""
                     fill
-                    className="object-cover"
+                    className="object-cover object-[center_22%]"
                     sizes="(max-width: 768px) 100vw, 400px"
                   />
                 ) : (
@@ -286,26 +324,28 @@ export function Landing() {
               </div>
             );
             return (
-              <Reveal key={card.id} delay={index * 0.06}>
-                <Tilt>
-                  {card.door === "contact" ? (
-                    <Link href="/contact" className="block">
-                      {frame}
-                    </Link>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => pickFit(card.id)}
-                      className="block w-full text-left"
-                    >
-                      {frame}
-                    </button>
-                  )}
-                </Tilt>
-              </Reveal>
+              <Item key={card.id}>
+                <Wipe>
+                  <Tilt>
+                    {card.door === "contact" ? (
+                      <Link href="/contact" className="block">
+                        {frame}
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => pickFit(card.id)}
+                        className="block w-full text-left"
+                      >
+                        {frame}
+                      </button>
+                    )}
+                  </Tilt>
+                </Wipe>
+              </Item>
             );
           })}
-        </div>
+        </Stagger>
       </Episode>
 
       <Episode labelledBy="catalogue">
@@ -324,12 +364,12 @@ export function Landing() {
         </EpisodeHead>
         {lead ? (
           <div className="mt-8 grid gap-3 md:grid-cols-12">
-            <Reveal className="md:col-span-7">
+            <Reveal className="md:col-span-7" delay={0.1}>
               <WorkCard lot={lead} featured />
             </Reveal>
             <div className="grid gap-3 sm:grid-cols-2 md:col-span-5 md:grid-cols-1">
               {restLots.map((lot, index) => (
-                <Reveal key={lot.slug} delay={0.08 + index * 0.08}>
+                <Reveal key={lot.slug} delay={0.2 + index * 0.1}>
                   <WorkCard lot={lot} />
                 </Reveal>
               ))}
@@ -347,23 +387,15 @@ export function Landing() {
         >
           Lowest risk first. Nothing starts until you sign the lock.
         </EpisodeHead>
-        <div className="mt-8 grid gap-3">
+        <Stagger className="mt-8 grid gap-3" delay={0.1} gap={0.1}>
           {homePath.map((step, index) => (
-            <Reveal key={step.name} delay={index * 0.08}>
+            <Item key={step.name}>
               <Tilt>
                 <Link
                   href={step.href}
-                  className={`group relative block min-h-[9.5rem] overflow-hidden ${plate}`}
+                  className={`group grid min-h-[10.5rem] overflow-hidden bg-iron sm:grid-cols-[1fr_10rem] ${plate}`}
                 >
-                  <Image
-                    src={step.image}
-                    alt=""
-                    fill
-                    className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.05]"
-                    sizes="820px"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-iron via-iron/75 to-iron/25" />
-                  <div className="relative flex h-full min-h-[9.5rem] flex-col justify-between p-5">
+                  <div className="relative z-10 flex min-h-[10.5rem] flex-col justify-between p-5">
                     <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/70">
                       {String(index + 1).padStart(2, "0")} · {step.meter}
                     </p>
@@ -379,11 +411,20 @@ export function Landing() {
                       </p>
                     </div>
                   </div>
+                  <Wipe className="relative min-h-[10.5rem]">
+                    <Image
+                      src={step.image}
+                      alt=""
+                      fill
+                      className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+                      sizes="160px"
+                    />
+                  </Wipe>
                 </Link>
               </Tilt>
-            </Reveal>
+            </Item>
           ))}
-        </div>
+        </Stagger>
       </Episode>
 
       <Episode labelledBy="crew">
@@ -400,13 +441,13 @@ export function Landing() {
         >
           {specialists.length} named people. No handoff mid-build.
         </EpisodeHead>
-        <div className="mt-8 grid grid-cols-3 gap-3">
-          {crew.map((person, index) => (
-            <Reveal key={person.id} delay={index * 0.05}>
+        <Stagger className="mt-8 grid grid-cols-3 gap-3" delay={0.1} gap={0.07}>
+          {crew.map((person) => (
+            <Item key={person.id}>
               <CrewCard person={person} />
-            </Reveal>
+            </Item>
           ))}
-        </div>
+        </Stagger>
         {more > 0 ? (
           <Reveal delay={0.16}>
             <p className="mt-6 font-newsreader text-[15px] text-ink">
@@ -419,18 +460,10 @@ export function Landing() {
       </Episode>
 
       <Episode labelledBy="check">
-        <Tilt>
-          <div className={`relative overflow-hidden bg-iron text-rag ${plate}`}>
-            {runner.photo ? (
-              <Image
-                src={runner.photo}
-                alt=""
-                fill
-                className="object-cover object-top opacity-35"
-                sizes="820px"
-              />
-            ) : null}
-            <div className="absolute inset-0 bg-gradient-to-r from-iron via-iron/85 to-iron/55" />
+        <Reveal>
+          <div
+            className={`relative grid overflow-hidden bg-iron text-rag sm:grid-cols-[1fr_11rem] ${plate}`}
+          >
             <div className="relative p-6 md:p-8">
               <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
                 06 · The Check
@@ -438,7 +471,7 @@ export function Landing() {
               <Rise delay={0.06}>
                 <h2
                   id="check"
-                  className="mt-2 max-w-[12ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-rag md:text-[34px]"
+                  className="mt-2 max-w-[12ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-signal md:text-[34px]"
                 >
                   Five days. A verdict.
                 </h2>
@@ -448,11 +481,12 @@ export function Landing() {
               </p>
               <ol className="mt-5 flex flex-wrap gap-1.5">
                 {homeDays.map((day, index) => (
-                  <li
-                    key={day}
-                    className="rounded-full border border-rag/20 bg-iron/40 px-3 py-1 font-plex-mono text-[11px] uppercase tracking-[0.06em] text-rag/80"
-                  >
-                    {index + 1} · {day}
+                  <li key={day}>
+                    <Reveal delay={0.2 + index * 0.05}>
+                      <span className="inline-block rounded-full border border-rag/20 bg-iron/40 px-3 py-1 font-plex-mono text-[11px] uppercase tracking-[0.06em] text-rag/80">
+                        {index + 1} · {day}
+                      </span>
+                    </Reveal>
                   </li>
                 ))}
               </ol>
@@ -474,8 +508,19 @@ export function Landing() {
                 </Link>
               </div>
             </div>
+            {runner.photo ? (
+              <Wipe className="relative min-h-[14rem] sm:min-h-full">
+                <Image
+                  src={runner.photo}
+                  alt={runner.name}
+                  fill
+                  className="object-cover object-top"
+                  sizes="176px"
+                />
+              </Wipe>
+            ) : null}
           </div>
-        </Tilt>
+        </Reveal>
         <Reveal delay={0.1} className="mt-8">
           <div id="intake">
             <PulseCheckIntake

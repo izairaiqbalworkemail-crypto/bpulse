@@ -5,10 +5,16 @@ import { CrewSession } from "@/components/intake/CrewSession";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
 import { Credit } from "@/components/primitives/Credit";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
+import { Reveal } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 import { addressLine } from "@/config/site";
 import { checkRunner } from "@/content/check";
-import { getSpecialist } from "@/content/specialists";
+import { getSpecialist, specialists } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
@@ -29,15 +35,25 @@ export default function ContactPage() {
         hideAction
       />
 
-      <section className="w-full bg-rag pb-24">
-        <div className="grid-container pt-12 md:pt-16">
-          <Credit
-            name={runner.name}
-            capability={runner.role}
-            line={checkRunner.line}
-            portraitSrc={runner.photo}
-            portraitAlt={runner.name}
+      <section className="relative w-full overflow-hidden bg-rag pb-24">
+        <Atmosphere kind="paper" opacity={0.16} />
+        <div className="relative grid-container pt-12 md:pt-16">
+          <PeopleRail
+            people={specialists}
+            line="A named person replies. Not a queue."
           />
+          <div className="mt-3">
+            <AtmosphereNote />
+          </div>
+          <Reveal className="mt-10">
+            <Credit
+              name={runner.name}
+              capability={runner.role}
+              line={checkRunner.line}
+              portraitSrc={runner.photo}
+              portraitAlt={runner.name}
+            />
+          </Reveal>
 
           <div id="intake" className="mt-12">
             <CrewSession type="contact" source="contact" />

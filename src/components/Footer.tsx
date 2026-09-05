@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Mark } from "@/components/primitives/Mark";
+import { Atmosphere } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 import { edition, addressLine } from "@/config/site";
@@ -38,8 +39,9 @@ const linkClass =
 
 export function Footer() {
   return (
-    <footer className="on-iron w-full bg-iron text-rag">
-      <div className="grid-container pt-14 pb-10 md:pt-[72px] md:pb-12 lg:pt-[100px] lg:pb-16">
+    <footer className="on-iron relative w-full overflow-hidden bg-iron text-rag">
+      <Atmosphere kind="ring" opacity={0.28} />
+      <div className="relative z-10 grid-container pt-14 pb-10 md:pt-[72px] md:pb-12 lg:pt-[100px] lg:pb-16">
         <Reveal>
           <div className="flex items-center gap-5">
             <Mark size={56} />

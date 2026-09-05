@@ -71,7 +71,7 @@ export const homeFits = [
     title: "Just an idea",
     body: "Nothing built yet. The Check is the wrong door — write the studio.",
     door: "contact" as const,
-    image: null,
+    image: "/atmosphere/iron-ring.jpg",
   },
 ] as const;
 

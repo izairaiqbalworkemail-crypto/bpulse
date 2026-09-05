@@ -5,6 +5,12 @@ import { ServiceJsonLd } from "@/lib/JsonLd";
 import { StageRail } from "@/components/StageRail";
 import { TierTable } from "@/components/TierTable";
 import { Credit } from "@/components/primitives/Credit";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
+import { Count, Reveal } from "@/components/landing/Reveal";
 import {
   PulseCheckIntake,
   type PulseCheckSituation,
@@ -13,7 +19,7 @@ import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
 import { offer } from "@/content/offer";
 import { checkBadOutcome, checkDays, checkRunner, offerTiers } from "@/content/check";
-import { getSpecialist } from "@/content/specialists";
+import { getSpecialist, specialists } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
   title: "The Check",
@@ -72,7 +78,7 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
             {offer.check.name} · {offer.check.duration}
           </p>
           <p className="mt-3 font-newsreader text-[56px] leading-none tracking-[-0.04em] text-iron md:text-[72px]">
-            ${offer.check.price.toLocaleString("en-US")}
+            <Count prefix="$" to={offer.check.price} />
           </p>
           <p className="mt-6 max-w-[40ch] font-newsreader text-[16px] leading-[1.5] text-iron">
             Verdict of keep, repair, or rebuild. Credited on a Close invoice
@@ -87,14 +93,24 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
         </div>
       </section>
 
-      <section className="w-full bg-rag">
-        <div className="grid-container py-16 md:py-24">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-            Five days
-          </p>
+      <section className="relative w-full overflow-hidden bg-rag">
+        <Atmosphere kind="paper" opacity={0.18} />
+        <div className="relative grid-container py-16 md:py-24">
+          <PeopleRail
+            people={specialists.slice(0, 6)}
+            line="Aneeb runs it. The rest stay on the Close."
+          />
+          <div className="mt-3">
+            <AtmosphereNote />
+          </div>
+          <Reveal>
+            <p className="mt-10 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+              Five days
+            </p>
+          </Reveal>
           <StageRail stages={checkDays} label="Check days" />
 
-          <div className="mt-16">
+          <Reveal className="mt-16">
             <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Who runs it
             </p>
@@ -105,20 +121,20 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
               portraitSrc={runner.photo}
               portraitAlt={runner.name}
             />
-          </div>
+          </Reveal>
 
-          <div className="mt-16 max-w-[60ch]">
+          <Reveal className="mt-16 max-w-[60ch]">
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               The honest bad outcome
             </p>
             <p className="mt-3 font-newsreader text-[16px] leading-[1.55] text-ink">
               {checkBadOutcome}
             </p>
-          </div>
+          </Reveal>
 
-          <div className="mt-16">
+          <Reveal className="mt-16">
             <TierTable tiers={offerTiers} caption="Against the rest of the offer" />
-          </div>
+          </Reveal>
         </div>
       </section>
 

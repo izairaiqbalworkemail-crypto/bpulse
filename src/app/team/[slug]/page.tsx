@@ -6,6 +6,12 @@ import { specialists, getSpecialist } from "@/content/specialists";
 import { lots } from "@/content/lots";
 import { crewAttach, crewJourney } from "@/content/crew-lines";
 import { CrewSession } from "@/components/intake/CrewSession";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
+import { Reveal, Tilt } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 
 type PageProps = {
@@ -58,11 +64,20 @@ export default async function SpecialistPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="w-full bg-rag">
-        <div className="grid-container pb-24 pt-10 md:pb-32 md:pt-16">
+      <section className="relative w-full overflow-hidden bg-rag">
+        <Atmosphere kind="paper" opacity={0.16} />
+        <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-16">
+          <PeopleRail
+            people={specialists.filter((person) => person.id !== specialist.id)}
+            line="The rest of the crew"
+          />
+          <div className="mt-3 mb-10">
+            <AtmosphereNote />
+          </div>
           <div className="grid items-start gap-10 md:grid-cols-[minmax(0,16rem)_1fr]">
+            <Tilt>
             {absent ? (
-              <div className="grid h-64 w-full place-items-center bg-iron text-rag md:h-80">
+              <div className="grid h-64 w-full place-items-center rounded-[24px] bg-iron text-rag md:h-80">
                 <span className="font-newsreader text-[72px] leading-none tracking-[-0.04em]">
                   {initials(specialist.name)}
                 </span>
@@ -74,9 +89,11 @@ export default async function SpecialistPage({ params }: PageProps) {
                 alt={specialist.name}
                 width={320}
                 height={400}
-                className="h-64 w-full object-cover object-top grayscale md:h-80"
+                className="h-64 w-full rounded-[24px] object-cover object-top grayscale md:h-80"
               />
             )}
+            </Tilt>
+            <Reveal>
             <div>
               <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
                 {specialist.role}
@@ -88,6 +105,7 @@ export default async function SpecialistPage({ params }: PageProps) {
                 {specialist.philosophy}
               </p>
             </div>
+            </Reveal>
           </div>
 
           <div className="mt-16 grid gap-12 md:grid-cols-2">

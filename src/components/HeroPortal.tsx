@@ -16,9 +16,9 @@ export function HeroPortal() {
   return (
     <motion.div
       className="relative w-full"
-      initial={reduce ? false : { opacity: 0, y: 40, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={reduce ? { duration: 0 } : { ...spring, delay: 0.32 }}
+      initial={reduce ? false : { opacity: 0, y: 28 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={reduce ? { duration: 0 } : { ...spring, delay: 0.28 }}
     >
       <div className="overflow-x-auto overflow-y-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:overflow-visible">
         <div className="min-w-[52rem] overflow-hidden rounded-[12px] bg-rag-card text-iron shadow-[var(--shadow-artifact)] md:min-w-0">

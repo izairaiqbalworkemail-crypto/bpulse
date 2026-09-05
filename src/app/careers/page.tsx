@@ -3,8 +3,15 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { GateCard } from "@/components/GateCard";
 import { PageHero } from "@/components/PageHero";
+import { PeopleRail } from "@/components/PeopleRail";
+import {
+  Atmosphere,
+  AtmosphereNote,
+} from "@/components/landing/Atmosphere";
+import { Reveal } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 import { crewGates } from "@/content/process";
+import { specialists } from "@/content/specialists";
 import { CrewSession } from "@/components/intake/CrewSession";
 
 export const metadata: Metadata = buildMetadata({
@@ -23,7 +30,14 @@ export default function CareersPage() {
         dek="Candidates are never charged a fee at any stage. If someone asks you to pay to apply, it is not us."
         hideAction
       />
-      <div className="grid-container pb-24 pt-10 md:pb-32 md:pt-14">
+      <div className="relative overflow-hidden">
+        <Atmosphere kind="desk" opacity={0.14} />
+        <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-14">
+        <PeopleRail people={specialists} line="The crew you would join" />
+        <div className="mt-3 mb-10">
+          <AtmosphereNote />
+        </div>
+        <Reveal>
         <p className="max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-ink">
           Breakthrough Pulse is a senior studio in Lahore. We finish products
           stuck at eighty percent. The people who scope the work ship it. We
@@ -86,6 +100,8 @@ export default function CareersPage() {
           </a>
           .
         </p>
+        </Reveal>
+        </div>
       </div>
     </section>
   );

@@ -10,9 +10,9 @@ type FanShot = {
 };
 
 const OFFSETS = [
-  { x: -22, y: 10, r: -9, z: 1 },
-  { x: 4, y: -4, r: 2, z: 3 },
-  { x: 28, y: 14, r: 11, z: 2 },
+  { x: -12, y: 8, r: -7, z: 1 },
+  { x: 0, y: -2, r: 1, z: 3 },
+  { x: 14, y: 10, r: 8, z: 2 },
 ];
 
 /**
@@ -22,7 +22,7 @@ export function PhotoFan({ shots }: Readonly<{ shots: FanShot[] }>) {
   const reduce = useReducedMotion();
 
   return (
-    <div className="relative mx-auto h-[220px] w-[220px] sm:h-[240px] sm:w-[240px]">
+    <div className="relative mx-auto h-[240px] w-[240px] overflow-visible sm:h-[260px] sm:w-[260px]">
       {shots.slice(0, 3).map((shot, index) => {
         const pose = OFFSETS[index] ?? OFFSETS[0];
         return (
@@ -42,27 +42,13 @@ export function PhotoFan({ shots }: Readonly<{ shots: FanShot[] }>) {
             viewport={{ once: true, margin: "-12% 0px" }}
             transition={reduce ? { duration: 0 } : { ...landSpring, delay: index * 0.1 }}
           >
-            <motion.div
-              className="absolute inset-0"
-              animate={reduce ? undefined : { y: [0, -7, 0] }}
-              transition={
-                reduce
-                  ? undefined
-                  : {
-                      duration: 5.2 + index * 0.7,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }
-              }
-            >
-              <Image
-                src={shot.src}
-                alt={shot.alt}
-                fill
-                className="object-cover"
-                sizes="220px"
-              />
-            </motion.div>
+            <Image
+              src={shot.src}
+              alt={shot.alt}
+              fill
+              className="object-cover object-center"
+              sizes="220px"
+            />
           </motion.div>
         );
       })}

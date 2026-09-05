@@ -6,7 +6,7 @@ import { HeroFrame } from "@/components/HeroFrame";
 import { HeroPortal } from "@/components/HeroPortal";
 import { offer } from "@/content/offer";
 
-const spring = { type: "spring" as const, stiffness: 200, damping: 26 };
+const spring = { type: "spring" as const, stiffness: 180, damping: 26 };
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -14,16 +14,11 @@ export function Hero() {
   return (
     <HeroFrame tall>
       <div className="flex flex-col items-center text-center">
-        {/*
-          Type sits in the first ~58svh so the window starts in-viewport
-          and is cropped by the fold. Fixed 180/140 gaps leave a chrome
-          sliver on 900px-tall laptops.
-        */}
         <div className="flex min-h-[52svh] w-full flex-col items-center justify-end px-5 pb-[clamp(2.5rem,8svh,8.75rem)] pt-16 md:min-h-[58svh] md:px-8 md:pt-20">
           <h1 className="mx-auto max-w-[900px] font-newsreader text-[40px] leading-[1.05] tracking-[-0.03em] md:text-[60px] xl:text-[96px]">
             <motion.span
               className="block text-rag"
-              initial={reduce ? false : { opacity: 0, y: 16 }}
+              initial={reduce ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={reduce ? { duration: 0 } : spring}
             >
@@ -31,7 +26,7 @@ export function Hero() {
             </motion.span>
             <motion.span
               className="mt-0 block text-signal"
-              initial={reduce ? false : { opacity: 0, y: 16 }}
+              initial={reduce ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={reduce ? { duration: 0 } : { ...spring, delay: 0.08 }}
             >
@@ -41,18 +36,18 @@ export function Hero() {
 
           <motion.p
             className="mt-12 max-w-[64ch] font-newsreader text-[20px] leading-normal text-rag/75"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={reduce ? { duration: 0 } : { ...spring, delay: 0.18 }}
+            transition={reduce ? { duration: 0 } : { ...spring, delay: 0.16 }}
           >
             Fixed scope. Senior only. You watch every day of it.
           </motion.p>
 
           <motion.div
             className="mt-[72px] flex flex-wrap items-center justify-center gap-4"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={reduce ? { duration: 0 } : { ...spring, delay: 0.24 }}
+            transition={reduce ? { duration: 0 } : { ...spring, delay: 0.22 }}
           >
             <Link
               href="/check"
