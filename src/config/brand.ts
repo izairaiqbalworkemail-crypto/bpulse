@@ -5,8 +5,20 @@ export const brand = {
   description:
     "Senior software studio. We take over products stuck at 80% and ship them to production.",
   url: "https://bpulse.dev",
-  logo: "/logo.png",
-  ogImage: "/opengraph-image",
+  logo: "/bpulse-brand/icon/bpulse-icon-512.png",
+  ogImage: "/bpulse-brand/social/bpulse-og.png",
+  profile: "/bpulse-brand/icon/bpulse-icon.svg",
+  cover: "/bpulse-brand/social/bpulse-og.svg",
+  assets: {
+    markDark: "/bpulse-brand/mark/bpulse-mark-dark.svg",
+    markLight: "/bpulse-brand/mark/bpulse-mark-light.svg",
+    markMono: "/bpulse-brand/mark/bpulse-mark-mono.svg",
+    lockupDark: "/bpulse-brand/lockup/bpulse-lockup-dark.svg",
+    lockupLight: "/bpulse-brand/lockup/bpulse-lockup-light.svg",
+    icon: "/bpulse-brand/icon/bpulse-icon.svg",
+    favicon: "/bpulse-brand/favicon/bpulse-favicon.svg",
+    og: "/bpulse-brand/social/bpulse-og.svg",
+  },
 
   address: {
     street: "Lahore",

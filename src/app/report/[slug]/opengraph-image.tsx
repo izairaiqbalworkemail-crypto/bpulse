@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { getReport } from "@/content/reports";
 
@@ -12,6 +14,10 @@ export default async function ReportOgImage({ params }: Props) {
   const report = getReport(slug);
   const company = report?.company ?? "bpulse";
   const read = report?.theRead ?? "A private diagnostic.";
+  const icon = await readFile(
+    join(process.cwd(), "public/bpulse-brand/icon/bpulse-icon-512.png")
+  );
+  const iconSrc = `data:image/png;base64,${icon.toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -26,6 +32,13 @@ export default async function ReportOgImage({ params }: Props) {
           padding: 64,
         }}
       >
+        <img
+          src={iconSrc}
+          width={64}
+          height={64}
+          alt=""
+          style={{ position: "absolute", top: 64, left: 64 }}
+        />
         <div
           style={{
             fontSize: 20,

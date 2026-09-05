@@ -9,6 +9,8 @@ import {
   PulseCheckIntake,
   type PulseCheckSituation,
 } from "@/components/intake/PulseCheckIntake";
+import { PassAlong } from "@/components/PassAlong";
+import { VettedPay } from "@/components/VettedPay";
 import { offer } from "@/content/offer";
 import { checkBadOutcome, checkDays, checkRunner, offerTiers } from "@/content/check";
 import { getSpecialist } from "@/content/specialists";
@@ -65,11 +67,11 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
       />
 
       <section className="w-full bg-signal">
-        <div className="grid-container py-20 md:py-28">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-iron/80">
+        <div className="grid-container py-14 md:py-16">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-iron/80">
             {offer.check.name} · {offer.check.duration}
           </p>
-          <p className="mt-4 font-newsreader text-[64px] leading-none tracking-[-0.04em] text-iron md:text-[96px]">
+          <p className="mt-3 font-newsreader text-[56px] leading-none tracking-[-0.04em] text-iron md:text-[72px]">
             ${offer.check.price.toLocaleString("en-US")}
           </p>
           <p className="mt-6 max-w-[40ch] font-newsreader text-[16px] leading-[1.5] text-iron">
@@ -122,7 +124,13 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
 
       <section id="intake" className="w-full bg-rag pb-24">
         <div className="grid-container">
-          <PulseCheckIntake prefill={prefill} />
+          <PulseCheckIntake prefill={prefill} source="check" />
+          <div className="mt-8">
+            <VettedPay />
+          </div>
+          <div className="mt-8">
+            <PassAlong />
+          </div>
         </div>
       </section>
     </>

@@ -11,6 +11,7 @@ import { lots, getLot, figureDisclaimer } from "@/content/lots";
 import { stagesForLot } from "@/content/catalogue";
 import { getSpecialist } from "@/content/specialists";
 import { brand } from "@/config/brand";
+import { PageClose } from "@/components/PageClose";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -182,14 +183,7 @@ export default async function LotPage({ params }: PageProps) {
             </div>
           </div>
 
-          <div className="mt-16">
-            <Link
-              href="/check"
-              className="inline-flex items-center rounded-full bg-signal px-6 py-3 font-plex-sans text-[15px] font-medium text-iron"
-            >
-              Book a call
-            </Link>
-          </div>
+          <PageClose line="This lot entered unfinished. Yours can too." />
         </div>
       </section>
     </>

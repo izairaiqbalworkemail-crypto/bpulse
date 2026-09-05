@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useReducedMotion } from "motion/react";
 import type { Specialist } from "@/content/types";
+import { Lift } from "@/components/landing/Reveal";
 
 type PortraitStripProps = {
   people: Specialist[];
@@ -34,13 +35,14 @@ export function PortraitStrip({
         const absent = person.photoStatus === "Photo pending" || !person.photo;
         return (
           <li key={person.id} className="w-[9.5rem] shrink-0 md:w-44">
+            <Lift>
             <Link
               href={`/team/${person.id}`}
               className="group block underline-offset-4"
             >
               {absent ? (
                 <div
-                  className={`grid ${frame} place-items-center rounded-[4px] bg-iron text-rag`}
+                  className={`grid ${frame} place-items-center rounded-[20px] bg-iron text-rag`}
                 >
                   <span className="font-newsreader text-[28px] leading-none tracking-[-0.03em] md:text-[36px]">
                     {initials(person.name)}
@@ -53,7 +55,7 @@ export function PortraitStrip({
                   alt={person.name}
                   width={176}
                   height={176}
-                  className={`${frame} rounded-[4px] object-cover object-top grayscale transition-[filter] duration-200 group-hover:grayscale-0`}
+                  className={`${frame} rounded-[20px] object-cover object-top grayscale transition-[filter,transform] duration-500 group-hover:scale-[1.04] group-hover:grayscale-0`}
                 />
               )}
               <p className="mt-3 font-plex-sans text-[15px] font-medium text-iron underline decoration-iron/30 group-hover:decoration-iron">
@@ -70,6 +72,7 @@ export function PortraitStrip({
                 )}
               </p>
             </Link>
+            </Lift>
           </li>
         );
       })}

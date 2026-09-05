@@ -54,8 +54,8 @@
   --radius-button: var(--radius-pill);
 
   /* ── Grid ── */
-  --size-grid: 1180px;
-  --spacing-gutter: 32px;
+  --size-grid: 820px;
+  --spacing-gutter: 20px;
 
   /* ── Headings ── */
   --text-h1: var(--text-lead-title);
@@ -684,19 +684,19 @@ p,
    Conversation intake (CrewSession — ported from bpulse)
    ============================================================ */
 
-/* Chat bubble entrance — fade + 5px rise */
+/* Chat bubble entrance — masked rise, no blur */
 @keyframes msg-in {
   from {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(18px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 .msg-in {
-  animation: msg-in 0.3s cubic-bezier(0.16, 0.7, 0.3, 1) both;
+  animation: msg-in 0.5s cubic-bezier(0.16, 0.84, 0.32, 1) both;
 }
 
 /* Brief drawer row entrance */

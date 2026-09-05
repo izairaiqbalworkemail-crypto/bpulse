@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
-import { Masthead } from "@/components/primitives/Masthead";
 
 type HeroFrameProps = {
   children: ReactNode;
@@ -11,8 +10,8 @@ type HeroFrameProps = {
 };
 
 /**
- * Shared hero chrome: rag inset, iron plate, masthead.
- * Home fills it with the four-element hero. Every other page fills it with a title.
+ * Shared hero chrome: rag inset, iron plate.
+ * Nav lives in SiteChrome so every page has the same topbar.
  */
 export function HeroFrame({ children, tall = false }: HeroFrameProps) {
   const reduceMotion = useReducedMotion();
@@ -21,9 +20,7 @@ export function HeroFrame({ children, tall = false }: HeroFrameProps) {
     <section className="relative bg-rag">
       <div
         className={
-          tall
-            ? "px-3 pt-3 md:px-5 md:pt-5 lg:px-8 lg:pt-8"
-            : "px-3 pb-3 pt-3 md:px-5 md:pb-5 md:pt-5 lg:px-8 lg:pb-8 lg:pt-8"
+          "px-3 pb-3 pt-3 md:px-5 md:pb-5 md:pt-5 lg:px-8 lg:pb-8 lg:pt-8"
         }
       >
         <motion.div
@@ -40,24 +37,18 @@ export function HeroFrame({ children, tall = false }: HeroFrameProps) {
               : { type: "spring", stiffness: 180, damping: 24 }
           }
         >
-          <div className="absolute inset-x-5 top-4 z-20 md:inset-x-8 md:top-6 lg:inset-x-10 lg:top-8">
-            <div className={tall ? "mx-auto max-w-[1200px]" : "max-w-[1200px]"}>
-              <Masthead />
-            </div>
-          </div>
-
           <div
             className={
               tall
                 ? "px-0 pb-0 pt-0"
-                : "px-5 pb-12 pt-20 md:px-8 md:pb-16 md:pt-24 lg:px-20 lg:pb-20 lg:pt-28"
+                : "px-5 pb-10 pt-10 md:px-8 md:pb-14 md:pt-12"
             }
           >
             <div
               className={
                 tall
                   ? "mx-auto flex w-full flex-col"
-                  : "mx-0 flex max-w-[1200px] flex-col"
+                  : "mx-auto flex w-full max-w-[820px] flex-col"
               }
             >
               {children}

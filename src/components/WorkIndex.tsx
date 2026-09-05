@@ -71,12 +71,14 @@ export function WorkIndex() {
                     {row.lot.title}
                   </p>
                   {row.lot.imageUrl ? (
-                    <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden bg-iron/5">
+                    <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-[24px] bg-iron/5">
                       <Image
                         src={row.lot.imageUrl}
                         alt=""
                         fill
-                        className="object-cover"
+                        className={`object-cover ${
+                          reduce ? "" : "transition-transform duration-700 group-hover:scale-[1.04]"
+                        }`}
                         sizes="(max-width: 768px) 100vw, 1180px"
                       />
                     </div>

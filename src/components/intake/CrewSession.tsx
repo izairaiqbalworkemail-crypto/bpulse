@@ -1,29 +1,45 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import { useReducedMotion } from "motion/react";
 
+import { sessionFields } from "@/lib/intake/fields";
 import { buildWorkSession } from "@/lib/intake/work-session";
 import { brand } from "@/config/brand";
+import { studioOpening } from "@/content/beliefs";
+import { checkRunner } from "@/content/check";
+import { offer } from "@/content/offer";
 import { specialists } from "@/content/specialists";
 import type { Specialist } from "@/content/types";
 
-export type IntakeType = "start" | "rescue" | "contact" | "careers" | "work";
+export type IntakeType =
+  | "start"
+  | "rescue"
+  | "contact"
+  | "about"
+  | "careers"
+  | "work"
+  | "check";
 
-export type FieldConfig =
-  | {
-      name: string;
-      label: string;
-      type: "input";
-      input?: string;
-      autoComplete?: string;
-      required: boolean;
-      placeholder?: string;
-    }
-  | { name: string; label: string; type: "textarea"; required: boolean; placeholder?: string }
-  | { name: string; label: string; type: "select"; options: string[]; required: boolean }
-  | { name: string; label: string; type: "radio"; options: string[]; required: boolean };
+type FieldWhen = {
+  when?: (answers: Record<string, string>) => boolean;
+};
+
+export type FieldConfig = FieldWhen &
+  (
+    | {
+        name: string;
+        label: string;
+        type: "input";
+        input?: string;
+        autoComplete?: string;
+        required: boolean;
+        placeholder?: string;
+      }
+    | { name: string; label: string; type: "textarea"; required: boolean; placeholder?: string }
+    | { name: string; label: string; type: "select"; options: string[]; required: boolean }
+    | { name: string; label: string; type: "radio"; options: string[]; required: boolean }
+  );
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const AI_RE = /ai|ml|model|rag|llm|gpt|agent|bot|gen\s*ai|automat/i;
@@ -61,6 +77,7 @@ export type SessionCopy = {
   ask: Record<string, string>;
   owners: Record<string, string>;
   askPick?: Record<string, (answers: Record<string, string>) => string>;
+  askLine?: Record<string, (answers: Record<string, string>) => string>;
   mirror: Record<string, MirrorSpec>;
   submitBy: string;
   submitLine: string;
@@ -490,6 +507,198 @@ const SESSIONS: Record<IntakeType, SessionCopy> = {
     errorLine: "That didn't make it through. One more tap and we resend.",
     wrongEmail: "That email looks off. Mind a second pass?",
   },
+  check: {
+    channel: "the-check",
+    label: "Check session",
+    pool: [checkRunner.id, "suhaib", "najiullah"],
+    intro: [
+      {
+        memberId: checkRunner.id,
+        text: `The Check. Five days. $${offer.check.price.toLocaleString("en-US")}. Real questions — a person reads the brief tomorrow. No one is typing now.`,
+      },
+    ],
+    ask: {
+      situation: "Which is it — almost done, stalled, live but fragile, or still an idea?",
+      build: "What is stuck? The last thing that will not ship.",
+      stack: "What is the stack, roughly?",
+      access: "Can we read the repo, or not yet?",
+      name: "What do we call you? A first name is plenty.",
+      email: "Where the verdict lands. A real inbox.",
+      codeLocation: "A repo, if you have one. Skip it if you don't.",
+    },
+    askLine: {
+      build: (answers) => {
+        const wound = answers.situation ?? "";
+        if (/stalled/i.test(wound)) {
+          return "Who left, and what is still in the repo?";
+        }
+        if (/fragile/i.test(wound)) {
+          return "What is live, and what breaks when you ship?";
+        }
+        if (/idea/i.test(wound)) {
+          return "What is the idea, in one or two lines? If nothing is built, we will say the Check is the wrong door.";
+        }
+        return "What is the last thing that will not ship?";
+      },
+    },
+    owners: {
+      situation: checkRunner.id,
+      build: checkRunner.id,
+      stack: checkRunner.id,
+      access: checkRunner.id,
+      name: checkRunner.id,
+      email: checkRunner.id,
+      codeLocation: checkRunner.id,
+    },
+    askPick: {
+      build: (answers) => (AI_RE.test(answers.build ?? "") ? "najiullah" : checkRunner.id),
+    },
+    mirror: {
+      situation: {
+        kind: "custom",
+        member: () => checkRunner.id,
+        say: (answer) =>
+          /idea/i.test(answer)
+            ? "\u201cJust an idea\u201d. Then the Check is the wrong door — write us on /contact and we will say so. If something is already built, stay here."
+            : /stalled/i.test(answer)
+              ? "\u201cStalled\u201d. Familiar. We read the repo cold and tell you what is salvageable."
+              : /fragile/i.test(answer)
+                ? "\u201cLive, but fragile\u201d. Then the Check is a hold test, not a rebuild pitch."
+                : "\u201cAlmost done\u201d. That last twenty is the work. We will say keep, repair, or rebuild.",
+      },
+      build: {
+        kind: "custom",
+        member: (answer) => (AI_RE.test(answer) ? "najiullah" : checkRunner.id),
+        say: (answer, answers) => {
+          const quote = `\u201c${quoteOf(answer)}\u201d`;
+          if (/idea/i.test(answers.situation ?? "")) {
+            return `${quote}. Logged. If there is no repo yet, the Check is the wrong door — we will still reply and say so.`;
+          }
+          if (AI_RE.test(answer)) {
+            return `${quote}. There is a model in there. We treat that as a product, not a prompt.`;
+          }
+          return `${quote}. That is the wound. Five days: read, trace, map, grade, report.`;
+        },
+      },
+      stack: {
+        kind: "custom",
+        member: () => checkRunner.id,
+        say: (answer) =>
+          /next|react/i.test(answer)
+            ? "\u201cNext / React\u201d. Familiar floor. We will walk it cold."
+            : /rails|django|laravel/i.test(answer)
+              ? `\u201c${quoteOf(answer)}\u201d. Fine. The Check is the condition, not the fashion.`
+              : /mobile/i.test(answer)
+                ? "\u201cMobile\u201d. Then the last twenty is usually store, auth, and the API it leans on."
+                : `\u201c${quoteOf(answer)}\u201d. Noted. We will ask for a walk-through if the repo is quiet.`,
+      },
+      access: {
+        kind: "custom",
+        member: () => checkRunner.id,
+        say: (answer) =>
+          /full/i.test(answer)
+            ? "\u201cFull access\u201d. Then day one is a read, not a hunt."
+            : /partial/i.test(answer)
+              ? "\u201cPartial\u201d. We start with what you can share and list what is missing."
+              : "\u201cNot yet\u201d. Fine. The reply will say exactly what we need to open the repo.",
+      },
+      name: {
+        kind: "plain",
+        lines: [
+          "\u201c{q}\u201d. Good. The brief has a name on it now.",
+          "\u201c{q}\u201d. Noted.",
+        ],
+      },
+      email: {
+        kind: "plain",
+        lines: [
+          "\u201c{q}\u201d. That is where the condition report lands. No payment on this form.",
+          "\u201c{q}\u201d. Saved. A named person replies here within one business day.",
+        ],
+      },
+      codeLocation: {
+        kind: "plain",
+        lines: [
+          "\u201c{q}\u201d. Read access and the walk starts.",
+          "\u201c{q}\u201d. Noted. We can also start from a zip or a screen-share.",
+        ],
+      },
+    },
+    submitBy: checkRunner.id,
+    submitLine: "That is the Check brief. Saving it and putting it on the desk.",
+    successTitle: "Brief captured",
+    successText:
+      "A named person replies within one business day with how the five-day review would start. No payment was taken. The fee is credited on a Close within 30 days.",
+    errorLine: "That didn't make it through. One more tap and we resend.",
+    wrongEmail: "That email looks off. Mind a second pass?",
+  },
+  about: {
+    channel: "the-studio",
+    label: "studio line",
+    pool: [checkRunner.id, "madiha"],
+    intro: [
+      {
+        memberId: checkRunner.id,
+        text: studioOpening,
+      },
+      {
+        memberId: checkRunner.id,
+        text: "This is an intake form that reads like a conversation. No one is typing — a person reads every answer and replies within one business day.",
+      },
+    ],
+    ask: {
+      name: "First, what do we call you?",
+      email: "A real email. A person replies, that is the whole promise.",
+      stage: "Where is the thing today? Rough, written, or already building?",
+      build: "What are you sitting on? One or two lines.",
+    },
+    owners: {
+      name: checkRunner.id,
+      email: checkRunner.id,
+      stage: checkRunner.id,
+      build: checkRunner.id,
+    },
+    mirror: {
+      name: {
+        kind: "plain",
+        lines: [
+          "\u201c{q}\u201d. Good to meet you by text.",
+          "\u201c{q}\u201d. Noted.",
+        ],
+      },
+      email: {
+        kind: "plain",
+        lines: [
+          "\u201c{q}\u201d. That is the inbox a real human replies to.",
+          "\u201c{q}\u201d. Saved.",
+        ],
+      },
+      stage: {
+        kind: "custom",
+        member: () => checkRunner.id,
+        say: (answer) =>
+          /rough/i.test(answer)
+            ? "\u201cRough idea\u201d. Honest. We find the one thing worth building."
+            : /spec/i.test(answer)
+              ? "\u201cSpec written\u201d. It is read before anything is commented on."
+              : "\u201cAlready building\u201d. Then we talk about the gap, not the dream.",
+      },
+      build: {
+        kind: "plain",
+        lines: [
+          "\u201c{q}\u201d. That is enough to start. The people who scope it ship it.",
+          "\u201c{q}\u201d. Logged. If it is the last twenty, that is the Check.",
+        ],
+      },
+    },
+    submitBy: checkRunner.id,
+    submitLine: "Brief complete. Saving it and handing it to the studio table.",
+    successTitle: "Brief captured",
+    successText:
+      "Saved. A named person replies within one business day. No chatbot, no queue.",
+    errorLine: "That didn't make it through. One more tap and we resend.",
+    wrongEmail: "That email looks off. Mind a second pass?",
+  },
 };
 
 type Msg =
@@ -564,18 +773,25 @@ export function CrewSession({
   fields: incoming,
   session: sessionOverride,
   workWith,
+  source,
+  prefill,
 }: {
   type: IntakeType;
   fields?: FieldConfig[];
   session?: SessionCopy;
   workWith?: string;
+  source?: string;
+  prefill?: Record<string, string>;
 }) {
   const work = useMemo(
     () => (workWith ? buildWorkSession(memberById(workWith)) : null),
     [workWith],
   );
   const session = sessionOverride ?? work?.session ?? SESSIONS[type] ?? SESSIONS.contact;
-  const fields = work?.fields ?? incoming ?? [];
+  const fields = useMemo(
+    () => work?.fields ?? incoming ?? sessionFields[type] ?? sessionFields.contact,
+    [work, incoming, type],
+  );
   const lead = memberById(session.pool[0]);
   const reduce = useReducedMotion();
 
@@ -605,7 +821,6 @@ export function CrewSession({
   const runningRef = useRef(false);
   const timersRef = useRef<number[]>([]);
   const idRef = useRef(1);
-  const stepRef = useRef(0);
   const answersRef = useRef<Record<string, string>>({});
   const rotRef = useRef<Record<string, number>>({});
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -678,11 +893,23 @@ export function CrewSession({
     };
   }
 
+  function applies(field: FieldConfig, answers: Record<string, string>) {
+    return !field.when || field.when(answers);
+  }
+
+  function nextUnanswered(answers: Record<string, string> = answersRef.current) {
+    return fields.find((field) => applies(field, answers) && !(field.name in answers));
+  }
+
+  function applicable(answers: Record<string, string> = answersRef.current) {
+    return fields.filter((field) => applies(field, answers));
+  }
+
   function buildAsk(fieldName: string, answers: Record<string, string>) {
     const pick = session.askPick?.[fieldName];
     return {
       memberId: pick ? pick(answers) : session.owners[fieldName] ?? session.pool[0],
-      text: session.ask[fieldName] ?? "",
+      text: session.askLine?.[fieldName]?.(answers) ?? session.ask[fieldName] ?? "",
     };
   }
 
@@ -717,14 +944,10 @@ export function CrewSession({
     };
   }
 
-  function completeStep() {
-    const index = stepRef.current;
-    const isLast = index === fields.length - 1;
-    stepRef.current += 1;
-    setAnswered(stepRef.current);
-    const field = fields[index];
+  function completeStep(field: FieldConfig) {
     const value = answersRef.current[field.name] ?? "";
     const skipped = !value.trim() && !field.required;
+    setAnswered(applicable().filter((item) => item.name in answersRef.current).length);
     if (skipped) {
       queueRef.current.push(
         sceneBot("Noted, skipped. No pressure.", session.owners[field.name] ?? session.pool[0]),
@@ -733,14 +956,12 @@ export function CrewSession({
       const mirror = buildMirror(field.name, value, answersRef.current);
       queueRef.current.push(sceneBot(mirror.text, mirror.memberId));
     }
-    if (isLast) {
+    const next = nextUnanswered();
+    if (!next) {
       queueRef.current.push(sceneSubmit());
     } else {
-      const nextField = fields[stepRef.current];
-      if (nextField) {
-        const ask = buildAsk(nextField.name, answersRef.current);
-        queueRef.current.push(sceneQuestion(nextField, ask.memberId));
-      }
+      const ask = buildAsk(next.name, answersRef.current);
+      queueRef.current.push(sceneQuestion(next, ask.memberId));
     }
     kick();
   }
@@ -781,7 +1002,7 @@ export function CrewSession({
     answersRef.current = saved;
     setAnswers(saved);
     pushMessage({ kind: "text", from: "you", text: trimmed });
-    completeStep();
+    completeStep(field);
   }
 
   function submitChip(fieldName: string, option: string) {
@@ -796,7 +1017,7 @@ export function CrewSession({
     setAnswers(saved);
     pushMessage({ kind: "text", from: "you", text: option });
     const field = fields.find((f) => f.name === fieldName);
-    if (field) completeStep();
+    if (field) completeStep(field);
   }
 
   function sceneSubmit(): Task {
@@ -819,11 +1040,12 @@ export function CrewSession({
     const clientId = sessionId || "";
     try {
       const body = {
-        type,
+        type: type === "check" ? "pulse-check" : type,
         clientId,
         requestId: clientId,
         website: honeypot,
         with: session.directWith ?? "",
+        source: source ?? type,
         ...answersRef.current,
       };
       const response = await fetch("/api/contact", {
@@ -831,15 +1053,26 @@ export function CrewSession({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      const data = (await response.json()) as { ok?: boolean; id?: string };
+      const data = (await response.json()) as {
+        ok?: boolean;
+        id?: string;
+        emailed?: boolean;
+        stored?: string;
+      };
       if (!response.ok || !data.ok) throw new Error("not ok");
       pushMessage({
         kind: "success",
         title: session.successTitle,
-        text: session.successText,
+        text: data.emailed
+          ? session.successText
+          : "Brief saved on this desk. A person will read it — email goes out once Resend is connected. No payment was taken.",
       });
       setPhase("done");
-      setDeliveryNote(`Brief ${shortId(data.id ?? clientId)} · captured · saved · emailed`);
+      setDeliveryNote(
+        data.emailed
+          ? `Brief ${shortId(data.id ?? clientId)} · saved · emailed`
+          : `Brief ${shortId(data.id ?? clientId)} · saved · email later`,
+      );
     } catch {
       setPhase("chatting");
       pushBot(session.errorLine, session.pool[0]);
@@ -862,11 +1095,15 @@ export function CrewSession({
       timersRef.current = [];
       idRef.current = 1;
       queueRef.current = [];
-      stepRef.current = 0;
-      answersRef.current = {};
+      answersRef.current = { ...(prefill ?? {}) };
       rotRef.current = {};
-      setAnswers({});
-      setAnswered(0);
+      setAnswers({ ...(prefill ?? {}) });
+      setAnswered(
+        fields.filter(
+          (field) =>
+            applies(field, answersRef.current) && field.name in answersRef.current,
+        ).length,
+      );
       setMsgs([]);
       setPhase("chatting");
       setDeliveryNote("");
@@ -876,8 +1113,20 @@ export function CrewSession({
       session.intro.forEach((line) =>
         queueRef.current.push(sceneBot(line.text, line.memberId)),
       );
-      const first = buildAsk(fields[0].name, {});
-      queueRef.current.push(sceneQuestion(fields[0], first.memberId));
+      if (prefill?.situation) {
+        queueRef.current.push(
+          sceneBot(`You marked this as ${prefill.situation.toLowerCase()}.`, session.pool[0]),
+        );
+      }
+      if (prefill?.build) {
+        queueRef.current.push(
+          sceneBot(`From the window: ${prefill.build}`, session.pool[0]),
+        );
+      }
+      const first = nextUnanswered(answersRef.current);
+      if (!first) return;
+      const ask = buildAsk(first.name, answersRef.current);
+      queueRef.current.push(sceneQuestion(first, ask.memberId));
 
       runningRef.current = false;
       kick();
@@ -917,7 +1166,6 @@ export function CrewSession({
       ? 100
       : Math.max(4, (answered / Math.max(fields.length, 1)) * 100);
   const nextField = isChoice(currentField) ? null : currentField;
-  const isDirect = type === "work" && !!workWith;
 
   return (
     <>
@@ -1218,9 +1466,9 @@ export function CrewSession({
       </div>
 
       <div
-        className="relative flex h-[540px] w-full flex-col overflow-hidden rounded-surface border border-iron/10 bg-rag-card shadow-[var(--shadow-card)] sm:h-[620px]"
+        className="relative mx-auto flex h-[32rem] w-full max-w-[26.5rem] flex-col overflow-hidden rounded-[28px] bg-iron text-rag shadow-[0_24px_60px_-24px_rgba(13,18,24,0.55)] ring-1 ring-rag/10"
         role="region"
-        aria-label={`${sentenceCase(session.label)} intake`}
+        aria-label={`${sentenceCase(session.label)} desk`}
       >
         <input
           type="text"
@@ -1232,35 +1480,39 @@ export function CrewSession({
           aria-hidden="true"
           className="absolute left-[-9999px] h-0 w-0 opacity-0"
         />
-        {/* Header */}
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-iron/10 px-4 py-3 sm:px-5 sm:py-3.5">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-rag/10 px-4 py-4 sm:px-5">
           <div className="flex min-w-0 flex-1 items-center gap-3">
-            <div className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-surface bg-iron/5 ring-1 ring-iron/10">
-              <Image
-                src={brand.logo}
-                alt={brand.name}
-                width={26}
-                height={26}
-                className="h-[26px] w-[26px] object-contain"
-              />
+            <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-iron-2 ring-2 ring-signal/70">
+              {lead.photo && lead.photoStatus !== "Photo pending" ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={lead.photo}
+                  alt=""
+                  width={44}
+                  height={44}
+                  className="h-11 w-11 object-cover object-top"
+                />
+              ) : (
+                <span className="grid h-full place-items-center font-newsreader text-[18px] text-rag">
+                  {lead.name[0]}
+                </span>
+              )}
             </div>
             <div className="min-w-0">
-              <p className="truncate font-plex-sans text-sm font-medium tracking-tight text-iron">
-                {brand.name}
+              <p className="truncate font-plex-sans text-[15px] font-medium text-rag">
+                {lead.name.split(" ")[0]}&apos;s desk
               </p>
-              <p className="truncate font-plex-mono text-[0.66rem] text-ink/60">
-                {isDirect
-                  ? `direct line to ${lead.name.split(" ")[0]} · replies within one business day`
-                  : `${sentenceCase(session.label)} · replies within one business day`}
+              <p className="truncate font-plex-mono text-[11px] text-rag/60">
+                No card on this screen · a person reads it tomorrow
               </p>
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
               onClick={() => window.print()}
               aria-label="Download the record of this brief"
-              className="inline-flex items-center gap-1.5 rounded-input border border-iron/15 bg-iron/[0.03] px-2.5 py-1.5 font-plex-sans text-xs font-medium text-iron/80 transition-colors hover:border-iron/40 hover:text-iron"
+              className="rounded-full border border-rag/15 px-3 py-1.5 font-plex-sans text-[12px] text-rag/75 hover:text-rag"
             >
               Record
             </button>
@@ -1269,31 +1521,19 @@ export function CrewSession({
               onClick={() => setBriefOpen((v) => !v)}
               aria-expanded={briefOpen}
               aria-label="Open the brief"
-              className={`inline-flex items-center gap-1.5 rounded-input border px-2.5 py-1.5 font-plex-sans text-xs font-medium transition-colors ${
+              className={`rounded-full px-3 py-1.5 font-plex-sans text-[12px] ${
                 briefOpen
-                  ? "border-signal/60 bg-signal/10 text-iron"
-                  : "border-iron/15 text-iron/70 hover:border-signal/50 hover:text-iron"
+                  ? "bg-signal text-iron"
+                  : "border border-rag/15 text-rag/75 hover:text-rag"
               }`}
             >
-              Brief
-              <span className="grid h-4 min-w-4 place-items-center rounded-full bg-signal px-1 text-[10px] font-bold text-signal-ink">
-                {answered}
-              </span>
+              Card · {answered}
             </button>
           </div>
         </div>
 
-        {/* Plain label: a form that talks, not presence */}
-        <div className="border-b border-iron/10 bg-iron/[0.03] px-4 py-2 sm:px-5">
-          <p className="font-plex-mono text-caption leading-relaxed tracking-tight text-ink/70">
-            This is an intake form that reads like a conversation. No one is
-            typing — a person reads every answer and replies within one
-            business day.
-          </p>
-        </div>
-
         {/* Progress */}
-        <div className="h-px shrink-0 bg-iron/10">
+        <div className="h-1 shrink-0 bg-iron-2">
           <div
             className="h-full bg-signal transition-[width] duration-500 ease-out"
             style={{ width: `${progress}%` }}
@@ -1306,14 +1546,14 @@ export function CrewSession({
           role="log"
           aria-label="Intake conversation"
           aria-live="polite"
-          className="min-h-0 flex-1 overflow-y-auto px-5 py-5"
+          className="min-h-0 flex-1 overflow-y-auto px-5 py-5 text-rag"
         >
           <div className="mb-5 flex items-center gap-3">
-            <span className="h-px flex-1 bg-iron/10" aria-hidden />
-            <span className="whitespace-nowrap font-plex-mono text-[0.66rem] tracking-wide text-ink/50">
-              {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" })} · intake
+            <span className="h-px flex-1 bg-rag/10" aria-hidden />
+            <span className="whitespace-nowrap font-plex-mono text-[0.66rem] tracking-wide text-rag/45">
+              {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" })} · desk
             </span>
-            <span className="h-px flex-1 bg-iron/10" aria-hidden />
+            <span className="h-px flex-1 bg-rag/10" aria-hidden />
           </div>
 
           {msgs.map((msg) => {
@@ -1328,24 +1568,24 @@ export function CrewSession({
                   >
                     {yours ? (
                       <span
-                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-iron/10 font-plex-sans text-[10px] font-semibold uppercase tracking-wide text-iron/70"
+                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-rag/15 font-plex-sans text-[10px] font-semibold uppercase tracking-wide text-rag/70"
                         aria-label="You"
                       >
                         You
                       </span>
                     ) : (
                       <span
-                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-iron text-[10px] font-bold text-signal"
+                        className="grid h-7 w-7 shrink-0 place-items-center overflow-hidden rounded-full bg-iron-2 text-[10px] font-bold text-signal"
                         aria-hidden
                       >
-                        ·
+                        {lead.name[0]}
                       </span>
                     )}
                     <div
                       className={`px-4 py-2.5 font-newsreader text-[0.95rem] leading-reading ${
                         yours
-                          ? "rounded-[16px] rounded-br-[5px] bg-iron text-rag"
-                          : "rounded-[16px] rounded-bl-[5px] bg-iron/[0.05] text-iron ring-1 ring-iron/10"
+                          ? "rounded-[22px] rounded-br-[6px] bg-signal text-iron"
+                          : "rounded-[22px] rounded-bl-[6px] bg-rag/[0.08] text-rag ring-1 ring-rag/10"
                       }`}
                     >
                       {msg.text}
@@ -1358,7 +1598,7 @@ export function CrewSession({
             if (msg.kind === "note") {
               return (
                 <div key={msg.id} className="msg-in my-2 flex justify-center">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-iron/10 bg-iron/[0.03] px-3 py-1 font-plex-mono text-[0.64rem] tracking-wide text-ink/60">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-rag/15 bg-rag/[0.06] px-3 py-1 font-plex-mono text-[0.64rem] tracking-wide text-rag/60">
                     {msg.text}
                   </span>
                 </div>
@@ -1383,12 +1623,12 @@ export function CrewSession({
                         disabled={!enabled}
                         aria-pressed={picked}
                         onClick={() => submitChip(msg.name, option)}
-                        className={`rounded-input border px-3.5 py-2 font-plex-sans text-[0.82rem] font-medium transition-colors ${
+                        className={`rounded-full border px-4 py-2 font-plex-sans text-[0.82rem] font-medium transition-colors ${
                           picked
-                            ? "border-signal/60 bg-signal/10 text-iron"
+                            ? "border-signal bg-signal text-iron"
                             : enabled
-                              ? "border-iron/15 text-iron/85 hover:border-signal/50 hover:text-iron"
-                              : "cursor-default border-iron/[0.06] text-iron/30"
+                              ? "border-rag/20 text-rag hover:border-signal hover:text-signal"
+                              : "cursor-default border-rag/10 text-rag/30"
                         }`}
                       >
                         {option}
@@ -1401,7 +1641,7 @@ export function CrewSession({
 
             return (
               <div key={msg.id} className="msg-in mb-4 flex justify-center pt-2">
-                <div className="flex max-w-[94%] flex-col items-center gap-2.5 rounded-surface border border-signal/30 bg-signal/[0.07] px-7 py-6 text-center">
+                <div className="flex max-w-[94%] flex-col items-center gap-2.5 rounded-[28px] border border-signal/40 bg-signal/[0.12] px-7 py-6 text-center">
                   <svg viewBox="0 0 52 52" className="h-11 w-11" aria-hidden>
                     <circle
                       cx="26"
@@ -1422,14 +1662,14 @@ export function CrewSession({
                       className="check-stroke"
                     />
                   </svg>
-                  <p className="font-plex-sans text-[0.82rem] font-semibold tracking-tight text-iron">
+                  <p className="font-plex-sans text-[0.82rem] font-semibold tracking-tight text-rag">
                     {msg.title}
                   </p>
-                  <p className="max-w-[42ch] font-newsreader text-sm leading-reading text-ink/80">
+                  <p className="max-w-[42ch] font-newsreader text-sm leading-reading text-rag/80">
                     {msg.text}
                   </p>
                   {deliveryNote ? (
-                    <p className="font-plex-mono text-[0.64rem] tracking-wide text-ink/50">
+                    <p className="font-plex-mono text-[0.64rem] tracking-wide text-rag/50">
                       {deliveryNote}
                     </p>
                   ) : null}
@@ -1439,17 +1679,17 @@ export function CrewSession({
           })}
 
           {phase === "done" ? (
-            <div className="dc-divider mt-2 font-plex-mono text-[0.7rem] tracking-wide text-ink/50">
+            <div className="dc-divider mt-2 font-plex-mono text-[0.7rem] tracking-wide text-rag/50">
               Brief filed · a person replies within one business day
             </div>
           ) : null}
         </div>
 
         {/* Brief fields strip */}
-        <div className="shrink-0 border-t border-iron/10 px-5 py-2">
+        <div className="shrink-0 border-t border-rag/10 px-5 py-2">
           <div className="flex items-center gap-2 overflow-x-auto pb-0.5" aria-hidden>
-            <span className="shrink-0 font-plex-mono text-[0.64rem] tracking-wide text-ink/60">
-              Capturing
+            <span className="shrink-0 font-plex-mono text-[0.64rem] tracking-wide text-rag/55">
+              On the card
             </span>
             {fields.map((field) => {
               const got = Boolean(answers[field.name]);
@@ -1457,11 +1697,11 @@ export function CrewSession({
                 <span
                   key={field.name}
                   className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-plex-sans text-[0.64rem] font-medium ${
-                    got ? "border-signal/50 text-iron" : "border-iron/10 text-ink/50"
+                    got ? "border-signal/70 text-signal" : "border-rag/15 text-rag/45"
                   }`}
                 >
                   <span
-                    className={`h-1.5 w-1.5 rounded-full ${got ? "bg-signal" : "bg-ink/30"}`}
+                    className={`h-1.5 w-1.5 rounded-full ${got ? "bg-signal" : "bg-rag/30"}`}
                     aria-hidden
                   />
                   {field.label}
@@ -1472,13 +1712,13 @@ export function CrewSession({
         </div>
 
         {/* Composer */}
-        <div className="shrink-0 border-t border-iron/10 px-5 py-3">
+        <div className="shrink-0 border-t border-rag/10 px-5 py-3">
           {currentField && !isChoice(currentField) ? (
             <>
               <div
                 key={shake}
-                className={`flex items-center gap-2 rounded-input border bg-rag px-3.5 py-2 transition-colors ${
-                  inputError ? "animate-shake border-blocked/60" : "border-iron/15 focus-within:border-iron/30"
+                className={`flex items-center gap-2 rounded-full border bg-iron-2 px-4 py-2 transition-colors ${
+                  inputError ? "animate-shake border-blocked/60" : "border-rag/15 focus-within:border-signal/50"
                 }`}
               >
                 <textarea
@@ -1487,7 +1727,7 @@ export function CrewSession({
                   rows={1}
                   disabled={!readyForInput}
                   aria-label={currentField.label}
-                  placeholder={PLACEHOLDERS[currentField.name] ?? "Type here…"}
+                  placeholder={PLACEHOLDERS[currentField.name] ?? "Leave a line…"}
                   onChange={(e) => {
                     setInput(e.target.value);
                     autoGrow(e.target);
@@ -1498,14 +1738,14 @@ export function CrewSession({
                       send();
                     }
                   }}
-                  className="max-h-[132px] flex-1 resize-none bg-transparent py-1.5 font-plex-sans text-sm leading-relaxed text-iron outline-none placeholder:text-ink/40"
+                  className="max-h-[132px] flex-1 resize-none bg-transparent py-1.5 font-plex-sans text-sm leading-relaxed text-rag outline-none placeholder:text-rag/35"
                 />
                 <button
                   type="button"
                   aria-label="Send answer"
                   disabled={!readyForInput}
                   onClick={send}
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-input bg-signal text-signal-ink transition-colors hover:brightness-95 disabled:opacity-35"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-signal text-signal-ink transition-transform hover:scale-105 disabled:opacity-35"
                 >
                   <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" aria-hidden>
                     <path
@@ -1521,25 +1761,25 @@ export function CrewSession({
               <div className="flex min-h-[1.25rem] items-center justify-between gap-3 pt-1.5">
                 <p
                   aria-live="polite"
-                  className={`font-plex-sans text-xs ${inputError ? "text-blocked" : "text-ink/60"}`}
+                  className={`font-plex-sans text-xs ${inputError ? "text-blocked" : "text-rag/55"}`}
                 >
-                  {inputError || "Press Enter to send"}
+                  {inputError || "Hit return. It lands on the card."}
                 </p>
-                <p className="font-plex-mono text-[0.64rem] text-ink/50">
-                  Every answer lands in the brief
+                <p className="font-plex-mono text-[0.64rem] text-rag/45">
+                  No charge on this desk
                 </p>
               </div>
             </>
           ) : (
-            <div className="flex min-h-[38px] items-center justify-between gap-3 font-plex-sans text-sm text-ink/60">
+            <div className="flex min-h-[38px] items-center justify-between gap-3 font-plex-sans text-sm text-rag/60">
               <p>
                 {botBusy
-                  ? "Recording your answer…"
+                  ? "Filing that line…"
                   : phase === "done"
-                    ? "Saved and on its way."
-                    : "Choose one of the options above to continue"}
+                    ? "On the desk. A person replies tomorrow."
+                    : "Tap a chip above"}
               </p>
-              <p className="shrink-0 font-plex-mono text-xs text-ink/50">Breakthrough Pulse</p>
+              <p className="shrink-0 font-plex-mono text-xs text-rag/45">No card taken</p>
             </div>
           )}
         </div>

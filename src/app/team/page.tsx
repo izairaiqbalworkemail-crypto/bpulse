@@ -3,6 +3,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { PortraitStrip } from "@/components/PortraitStrip";
+import { PageClose } from "@/components/PageClose";
 import { specialists } from "@/content/specialists";
 import { crewCapability, crewCapabilityLine } from "@/content/crew-lines";
 
@@ -64,6 +65,7 @@ export default function TeamPage() {
               </div>
             );
           })}
+          <PageClose line="The name on the Check is the name on the Close." />
         </div>
       </div>
     </section>

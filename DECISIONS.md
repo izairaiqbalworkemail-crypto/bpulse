@@ -119,9 +119,9 @@ h1, h2, h3, p, .font-newsreader {
 
 `font-optical-sizing: auto` lets the browser derive opsz from the rendered size, so a 36px heading still renders at a reading-like optical size instead of the high-contrast display face. `font-variation-settings` pins the default to text-optical (opsz 16, wght 400) as a baseline. This prevents exactly the failure the brief describes: high-contrast serif on warm cream.
 
-### 5. Grid — 1180px with 32px gutters
+### 5. Grid — 820px with 20px gutters
 
-Chosen over ivee's measured 1200px. The brief's grid is settled at 1180px; ivee's 1200px confirms the convention, but we keep 1180px for the slightly tighter reading rhythm a catalogue wants.
+1180px read as a stretched brochure: cards ballooned, the desk became a cinema screen, type lost a spine. The site is now a compact column (820px, 20px gutters). Interior plates, the Check desk (phone-width), and the masthead share that measure. The home hero portal stays full-bleed inside its iron plate.
 
 ### 6. `signal` — enforced by review
 
@@ -153,6 +153,37 @@ Added an ESLint guard using `no-restricted-syntax` to block `className` strings 
 - `src/components/IntakeForm.tsx`
 
 This prevents regressions while the remaining routes are migrated to the same floor in later phases.
+
+---
+
+## Landing below the hero (Sep 2026)
+
+Hero stays: headline · sub · buttons · cropped portal. The tall iron plate now has the same rag inset on the bottom as on the sides, so the black ends on cream instead of colliding with a second full-bleed iron block.
+
+Rejected on the landing: a second full-viewport iron self-check, four-up stats, three capability cards, three process columns, circular avatar grid, stepped/wizard intake, gradient form chrome. Those read as a generated SaaS page.
+
+Adopted — four episodes after the hero. Photographs carry the page. Copy stays short. No invented revenue.
+
+Colour law: the hero is the iron room. Everything below stays rag. Soft 32 radius. No hairline tables, no second iron room, no signal wall. Motion is the same spring as the hero (180 / 24), with a lift on photographs.
+
+| Episode | Job | Object |
+|---|---|---|
+| 01 The last twenty | Wound + control | One cream plate: dome ring to 80% + four lock pills |
+| 02 Which is it | Matcher | Four wounds. A tap seeds the Check conversation |
+| 03 Work we actually did | Proof | Three 4/5 lot photographs |
+| 04 The path | Process | Check · Close · Standing, priced from the offer |
+| 05 The same hands | Trust | Six crew portraits + a count of the rest |
+| 06 The Check | Convert | Price, five day chips, conversation brief |
+
+Site nav is one sticky topbar in `SiteChrome` — every public page, including `/check`, `/careers`, `/notices`, `/work/[slug]`, `/team/[slug]`, and `/report/[slug]`. The iron plate no longer duplicates the masthead. Interior pages that do not run a conversation end on `PageClose`.
+
+Dropped as landing objects: field log, hold-card essays, catalogue rows, Check-day list, offer table, name directory, mark closer, radio-wall intake, timeline/budget quiz. Those live on `/work`, `/check`, and `/team`. The $1M/year target stays internal.
+
+The Check brief is three fields (what's stuck, email, optional repo). Same `/api/contact` payload. Situation defaults to `almost` unless the Check page prefills it.
+
+Every public door now uses `CrewSession` — home Check, `/check`, `/contact`, `/about`, `/careers`, `/team/[slug]`. Field sets live in `src/lib/intake/fields.ts` and reuse `BUDGET_BANDS`, `checkRunner`, `offer`, and `studioOpening`. Contact was rendering the conversation with no fields, so the log never started. No typing simulation. A person reads the brief.
+
+The live mark is the extruded B in `/public/bpulse-brand`. Nav, footer, and the last episode use it. The lockup is on `/about`. The plated icon is the contact stamp, intake header, favicon, and Apple touch icon. Json-LD uses the 512 icon. The full kit is on `/design`.
 
 ---
 

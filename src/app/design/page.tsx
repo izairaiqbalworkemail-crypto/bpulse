@@ -204,16 +204,81 @@ export default function DesignPage() {
       {/* Primitives — Mark */}
       <section className="mt-24">
         <SectionLabel>Mark</SectionLabel>
-        <div className="flex items-center gap-8 rounded-surface border border-iron/15 p-8">
-          <Mark size={200} />
-          <Mark size={64} />
-          <Mark size={32} />
-          <Mark size={16} />
-          <Mark size={32} mono />
+        <div className="flex flex-wrap items-end gap-8">
+          <div className="flex items-end gap-6 rounded-surface bg-iron p-8">
+            <Mark size={200} ground="iron" />
+            <Mark size={64} ground="iron" />
+            <Mark size={32} ground="iron" />
+          </div>
+          <div className="flex items-end gap-6 rounded-surface border border-iron/15 bg-rag p-8">
+            <Mark size={64} ground="rag" />
+            <Mark size={32} ground="rag" />
+            <Mark size={32} mono />
+          </div>
         </div>
-        <p className="mt-6 font-plex-mono text-caption text-ink/60">
-          200 / 64 / 32 / 16 px — cream face, signal sides
+        <p className="mt-6 font-plex-mono text-caption text-ink/70">
+          Cream face, gold extrusion. Iron face on rag. Mono is currentColor only.
         </p>
+      </section>
+
+      <section className="mt-24">
+        <SectionLabel>Brand kit</SectionLabel>
+        <div className="flex flex-col gap-10">
+          <figure>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/bpulse-brand/social/bpulse-og.svg"
+              alt="bpulse. We finish what starts."
+              width={1200}
+              height={630}
+              className="h-auto w-full rounded-[16px]"
+            />
+            <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+              social/bpulse-og · 1200 × 630
+            </figcaption>
+          </figure>
+          <figure>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/bpulse-brand/lockup/bpulse-lockup-dark.svg"
+              alt="bpulse lockup"
+              width={1600}
+              height={460}
+              className="h-auto w-full rounded-[16px]"
+            />
+            <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+              lockup-dark · 1600 × 460
+            </figcaption>
+          </figure>
+          <div className="flex flex-wrap items-end gap-8">
+            <figure>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/bpulse-brand/icon/bpulse-icon.svg"
+                alt="bpulse icon"
+                width={128}
+                height={128}
+                className="h-[128px] w-[128px]"
+              />
+              <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+                icon
+              </figcaption>
+            </figure>
+            <figure>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/bpulse-brand/favicon/bpulse-favicon.svg"
+                alt="bpulse favicon"
+                width={64}
+                height={64}
+                className="h-[64px] w-[64px]"
+              />
+              <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+                favicon · flat
+              </figcaption>
+            </figure>
+          </div>
+        </div>
       </section>
 
       {/* Primitives — DataLine */}

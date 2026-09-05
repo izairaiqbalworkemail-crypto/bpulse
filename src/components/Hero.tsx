@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { HeroFrame } from "@/components/HeroFrame";
 import { HeroPortal } from "@/components/HeroPortal";
+import { offer } from "@/content/offer";
 
 const spring = { type: "spring" as const, stiffness: 200, damping: 26 };
 
@@ -18,7 +19,7 @@ export function Hero() {
           and is cropped by the fold. Fixed 180/140 gaps leave a chrome
           sliver on 900px-tall laptops.
         */}
-        <div className="flex min-h-[52svh] w-full flex-col items-center justify-end px-5 pb-[clamp(2.5rem,8svh,8.75rem)] pt-28 md:min-h-[58svh] md:px-8 md:pt-32">
+        <div className="flex min-h-[52svh] w-full flex-col items-center justify-end px-5 pb-[clamp(2.5rem,8svh,8.75rem)] pt-16 md:min-h-[58svh] md:px-8 md:pt-20">
           <h1 className="mx-auto max-w-[900px] font-newsreader text-[40px] leading-[1.05] tracking-[-0.03em] md:text-[60px] xl:text-[96px]">
             <motion.span
               className="block text-rag"
@@ -57,7 +58,7 @@ export function Hero() {
               href="/check"
               className="inline-flex items-center rounded-full bg-signal px-6 py-3 font-plex-sans text-[15px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
             >
-              Book a call
+              {`Start the Check · $${offer.check.price.toLocaleString("en-US")}`}
             </Link>
             <Link
               href="/demo"

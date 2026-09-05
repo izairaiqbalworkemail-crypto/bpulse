@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { GateCard } from "@/components/GateCard";
 import { BeliefBlock } from "@/components/BeliefBlock";
+import { PageClose } from "@/components/PageClose";
 import {
   crewGates,
   standingReview,
@@ -45,6 +46,7 @@ export default function StandardPage() {
         <p className="mt-16 font-newsreader text-[16px] text-ink/80">
           {passRateNote}
         </p>
+        <PageClose line="The people who pass these gates are the ones on your Close." />
       </div>
     </section>
   );

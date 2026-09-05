@@ -3,6 +3,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { TierTable } from "@/components/TierTable";
+import { PageClose } from "@/components/PageClose";
 import { edpulseTracks, edpulseJoinNote } from "@/content/process";
 
 export const metadata: Metadata = buildMetadata({
@@ -46,6 +47,7 @@ export default function EdpulsePage() {
           </Link>
           .
         </p>
+        <PageClose line="Hiring is a different door. The Check is for a product that is stuck." />
       </div>
     </section>
   );

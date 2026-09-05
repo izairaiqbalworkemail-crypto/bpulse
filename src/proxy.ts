@@ -63,6 +63,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.png|logo.png|apple-icon.png|icon.svg).*)",
+    "/((?!_next/static|_next/image|favicon.png|logo.png|apple-icon.png|icon.svg|bpulse-brand/).*)",
   ],
 };

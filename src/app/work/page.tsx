@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { WorkIndex } from "@/components/WorkIndex";
+import { PageClose } from "@/components/PageClose";
 import { getCatalogue } from "@/content/catalogue";
 
 const count = getCatalogue().length;
@@ -24,6 +25,7 @@ export default function WorkPage() {
 
       <div className="grid-container pb-24 pt-10 md:pb-32 md:pt-14">
         <WorkIndex />
+        <PageClose line="Your lot is not in the log yet. A Check is how it gets there." />
       </div>
     </section>
   );

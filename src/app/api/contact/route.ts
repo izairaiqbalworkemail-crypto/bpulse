@@ -4,6 +4,7 @@ import { env } from "@/lib/env";
 import { getDb } from "@/lib/db";
 import { submissions } from "@/lib/db/schema";
 import { sendSubmissionEmail } from "@/lib/email";
+import { saveLocalSubmission } from "@/lib/intake/local-store";
 import { isRateLimited } from "@/lib/rate-limit";
 import { cacheSubmission, getCachedSubmission } from "@/lib/idempotency";
 
@@ -16,6 +17,10 @@ function fail(error: string, status: number) {
   return NextResponse.json({ ok: false, error, mailto: MAILTO_FALLBACK }, { status });
 }
 
+/**
+ * Intake always saves. Email is optional until Resend is on.
+ * Local dev without Neon writes `.data/submissions.jsonl`.
+ */
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try {
@@ -24,11 +29,8 @@ export async function POST(request: Request) {
     return fail("invalid body", 400);
   }
 
-  // Honeypot: a real visitor never fills a field named "website" here — it's
-  // visually hidden and unlabeled in every intake form. A filled value means
-  // a bot posted directly to the endpoint.
   if (typeof body.website === "string" && body.website.trim() !== "") {
-    return NextResponse.json({ ok: true, id: crypto.randomUUID() });
+    return NextResponse.json({ ok: true, id: crypto.randomUUID(), stored: "honeypot", emailed: false });
   }
 
   const ip =
@@ -48,7 +50,7 @@ export async function POST(request: Request) {
 
   const cached = await getCachedSubmission(requestId);
   if (cached) {
-    return NextResponse.json({ ok: true, id: cached });
+    return NextResponse.json({ ok: true, id: cached, stored: "cache", emailed: false });
   }
 
   const type = typeof body.type === "string" ? body.type : "unknown";
@@ -59,52 +61,90 @@ export async function POST(request: Request) {
   const { website: _website, ...payload } = body;
   void _website;
 
-  if (!env.DATABASE_URL || !env.RESEND_API_KEY) {
-    console.warn("[intake, no delivery channel configured]", { type, payload });
-    return fail("delivery is not configured in this environment", 500);
-  }
+  let submissionId = requestId;
+  let stored: "database" | "local" = "local";
 
-  let submissionId: string;
-  try {
-    const db = getDb();
-    const [row] = await db
-      .insert(submissions)
-      .values({
+  if (env.DATABASE_URL) {
+    try {
+      const db = getDb();
+      const [row] = await db
+        .insert(submissions)
+        .values({
+          type,
+          source: typeof body.source === "string" ? body.source : null,
+          payload,
+          email: email ?? null,
+          budget: budget ?? null,
+          timeline: timeline ?? null,
+          state: state ?? null,
+          requestId,
+        })
+        .onConflictDoNothing({ target: submissions.requestId })
+        .returning({ id: submissions.id });
+
+      if (row) {
+        submissionId = row.id;
+        stored = "database";
+      } else {
+        const existing = await getDb().query.submissions.findFirst({
+          where: (s, { eq }) => eq(s.requestId, requestId),
+        });
+        if (existing) {
+          submissionId = existing.id;
+          stored = "database";
+          await cacheSubmission(requestId, submissionId);
+          return NextResponse.json({
+            ok: true,
+            id: submissionId,
+            stored,
+            emailed: false,
+          });
+        }
+        submissionId = await saveLocalSubmission({
+          id: requestId,
+          type,
+          source: typeof body.source === "string" ? body.source : null,
+          email: email ?? null,
+          payload,
+          requestId,
+        });
+      }
+    } catch (err) {
+      console.error("[intake] database write failed, saving locally", err);
+      submissionId = await saveLocalSubmission({
+        id: requestId,
         type,
         source: typeof body.source === "string" ? body.source : null,
-        payload,
         email: email ?? null,
-        budget: budget ?? null,
-        timeline: timeline ?? null,
-        state: state ?? null,
+        payload,
         requestId,
-      })
-      .onConflictDoNothing({ target: submissions.requestId })
-      .returning({ id: submissions.id });
-
-    if (row) {
-      submissionId = row.id;
-    } else {
-      const existing = await getDb().query.submissions.findFirst({
-        where: (s, { eq }) => eq(s.requestId, requestId),
       });
-      if (!existing) throw new Error("conflict with no existing row");
-      submissionId = existing.id;
-      await cacheSubmission(requestId, submissionId);
-      return NextResponse.json({ ok: true, id: submissionId });
+      stored = "local";
     }
-  } catch (err) {
-    console.error("[intake] database write failed", err);
-    return fail("could not save your submission", 500);
+  } else {
+    submissionId = await saveLocalSubmission({
+      id: requestId,
+      type,
+      source: typeof body.source === "string" ? body.source : null,
+      email: email ?? null,
+      payload,
+      requestId,
+    });
+    stored = "local";
   }
 
-  try {
-    await sendSubmissionEmail({ type, payload, email, requestId });
-  } catch (err) {
-    console.error("[intake] email send failed", err);
-    return fail("saved, but the notification email failed to send", 500);
+  let emailed = false;
+  if (env.RESEND_API_KEY) {
+    try {
+      await sendSubmissionEmail({ type, payload, email, requestId });
+      emailed = true;
+    } catch (err) {
+      console.error("[intake] email send failed — brief is still saved", err);
+    }
+  } else {
+    console.info("[intake] saved without Resend", { id: submissionId, type, stored });
   }
 
   await cacheSubmission(requestId, submissionId);
-  return NextResponse.json({ ok: true, id: submissionId });
+  return NextResponse.json({ ok: true, id: submissionId, stored, emailed });
 }

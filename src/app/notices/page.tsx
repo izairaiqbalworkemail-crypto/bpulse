@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { FAQPageJsonLd } from "@/lib/JsonLd";
+import { PageHero } from "@/components/PageHero";
+import { PageClose } from "@/components/PageClose";
 import { notices } from "@/content/notices";
 
 export const metadata: Metadata = buildMetadata({
@@ -24,7 +25,13 @@ export default function NoticesPage() {
       />
 
       <section className="w-full bg-rag">
-        <div className="grid-container pb-24 pt-16 md:pb-32 md:pt-20">
+        <PageHero
+          kicker="Notices"
+          title="Questions we get asked, answered plainly."
+          dek="No accordion. The last one is what we are bad at."
+          hideAction
+        />
+        <div className="grid-container pb-24 pt-10 md:pb-32">
           <nav aria-label="Jump to a notice" className="border-b border-iron/20 pb-8">
             <ol className="flex flex-col gap-2">
               {notices.map((notice, index) => (
@@ -61,16 +68,7 @@ export default function NoticesPage() {
             ))}
           </div>
 
-          <p className="mt-8 font-newsreader text-[16px] text-ink/80">
-            Still a question?{" "}
-            <Link
-              href="/contact"
-              className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
-            >
-              Write to us
-            </Link>
-            .
-          </p>
+          <PageClose line="Still a question? Five days, or write the studio." />
         </div>
       </section>
     </>

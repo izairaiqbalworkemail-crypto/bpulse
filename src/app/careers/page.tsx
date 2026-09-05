@@ -2,47 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { GateCard } from "@/components/GateCard";
+import { PageHero } from "@/components/PageHero";
 import { brand } from "@/config/brand";
 import { crewGates } from "@/content/process";
-import { CrewSession, type FieldConfig } from "@/components/intake/CrewSession";
-
-const careerFields: FieldConfig[] = [
-  {
-    name: "mode",
-    label: "Which door?",
-    type: "radio",
-    options: ["Join the studio", "Pitch an idea"],
-    required: true,
-  },
-  {
-    name: "name",
-    label: "Your name",
-    type: "input",
-    required: true,
-    autoComplete: "name",
-  },
-  {
-    name: "email",
-    label: "Email",
-    type: "input",
-    input: "email",
-    required: true,
-    autoComplete: "email",
-  },
-  {
-    name: "link",
-    label: "A link to work you shipped",
-    type: "input",
-    required: false,
-    placeholder: "Optional",
-  },
-  {
-    name: "detail",
-    label: "What you'd bring, or the idea",
-    type: "textarea",
-    required: true,
-  },
-];
+import { CrewSession } from "@/components/intake/CrewSession";
 
 export const metadata: Metadata = buildMetadata({
   title: "Careers",
@@ -54,7 +17,13 @@ export const metadata: Metadata = buildMetadata({
 export default function CareersPage() {
   return (
     <section className="w-full bg-rag">
-      <div className="grid-container pb-24 pt-16 md:pb-32 md:pt-24">
+      <PageHero
+        kicker="Careers"
+        title="Join the crew, or pitch an idea."
+        dek="Candidates are never charged a fee at any stage. If someone asks you to pay to apply, it is not us."
+        hideAction
+      />
+      <div className="grid-container pb-24 pt-10 md:pb-32 md:pt-14">
         <p className="max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-ink">
           Breakthrough Pulse is a senior studio in Lahore. We finish products
           stuck at eighty percent. The people who scope the work ship it. We
@@ -84,7 +53,7 @@ export default function CareersPage() {
           <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
             The door
           </p>
-          <CrewSession type="careers" fields={careerFields} />
+          <CrewSession type="careers" source="careers" />
         </div>
 
         <div className="mt-20 border-t border-iron/20 pt-10">

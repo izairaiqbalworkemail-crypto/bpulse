@@ -3,6 +3,9 @@ import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { BeliefBlock } from "@/components/BeliefBlock";
 import { PortraitStrip } from "@/components/PortraitStrip";
+import { CrewSession } from "@/components/intake/CrewSession";
+import { PassAlong } from "@/components/PassAlong";
+import { VettedPay } from "@/components/VettedPay";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { studioBeliefs, studioOpening } from "@/content/beliefs";
 import { specialists } from "@/content/specialists";
@@ -33,6 +36,18 @@ export default function AboutPage() {
             {studioOpening}
           </p>
 
+          <div className="mt-12 overflow-hidden rounded-[16px]">
+            {/* SVG lockup — next/image is for raster. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/bpulse-brand/lockup/bpulse-lockup-dark.svg"
+              alt="bpulse"
+              width={1600}
+              height={460}
+              className="h-auto w-full"
+            />
+          </div>
+
           <div className="mt-16">
             {studioBeliefs.map((belief) => (
               <BeliefBlock key={belief.statement} {...belief} />
@@ -44,6 +59,19 @@ export default function AboutPage() {
               The crew
             </p>
             <PortraitStrip people={specialists} />
+          </div>
+
+          <div id="intake" className="mt-20">
+            <p className="mb-6 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+              Write the studio
+            </p>
+            <CrewSession type="about" source="about" />
+            <div className="mt-8">
+              <VettedPay />
+            </div>
+            <div className="mt-8">
+              <PassAlong />
+            </div>
           </div>
 
           <address className="mt-20 not-italic">

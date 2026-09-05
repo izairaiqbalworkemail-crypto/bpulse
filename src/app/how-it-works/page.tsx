@@ -3,6 +3,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { StageRail } from "@/components/StageRail";
+import { PageClose } from "@/components/PageClose";
 import { closeStages } from "@/content/process";
 
 export const metadata: Metadata = buildMetadata({
@@ -82,6 +83,7 @@ export default function HowItWorksPage() {
             </li>
           ))}
         </ol>
+        <PageClose line="The sample portal is the same stages, with sample data labelled sample." />
       </div>
     </section>
   );

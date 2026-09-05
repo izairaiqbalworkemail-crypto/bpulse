@@ -24,6 +24,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# local intake desk (no Resend / Neon yet)
+.data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Mark } from "@/components/primitives/Mark";
+import { Reveal } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 import { edition, addressLine } from "@/config/site";
 import pkg from "../../package.json";
@@ -37,17 +40,21 @@ export function Footer() {
   return (
     <footer className="on-iron w-full bg-iron text-rag">
       <div className="grid-container pt-14 pb-10 md:pt-[72px] md:pb-12 lg:pt-[100px] lg:pb-16">
-        <div className="flex items-center gap-5">
-          <Mark size={56} />
-          <span className="font-plex-sans text-[32px] font-medium leading-none tracking-[0.01em] text-rag">
-            bpulse
-          </span>
-        </div>
+        <Reveal>
+          <div className="flex items-center gap-5">
+            <Mark size={56} />
+            <span className="font-plex-sans text-[32px] font-medium leading-none tracking-[0.01em] text-rag">
+              bpulse
+            </span>
+          </div>
+        </Reveal>
 
-        <p className="mt-10 max-w-[500px] font-newsreader text-[24px] leading-[1.3] text-rag">
-          The last twenty percent is where products get stuck. That is where we
-          work.
-        </p>
+        <Reveal delay={0.08}>
+          <p className="mt-10 max-w-[500px] font-newsreader text-[24px] leading-[1.3] text-rag">
+            The last twenty percent is where products get stuck. That is where we
+            work.
+          </p>
+        </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           <nav aria-label="Work">

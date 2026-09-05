@@ -60,10 +60,13 @@ export const rootMetadata: Metadata = {
   metadataBase: new URL(brand.url),
   icons: {
     icon: [
+      { url: "/bpulse-brand/favicon/bpulse-favicon.svg", type: "image/svg+xml" },
       { url: "/icon.svg", type: "image/svg+xml" },
       { url: "/favicon.png", type: "image/png", sizes: "32x32" },
     ],
-    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    apple: [
+      { url: "/apple-icon.png", type: "image/png", sizes: "180x180" },
+    ],
   },
   openGraph: {
     title: brand.name,
@@ -72,8 +75,17 @@ export const rootMetadata: Metadata = {
     siteName: brand.name,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: brand.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${brand.name} — ${brand.tagline}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    images: [brand.ogImage],
   },
 };
