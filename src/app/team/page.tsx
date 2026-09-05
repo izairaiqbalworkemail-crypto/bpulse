@@ -6,10 +6,8 @@ import { PortraitStrip } from "@/components/PortraitStrip";
 import { PageClose } from "@/components/PageClose";
 import { specialists } from "@/content/specialists";
 import { crewCapability, crewCapabilityLine } from "@/content/crew-lines";
-import {
-  Atmosphere,
-  AtmosphereNote,
-} from "@/components/landing/Atmosphere";
+import { Episode } from "@/components/episode/Episode";
+import { AtmosphereNote } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
 
 export const metadata: Metadata = buildMetadata({
@@ -23,7 +21,7 @@ const groups = ["Integration", "Delivery", "Intelligence", "Operations"] as cons
 
 export default function TeamPage() {
   return (
-    <section className="w-full bg-rag">
+    <>
       <PageHero
         kicker="The crew"
         title="The people who ship it."
@@ -31,16 +29,15 @@ export default function TeamPage() {
         hideAction
       />
 
-      <div className="relative overflow-hidden pb-24">
-        <Atmosphere kind="paper" opacity={0.16} />
-        <div className="relative w-full px-5 pt-8 md:px-8 md:pt-12">
+      <Episode tone="cocoa">
           <PortraitStrip people={specialists} size="large" />
           <div className="mt-4">
-            <AtmosphereNote />
+            <AtmosphereNote tone="rag" />
           </div>
-        </div>
+      </Episode>
 
-        <div className="relative grid-container mt-20">
+      <Episode tone="paper">
+        <div>
           {groups.map((group, index) => {
             const people = specialists.filter(
               (person) => crewCapability[person.id] === group
@@ -88,7 +85,7 @@ export default function TeamPage() {
           </p>
           <PageClose line="The name on the Check is the name on the Close." />
         </div>
-      </div>
-    </section>
+      </Episode>
+    </>
   );
 }

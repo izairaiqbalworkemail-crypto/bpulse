@@ -2,20 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useLayoutEffect, useState, type ReactNode } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { LotPlate } from "@/components/catalog/LotPlate";
-import {
-  Atmosphere,
-  AtmosphereNote,
-} from "@/components/landing/Atmosphere";
+import { Episode, EpisodeHead } from "@/components/episode/Episode";
 import { FitBand, type FitSelection } from "@/components/landing/FitBand";
-import { PhotoFan } from "@/components/landing/PhotoFan";
-import { PeopleRail } from "@/components/PeopleRail";
 import {
   Count,
   Item,
-  Lift,
   Reveal,
   Rise,
   Stagger,
@@ -29,9 +23,9 @@ import { VettedPay } from "@/components/VettedPay";
 import { getCatalogue } from "@/content/catalogue";
 import { checkRunner } from "@/content/check";
 import {
+  controlCards,
   homeCrew,
   homeDays,
-  homeLocks,
   homeLots,
   homePath,
 } from "@/content/landing";
@@ -41,77 +35,10 @@ import { getSpecialist, specialists } from "@/content/specialists";
 import type { Specialist } from "@/content/types";
 import { scrollToSection } from "@/lib/scroll-section";
 
-const title =
-  "mt-2 max-w-[16ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-iron md:text-[34px]";
 const linkQuiet =
-  "font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron";
-
-function Episode({
-  children,
-  labelledBy,
-}: Readonly<{ children: ReactNode; labelledBy: string }>) {
-  return (
-    <section
-      id={labelledBy}
-      aria-labelledby={`${labelledBy}-heading`}
-      className="relative scroll-mt-[5.75rem] overflow-hidden bg-rag text-iron md:scroll-mt-28"
-    >
-      <Atmosphere kind="light" opacity={0.22} />
-      <div className="relative grid-container py-14 md:py-16">{children}</div>
-    </section>
-  );
-}
-
-function EpisodeHead({
-  n,
-  kicker,
-  id,
-  heading,
-  aside,
-  children,
-}: Readonly<{
-  n: string;
-  kicker: string;
-  id: string;
-  heading: string;
-  aside?: ReactNode;
-  children?: ReactNode;
-}>) {
-  return (
-    <div className="flex items-end justify-between gap-6">
-      <div className="min-w-0">
-        <Reveal>
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-            {n} · {kicker}
-          </p>
-        </Reveal>
-        <Rise delay={0.06}>
-          <h2 id={`${id}-heading`} className={title}>
-            {heading}
-          </h2>
-        </Rise>
-        {children ? (
-          <Reveal delay={0.1}>
-            <p className="mt-3 max-w-[34ch] font-newsreader text-[16px] leading-[1.45] text-ink">
-              {children}
-            </p>
-          </Reveal>
-        ) : null}
-        {aside ? (
-          <Reveal delay={0.16} className="mt-4 sm:hidden">
-            {aside}
-          </Reveal>
-        ) : null}
-      </div>
-      {aside ? (
-        <Reveal delay={0.16} className="hidden shrink-0 pb-1 sm:block">
-          {aside}
-        </Reveal>
-      ) : null}
-    </div>
-  );
-}
-
+  "font-plex-sans text-[15px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron";
+const linkQuietRag =
+  "font-plex-sans text-[15px] text-rag underline decoration-rag/35 underline-offset-4 hover:decoration-rag";
 
 function CrewCard({ person }: Readonly<{ person: Specialist }>) {
   const reduce = useReducedMotion();
@@ -124,42 +51,47 @@ function CrewCard({ person }: Readonly<{ person: Specialist }>) {
     .join("");
 
   return (
-    <Tilt intensity={8}>
-      <Link href={`/team/${person.id}`} className="group block">
-        <Wipe>
-          <div className="card-iron relative aspect-[3/4]">
-            {absent ? (
-              <div className="grid h-full place-items-center">
-                <span className="font-newsreader text-[32px] leading-none text-rag">
-                  {initials}
-                </span>
-              </div>
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={person.photo}
-                alt={person.name}
-                width={240}
-                height={320}
-                className={`h-full w-full object-cover object-top grayscale ${
-                  reduce
-                    ? ""
-                    : "transition-[filter,transform] duration-700 group-hover:scale-[1.06] group-hover:grayscale-0"
-                }`}
-              />
-            )}
-            <div className="absolute inset-x-3 bottom-3">
-              <p className="rounded-[12px] bg-rag/95 px-3 py-2 shadow-[var(--shadow-card)]">
-                <span className="block font-plex-sans text-[14px] font-medium text-iron">
-                  {person.name}
-                </span>
-                <span className="mt-0.5 block font-newsreader text-[13px] leading-[1.3] text-ink">
-                  {person.role}
-                </span>
+    <Tilt intensity={6}>
+      <Link href={`/team/${person.id}`} className="group block h-full">
+        <article className="card flex h-full flex-col overflow-hidden">
+          <Wipe>
+            <div className="relative aspect-[4/5] bg-iron">
+              {absent ? (
+                <div className="grid h-full place-items-center">
+                  <span className="font-newsreader text-[48px] leading-none text-rag">
+                    {initials}
+                  </span>
+                </div>
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={person.photo}
+                  alt={person.name}
+                  width={480}
+                  height={600}
+                  className={`h-full w-full object-cover object-top grayscale ${
+                    reduce
+                      ? ""
+                      : "transition-[filter,transform] duration-700 group-hover:scale-[1.04] group-hover:grayscale-0"
+                  }`}
+                />
+              )}
+            </div>
+          </Wipe>
+          <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
+            <div>
+              <h3 className="font-newsreader text-[26px] leading-[1.15] text-iron">
+                {person.name}
+              </h3>
+              <p className="mt-2 font-newsreader text-[16px] leading-[1.4] text-ink">
+                {person.role}
               </p>
             </div>
+            <p className="mt-6 font-plex-sans text-[14px] text-iron/70">
+              Profile →
+            </p>
           </div>
-        </Wipe>
+        </article>
       </Link>
     </Tilt>
   );
@@ -187,64 +119,42 @@ export function Landing() {
 
   return (
     <>
-      <Episode labelledBy="argument">
-        <Reveal>
-        <div className="card relative p-6 md:p-8">
-          <Atmosphere kind="paper" opacity={0.22} />
-          <div className="relative grid items-center gap-8 sm:grid-cols-[1fr_1.1fr]">
-            <Reveal delay={0.06}>
-              <PhotoFan
-                shots={lots
-                  .filter((lot) => lot.imageUrl)
-                  .map((lot) => ({
-                    src: lot.imageUrl as string,
-                    alt: `${lot.client} public site`,
-                  }))}
-              />
-            </Reveal>
-            <div className="min-w-0">
-              <EpisodeHead
-                n="01"
-                kicker="The last twenty"
-                id="argument"
-                heading="Most products die at 80%."
+      <Episode labelledBy="argument" tone="cocoa">
+        <EpisodeHead
+          n="01"
+          kicker="The last twenty"
+          id="argument"
+          heading="Most products die at 80%."
+          tone="cocoa"
+        >
+          Integration, compliance, handover. You keep the lock, the portal, and
+          the keys.
+        </EpisodeHead>
+        <Stagger className="mt-12 grid gap-5 md:grid-cols-2" delay={0.08} gap={0.08}>
+          {controlCards.map((lock) => (
+            <Item key={lock.title}>
+              <Link
+                href={lock.href}
+                className="group flex h-full min-h-[16rem] flex-col justify-between rounded-[24px] bg-iron-card p-8 shadow-[var(--shadow-card)] md:p-10"
               >
-                Integration, compliance, handover. You keep the lock, the
-                portal, and the keys.
-              </EpisodeHead>
-              <ul className="mt-6 space-y-2">
-                {homeLocks.map((lock, index) => (
-                  <li key={lock.title}>
-                    <Reveal delay={0.18 + index * 0.07}>
-                      <Lift>
-                        <Link
-                          href={lock.href}
-                          className="flex items-center justify-between gap-3 rounded-full bg-rag px-4 py-2 font-newsreader text-[15px] text-iron ring-1 ring-iron/10 transition-colors hover:bg-white"
-                        >
-                          {lock.title}
-                          <span aria-hidden="true">→</span>
-                        </Link>
-                      </Lift>
-                    </Reveal>
-                  </li>
-                ))}
-              </ul>
-              <Reveal delay={0.28} className="mt-6">
-                <PeopleRail
-                  people={crew.slice(0, 4)}
-                  line="The names on the Check"
-                />
-              </Reveal>
-              <div className="mt-4">
-                <AtmosphereNote />
-              </div>
-            </div>
-          </div>
-        </div>
-        </Reveal>
+                <div>
+                  <h3 className="max-w-[18ch] font-newsreader text-[26px] leading-[1.15] text-rag md:text-[30px]">
+                    {lock.title}
+                  </h3>
+                  <p className="mt-4 max-w-[36ch] font-newsreader text-[17px] leading-[1.5] text-rag/75">
+                    {lock.body}
+                  </p>
+                </div>
+                <p className="mt-8 font-plex-sans text-[15px] text-signal">
+                  {lock.label} →
+                </p>
+              </Link>
+            </Item>
+          ))}
+        </Stagger>
       </Episode>
 
-      <Episode labelledBy="fit">
+      <Episode labelledBy="fit" tone="paper">
         <EpisodeHead
           n="02"
           kicker="Which is it"
@@ -253,12 +163,12 @@ export function Landing() {
         >
           One tap starts the Check with that situation on the record.
         </EpisodeHead>
-        <Reveal delay={0.1} className="mt-8">
+        <Reveal delay={0.1} className="mt-12">
           <FitBand onStart={pickFit} />
         </Reveal>
       </Episode>
 
-      <Episode labelledBy="catalogue">
+      <Episode labelledBy="catalogue" tone="milk">
         <EpisodeHead
           n="03"
           kicker="Work we actually did"
@@ -272,16 +182,20 @@ export function Landing() {
         >
           DeepIDV, Sully, WearMeOut.
         </EpisodeHead>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
           {lots.map((lot, index) => (
-            <Reveal key={lot.slug} delay={0.1 + index * 0.08}>
-              <LotPlate lot={lot} compact />
+            <Reveal
+              key={lot.slug}
+              delay={0.1 + index * 0.08}
+              className={index === 0 ? "lg:col-span-2" : undefined}
+            >
+              <LotPlate lot={lot} compact={index !== 0} />
             </Reveal>
           ))}
         </div>
       </Episode>
 
-      <Episode labelledBy="path">
+      <Episode labelledBy="path" tone="paper">
         <EpisodeHead
           n="04"
           kicker="The path"
@@ -290,37 +204,37 @@ export function Landing() {
         >
           Lowest risk first. Nothing starts until you sign the lock.
         </EpisodeHead>
-        <Stagger className="mt-8 grid gap-3" delay={0.1} gap={0.1}>
+        <Stagger className="mt-12 grid gap-6" delay={0.1} gap={0.1}>
           {homePath.map((step, index) => (
             <Item key={step.name}>
               <Tilt>
                 <Link
                   href={step.href}
-                  className="card-iron group grid min-h-[10.5rem] sm:grid-cols-[1fr_10rem]"
+                  className="card-iron group grid min-h-[18rem] md:grid-cols-[1fr_18rem]"
                 >
-                  <div className="relative z-10 flex min-h-[10.5rem] flex-col justify-between p-5">
-                    <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/70">
+                  <div className="relative z-10 flex min-h-[18rem] flex-col justify-between p-8 md:p-10">
+                    <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
                       {String(index + 1).padStart(2, "0")} · {step.meter}
                     </p>
                     <div>
-                      <h3 className="font-newsreader text-[26px] leading-[1.1] tracking-[-0.02em] text-rag">
+                      <h3 className="font-newsreader text-[32px] leading-[1.1] tracking-[-0.015em] text-rag md:text-[40px]">
                         {step.name}
                       </h3>
-                      <p className="mt-1.5 max-w-[36ch] font-newsreader text-[15px] leading-[1.4] text-rag/80">
+                      <p className="mt-3 max-w-[42ch] font-newsreader text-[17px] leading-[1.45] text-rag/80">
                         {step.body}
                       </p>
-                      <p className="mt-3 font-plex-sans text-[14px] text-signal">
+                      <p className="mt-5 font-plex-sans text-[15px] text-signal">
                         {step.label} →
                       </p>
                     </div>
                   </div>
-                  <Wipe className="relative min-h-[10.5rem]">
+                  <Wipe className="relative min-h-[14rem] md:min-h-full">
                     <Image
                       src={step.image}
                       alt=""
                       fill
                       className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-                      sizes="160px"
+                      sizes="288px"
                     />
                   </Wipe>
                 </Link>
@@ -330,21 +244,26 @@ export function Landing() {
         </Stagger>
       </Episode>
 
-      <Episode labelledBy="crew">
+      <Episode labelledBy="crew" tone="cocoa">
         <EpisodeHead
           n="05"
           kicker="The same hands"
           id="crew"
           heading="The people who scope it ship it."
+          tone="cocoa"
           aside={
-            <Link href="/team" className={linkQuiet}>
+            <Link href="/team" className={linkQuietRag}>
               The whole crew
             </Link>
           }
         >
           {specialists.length} named people. No handoff mid-build.
         </EpisodeHead>
-        <Stagger className="mt-8 grid grid-cols-3 gap-3" delay={0.1} gap={0.07}>
+        <Stagger
+          className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          delay={0.1}
+          gap={0.07}
+        >
           {crew.map((person) => (
             <Item key={person.id}>
               <CrewCard person={person} />
@@ -353,8 +272,8 @@ export function Landing() {
         </Stagger>
         {more > 0 ? (
           <Reveal delay={0.16}>
-            <p className="mt-6 font-newsreader text-[15px] text-ink">
-              <Link href="/team" className={linkQuiet}>
+            <p className="mt-10 font-newsreader text-[18px] text-rag/80">
+              <Link href="/team" className={linkQuietRag}>
                 {more} more on the crew page
               </Link>
             </p>
@@ -362,7 +281,7 @@ export function Landing() {
         ) : null}
       </Episode>
 
-      <Episode labelledBy="match">
+      <Episode labelledBy="match" tone="milk">
         <EpisodeHead
           n="06"
           kicker="The Match"
@@ -375,92 +294,91 @@ export function Landing() {
           }
         >
           Not a guess and not a model. We read what you write against{" "}
-          {recordCount} real engagements, then name the person and
-          the reason.
+          {recordCount} real engagements, then name the person and the reason.
         </EpisodeHead>
-        <Reveal delay={0.1} className="mt-8">
-          <div className="card p-5 md:p-8">
+        <Reveal delay={0.1} className="mt-12">
+          <div className="card p-8 md:p-12">
             <MatchDesk compact />
           </div>
         </Reveal>
       </Episode>
 
-      <Episode labelledBy="check">
-        <Reveal>
-          <div className="relative grid overflow-hidden rounded-[24px] bg-signal text-iron sm:grid-cols-[1fr_11rem]">
-            <div className="relative p-6 md:p-8">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-iron/70">
-                07 · The Check
-              </p>
-              <Rise delay={0.06}>
-                <h2
-                  id="check-heading"
-                  className="mt-2 max-w-[12ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-iron md:text-[34px]"
-                >
-                  Five days. A verdict.
-                </h2>
-              </Rise>
-              <p className="mt-4 font-newsreader text-[48px] leading-none tracking-[-0.04em] text-iron md:text-[56px]">
-                <Count prefix="$" to={offer.check.price} />
-              </p>
-              <ol className="mt-5 flex flex-wrap gap-1.5">
-                {homeDays.map((day, index) => (
-                  <li key={day}>
-                    <Reveal delay={0.2 + index * 0.05}>
-                      <span className="inline-block rounded-full bg-iron/[0.08] px-3 py-1 font-plex-mono text-[11px] uppercase tracking-[0.06em] text-iron/80">
-                        {index + 1} · {day}
-                      </span>
-                    </Reveal>
-                  </li>
-                ))}
-              </ol>
-              <p className="mt-4 max-w-[34ch] font-newsreader text-[16px] leading-[1.45] text-iron/85">
-                Keep, repair, or rebuild. Credited on a Close within 30 days.
-              </p>
-              <div className="mt-5 flex flex-wrap items-center gap-4">
-                <button
-                  type="button"
-                  onClick={() => scrollToSection("intake")}
-                  className="inline-flex items-center rounded-full bg-iron px-5 py-2.5 font-plex-sans text-[14px] font-medium text-rag"
-                >
-                  Start on this desk
-                </button>
-                <Link
-                  href="/check"
-                  className="font-plex-sans text-[14px] text-iron/80 underline decoration-iron/30 underline-offset-4 hover:text-iron"
-                >
-                  How the five days work
-                </Link>
-              </div>
+      <Episode labelledBy="check" tone="signal">
+        <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+          <div>
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-iron/70">
+              07 · The Check
+            </p>
+            <Rise delay={0.06}>
+              <h2
+                id="check-heading"
+                className="mt-3 max-w-[12ch] font-newsreader text-[32px] leading-[1.1] tracking-[-0.015em] text-iron md:text-[42px]"
+              >
+                Five days. A verdict.
+              </h2>
+            </Rise>
+            <p className="mt-6 font-newsreader text-[64px] leading-none tracking-[-0.03em] text-iron md:text-[80px]">
+              <Count prefix="$" to={offer.check.price} />
+            </p>
+            <ol className="mt-8 flex flex-wrap gap-2">
+              {homeDays.map((day, index) => (
+                <li key={day}>
+                  <Reveal delay={0.2 + index * 0.05}>
+                    <span className="inline-block rounded-full bg-iron/[0.08] px-4 py-2 font-plex-mono text-[12px] uppercase tracking-[0.06em] text-iron/80">
+                      {index + 1} · {day}
+                    </span>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 max-w-[38ch] font-newsreader text-[18px] leading-[1.5] text-iron/85">
+              Keep, repair, or rebuild. Credited on a Close within 30 days.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                onClick={() => scrollToSection("intake")}
+                className="inline-flex min-h-12 items-center rounded-full bg-iron px-6 py-3 font-plex-sans text-[15px] font-medium text-rag"
+              >
+                Start on this desk
+              </button>
+              <Link
+                href="/check"
+                className="font-plex-sans text-[15px] text-iron/80 underline decoration-iron/30 underline-offset-4 hover:text-iron"
+              >
+                How the five days work
+              </Link>
             </div>
-            {runner.photo ? (
-              <Wipe className="relative min-h-[14rem] sm:min-h-full">
-                <Image
-                  src={runner.photo}
-                  alt={runner.name}
-                  fill
-                  className="object-cover object-top"
-                  sizes="176px"
-                />
-              </Wipe>
-            ) : null}
           </div>
-        </Reveal>
-        <Reveal delay={0.1} className="mt-8">
-          <div id="intake" className="scroll-mt-[5.75rem] pb-24 md:scroll-mt-28">
+          {runner.photo ? (
+            <Wipe className="relative min-h-[20rem] overflow-hidden rounded-[24px]">
+              <Image
+                src={runner.photo}
+                alt={runner.name}
+                fill
+                className="object-cover object-top"
+                sizes="256px"
+              />
+            </Wipe>
+          ) : null}
+        </div>
+        <Reveal delay={0.1} className="mt-16">
+          <div id="intake" className="scroll-mt-[5.75rem] md:scroll-mt-28">
             <PulseCheckIntake
               key={fit ? `${fit.situation}:${fit.note}` : "open"}
               source="home"
               prefill={
-                fit ? { situation: fit.situation, stuckNote: fit.note } : undefined
+                fit
+                  ? { situation: fit.situation, stuckNote: fit.note }
+                  : undefined
               }
             />
           </div>
         </Reveal>
-        <Reveal delay={0.14} className="mt-6">
+        <Reveal delay={0.14} className="mt-8">
           <VettedPay />
         </Reveal>
-        <Reveal delay={0.18} className="mt-6">
+        <Reveal delay={0.18} className="mt-8">
           <PassAlong />
         </Reveal>
       </Episode>

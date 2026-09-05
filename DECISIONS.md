@@ -18,6 +18,10 @@ Computed from the settled tokens.
 
 All pass WCAG AA; secondary text stays at or above 70% opacity.
 
+### Hero pill on iron-2 (Sep 2026)
+
+- `rgba(239,234,224,0.75)` on `#151C25` (nav on the pill): effective `#B9B7B1`, **8.55:1**. AAA.
+
 ### Dependency decisions (Sep 2026)
 
 - Added `motion` (`motion/react`) for spring-driven and path-morph animation in the hero because the brief explicitly requires Motion as the animation runtime.
@@ -156,9 +160,38 @@ This prevents regressions while the remaining routes are migrated to the same fl
 
 ---
 
+## Hero argument — the last twenty, on the desk (Sep 2026)
+
+The centered SaaS stack was structurally correct and commercially quiet. The hero is now an editorial desk: argument left, sample window right. The signature motion is a 2px rule that draws to 80% in rag, then the last 20% in signal — the product, not a decoration. The window settles like an object placed on iron (scale + a half-degree rotate), then a light tilt. The current stage pip breathes. Reduced motion stills all of it.
+
+Copy, price, seed, tokens, and the one iron surface did not change.
+
+---
+
+## Hero plate — cream sides, caramel card (Sep 2026)
+
+The opening is the old inset again, not a full-bleed black or cream wall. Paper (`#F4EEE6`) shows at the edges. The room is a dark chocolate caramel plate (`#3A2418` → `#1A100C`) with a warm signal wash. Home fills the viewport inside a 10–16px gutter. Inner pages use the same plate, shorter. Cream type, signal CTA. The sample window stays a paper object on the caramel.
+
+Contrast: `#F4EEE6` on `#1A100C` ≈ **14.8:1**. `#3C2A1D` on `#F2C230` remains the Check button.
+
+## Hero composition — one surface, contained window (Sep 2026)
+
+The seam above the pill was a second surface: a fixed masthead on rag, plus a spacer, plus a rag-inset iron plate. Home is now one caramel plate on paper, masthead inside the plate. The pill is `iron-2`, `rag/12` border, no blur, no shadow, not sticky.
+
+The portal is complete, not cropped. Desktop/tablet is a ~1000px window (chrome, stage rail, bar, three pairs). Mobile is a different DOM — a card, no chrome, dots + current label, two pairs. Both read `heroPortalView(getDemoOverview())`.
+
+Deviations from the ASCII, on purpose:
+
+- Seed stays: day 11 of **23**, **48%** used, six stages including Standing, next milestone is the reset-token line. The brief's 21 / 52% / five stages / “8 Sep” are not on the record.
+- Stage dates are not in the seed, so none are shown under the rail.
+- Headline, sub, and the two buttons are unchanged. The CTA is still `Start the Check · $1,500`, not “Book a call”.
+- The progress bar stays `signal`. That is a second fill next to the Check button; changing it would be a colour redesign.
+
+---
+
 ## Landing below the hero (Sep 2026)
 
-Hero stays: headline · sub · buttons · cropped portal. The tall iron plate now has the same rag inset on the bottom as on the sides, so the black ends on cream instead of colliding with a second full-bleed iron block.
+Hero stays: headline · sub · buttons · contained portal. The home hero is full-bleed iron; rag begins at the first episode.
 
 Rejected on the landing: a second full-viewport iron self-check, four-up stats, three capability cards, three process columns, circular avatar grid, stepped/wizard intake, gradient form chrome. Those read as a generated SaaS page.
 
@@ -175,7 +208,7 @@ Colour law: the hero is the iron room. Everything below stays rag. Soft 32 radiu
 | 05 The same hands | Trust | Six crew portraits + a count of the rest |
 | 06 The Check | Convert | Price, five day chips, conversation brief |
 
-Site nav is one sticky topbar in `SiteChrome` — every public page, including `/check`, `/careers`, `/notices`, `/work/[slug]`, `/team/[slug]`, and `/report/[slug]`. The iron plate no longer duplicates the masthead. Interior pages that do not run a conversation end on `PageClose`.
+Site nav is a pill. On `/` it sits *inside* the iron hero and scrolls away — not sticky, so the signal CTA does not follow every viewport. Inner pages render the same pill in document flow (`variant="solid"`) from `SiteChrome`. Interior pages that do not run a conversation end on `PageClose`.
 
 Dropped as landing objects: field log, hold-card essays, catalogue rows, Check-day list, offer table, name directory, mark closer, radio-wall intake, timeline/budget quiz. Those live on `/work`, `/check`, and `/team`. The $1M/year target stays internal.
 

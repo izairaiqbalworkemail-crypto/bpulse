@@ -3,13 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutGroup,
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { Mark } from "@/components/primitives/Mark";
 import { lots } from "@/content/lots";
 import { specialists } from "@/content/specialists";
@@ -47,15 +41,16 @@ const nav = [
 const FOCUS_TRAP_SELECTOR = "a[href], button:not([disabled])";
 const checkPrice = `$${offer.check.price.toLocaleString("en-US")}`;
 
-export function Masthead() {
+type MastheadProps = {
+  /** Hero sits on paper — chocolate pill. Inner pages use the same pill. */
+  variant?: "transparent" | "solid";
+};
+
+export function Masthead({ variant = "solid" }: Readonly<MastheadProps>) {
   const pathname = usePathname();
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
   const [menuOpenAt, setMenuOpenAt] = useState<string | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-
-  const scale = useTransform(scrollY, [0, 220], [1, 0.9]);
-  const y = useTransform(scrollY, [0, 220], [0, 6]);
 
   const open = menuOpenAt === pathname;
   const closeMenu = () => setMenuOpenAt(null);
@@ -102,28 +97,27 @@ export function Masthead() {
 
   return (
     <>
-      <motion.div
-        style={reduce ? undefined : { scale, y }}
-        className="origin-top"
+      <div
+        data-masthead={variant}
+        className="flex items-center justify-between gap-2 rounded-full border border-rag/12 bg-iron-2 p-2"
       >
-        <div className="flex items-center justify-between gap-2 rounded-full border border-rag/15 bg-iron/92 p-2 shadow-[0_18px_50px_-18px_rgba(13,18,24,0.65)] backdrop-blur-xl">
-          <Link
-            href="/"
-            onClick={(event) => {
-              if (pathname !== "/") return;
-              event.preventDefault();
-              closeMenu();
-              scrollToHero();
-            }}
-            className="flex shrink-0 items-center gap-2.5 pl-1.5"
-          >
-            <Mark size={36} />
-            <span className="hidden font-plex-sans text-[15px] font-medium tracking-[0.01em] text-rag sm:inline">
-              bpulse
-            </span>
-          </Link>
+        <Link
+          href="/"
+          onClick={(event) => {
+            if (pathname !== "/") return;
+            event.preventDefault();
+            closeMenu();
+            scrollToHero();
+          }}
+          className="flex shrink-0 items-center gap-2.5 pl-1.5"
+        >
+          <Mark size={36} />
+          <span className="hidden font-plex-sans text-[15px] font-medium tracking-[0.01em] text-rag sm:inline">
+            bpulse
+          </span>
+        </Link>
 
-          <LayoutGroup>
+        <LayoutGroup>
           <nav aria-label="Primary" className="hidden items-center gap-0.5 md:flex">
             {nav.map((item) => {
               const on =
@@ -132,8 +126,8 @@ export function Masthead() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative rounded-full px-4 py-2 font-plex-sans text-[14px] font-medium transition-colors duration-200 ${
-                    on ? "text-rag" : "text-rag/70 hover:text-rag"
+                  className={`relative rounded-full px-5 py-2.5 font-plex-sans text-[14px] font-medium transition-colors duration-150 ${
+                    on ? "text-rag" : "text-rag/75 hover:text-rag"
                   }`}
                 >
                   {item.label}
@@ -148,39 +142,38 @@ export function Masthead() {
               );
             })}
           </nav>
-          </LayoutGroup>
+        </LayoutGroup>
 
-          <div className="flex items-center gap-1">
-            <motion.div
-              className="hidden md:block"
-              whileHover={reduce ? undefined : { scale: 1.04, y: -1 }}
-              whileTap={reduce ? undefined : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 380, damping: 24 }}
+        <div className="flex items-center gap-1">
+          <motion.div
+            className="hidden md:block"
+            whileHover={reduce ? undefined : { scale: 1.04, y: -1 }}
+            whileTap={reduce ? undefined : { scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 380, damping: 24 }}
+          >
+            <Link
+              href="/check"
+              onClick={(event) => {
+                if (pathname !== "/") return;
+                event.preventDefault();
+                scrollToSection("intake");
+              }}
+              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
             >
-              <Link
-                href="/check"
-                onClick={(event) => {
-                  if (pathname !== "/") return;
-                  event.preventDefault();
-                  scrollToSection("intake");
-                }}
-                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-4 py-2 font-plex-sans text-[14px] font-medium text-iron"
-              >
-                Check · {checkPrice}
-              </Link>
-            </motion.div>
-            <button
-              type="button"
-              onClick={openMenu}
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              className="min-h-11 touch-manipulation rounded-full border border-rag/15 px-4 py-2 font-plex-mono text-[13px] text-rag/75 hover:text-rag md:hidden"
-            >
-              Menu
-            </button>
-          </div>
+              Check · {checkPrice}
+            </Link>
+          </motion.div>
+          <button
+            type="button"
+            onClick={openMenu}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className="min-h-11 touch-manipulation rounded-full px-5 py-2.5 font-plex-mono text-[13px] text-rag/75 transition-colors duration-150 hover:text-rag md:hidden"
+          >
+            Menu
+          </button>
         </div>
-      </motion.div>
+      </div>
 
       {open ? (
         <div

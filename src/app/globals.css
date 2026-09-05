@@ -6,17 +6,17 @@
 
 @theme inline {
   /* ── Surfaces ── */
-  --color-rag: #efeae0;
-  --color-rag-card: #f7f4ee;
-  --color-iron: #0d1218;
-  --color-iron-2: #151c25;
-  --color-iron-card: #1a222b;
-  --color-ink: #38424e;
-  --color-rag-mute: rgba(239, 234, 224, 0.75);
+  --color-rag: #f4eee6;
+  --color-rag-card: #faf6f0;
+  --color-iron: #3c2a1d;
+  --color-iron-2: #2f2118;
+  --color-iron-card: #4a3526;
+  --color-ink: #5c4a3d;
+  --color-rag-mute: rgba(244, 238, 230, 0.78);
 
   /* ── Accent ── */
   --color-signal: #f2c230;
-  --color-signal-ink: #10161c;
+  --color-signal-ink: #3c2a1d;
 
   /* ── Grades ── */
   --color-partial: #4a8f6f;
@@ -55,6 +55,7 @@
 
   /* ── Grid ── */
   --size-grid: 820px;
+  --size-stage: 1120px;
   --spacing-gutter: 20px;
 
   /* ── Headings ── */
@@ -81,17 +82,17 @@
 
   /* Paper-ground shadow system (brand-tinted, no pure black) */
   --shadow-card:
-    0 1px 2px rgba(16, 22, 28, 0.04),
-    0 10px 28px -10px rgba(16, 22, 28, 0.12),
-    0 28px 56px -24px rgba(16, 22, 28, 0.14);
+    0 1px 2px rgba(60, 42, 29, 0.04),
+    0 10px 28px -10px rgba(60, 42, 29, 0.1),
+    0 28px 56px -24px rgba(60, 42, 29, 0.12);
   --shadow-raised:
-    0 2px 6px rgba(16, 22, 28, 0.05),
-    0 18px 36px -12px rgba(16, 22, 28, 0.16),
-    0 40px 72px -28px rgba(16, 22, 28, 0.18);
+    0 2px 6px rgba(60, 42, 29, 0.05),
+    0 18px 36px -12px rgba(60, 42, 29, 0.14),
+    0 40px 72px -28px rgba(60, 42, 29, 0.16);
   --shadow-artifact:
-    0 2px 6px -2px rgba(16, 22, 28, 0.08),
-    0 18px 34px -20px rgba(16, 22, 28, 0.22),
-    0 36px 68px -40px rgba(16, 22, 28, 0.16);
+    0 2px 6px -2px rgba(60, 42, 29, 0.07),
+    0 18px 34px -20px rgba(60, 42, 29, 0.18),
+    0 36px 68px -40px rgba(60, 42, 29, 0.14);
 }
 
 /* ──────────────────────────────────────────────
@@ -118,9 +119,9 @@ html {
 
 body {
   overflow-x: clip;
-  font-family: var(--font-newsreader), Georgia, serif;
+  font-family: var(--font-plex-sans), "Source Sans 3", sans-serif;
   font-size: var(--text-reading);
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--color-ink);
   background: var(--color-rag);
   -webkit-font-smoothing: antialiased;
@@ -128,20 +129,21 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Newsreader is a variable font with an opsz axis (6–72).
-   Lock it to the TEXT optical size so it never renders as the
-   high-contrast display serif. font-optical-sizing: auto makes the
-   browser pick the opsz from the rendered size, so a 36px heading
-   still renders at a reading-like optical size rather than display. */
+/* Fraunces: soft optical axis. Headings stay calm, not engraved. */
 h1,
 h2,
 h3,
-p,
 .font-newsreader {
+  font-family: var(--font-newsreader), "Fraunces", Georgia, serif;
   font-optical-sizing: auto;
   font-variation-settings:
-    "opsz" 16,
-    "wght" 400;
+    "SOFT" 70,
+    "opsz" 36,
+    "wght" 500;
+}
+
+p {
+  font-optical-sizing: auto;
 }
 
 /* ──────────────────────────────────────────────
@@ -176,8 +178,8 @@ p,
   --leading-reading: 1.6;
 
   /* Letter spacing */
-  --tracking-tight: -0.02em;
-  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.01em;
+  --tracking-tighter: -0.015em;
 }
 
 /* ──────────────────────────────────────────────
@@ -189,12 +191,43 @@ p,
   max-width: 66ch;
 }
 
-/* Grid container */
+/* Grid container — documents, legal, desks */
 .grid-container {
   width: 100%;
   max-width: var(--size-grid);
   margin-inline: auto;
   padding-inline: var(--spacing-8);
+}
+
+/* Stage — public rooms. Wider than the reading column. */
+.stage-container {
+  width: 100%;
+  max-width: var(--size-stage);
+  margin-inline: auto;
+  padding-inline: var(--spacing-8);
+}
+
+/* Paper ground — heroes only. Do not stamp on every room. */
+.paper-ground {
+  background-color: var(--color-rag);
+  background-image:
+    radial-gradient(90rem 40rem at 8% -20%, rgba(242, 194, 48, 0.18), transparent 58%),
+    radial-gradient(70rem 36rem at 100% 120%, rgba(60, 42, 29, 0.07), transparent 52%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* Dark chocolate caramel plate — cream sides, one room inside. */
+.hero-plate {
+  overflow: hidden;
+  border-radius: 28px;
+  color: var(--color-rag);
+  background:
+    radial-gradient(72rem 36rem at 88% -8%, rgba(242, 194, 48, 0.16), transparent 52%),
+    radial-gradient(48rem 28rem at 0% 110%, rgba(196, 112, 42, 0.1), transparent 48%),
+    linear-gradient(168deg, #3a2418 0%, #241610 58%, #1a100c 100%);
+  box-shadow:
+    0 1px 0 rgba(242, 194, 48, 0.08) inset,
+    var(--shadow-raised);
 }
 
 /* Section rhythm */
@@ -660,8 +693,8 @@ p,
    ============================================================ */
 
 /*
-   Typing dots: reuse the Tailwind `animate-bounce` utility with staggered
-   delays (same pattern as IntakeForm's TypingIndicator). No custom keyframe.
+   No typing indicator, no read receipts, no presence markers —
+   the intake brief forbids simulated presence.
 */
 
 /* Message / row entrance — fade + slide + subtle scale */

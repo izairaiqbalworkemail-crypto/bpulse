@@ -6,10 +6,8 @@ import { PageClose } from "@/components/PageClose";
 import { Reveal } from "@/components/landing/Reveal";
 import { getCatalogue } from "@/content/catalogue";
 import { PeopleRail } from "@/components/PeopleRail";
-import {
-  Atmosphere,
-  AtmosphereNote,
-} from "@/components/landing/Atmosphere";
+import { Episode } from "@/components/episode/Episode";
+import { AtmosphereNote } from "@/components/landing/Atmosphere";
 import { specialists } from "@/content/specialists";
 
 const count = getCatalogue().length;
@@ -22,7 +20,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function WorkPage() {
   return (
-    <section className="w-full bg-rag">
+    <>
       <PageHero
         kicker="Catalogue"
         title="Twenty-four records. Nine in depth."
@@ -30,10 +28,8 @@ export default function WorkPage() {
         hideAction
       />
 
-      <div className="relative overflow-hidden">
-        <Atmosphere kind="paper" opacity={0.16} />
-        <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-14">
-<Reveal delay={0.06}>
+      <Episode tone="milk">
+          <Reveal delay={0.06}>
             <PeopleRail
               people={specialists.slice(0, 6)}
               line="The names on the lots"
@@ -44,8 +40,7 @@ export default function WorkPage() {
           </Reveal>
           <WorkIndex />
           <PageClose line="Your lot is not in the log yet. A Check is how it gets there." />
-        </div>
-      </div>
-    </section>
+      </Episode>
+    </>
   );
 }

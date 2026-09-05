@@ -38,15 +38,13 @@ export function FitBand({
   }
 
   return (
-    <div
-      className="card relative p-6 md:p-8"
-    >
-      <div className="grid gap-6 md:grid-cols-[5fr_7fr] md:gap-0">
+    <div className="card relative p-8 md:p-12">
+      <div className="grid gap-10 lg:grid-cols-[5fr_7fr] lg:gap-0">
         <div>
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
             What&rsquo;s stuck?
           </p>
-          <ul role="list" className="mt-4 grid gap-2">
+          <ul role="list" className="mt-5 grid gap-3">
             {fitSymptoms.map((entry) => {
               const on = selected.includes(entry.key);
               return (
@@ -55,10 +53,10 @@ export function FitBand({
                     type="button"
                     aria-pressed={on}
                     onClick={() => toggle(entry.key)}
-                    className={`flex w-full items-center justify-between gap-3 rounded-full border px-4 py-2 font-plex-sans text-[15px] transition-colors duration-150 ${
+                    className={`flex w-full items-center justify-between gap-3 rounded-[16px] border px-5 py-4 text-left font-plex-sans text-[16px] transition-colors duration-150 ${
                       on
-                        ? "border-signal/40 bg-signal/10 text-signal"
-                        : "border-iron/10 text-iron hover:border-iron/25"
+                        ? "border-signal bg-signal text-iron"
+                        : "border-iron/10 bg-rag text-iron hover:border-iron/25"
                     }`}
                   >
                     {entry.label}
@@ -75,7 +73,7 @@ export function FitBand({
           </ul>
         </div>
 
-        <div className="flex min-h-[18rem] flex-col border-iron/10 md:border-l md:pl-8">
+        <div className="flex min-h-[22rem] flex-col border-iron/10 lg:border-l lg:pl-12">
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
             The trace
           </p>
@@ -112,7 +110,7 @@ export function FitBand({
             <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
               Arrival state
             </p>
-            <p className="mt-1 font-newsreader text-[28px] leading-[1.05] tracking-[-0.03em] text-iron">
+            <p className="mt-1 font-newsreader text-[32px] leading-[1.08] tracking-[-0.015em] text-iron md:text-[36px]">
               {leading?.verdict ?? "Nothing on record"}
             </p>
             <p className="mt-2 max-w-[32ch] font-newsreader text-[15px] leading-[1.45] text-ink">

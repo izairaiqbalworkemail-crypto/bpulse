@@ -54,8 +54,8 @@ export function Mark({
 
   const face =
     ground === "rag"
-      ? { start: "#0d1218", mid: "#151c25", end: "#0d1218" }
-      : { start: "#fff8ec", mid: "#efeae0", end: "#d4cbb8" };
+      ? { start: "#3c2a1d", mid: "#2f2118", end: "#3c2a1d" }
+      : { start: "#fff8ec", mid: "#f4eee6", end: "#d4cbb8" };
 
   return (
     <svg

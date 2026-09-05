@@ -20,8 +20,7 @@ type PageHeroProps = {
 const checkPrice = `$${offer.check.price.toLocaleString("en-US")}`;
 
 /**
- * Interior-page hero. Iron plate, gold mark, one Check ask.
- * No 80% bar — the mark is the object.
+ * Interior opening. Same caramel plate as home. Cream type, one Check ask.
  */
 export function PageHero({
   kicker,
@@ -36,58 +35,66 @@ export function PageHero({
 
   return (
     <HeroFrame>
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={reduce ? { duration: 0 } : landSpring}
-      >
-        <Mark size={52} />
-      </motion.div>
-      <div className="mt-8 flex flex-col gap-7 md:mt-10">
-        <div>
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-rag/70">
-            {kicker}
-          </p>
-          <Rise delay={0.06}>
-            <h1 className="mt-3 max-w-[16ch] font-newsreader text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.04] tracking-[-0.03em] text-rag">
-              {title}
-            </h1>
-          </Rise>
-          {dek ? (
-            <motion.div
-              className="mt-4 max-w-[40ch] font-newsreader text-[18px] leading-[1.4] text-rag/70 md:text-[20px]"
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.16 }}
-            >
-              {dek}
-            </motion.div>
-          ) : null}
-        </div>
-        {!hideAction ? (
+      <div className="flex flex-1 flex-col justify-center px-6 py-14 md:px-12 md:py-20">
+        <div className="mx-auto flex w-full max-w-[720px] flex-col">
           <motion.div
-            className="flex flex-wrap items-center gap-4"
-            initial={reduce ? false : { opacity: 0, y: 12 }}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.22 }}
+            transition={reduce ? { duration: 0 } : landSpring}
           >
-            <Link
-              href={actionHref}
-              className="inline-flex min-h-11 w-fit touch-manipulation items-center gap-2 rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
-            >
-              {label}
-              <span aria-hidden="true">→</span>
-            </Link>
-            {actionHref === "/check" ? (
-              <Link
-                href="/contact"
-                className="font-plex-sans text-[14px] text-rag/80 underline decoration-rag/30 underline-offset-4 hover:text-rag hover:decoration-rag"
-              >
-                Or write the studio
-              </Link>
-            ) : null}
+            <Mark size={52} />
           </motion.div>
-        ) : null}
+          <div className="mt-8 flex flex-col gap-7 md:mt-10">
+            <div>
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-rag/70">
+                {kicker}
+              </p>
+              <Rise delay={0.06}>
+                <h1 className="mt-3 max-w-[16ch] font-newsreader text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.08] tracking-[-0.015em] text-rag">
+                  {title}
+                </h1>
+              </Rise>
+              {dek ? (
+                <motion.div
+                  className="mt-4 max-w-[40ch] font-newsreader text-[18px] leading-[1.45] text-rag/75 md:text-[20px]"
+                  initial={reduce ? false : { opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={
+                    reduce ? { duration: 0 } : { ...landSpring, delay: 0.16 }
+                  }
+                >
+                  {dek}
+                </motion.div>
+              ) : null}
+            </div>
+            {!hideAction ? (
+              <motion.div
+                className="flex flex-wrap items-center gap-4"
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={
+                  reduce ? { duration: 0 } : { ...landSpring, delay: 0.22 }
+                }
+              >
+                <Link
+                  href={actionHref}
+                  className="inline-flex min-h-11 w-fit touch-manipulation items-center gap-2 rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+                >
+                  {label}
+                  <span aria-hidden="true">→</span>
+                </Link>
+                {actionHref === "/check" ? (
+                  <Link
+                    href="/contact"
+                    className="font-plex-sans text-[14px] text-rag/75 underline decoration-rag/30 underline-offset-4 hover:text-rag hover:decoration-rag"
+                  >
+                    Or write the studio
+                  </Link>
+                ) : null}
+              </motion.div>
+            ) : null}
+          </div>
+        </div>
       </div>
     </HeroFrame>
   );

@@ -6,7 +6,7 @@ import { PageHero } from "@/components/PageHero";
 import { SignalPlate } from "@/components/SignalPlate";
 import { StageRail } from "@/components/StageRail";
 import { Credit } from "@/components/primitives/Credit";
-import { Atmosphere } from "@/components/landing/Atmosphere";
+import { Episode } from "@/components/episode/Episode";
 import { Reveal } from "@/components/landing/Reveal";
 import { Desk } from "@/components/conversation/Desk";
 import { PassAlong } from "@/components/PassAlong";
@@ -62,15 +62,11 @@ export default function CheckPage() {
         action="Start on this desk"
       />
 
-      <section
-        id="intake"
-        className="w-full scroll-mt-[5.75rem] bg-rag pt-14 pb-16 md:scroll-mt-28 md:pt-20"
-      >
-        <div className="grid-container">
+      <Episode labelledBy="intake" tone="paper">
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-            The conversation
+            02 · The conversation
           </p>
-          <h2 className="mt-3 max-w-[18ch] font-newsreader text-[32px] leading-[1.08] tracking-[-0.03em] text-iron md:text-[40px]">
+          <h2 id="intake-heading" className="mt-3 max-w-[18ch] font-newsreader text-[32px] leading-[1.08] tracking-[-0.015em] text-iron md:text-[40px]">
             Tell us what happens when you try to ship it.
           </h2>
           <p className="mt-5 max-w-[46ch] font-newsreader text-[18px] leading-[1.45] text-ink">
@@ -80,12 +76,10 @@ export default function CheckPage() {
           <div className="mt-10">
             <Desk scriptId="check" ending="read" />
           </div>
-        </div>
-      </section>
+      </Episode>
 
-      <section className="relative w-full overflow-hidden bg-rag">
-        <Atmosphere kind="paper" opacity={0.18} />
-        <div className="relative grid-container py-16 md:py-24">
+      <Episode tone="milk">
+        <div>
           <Reveal>
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Five days
@@ -129,7 +123,7 @@ export default function CheckPage() {
             .
           </p>
         </div>
-      </section>
+      </Episode>
     </>
   );
 }
