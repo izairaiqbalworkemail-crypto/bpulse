@@ -50,24 +50,28 @@ export const homeFits = [
     title: "Almost done",
     body: "Ninety percent, for months. The last twenty will not ship.",
     door: "check" as const,
+    image: "/project-shots/project-wearmeout.png",
   },
   {
     id: "stalled" as const,
     title: "Stalled",
     body: "The last person left. The build did not.",
     door: "check" as const,
+    image: "/project-shots/project-sully.png",
   },
   {
     id: "fragile" as const,
     title: "Live, but fragile",
     body: "Users are on it. Shipping still feels like a risk.",
     door: "check" as const,
+    image: "/project-shots/project-deepidv.png",
   },
   {
     id: "idea" as const,
     title: "Just an idea",
     body: "Nothing built yet. The Check is the wrong door — write the studio.",
     door: "contact" as const,
+    image: null,
   },
 ] as const;
 
@@ -78,6 +82,7 @@ export const homePath = [
     body: offer.check.description,
     href: "/check",
     label: "How the five days work",
+    image: "/team/aneeb.jpg",
   },
   {
     name: offer.close.name,
@@ -85,6 +90,7 @@ export const homePath = [
     body: offer.close.description,
     href: "/how-it-works",
     label: "The six stages",
+    image: "/project-shots/project-sully.png",
   },
   {
     name: offer.standing.name,
@@ -92,6 +98,7 @@ export const homePath = [
     body: "You can run it without us. Standing is if you want us, not because you have to.",
     href: "/how-it-works",
     label: "After handover",
+    image: "/team/hassan.jpg",
   },
 ] as const;
 

@@ -128,6 +128,47 @@ export function Lift({
   );
 }
 
+export function Tilt({
+  children,
+  className,
+  intensity = 10,
+}: Readonly<{ children: ReactNode; className?: string; intensity?: number }>) {
+  const reduce = useReducedMotion();
+  const rotateX = useSpring(0, landSpring);
+  const rotateY = useSpring(0, landSpring);
+
+  function onMove(event: PointerEvent<HTMLDivElement>) {
+    if (reduce) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width;
+    const py = (event.clientY - rect.top) / rect.height;
+    rotateY.set((px - 0.5) * intensity);
+    rotateX.set((0.5 - py) * intensity);
+  }
+
+  function reset() {
+    rotateX.set(0);
+    rotateY.set(0);
+  }
+
+  return (
+    <motion.div
+      className={className}
+      style={
+        reduce
+          ? undefined
+          : { rotateX, rotateY, transformPerspective: 900 }
+      }
+      onPointerMove={onMove}
+      onPointerLeave={reset}
+      whileHover={reduce ? undefined : { scale: 1.015 }}
+      transition={landSpring}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function Count({
   to,
   prefix = "",
