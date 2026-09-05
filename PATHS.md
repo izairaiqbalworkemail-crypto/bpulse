@@ -31,9 +31,10 @@ Home landing, from the hero down:
 
 | Button | Lands |
 |---|---|
-| Start the Check · $1,500 | `#intake` — desk opens fresh |
-| Match it against the record | `#match` |
-| Masthead / menu Check | `#intake` on home, `/check#intake` elsewhere |
+| Start the Check · $1,500 | Scrolls to the desk. No hash — refresh opens the hero. |
+| Match it against the record | Scrolls to episode 06. No hash. |
+| Logo (header, all screens) | Hero / top of `/` |
+| Masthead / menu Check | Desk on home (no hash), `/check#intake` elsewhere |
 | Fit cards (almost / stalled / fragile) | `#intake` with that arrival marked |
 | Just an idea | `/contact` |
 | Locks, lots, path, crew | Their pages (`/demo`, `/work/…`, `/check`, `/team/…`) |

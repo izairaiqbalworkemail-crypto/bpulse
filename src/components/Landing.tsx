@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useLayoutEffect, useState, type ReactNode } from "react";
 import { useReducedMotion } from "motion/react";
 import {
   Atmosphere,
@@ -42,6 +42,7 @@ import { getLot } from "@/content/lots";
 import { offer } from "@/content/offer";
 import { getSpecialist, specialists } from "@/content/specialists";
 import type { Lot, Specialist } from "@/content/types";
+import { scrollToSection } from "@/lib/scroll-section";
 
 const plate = "rounded-[24px]";
 const title =
@@ -216,23 +217,15 @@ export function Landing() {
   const runner = getSpecialist(checkRunner.id);
   const [fit, setFit] = useState<PulseCheckSituation | null>(null);
 
-  function goTo(id: string) {
-    const node = document.getElementById(id);
-    if (!node) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    node.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
-  }
-
   function pickFit(id: PulseCheckSituation) {
     setFit(id);
-    goTo("intake");
+    scrollToSection("intake");
   }
 
-  useEffect(() => {
-    const hash = window.location.hash.replace(/^#/, "");
-    if (!hash) return;
-    const frame = window.requestAnimationFrame(() => goTo(hash));
-    return () => window.cancelAnimationFrame(frame);
+  useLayoutEffect(() => {
+    if (!window.location.hash) return;
+    window.history.replaceState(null, "", "/");
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -536,12 +529,13 @@ export function Landing() {
                 Keep, repair, or rebuild. Credited on a Close within 30 days.
               </p>
               <div className="mt-5 flex flex-wrap items-center gap-4">
-                <a
-                  href="#intake"
+                <button
+                  type="button"
+                  onClick={() => scrollToSection("intake")}
                   className="inline-flex items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
                 >
                   Start on this desk
-                </a>
+                </button>
                 <Link
                   href="/check"
                   className="font-plex-sans text-[14px] text-rag/80 underline decoration-rag/30 underline-offset-4 hover:text-rag"

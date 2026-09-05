@@ -14,6 +14,7 @@ import { Mark } from "@/components/primitives/Mark";
 import { lots } from "@/content/lots";
 import { specialists } from "@/content/specialists";
 import { offer } from "@/content/offer";
+import { scrollToHero, scrollToSection } from "@/lib/scroll-section";
 
 const nav = [
   {
@@ -106,7 +107,16 @@ export function Masthead() {
         className="origin-top"
       >
         <div className="flex items-center justify-between gap-2 rounded-full border border-rag/15 bg-iron/92 p-2 shadow-[0_18px_50px_-18px_rgba(13,18,24,0.65)] backdrop-blur-xl">
-          <Link href="/" className="flex shrink-0 items-center gap-2.5 pl-1.5">
+          <Link
+            href="/"
+            onClick={(event) => {
+              if (pathname !== "/") return;
+              event.preventDefault();
+              closeMenu();
+              scrollToHero();
+            }}
+            className="flex shrink-0 items-center gap-2.5 pl-1.5"
+          >
             <Mark size={36} />
             <span className="hidden font-plex-sans text-[15px] font-medium tracking-[0.01em] text-rag sm:inline">
               bpulse
@@ -148,7 +158,12 @@ export function Masthead() {
               transition={{ type: "spring", stiffness: 380, damping: 24 }}
             >
               <Link
-                href={pathname === "/" ? "#intake" : "/check#intake"}
+                href="/check#intake"
+                onClick={(event) => {
+                  if (pathname !== "/") return;
+                  event.preventDefault();
+                  scrollToSection("intake");
+                }}
                 className="inline-flex rounded-full bg-signal px-4 py-2 font-plex-sans text-[14px] font-medium text-iron"
               >
                 Check · {checkPrice}
@@ -177,12 +192,21 @@ export function Masthead() {
           className="on-iron fixed inset-0 z-50 flex flex-col bg-iron text-rag"
         >
           <div className="flex items-center justify-between px-5 pt-4 md:px-8 md:pt-6">
-            <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              onClick={(event) => {
+                closeMenu();
+                if (pathname !== "/") return;
+                event.preventDefault();
+                scrollToHero();
+              }}
+              className="flex items-center gap-3"
+            >
               <Mark size={40} />
               <span className="font-plex-sans text-[15px] font-medium text-rag">
                 bpulse
               </span>
-            </div>
+            </Link>
             <button
               type="button"
               onClick={closeMenu}
@@ -212,8 +236,13 @@ export function Masthead() {
 
           <div className="mt-auto px-5 pb-10 md:px-8">
             <Link
-              href={pathname === "/" ? "#intake" : "/check#intake"}
-              onClick={closeMenu}
+              href="/check#intake"
+              onClick={(event) => {
+                closeMenu();
+                if (pathname !== "/") return;
+                event.preventDefault();
+                scrollToSection("intake");
+              }}
               className="inline-flex rounded-full bg-signal px-8 py-3.5 font-plex-sans text-[15px] font-medium text-iron"
             >
               Check · {checkPrice}

@@ -18,7 +18,10 @@ export function HeroFrame({ children, tall = false }: HeroFrameProps) {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-rag">
+    <section
+      id={tall ? "hero" : undefined}
+      className="relative overflow-hidden bg-rag"
+    >
       <Atmosphere kind="light" opacity={0.38} />
       <div className="relative z-10 px-3 pb-3 pt-3 md:px-5 md:pb-5 md:pt-5 lg:px-8 lg:pb-8 lg:pt-8">
         <motion.div

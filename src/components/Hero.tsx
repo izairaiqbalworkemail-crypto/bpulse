@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { HeroFrame } from "@/components/HeroFrame";
 import { HeroPortal } from "@/components/HeroPortal";
 import { offer } from "@/content/offer";
+import { scrollToSection } from "@/lib/scroll-section";
 
 const spring = { type: "spring" as const, stiffness: 180, damping: 26 };
 
@@ -48,19 +49,21 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={reduce ? { duration: 0 } : { ...spring, delay: 0.22 }}
           >
-            <a
-              href="#intake"
+            <button
+              type="button"
+              onClick={() => scrollToSection("intake")}
               className="inline-flex items-center rounded-full bg-signal px-6 py-3 font-plex-sans text-[15px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
             >
               {`Start the Check · $${offer.check.price.toLocaleString("en-US")}`}
-            </a>
-            <a
-              href="#match"
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection("match")}
               className="inline-flex items-center gap-2 font-plex-sans text-[15px] text-rag/80 hover:text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rag"
             >
               Match it against the record
               <span aria-hidden="true">→</span>
-            </a>
+            </button>
           </motion.div>
         </div>
 
