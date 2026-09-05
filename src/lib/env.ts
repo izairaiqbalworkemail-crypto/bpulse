@@ -1,17 +1,17 @@
 /**
- * Boot-time delivery contract. §8.6 of the old build moved this check from
- * boot to write-time, which meant a JSONL log always "succeeded" and the
- * failure became invisible. This module restores the boot-time contract:
- * in production, importing it without a delivery channel configured throws
- * and the build refuses to start. Local dev degrades to a console warning
- * so the app still runs without real credentials.
+ * Delivery contract.
+ * `next build` sets NODE_ENV=production and imports API routes to collect
+ * page data. Throwing on import there is what killed the Vercel compile
+ * (`Failed to collect configuration for /api/contact`). Missing keys still
+ * throw at runtime, once a request actually hits a function.
  */
 
 const isProduction = process.env.NODE_ENV === "production";
+const isBuild = process.env.NEXT_PHASE === "phase-production-build";
 
 function required(name: string): string | undefined {
   const value = process.env[name];
-  if (!value && isProduction) {
+  if (!value && isProduction && !isBuild) {
     throw new Error(
       `[boot] ${name} is not set. bpulse refuses to start in production without ` +
         `delivery and shared serverless state configured. Set ${name} and rebuild.`
