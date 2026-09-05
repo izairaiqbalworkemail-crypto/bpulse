@@ -851,6 +851,22 @@ p,
   }
 }
 
+@media print {
+  body:has(.read-doc) {
+    background: #efeae0 !important;
+  }
+  body:has(.read-doc) * {
+    visibility: visible !important;
+  }
+  body:has(.read-doc) header,
+  body:has(.read-doc) footer {
+    display: none !important;
+  }
+  body:has(.read-doc) .read-doc {
+    color: #0d1218;
+  }
+}
+
 /* ──────────────────────────────────────────────
    Focus on dark surfaces — 2px signal outline
 

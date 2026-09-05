@@ -21,7 +21,9 @@ stuck product
     │                 ├─ Write {name} ── /team/{id}#intake ── brief on their desk
     │                 └─ Or start a Check ── /check#intake ── condition on Aneeb's desk
     │
-    ├─ /check#intake ── same condition sheet, after the five days
+    ├─ /check ── structured intake (not a chatbot) ── /read/{token}
+    │
+    ├─ /second-chair ── Second Chair intake ── named engineer (Hassan)
     │
     └─ /contact  /about  /careers  /team/{id}
               same session chat, different door

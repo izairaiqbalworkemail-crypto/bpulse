@@ -11,7 +11,9 @@ import { scrollToSection, takeIntakeJump } from "@/lib/scroll-section";
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const report =
-    pathname.startsWith("/report/") || pathname.startsWith("/studio/");
+    pathname.startsWith("/report/") ||
+    pathname.startsWith("/studio/") ||
+    pathname.startsWith("/read/");
 
   useLayoutEffect(() => {
     if ("scrollRestoration" in history) {

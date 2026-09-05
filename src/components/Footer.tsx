@@ -15,7 +15,7 @@ const studioLinks = [
   { label: "The crew", href: "/team" },
   { label: "The standard", href: "/standard" },
   { label: "Security", href: "/security" },
-  { label: "Edpulse", href: "/edpulse" },
+  { label: "Second Chair", href: "/second-chair" },
   { label: "The Check", href: "/check" },
   { label: "The Match", href: "/match" },
   { label: "Sample portal", href: "/demo" },

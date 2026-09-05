@@ -1,5 +1,6 @@
 import { pgTable, text, timestamp, jsonb, uuid } from "drizzle-orm/pg-core";
 import type { MatchResult } from "@/lib/match/types";
+import type { PreliminaryRead } from "@/lib/read/types";
 
 export const submissions = pgTable("submissions", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -29,6 +30,15 @@ export const matchEvents = pgTable("match_events", {
   results: jsonb("results").$type<MatchResult[]>().notNull(),
   confidence: text("confidence").notNull(),
   session: text("session").notNull(),
+});
+
+export const reads = pgTable("reads", {
+  token: uuid("token").primaryKey(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  source: text("source").notNull(),
+  email: text("email"),
+  title: text("title").notNull(),
+  document: jsonb("document").$type<PreliminaryRead>().notNull(),
 });
 
 export const matchOutcomes = pgTable("match_outcomes", {

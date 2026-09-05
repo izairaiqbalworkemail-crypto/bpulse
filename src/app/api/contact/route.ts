@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { env } from "@/lib/env";
+import { env, hasDeliveryChannel } from "@/lib/env";
 import { getDb } from "@/lib/db";
 import { submissions } from "@/lib/db/schema";
 import { sendSubmissionEmail } from "@/lib/email";
@@ -54,6 +54,13 @@ export async function POST(request: Request) {
   }
 
   const type = typeof body.type === "string" ? body.type : "unknown";
+  if (
+    process.env.NODE_ENV === "production" &&
+    type === "second-chair" &&
+    !hasDeliveryChannel
+  ) {
+    return fail("Delivery is not configured. The note was not filed.", 503);
+  }
   const email = typeof body.email === "string" ? body.email : undefined;
   const budget = typeof body.budget === "string" ? body.budget : undefined;
   const timeline = typeof body.timeline === "string" ? body.timeline : undefined;

@@ -28,6 +28,14 @@ const LABELS: Record<string, string> = {
   link: "Link",
   source: "How they found bpulse",
   clientId: "Session ref",
+  shipWound: "When they try to ship",
+  product: "What they're building",
+  whoBuilt: "Who built it",
+  deadline: "Deadline",
+  whoSits: "Who sits",
+  whatTheyHold: "What they hold",
+  whatBreaks: "What breaks",
+  readUrl: "Read",
 };
 
 const SKIP_FIELDS = new Set(["website", "requestId"]);
@@ -92,5 +100,52 @@ export async function sendSubmissionEmail(input: SubmissionEmailInput): Promise<
 
   if (error) {
     throw new Error(`Resend send failed: ${error.message}`);
+  }
+}
+
+export async function sendReadEmails(input: {
+  visitorEmail: string;
+  requestId: string;
+  readUrl: string;
+  title: string;
+  payload: Record<string, unknown>;
+}): Promise<void> {
+  if (!resend) {
+    throw new Error("Email is not configured.");
+  }
+
+  const visitor = await resend.emails.send({
+    from: env.RESEND_FROM,
+    to: input.visitorEmail,
+    subject: `Your preliminary read from bpulse — ${input.title}`,
+    html: `
+      <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
+        <p style="font-size:18px;line-height:1.4;">The written read of what you described is here:</p>
+        <p><a href="${escapeHtml(input.readUrl)}">${escapeHtml(input.readUrl)}</a></p>
+        <p style="font-size:14px;color:#5a5a5a;">A person replies within one business day. This is not a diagnosis of code we have not seen.</p>
+      </div>
+    `,
+  });
+  if (visitor.error) {
+    throw new Error(`Resend send failed: ${visitor.error.message}`);
+  }
+
+  const studio = await resend.emails.send({
+    from: env.RESEND_FROM,
+    to: env.FOUNDER_EMAIL,
+    replyTo: input.visitorEmail,
+    subject: `Check intake — read filed — ${input.visitorEmail}`,
+    html: `
+      <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
+        <p>Read: <a href="${escapeHtml(input.readUrl)}">${escapeHtml(input.readUrl)}</a></p>
+        <p style="font-size:13px;color:#5a5a5a;">Request ${escapeHtml(input.requestId)}</p>
+        <table style="border-collapse:collapse;width:100%;">
+          ${fieldRows(input.payload)}
+        </table>
+      </div>
+    `,
+  });
+  if (studio.error) {
+    throw new Error(`Resend send failed: ${studio.error.message}`);
   }
 }

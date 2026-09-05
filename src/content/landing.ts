@@ -45,34 +45,54 @@ export const homeDays = ["Read", "Trace", "Map", "Grade", "Report"] as const;
 
 export const homeLots = ["deepidv", "sully", "wearmeout"] as const;
 
-export const homeFits = [
+/**
+ * The six wounds behind the Trace. Verdict and prefill copy are
+ * on-record wording from /check (incomplete, stalled,
+ * integration-blocked, unstable, unsound). Situation ids keep the
+ * intake seed mapping to the ConditionDesk situations.
+ */
+export const fitSymptoms = [
   {
-    id: "almost" as const,
-    title: "Almost done",
-    body: "Ninety percent, for months. The last twenty will not ship.",
-    door: "check" as const,
-    image: "/project-shots/project-wearmeout.png",
+    key: "staging-only" as const,
+    label: "won't deploy",
+    verdict: "Incomplete",
+    situation: "stalled" as const,
+    note: "It is built and staged. It still will not deploy.",
   },
   {
-    id: "stalled" as const,
-    title: "Stalled",
-    body: "The last person left. The build did not.",
-    door: "check" as const,
-    image: "/project-shots/project-sully.png",
+    key: "ghosted-dev" as const,
+    label: "dev ghosted",
+    verdict: "Stalled",
+    situation: "stalled" as const,
+    note: "The last person left. The build did not.",
   },
   {
-    id: "fragile" as const,
-    title: "Live, but fragile",
-    body: "Users are on it. Shipping still feels like a risk.",
-    door: "check" as const,
-    image: "/project-shots/project-deepidv.png",
+    key: "single-owner" as const,
+    label: "one person knows it",
+    verdict: "Single point of failure",
+    situation: "fragile" as const,
+    note: "One person holds it. Nothing ships without them.",
   },
   {
-    id: "idea" as const,
-    title: "Just an idea",
-    body: "Nothing built yet. The Check is the wrong door — write the studio.",
-    door: "contact" as const,
-    image: "/atmosphere/iron-ring.jpg",
+    key: "almost-done" as const,
+    label: "90% for months",
+    verdict: "Integration-blocked",
+    situation: "almost" as const,
+    note: "It has been at ninety percent for months. The last part will not ship.",
+  },
+  {
+    key: "real-data-break" as const,
+    label: "dies on real data",
+    verdict: "Unsound",
+    situation: "fragile" as const,
+    note: "It holds in the demo and breaks on real data.",
+  },
+  {
+    key: "no-release-owner" as const,
+    label: "no one owns release",
+    verdict: "Ownerless",
+    situation: "stalled" as const,
+    note: "Nobody owns the release. It cannot reach production.",
   },
 ] as const;
 

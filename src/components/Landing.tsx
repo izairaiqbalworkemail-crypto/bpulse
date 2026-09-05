@@ -8,6 +8,7 @@ import {
   Atmosphere,
   AtmosphereNote,
 } from "@/components/landing/Atmosphere";
+import { FitBand, type FitSelection } from "@/components/landing/FitBand";
 import { PhotoFan } from "@/components/landing/PhotoFan";
 import { PeopleRail } from "@/components/PeopleRail";
 import {
@@ -20,20 +21,15 @@ import {
   Tilt,
   Wipe,
 } from "@/components/landing/Reveal";
-import {
-  PulseCheckIntake,
-  type PulseCheckSituation,
-} from "@/components/intake/PulseCheckIntake";
+import { PulseCheckIntake } from "@/components/intake/PulseCheckIntake";
 import { MatchDesk } from "@/components/match/MatchDesk";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
-import { Mark } from "@/components/primitives/Mark";
 import { getCatalogue, lotEntryState } from "@/content/catalogue";
 import { checkRunner } from "@/content/check";
 import {
   homeCrew,
   homeDays,
-  homeFits,
   homeLocks,
   homeLots,
   homePath,
@@ -215,10 +211,10 @@ export function Landing() {
   const crew = homeCrew.map((id) => getSpecialist(id));
   const more = specialists.length - crew.length;
   const runner = getSpecialist(checkRunner.id);
-  const [fit, setFit] = useState<PulseCheckSituation | null>(null);
+  const [fit, setFit] = useState<FitSelection | null>(null);
 
-  function pickFit(id: PulseCheckSituation) {
-    setFit(id);
+  function pickFit(picked: FitSelection) {
+    setFit(picked);
     scrollToSection("intake");
   }
 
@@ -295,68 +291,9 @@ export function Landing() {
         >
           One tap starts the Check with that situation on the record.
         </EpisodeHead>
-        <Stagger className="mt-8 grid gap-3 sm:grid-cols-2" delay={0.12} gap={0.08}>
-          {homeFits.map((card, index) => {
-            const on = fit === card.id;
-            const copy = (
-              <div className="absolute inset-x-0 bottom-0 p-4">
-                <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/70">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-1 font-newsreader text-[22px] leading-[1.15] tracking-[-0.02em] text-rag">
-                  {card.title}
-                </h3>
-                <p className="mt-1.5 max-w-[28ch] font-newsreader text-[14px] leading-[1.4] text-rag/80">
-                  {card.body}
-                </p>
-              </div>
-            );
-            const frame = (
-              <div
-                className={`relative min-h-[13.5rem] overflow-hidden ${plate} ${
-                  on ? "ring-2 ring-signal" : ""
-                }`}
-              >
-                {card.image ? (
-                  <Image
-                    src={card.image}
-                    alt=""
-                    fill
-                    className="object-cover object-[center_22%]"
-                    sizes="(max-width: 768px) 100vw, 400px"
-                  />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center bg-iron">
-                    <Mark size={64} />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-iron via-iron/45 to-iron/10" />
-                {copy}
-              </div>
-            );
-            return (
-              <Item key={card.id}>
-                <Wipe>
-                  <Tilt>
-                    {card.door === "contact" ? (
-                      <Link href="/contact" className="block">
-                        {frame}
-                      </Link>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => pickFit(card.id)}
-                        className="block w-full text-left"
-                      >
-                        {frame}
-                      </button>
-                    )}
-                  </Tilt>
-                </Wipe>
-              </Item>
-            );
-          })}
-        </Stagger>
+        <Reveal delay={0.1} className="mt-8">
+          <FitBand onStart={pickFit} />
+        </Reveal>
       </Episode>
 
       <Episode labelledBy="catalogue">
@@ -561,9 +498,11 @@ export function Landing() {
         <Reveal delay={0.1} className="mt-8">
           <div id="intake" className="scroll-mt-[5.75rem] pb-24 md:scroll-mt-28">
             <PulseCheckIntake
-              key={fit ?? "open"}
+              key={fit ? `${fit.situation}:${fit.note}` : "open"}
               source="home"
-              prefill={fit ? { situation: fit } : undefined}
+              prefill={
+                fit ? { situation: fit.situation, stuckNote: fit.note } : undefined
+              }
             />
           </div>
         </Reveal>

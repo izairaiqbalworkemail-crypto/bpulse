@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/how-it-works",
     "/standard",
     "/edpulse",
+    "/second-chair",
     "/demo",
     "/work",
     "/team",

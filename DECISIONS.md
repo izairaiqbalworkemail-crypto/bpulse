@@ -283,3 +283,12 @@ This keeps the existing two token colours and never invents a third.
 ### Fix: entrance animations were freezing in real Chrome
 
 Found by capture inspection, not asserted: with the panel spring's `settled` state gating only the `transition.delay` (60s/999s while pending), motion never restarted the already-in-flight child animations when `settled` flipped — the pain list stayed at `opacity: 0` and the 80% bar never filled, in both dev and prod. Fixed by flipping the `animate` **targets** through `revealed = reduceMotion || settled` (0 → shown / `width: 0` → `"80%"`), so motion starts a new value animation on settle. Verified by pixel scan: the bar fill run spans 101–1058 of the 1200px track ≈ **79.8%** after settle.
+
+## The two converting pages (Sep 2026)
+
+- The read CTA is **Write Aneeb**, not “Book 20 minutes”. Same rule as The Match.
+- Education is named **Second Chair**. `/edpulse` redirects. The old Explorer/Accelerator/Mastery tracks were a different product (crew path) and are no longer sold on that URL.
+- The assigned engineer on the page is **Hassan Saulat** because the brief named him and he has a real photo and real lots (Sully, DeepIDV). The DeepIDV *lot* owner remains Mehak.
+- Pattern claims in the read only fire from `src/content/read-patterns.ts`, each slug justified by that lot’s `condition`. If nothing matches, the block is omitted. No invented “three of nine”.
+- No Second Chair testimonials. None exist. The proof section does not render.
+- Locally a read still files to `.data/reads.jsonl` without Resend so the artifact can be opened. Production without delivery keys returns 503 and no success state.

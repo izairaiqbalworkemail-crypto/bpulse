@@ -53,6 +53,31 @@ export function getHeroSeverity(selected: HeroPainKey[]): number {
   return Math.min(score / 12, 1);
 }
 
+const PAIN_ORDER: HeroPainKey[] = [
+  "almost-done",
+  "staging-only",
+  "single-owner",
+  "ghosted-dev",
+  "real-data-break",
+  "no-release-owner",
+];
+
+export function dominantPain(selected: HeroPainKey[]): HeroPainKey | null {
+  if (selected.length === 0) return null;
+  let dominant: HeroPainKey | null = null;
+  for (const key of selected) {
+    if (
+      dominant === null ||
+      PAIN_WEIGHT[key] > PAIN_WEIGHT[dominant] ||
+      (PAIN_WEIGHT[key] === PAIN_WEIGHT[dominant] &&
+        PAIN_ORDER.indexOf(key) < PAIN_ORDER.indexOf(dominant))
+    ) {
+      dominant = key;
+    }
+  }
+  return dominant;
+}
+
 export function buildHeroTracePath(selected: HeroPainKey[], width: number, height: number): string {
   const sampleCount = 48;
   const baseline = height / 2;
