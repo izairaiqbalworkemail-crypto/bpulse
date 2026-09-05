@@ -21,30 +21,34 @@ export const demoClock = {
   currentStage: "Build",
   nextMilestone: "Reset-token one-time use in production",
   daysElapsed: 11,
-  daysRemaining: 10,
-  lockedDays: 21,
+  daysRemaining: 12,
+  lockedDays: 23,
 };
 
 export const documents = [
   {
+    slug: "mutual-nda",
     name: "NDA",
     dated: "12 Aug 2026",
     status: "signed",
     href: "/demo/stubs/nda.txt",
   },
   {
+    slug: "statement-of-work",
     name: "Scope v2.1",
     dated: "18 Aug 2026",
     status: "signed",
     href: "/demo/stubs/scope.txt",
   },
   {
+    slug: "ip-assignment",
     name: "IP assignment",
     dated: "18 Aug 2026",
     status: "signed",
     href: "/demo/stubs/ip.txt",
   },
   {
+    slug: "change-order",
     name: "Change order 01 — password-reset tokens",
     dated: "28 Aug 2026",
     status: "signed",
@@ -68,8 +72,8 @@ export const scopeVersions = [
 export const scopeDiff = [
   {
     change: "Added: invalidate reset tokens on first success, 15-minute expiry.",
-    price: "+$4,200",
-    order: "CO-01",
+    price: "+$2,400",
+    order: "CO-2026-047",
   },
   {
     change: "Unchanged: per-IP and per-email sliding window on /api/register.",
@@ -80,10 +84,10 @@ export const scopeDiff = [
 
 export const changeOrders = [
   {
-    id: "CO-01",
+    id: "CO-2026-047",
     dated: "28 Aug 2026",
     request: "Reset tokens remain valid after first use.",
-    price: "$4,200",
+    price: "$2,400",
     signed: "28 Aug 2026",
   },
 ];
@@ -102,7 +106,7 @@ export const progress = {
     { env: "preview", status: "not connected", at: "—" },
     { env: "production", status: "not connected", at: "—" },
   ],
-  burndown: "11 of 21 locked days used. Sample.",
+  burndown: "11 of 23 locked days used. Sample.",
 };
 
 const finding = (

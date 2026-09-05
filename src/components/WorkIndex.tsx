@@ -1,19 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { FilterBar } from "@/components/FilterBar";
-import { ProofRow } from "@/components/ProofRow";
-import { Tilt } from "@/components/landing/Reveal";
-import { figureDisclaimer } from "@/content/lots";
+import { LotPlate } from "@/components/catalog/LotPlate";
+import { Trace } from "@/components/trace/Trace";
 import {
   entryStates,
   getCatalogue,
   type CatalogueRow,
 } from "@/content/catalogue";
 import { brand } from "@/config/brand";
+import { specFromIndex, specFromLot } from "@/lib/lot-trace";
 
 const ALL = "all";
 
@@ -31,6 +30,52 @@ function matches(row: CatalogueRow, filter: string) {
     return row.entryState === filter;
   }
   return row.kind === "lot" && row.capability === filter;
+}
+
+function CompactRow({ row }: Readonly<{ row: CatalogueRow }>) {
+  const href = row.kind === "lot" ? row.href : row.project.url;
+  const meta =
+    row.kind === "lot"
+      ? `${row.entryState} · ${row.capability}`
+      : [row.project.year, row.project.stack, row.entryState]
+          .filter(Boolean)
+          .join(" · ");
+  const spec =
+    row.kind === "lot" ? specFromLot(row.lot) : specFromIndex(row.project);
+  const className =
+    "group flex flex-col gap-3 border-b border-iron/20 py-5 md:flex-row md:items-center md:justify-between";
+  const inner = (
+    <>
+      <span className="w-[7.5rem] shrink-0">
+        <Trace spec={spec} size="inline" surface="paper" />
+      </span>
+      <span className="font-plex-sans text-[16px] font-medium text-iron underline decoration-iron/35 underline-offset-4 group-hover:decoration-iron">
+        {row.client}
+      </span>
+      <span className="max-w-[48ch] font-newsreader text-[16px] leading-[1.45] text-ink md:flex-1 md:px-8">
+        {row.line}
+      </span>
+      <span className="font-plex-mono text-[12px] text-ink/70 md:text-right">
+        {meta}
+      </span>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={className}
+        {...(row.kind === "index"
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+      >
+        {inner}
+      </Link>
+    );
+  }
+
+  return <div className={className}>{inner}</div>;
 }
 
 export function WorkIndex() {
@@ -53,103 +98,22 @@ export function WorkIndex() {
       />
 
       <LayoutGroup>
-        <div className="mt-12 flex flex-col gap-16">
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
           {featured.map((row) =>
             row.kind === "lot" ? (
-              <motion.article
-                key={row.id}
-                layout={!reduce}
-                className="border-t border-iron/20 pt-8"
-              >
-                <Link href={row.href} className="group block">
-                  <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-                    {row.lot.lotNumber} · {row.entryState}
-                  </p>
-                  <h2 className="mt-2 font-newsreader text-[24px] leading-[1.15] text-iron underline decoration-iron/30 underline-offset-4 group-hover:decoration-iron">
-                    {row.client}
-                  </h2>
-                  <p className="mt-2 max-w-[60ch] font-newsreader text-[18px] leading-[1.45] text-ink">
-                    {row.lot.title}
-                  </p>
-                  {row.lot.imageUrl ? (
-                    <Tilt>
-                      <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-[24px] bg-iron/5">
-                        <Image
-                          src={row.lot.imageUrl}
-                          alt=""
-                          fill
-                          className={`object-cover ${
-                            reduce ? "" : "transition-transform duration-700 group-hover:scale-[1.04]"
-                          }`}
-                          sizes="(max-width: 768px) 100vw, 820px"
-                        />
-                      </div>
-                    </Tilt>
-                  ) : null}
-                </Link>
-                <div className="mt-6 max-w-[720px]">
-                  {row.lot.dataLines
-                    .filter((line) => line.label !== "Client")
-                    .map((line) => (
-                      <ProofRow
-                        key={line.label}
-                        value={line.value}
-                        label={line.label}
-                        source={
-                          row.lot.attribution.sourceUrl ??
-                          row.lot.attribution.type
-                        }
-                        unverified={Boolean(figureDisclaimer(row.lot))}
-                      />
-                    ))}
-                </div>
-              </motion.article>
-            ) : null
+              <motion.div key={row.id} layout={!reduce}>
+                <LotPlate lot={row.lot} href={row.href} />
+              </motion.div>
+            ) : null,
           )}
         </div>
 
         <ul className="mt-16 border-t border-iron">
-          {rest.map((row) => {
-            const href = row.kind === "lot" ? row.href : row.project.url;
-            const meta =
-              row.kind === "lot"
-                ? `${row.entryState} · ${row.capability}`
-                : [row.project.year, row.project.stack, row.entryState]
-                    .filter(Boolean)
-                    .join(" · ");
-            const className =
-              "group flex flex-col gap-2 border-b border-iron/20 py-5 md:flex-row md:items-baseline md:justify-between";
-            const inner = (
-              <>
-                <span className="font-plex-sans text-[16px] font-medium text-iron underline decoration-iron/35 underline-offset-4 group-hover:decoration-iron">
-                  {row.client}
-                </span>
-                <span className="max-w-[48ch] font-newsreader text-[16px] leading-[1.45] text-ink md:flex-1 md:px-8">
-                  {row.line}
-                </span>
-                <span className="font-plex-mono text-[12px] text-ink/70 md:text-right">
-                  {meta}
-                </span>
-              </>
-            );
-            return (
-              <motion.li key={row.id} layout={!reduce}>
-                {href ? (
-                  <Link
-                    href={href}
-                    className={className}
-                    {...(row.kind === "index"
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    {inner}
-                  </Link>
-                ) : (
-                  <div className={className}>{inner}</div>
-                )}
-              </motion.li>
-            );
-          })}
+          {rest.map((row) => (
+            <motion.li key={row.id} layout={!reduce}>
+              <CompactRow row={row} />
+            </motion.li>
+          ))}
         </ul>
       </LayoutGroup>
     </div>

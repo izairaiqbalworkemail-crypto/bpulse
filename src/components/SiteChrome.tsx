@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 import { useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Footer } from "@/components/Footer";
+import { DirectStrip } from "@/components/direct/DirectStrip";
 import { Masthead } from "@/components/primitives/Masthead";
-import { StickyContact } from "@/components/StickyContact";
 import { scrollToSection, takeIntakeJump } from "@/lib/scroll-section";
 
 export function SiteChrome({ children }: { children: ReactNode }) {
@@ -49,7 +49,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <main>{children}</main>
       {report ? null : (
         <>
-          <StickyContact />
+          <DirectStrip />
           <Footer />
         </>
       )}

@@ -3,9 +3,9 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PersonJsonLd, BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { specialists, getSpecialist } from "@/content/specialists";
-import { lots } from "@/content/lots";
 import { crewAttach, crewJourney } from "@/content/crew-lines";
-import { MatchPrefill } from "@/components/match/MatchPrefill";
+import { Trace } from "@/components/trace/Trace";
+import { lotsForPerson, specFromLots } from "@/lib/lot-trace";
 import { PeopleRail } from "@/components/PeopleRail";
 import {
   Atmosphere,
@@ -46,9 +46,7 @@ function initials(name: string) {
 export default async function SpecialistPage({ params }: PageProps) {
   const { slug } = await params;
   const specialist = getSpecialist(slug);
-  const specialistLots = lots.filter(
-    (lot) => lot.specialistId === specialist.id
-  );
+  const specialistLots = lotsForPerson(specialist);
   const absent = specialist.photoStatus === "Photo pending" || !specialist.photo;
   const journey = crewJourney[specialist.id] ?? specialist.bio;
   const attach = crewAttach[specialist.id] ?? [];
@@ -137,11 +135,12 @@ export default async function SpecialistPage({ params }: PageProps) {
           </div>
 
           {specialist.id === "hamza" ? (
-            <section className="mt-14 border-l-4 border-signal bg-signal/10 p-5">
+            <section className="mt-14 rounded-[16px] border border-iron/20 bg-rag-card p-5">
               <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Legal scope</p>
               <p className="mt-2 max-w-[58ch] font-newsreader text-[18px] leading-[1.5] text-iron">
                 Hamza owns legal and risk routing for NDAs, IP assignment, and procurement legal questions.
-                Draft legal documents stay marked draft until qualified solicitor review in the client jurisdiction.
+                The standard forms on /legal are active; each executed set is reviewed by a solicitor
+                in the client jurisdiction before completion.
               </p>
               <p className="mt-3 font-plex-sans text-[14px] text-ink">
                 See <Link href="/legal" className="underline underline-offset-4">/legal</Link> for the register.
@@ -152,6 +151,21 @@ export default async function SpecialistPage({ params }: PageProps) {
           {specialistLots.length > 0 ? (
             <div className="mt-16">
               <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+                The lots, as a trace
+              </p>
+              <div className="mt-4 rounded-[16px] bg-rag-card p-5 ring-1 ring-iron/10">
+                <Trace
+                  spec={specFromLots(
+                    specialist.id,
+                    specialistLots,
+                    `Lots ${firstName} worked on`,
+                  )}
+                  size="full"
+                  surface="paper"
+                  labelled
+                />
+              </div>
+              <p className="mt-10 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
                 Lots they shipped
               </p>
               <ul className="mt-4">
@@ -198,11 +212,16 @@ export default async function SpecialistPage({ params }: PageProps) {
             </div>
           ) : null}
 
-          <div id="intake" className="mt-20 scroll-mt-[5.75rem] md:scroll-mt-28">
+          <div className="mt-20">
             <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Direct line · {firstName}
             </p>
-            <MatchPrefill specialistId={specialist.id} />
+            <Link
+              href={`/direct/${specialist.id}`}
+              className="inline-flex min-h-11 items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+            >
+              Write {firstName}
+            </Link>
           </div>
         </div>
       </section>

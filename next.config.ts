@@ -41,6 +41,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  outputFileTracingIncludes: {
+    "/*": [
+      "./src/lib/legal/fonts/**/*",
+      "./public/bpulse-brand/mark/bpulse-mark-dark-1024.png",
+    ],
+  },
   async headers() {
     return [
       {

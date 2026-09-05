@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useState, type ReactNode } from "react";
 import { useReducedMotion } from "motion/react";
+import { LotPlate } from "@/components/catalog/LotPlate";
 import {
   Atmosphere,
   AtmosphereNote,
@@ -25,7 +26,7 @@ import { PulseCheckIntake } from "@/components/intake/PulseCheckIntake";
 import { MatchDesk } from "@/components/match/MatchDesk";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
-import { getCatalogue, lotEntryState } from "@/content/catalogue";
+import { getCatalogue } from "@/content/catalogue";
 import { checkRunner } from "@/content/check";
 import {
   homeCrew,
@@ -37,7 +38,7 @@ import {
 import { getLot } from "@/content/lots";
 import { offer } from "@/content/offer";
 import { getSpecialist, specialists } from "@/content/specialists";
-import type { Lot, Specialist } from "@/content/types";
+import type { Specialist } from "@/content/types";
 import { scrollToSection } from "@/lib/scroll-section";
 
 const plate = "rounded-[24px]";
@@ -112,49 +113,6 @@ function EpisodeHead({
   );
 }
 
-function WorkCard({
-  lot,
-  featured = false,
-}: Readonly<{ lot: Lot; featured?: boolean }>) {
-  const reduce = useReducedMotion();
-  const state = lotEntryState[lot.slug] ?? lot.grade.label;
-
-  return (
-    <Tilt>
-      <Wipe>
-        <Link
-          href={`/work/${lot.slug}`}
-          className={`group relative block overflow-hidden bg-iron ${plate}`}
-        >
-          <div className={featured ? "relative aspect-[16/10]" : "relative aspect-[4/5]"}>
-            {lot.imageUrl ? (
-              <Image
-                src={lot.imageUrl}
-                alt=""
-                fill
-                className={`object-cover ${
-                  reduce ? "" : "transition-transform duration-700 group-hover:scale-[1.08]"
-                }`}
-                sizes={featured ? "(max-width: 768px) 100vw, 480px" : "220px"}
-              />
-            ) : (
-              <div className="absolute inset-0 bg-iron-2" />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-iron via-iron/35 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-4">
-              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/70">
-                {lot.lotNumber} · {state}
-              </p>
-              <p className="mt-1 font-newsreader text-[20px] leading-[1.1] text-rag md:text-[22px]">
-                {lot.client}
-              </p>
-            </div>
-          </div>
-        </Link>
-      </Wipe>
-    </Tilt>
-  );
-}
 
 function CrewCard({ person }: Readonly<{ person: Specialist }>) {
   const reduce = useReducedMotion();
@@ -207,7 +165,6 @@ function CrewCard({ person }: Readonly<{ person: Specialist }>) {
 export function Landing() {
   const lots = homeLots.map((slug) => getLot(slug));
   const recordCount = getCatalogue().length;
-  const [lead, ...restLots] = lots;
   const crew = homeCrew.map((id) => getSpecialist(id));
   const more = specialists.length - crew.length;
   const runner = getSpecialist(checkRunner.id);
@@ -234,10 +191,12 @@ export function Landing() {
           <div className="relative grid items-center gap-8 sm:grid-cols-[1fr_1.1fr]">
             <Reveal delay={0.06}>
               <PhotoFan
-                shots={lots.map((lot) => ({
-                  src: lot.imageUrl ?? "/project-shots/project-deepidv.png",
-                  alt: lot.client,
-                }))}
+                shots={lots
+                  .filter((lot) => lot.imageUrl)
+                  .map((lot) => ({
+                    src: lot.imageUrl as string,
+                    alt: `${lot.client} public site`,
+                  }))}
               />
             </Reveal>
             <div className="min-w-0">
@@ -310,20 +269,13 @@ export function Landing() {
         >
           DeepIDV, Sully, WearMeOut.
         </EpisodeHead>
-        {lead ? (
-          <div className="mt-8 grid gap-3 md:grid-cols-12">
-            <Reveal className="md:col-span-7" delay={0.1}>
-              <WorkCard lot={lead} featured />
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {lots.map((lot, index) => (
+            <Reveal key={lot.slug} delay={0.1 + index * 0.08}>
+              <LotPlate lot={lot} />
             </Reveal>
-            <div className="grid gap-3 sm:grid-cols-2 md:col-span-5 md:grid-cols-1">
-              {restLots.map((lot, index) => (
-                <Reveal key={lot.slug} delay={0.2 + index * 0.1}>
-                  <WorkCard lot={lot} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        ) : null}
+          ))}
+        </div>
       </Episode>
 
       <Episode labelledBy="path">

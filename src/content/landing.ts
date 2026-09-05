@@ -111,7 +111,7 @@ export const homePath = [
     body: offer.close.description,
     href: "/how-it-works",
     label: "The six stages",
-    image: "/project-shots/project-sully.png",
+    image: "/project-shots/project-sully.webp",
   },
   {
     name: offer.standing.name,

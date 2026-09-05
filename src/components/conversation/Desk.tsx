@@ -19,7 +19,7 @@ import {
   saveDesk,
   subscribeDesk,
 } from "@/lib/conversation/persist";
-import type { Answers, Field, ScriptId } from "@/lib/conversation/types";
+import type { Answers, Field } from "@/lib/conversation/types";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -47,7 +47,7 @@ const SCRIPTS = {
 } as const;
 
 type DeskProps = {
-  scriptId: ScriptId;
+  scriptId: keyof typeof SCRIPTS;
   ending: "read" | "enquiry";
 };
 

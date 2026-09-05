@@ -15,7 +15,7 @@ export type Field = {
   when?: (answers: Answers) => boolean;
 };
 
-export type ScriptId = "check" | "second-chair";
+export type ScriptId = string;
 
 export type Script = {
   id: ScriptId;

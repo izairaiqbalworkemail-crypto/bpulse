@@ -16,7 +16,7 @@ export const lots: Lot[] = [
     client: "DeepIDV",
     clientUrl: "https://deepidv.com",
     logoUrl: "/logos/deepidv.svg",
-    imageUrl: "/project-shots/project-deepidv.png",
+    imageUrl: "/project-shots/project-deepidv.webp",
     title: "Verification engine and its compliance suite",
     summary:
       "A verification platform spanning KYC, liveness, deepfake, and fraud workflows.",
@@ -62,7 +62,7 @@ export const lots: Lot[] = [
     client: "Sully.ai",
     clientUrl: "https://sully.ai",
     logoUrl: "/logos/sully.svg",
-    imageUrl: "/project-shots/project-sully.png",
+    imageUrl: "/project-shots/project-sully.webp",
     title: "AI employee platform for hospitals",
     summary:
       "An AI employee platform for hospitals spanning triage, scribe, coding, and EHR-integrated operations.",
@@ -107,7 +107,7 @@ export const lots: Lot[] = [
     lotNumber: "LOT 028",
     client: "myUsta",
     clientUrl: "https://app.myusta.al",
-    imageUrl: "/project-shots/project-myusta.png",
+    imageUrl: "/project-shots/project-myusta.webp",
     title: "Tradesperson marketplace for Albania",
     summary:
       "A marketplace matching people with trusted tradespeople across Albania.",
@@ -147,7 +147,7 @@ export const lots: Lot[] = [
     client: "WearMeOut.ai",
     clientUrl: "https://wearmeout-frontend.onrender.com/",
     logoUrl: "/logos/wearmeout.svg",
-    imageUrl: "/project-shots/project-wearmeout.png",
+    imageUrl: "/project-shots/project-wearmeout.webp",
     title: "AI custom t-shirt platform, taken to production",
     summary:
       "Frontend delivery and production readiness for a Firebase + React product.",
@@ -186,7 +186,7 @@ export const lots: Lot[] = [
     client: "Mythos Archive",
     clientUrl: "https://www.mythosarchive.org/",
     logoUrl: "/logos/mythos-archive.svg",
-    imageUrl: "/project-shots/project-mythos-archive.png",
+    imageUrl: "/project-shots/project-mythos-archive.webp",
     title: "Interactive archive, grounded in verified sources",
     summary:
       "Phase 7 AI storytelling and archive experience built around verified historical sources.",
@@ -224,7 +224,7 @@ export const lots: Lot[] = [
     lotNumber: "LOT 038",
     client: "SBA 504 Loan Hub",
     clientUrl: "https://sba504loanhub.com",
-    imageUrl: "/project-shots/project-sba504.png",
+    imageUrl: "/project-shots/project-sba504.webp",
     title: "An unbiased SBA 504 loan information hub",
     summary:
       "A comprehensive, unbiased SBA 504 loan information hub for small-business owners.",
@@ -261,7 +261,7 @@ export const lots: Lot[] = [
     client: "Clearance.ai",
     clientUrl: "https://clearance.ai",
     logoUrl: "/logos/clearance.svg",
-    imageUrl: "/project-shots/project-clearance.png",
+    imageUrl: "/project-shots/project-clearance.webp",
     title: "AI-powered clearance automation platform",
     summary:
       "An AI platform automating clearance processes for enterprise clients.",
@@ -296,7 +296,7 @@ export const lots: Lot[] = [
     client: "Evidero",
     clientUrl: "https://evidero.com",
     logoUrl: "/logos/evidero.svg",
-    imageUrl: "/project-shots/project-evidero.png",
+    imageUrl: "/project-shots/project-evidero.webp",
     title: "Evidence management platform",
     summary:
       "A platform for managing, tracking, and presenting digital evidence in legal and compliance contexts.",
@@ -331,7 +331,7 @@ export const lots: Lot[] = [
     client: "Fullscript",
     clientUrl: "https://fullscript.com",
     logoUrl: "/logos/fullscript.svg",
-    imageUrl: "/project-shots/project-fullscript.png",
+    imageUrl: "/project-shots/project-fullscript.webp",
     title: "Healthcare product workflows for supplements and labs",
     summary:
       "Designed and built healthcare product workflows for supplement recommendations, lab ordering, and patient adherence tracking.",

@@ -292,3 +292,17 @@ Found by capture inspection, not asserted: with the panel spring's `settled` sta
 - Pattern claims in the read only fire from `src/content/read-patterns.ts`, each slug justified by that lot’s `condition`. If nothing matches, the block is omitted. No invented “three of nine”.
 - No Second Chair testimonials. None exist. The proof section does not render.
 - Locally a read still files to `.data/reads.jsonl` without Resend so the artifact can be opened. Production without delivery keys returns 503 and no success state.
+
+---
+
+## Direct line and the catalog plate (Sep 2026)
+
+- Availability is published content, not a live signal. Aneeb and Mehak are `on an engagement` because Sully and DeepIDV are ongoing. Everyone else is `available`. Nobody is marked `not taking new work` — the source does not say that. Never a green presence dot.
+- Gate 4 is still “Client-facing · Gate 4” linking `/standard`. Operations (Hamza, Madiha) say “not client-facing”. We do not invent a clearance date.
+- The strip is part of the layout, above the footer, not a fixed overlay. It replaces the floating contact chip. Hidden on `/report/`, `/studio/`, `/read/`.
+- Match “Write {name}” now opens `/direct/{id}`. The match brief seeds the first answer when present. `/team/{id}` links there; it no longer embeds a second intake.
+- About, after the four beliefs, uses the same desk with questions from Aneeb, Hassan, Najiullah, and Zaira. Softer than `/check`.
+- Lot screenshots are evidence in browser chrome, captioned “the client’s public site”. The trace is the primary visual. Index rows with no image get a trace and no grey box. Home episode 01’s PhotoFan still uses those public-site shots as atmosphere, not as the catalogue claim. The nine lot shots were cropped to the top 600px and encoded as WebP, all under 100KB.
+- Traces are computed from each lot’s condition, arrival state, and highlights. Same lot, same path. All nine paths are tested for inequality. The hero FitBand trace (`src/lib/trace.ts`) is a different object and is not reused.
+- Proof rows on plates only show client-listed figures that contain a number. Crew-asserted lots show none.
+- Submissions from this desk use `type: "direct"` and `source` of `direct/{id}` or `about`, plus `with` for the specialist.

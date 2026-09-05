@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Grade } from "@/components/primitives/Grade";
 import { Credit } from "@/components/primitives/Credit";
 import { StageRail } from "@/components/StageRail";
 import { ProofRow } from "@/components/ProofRow";
+import { BrowserShot } from "@/components/catalog/BrowserShot";
+import { Trace } from "@/components/trace/Trace";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { lots, getLot, figureDisclaimer } from "@/content/lots";
 import { stagesForLot } from "@/content/catalogue";
@@ -17,7 +18,8 @@ import {
   Atmosphere,
   AtmosphereNote,
 } from "@/components/landing/Atmosphere";
-import { Reveal, Wipe } from "@/components/landing/Reveal";
+import { Reveal } from "@/components/landing/Reveal";
+import { specFromLot, verifiedFigures } from "@/lib/lot-trace";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -44,6 +46,8 @@ export default async function LotPage({ params }: PageProps) {
   const lot = getLot(slug);
   const specialist = getSpecialist(lot.specialistId);
   const disclaimer = figureDisclaimer(lot);
+  const figures = verifiedFigures(lot);
+  const spec = specFromLot(lot);
   const findings = lot.highlights?.length
     ? lot.highlights.map((item) => ({
         observed: item,
@@ -75,20 +79,11 @@ export default async function LotPage({ params }: PageProps) {
           </h1>
         </div>
 
-        {lot.imageUrl ? (
-          <Wipe className="relative mt-8 w-full">
-            <div className="relative aspect-[16/8] w-full overflow-hidden bg-iron/5">
-              <Image
-                src={lot.imageUrl}
-                alt={`${lot.client} — project shot`}
-                fill
-                className="object-cover"
-                sizes="100vw"
-                priority
-              />
-            </div>
-          </Wipe>
-        ) : null}
+        <div className="relative mt-8 w-full bg-iron py-8">
+          <div className="grid-container">
+            <Trace spec={spec} size="full" surface="iron" labelled />
+          </div>
+        </div>
 
         <div className="relative grid-container pb-24 pt-12 md:pb-32 md:pt-16">
           <PeopleRail
@@ -149,10 +144,9 @@ export default async function LotPage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="mt-14 max-w-[720px]">
-            {lot.dataLines
-              .filter((line) => line.label !== "Client")
-              .map((line) => (
+          {figures.length > 0 ? (
+            <div className="mt-14 max-w-[720px]">
+              {figures.map((line) => (
                 <ProofRow
                   key={line.label}
                   value={line.value}
@@ -161,7 +155,18 @@ export default async function LotPage({ params }: PageProps) {
                   unverified={Boolean(disclaimer)}
                 />
               ))}
-          </div>
+            </div>
+          ) : null}
+
+          {lot.imageUrl ? (
+            <div className="mt-14 max-w-[28rem]">
+              <BrowserShot
+                src={lot.imageUrl}
+                url={lot.clientUrl}
+                client={lot.client}
+              />
+            </div>
+          ) : null}
 
           {lot.limits && lot.limits.length > 0 ? (
             <div className="mt-14 max-w-[66ch]">

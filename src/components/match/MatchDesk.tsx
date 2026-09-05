@@ -137,9 +137,8 @@ function ResultCard({
 
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <Link
-          href={`/team/${person.id}#intake`}
+          href={`/direct/${person.id}`}
           onClick={() => {
-            markIntakeJump();
             book();
           }}
           className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"

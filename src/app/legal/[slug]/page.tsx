@@ -3,40 +3,31 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
-import { getLegalDoc, legalOwner } from "@/content/legal";
+import { getLegalDoc, legalOwner, clauseNumber, partyPair } from "@/content/documents";
+import { LEGAL_STATUS_META, LEGAL_FAMILY_LABEL } from "@/content/documents/types";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
-
-function slugify(label: string) {
-  return label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const doc = getLegalDoc(slug);
   if (!doc) return {};
   return buildMetadata({
-    title: doc.title,
-    description: `${doc.title} maintained by ${legalOwner.name}. Draft pending solicitor sign-off.`,
+    title: doc.name,
+    description: `${doc.lead} Maintained by ${legalOwner.name}.`,
     path: `/legal/${doc.slug}`,
   });
 }
 
 export async function generateStaticParams() {
-  return [
-    { slug: "terms" },
-    { slug: "privacy-policy" },
-    { slug: "cookie-policy" },
-    { slug: "accessibility" },
-    { slug: "complaints" },
-    { slug: "terms-of-service" },
-    { slug: "accessibility-statement" },
-  ];
+  const slugs = new Set<string>();
+  for (const { slug, aliases } of (await import("@/content/documents")).legalDocuments) {
+    slugs.add(slug);
+    for (const alias of aliases ?? []) slugs.add(alias);
+  }
+  return [...slugs].map((slug) => ({ slug }));
 }
 
 export default async function LegalDocPage({ params }: PageProps) {
@@ -44,11 +35,12 @@ export default async function LegalDocPage({ params }: PageProps) {
   const doc = getLegalDoc(slug);
   if (!doc) notFound();
 
-  const toc = doc.sections.map((section) => section.heading);
+  const status = LEGAL_STATUS_META[doc.status];
+  const [from, to] = partyPair(doc);
 
   return (
     <section className="legal-print w-full bg-rag pb-24 md:pb-32">
-      <div className="grid-container pt-12 md:pt-16">
+      <div className="grid-container pt-14 md:pt-20">
         <Link
           href="/legal"
           className="font-plex-sans text-sm text-ink/70 underline-offset-4 hover:underline"
@@ -56,95 +48,262 @@ export default async function LegalDocPage({ params }: PageProps) {
           ← Back to legal register
         </Link>
 
-        <header className="mt-8 border border-iron/20 bg-rag-card p-6 shadow-[var(--shadow-card)]">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-            Legal document · Draft
-          </p>
-          <h1 className="mt-2 font-newsreader text-[34px] leading-[1.05] text-iron md:text-[48px]">
-            {doc.title}
-          </h1>
-          <div className="mt-5 grid gap-2 font-plex-mono text-[12px] text-ink/75 md:grid-cols-3">
-            <p>Version: {doc.version}</p>
-            <p>Updated: {doc.updatedAt}</p>
-            <p>
-              Owner: {legalOwner.name} · {legalOwner.role}
-            </p>
-          </div>
+        {/* Status chip + family */}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-partial px-3 py-1 font-plex-sans text-[12px] font-medium text-white">
+            <span aria-hidden="true">{status.dot}</span> {status.label}
+          </span>
+          <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+            {LEGAL_FAMILY_LABEL[doc.family]} · {doc.reference}
+          </span>
+        </div>
 
-          <div className="mt-5 rounded-[14px] border border-iron/15 bg-rag p-4">
-            <div className="flex items-start gap-4">
-              <Image
-                src="/team/hamza.jpg"
-                alt="Hamza Khan"
-                width={76}
-                height={96}
-                className="h-[96px] w-[76px] rounded-[10px] object-cover object-top grayscale"
-              />
-              <div>
-                <p className="font-newsreader text-[20px] leading-[1.2] text-iron">
-                  {legalOwner.name} · {legalOwner.role}
-                </p>
-                <p className="mt-1 font-newsreader text-[16px] leading-[1.45] text-ink">
-                  Part of the bpulse team. Owns legal routing, NDAs, and IP assignment handoff.
-                </p>
-                <p className="mt-2 font-plex-sans text-[14px] text-ink">
-                  Team profile: <Link href="/team/hamza" className="underline underline-offset-4">/team/hamza</Link>
-                </p>
-              </div>
+        {/* Document body */}
+        <article className="mt-4 max-w-[66ch]">
+          <h1 className="font-newsreader text-[40px] leading-[1.05] tracking-[-0.01em] text-iron md:text-[54px]">
+            {doc.name}
+          </h1>
+          <p className="mt-4 font-newsreader text-[18px] leading-[1.5] text-ink">{doc.lead}</p>
+
+          {/* Metadata card */}
+          <dl className="mt-6 rounded-[16px] border border-iron/20 bg-rag-card p-5 font-plex-sans text-[14px] md:grid md:grid-cols-3">
+            <div>
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                Reference
+              </dt>
+              <dd className="mt-0.5 text-iron">{doc.reference}</dd>
+            </div>
+            <div>
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                Version
+              </dt>
+              <dd className="mt-0.5 text-iron">{doc.version}</dd>
+            </div>
+            <div>
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                Issued
+              </dt>
+              <dd className="mt-0.5 text-iron">{doc.issuedAt}</dd>
+            </div>
+            <div>
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                Updated
+              </dt>
+              <dd className="mt-0.5 text-iron">{doc.updatedAt}</dd>
+            </div>
+            <div>
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                Status
+              </dt>
+              <dd className={`mt-0.5 text-iron`}>
+                <span className={status.class}>{status.dot}</span>{" "}
+                <span className="ml-1">{status.label}</span>
+              </dd>
+            </div>
+            <div>
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                Owner
+              </dt>
+              <dd className="mt-0.5 text-iron">
+                {doc.owner} · {doc.role}
+              </dd>
+            </div>
+          </dl>
+
+          {/* Parties */}
+          {from && to && (
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {[from, to].map((party) => (
+                <div key={party.key} className="rounded-[16px] border border-iron/20 bg-rag-card p-4">
+                  <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                    {party.key === "bpulse" ? "From" : "To"}
+                  </p>
+                  <p className="mt-1 font-newsreader text-[20px] leading-[1.2] text-iron">
+                    {party.name}
+                  </p>
+                  <p className="mt-1 font-newsreader text-[15px] leading-[1.45] text-ink">
+                    {party.entity} · {party.jurisdiction}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Legal owner — real crew profile */}
+          <div className="mt-6 flex flex-wrap items-start gap-4 rounded-[16px] border border-iron/20 bg-rag-card p-4">
+            <Image
+              src="/team/hamza.jpg"
+              alt={`${legalOwner.name} — ${legalOwner.role}`}
+              width={88}
+              height={110}
+              className="h-[104px] w-[84px] rounded-[10px] object-cover object-top grayscale"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                Legal owner
+              </p>
+              <p className="mt-1 font-newsreader text-[21px] leading-[1.2] text-iron">
+                {legalOwner.name} · {legalOwner.role}
+              </p>
+              <p className="mt-1.5 max-w-[52ch] font-newsreader text-[16px] leading-[1.5] text-ink">
+                {legalOwner.line}
+              </p>
+              <p className="mt-2 font-plex-sans text-[14px] text-ink">
+                See the crew profile:{" "}
+                <Link
+                  href="/team/hamza"
+                  className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+                >
+                  /team/hamza
+                </Link>{" "}
+                ·{" "}
+                <a
+                  href={`mailto:${legalOwner.email}`}
+                  className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+                >
+                  {legalOwner.email}
+                </a>
+              </p>
             </div>
           </div>
-        </header>
 
-        <aside className="mt-6 border-l-4 border-blocked bg-blocked/10 px-4 py-3 font-plex-sans text-[14px] leading-[1.5] text-iron" aria-live="polite">
-          Draft - pending qualified solicitor review for client jurisdictions. This text is not in force.
-        </aside>
+          <div className="mt-4 flex flex-wrap gap-3 print:hidden">
+            <a
+              href={`/legal/${doc.slug}/pdf`}
+              download
+              className="inline-flex items-center gap-2 rounded-[var(--radius-button)] bg-iron px-5 py-2.5 font-plex-sans text-[14px] font-medium text-rag transition-colors hover:bg-iron-2"
+            >
+              Download PDF
+            </a>
+            <a
+              href={`/legal/${doc.slug}/text`}
+              className="inline-flex items-center gap-2 rounded-[var(--radius-button)] border border-iron/25 px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron transition-colors hover:border-iron"
+            >
+              Plain text
+            </a>
+            {doc.versions && doc.versions.length > 1 && (
+              <a
+                href={`/legal/${doc.slug}/diff/pdf`}
+                download
+                className="inline-flex items-center gap-2 rounded-[var(--radius-button)] border border-iron/25 px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron transition-colors hover:border-iron"
+              >
+                Diff PDF
+              </a>
+            )}
+          </div>
 
-        <div className="mt-12 lg:grid lg:grid-cols-[15rem_minmax(0,66ch)] lg:items-start lg:gap-14">
-          <nav className="mb-10 hidden lg:sticky lg:top-8 lg:mb-0 lg:block" aria-label="Section index">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">On this page</p>
-            <ol className="mt-3 space-y-2">
-              {toc.map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${slugify(item)}`}
-                    className="font-plex-sans text-[14px] text-iron underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+          {/* Sections — one card per section */}
+          {doc.sections.map((section) => (
+            <section
+              key={section.number}
+              className="mt-8 scroll-mt-28 rounded-[16px] border border-iron/20 bg-rag-card p-5"
+              aria-labelledby={`section-${section.number}`}
+            >
+              <h2
+                id={`section-${section.number}`}
+                className="font-newsreader text-[27px] leading-[1.2] text-iron"
+              >
+                {section.number}. {section.heading}
+              </h2>
+              <div className="mt-3 border-l-[3px] border-signal bg-rag px-4 py-3">
+                <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
+                  In plain terms
+                </p>
+                <p className="mt-1 font-newsreader text-[17px] leading-[1.5] text-iron">
+                  {section.plainTerms}
+                </p>
+              </div>
+              <ul className="mt-4 space-y-3">
+                {section.clauses.map((clause, index) => (
+                  <li
+                    key={clause.number ?? `${section.number}.${index}`}
+                    className="flex gap-4 font-newsreader text-[17px] leading-[1.55] text-ink"
                   >
-                    {item}
-                  </a>
+                    <span className="shrink-0 pl-0 font-plex-mono text-[13px] leading-[1.9] text-ink/70">
+                      {clauseNumber(section.number, index, clause.number)}
+                    </span>
+                    <span>{clause.text}</span>
+                  </li>
+                ))}
+              </ul>
+              {section.reviewNote && (
+                <p className="mt-3 font-plex-sans text-[13px] italic leading-[1.5] text-ink">
+                  Review needed: {section.reviewNote}
+                </p>
+              )}
+            </section>
+          ))}
+
+          {/* Signature block */}
+          {doc.signatureBlocks.length > 0 && (
+            <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+              <h3 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+                Signatures
+              </h3>
+              <div className="mt-6 grid gap-8 sm:grid-cols-2">
+                {doc.signatureBlocks.map((block) => (
+                  <div key={block.party}>
+                    <p className="font-plex-sans text-[15px] font-semibold text-iron">
+                      For {block.party.toUpperCase()} — {block.name}
+                    </p>
+                    <p className="mt-0.5 font-plex-sans text-[15px] text-iron">
+                      Title: {block.title}
+                    </p>
+                    <div className="mt-10 border-b border-ink/50 pt-1 font-plex-mono text-[12px] text-ink/50">
+                      Signature and date
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Changelog */}
+          <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+            <h3 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+              Changelog
+            </h3>
+            <ul className="mt-4 space-y-4">
+              {doc.changelog.map((entry) => (
+                <li key={`${entry.version}-${entry.date}`} className="border-l-2 border-iron/20 pl-4">
+                  <p className="font-plex-mono text-[12px] text-ink/65">
+                    {entry.version} · {entry.date} · {entry.change}
+                  </p>
+                  <p className="mt-1 font-newsreader text-[16px] leading-[1.45] text-ink">
+                    Why: {entry.reason}
+                  </p>
                 </li>
               ))}
-            </ol>
-          </nav>
+            </ul>
+          </section>
 
-          <article className="max-w-[66ch]">
-            {doc.sections.map((section) => (
-              <section key={section.heading} id={slugify(section.heading)} className="mb-10 scroll-mt-28">
-                <h2 className="font-newsreader text-[27px] leading-[1.2] text-iron">{section.heading}</h2>
-                <p className="mt-3 border border-signal/40 bg-signal/10 px-4 py-3 font-plex-sans text-[14px] leading-[1.5] text-iron">
-                  Plain-language summary: {section.summary}
-                </p>
-                {section.body.map((paragraph) => (
-                  <p key={paragraph} className="mt-4 font-newsreader text-reading leading-reading text-ink">
-                    {paragraph}
-                  </p>
-                ))}
-              </section>
-            ))}
-
-            <section className="mt-14 border-t border-iron/20 pt-8">
-              <h3 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Changelog</h3>
+          {/* Version history + diff */}
+          {doc.versions && doc.versions.length > 0 && (
+            <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+              <h3 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+                Version history
+              </h3>
               <ul className="mt-4 space-y-4">
-                {doc.changelog.map((item) => (
-                  <li key={`${item.date}-${item.change}`} className="border-l-2 border-iron/20 pl-4">
-                    <p className="font-plex-mono text-[12px] text-ink/65">{item.date}</p>
-                    <p className="mt-1 font-newsreader text-[17px] leading-[1.45] text-iron">{item.change}</p>
-                    <p className="mt-1 font-newsreader text-[16px] leading-[1.45] text-ink">Why: {item.reason}</p>
+                {doc.versions.map((version) => (
+                  <li key={version.version} className="border-l-2 border-iron/20 pl-4">
+                    <p className="font-plex-mono text-[12px] text-ink/65">
+                      {version.version} · {version.issuedAt} · {version.note}
+                    </p>
                   </li>
                 ))}
               </ul>
             </section>
-          </article>
-        </div>
+          )}
+        </article>
+
+        {/* Footer */}
+        <footer className="mt-16 flex flex-wrap items-center justify-between gap-2 border-t border-iron/20 pt-3 font-plex-mono text-[12px] text-ink/70">
+          <p>bpulse · breakthrough pulse · contact@bpulse.dev</p>
+          <p>
+            {doc.reference} · {doc.version} ·{" "}
+            <span className={status.class}>{status.dot}</span> {status.label}
+          </p>
+        </footer>
       </div>
     </section>
   );

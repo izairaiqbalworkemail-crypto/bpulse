@@ -8,7 +8,7 @@ import {
   Atmosphere,
   AtmosphereNote,
 } from "@/components/landing/Atmosphere";
-import { BriefIntake } from "@/components/intake/BriefIntake";
+import { DirectDesk } from "@/components/direct/DirectDesk";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
@@ -66,6 +66,13 @@ export default function AboutPage() {
             ))}
           </div>
 
+          <div id="intake" className="mt-20 scroll-mt-[5.75rem] md:scroll-mt-28">
+            <p className="mb-6 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+              Different people would read different answers
+            </p>
+            <DirectDesk variant="about" pageSource="about" />
+          </div>
+
           <div className="mt-20 border-t border-iron/20 pt-10">
             <p className="mb-8 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               The crew
@@ -73,11 +80,7 @@ export default function AboutPage() {
             <PortraitStrip people={specialists} />
           </div>
 
-          <div id="intake" className="mt-20 scroll-mt-[5.75rem] md:scroll-mt-28">
-            <p className="mb-6 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-              Write the studio
-            </p>
-            <BriefIntake type="about" source="about" />
+          <div className="mt-20">
             <div className="mt-8">
               <VettedPay />
             </div>

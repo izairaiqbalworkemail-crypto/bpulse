@@ -16,9 +16,11 @@ stuck product
     │     ├─ Start the Check ── #intake ── condition sheet (fresh)
     │     └─ Match it against the record ── #match ── home Match desk
     │
+    ├─ /direct ── pick a person ── /direct/{id} ── attributed questions, living brief
+    │
     ├─ /match ── write the stuck part ── named person + reason
     │                 │
-    │                 ├─ Write {name} ── /team/{id}#intake ── brief on their desk
+    │                 ├─ Write {name} ── /direct/{id} ── match brief already on the sheet
     │                 └─ Or start a Check ── /check#intake ── condition on Aneeb's desk
     │
     ├─ /check ── structured intake (not a chatbot) ── /read/{token}
@@ -65,8 +67,8 @@ Path is **Check $1,500 → Close $18k–$95k**. Standing $2–6k/mo is shown, no
 2. Describe the stuck part. Server action `runMatchAction` → `match()` → save event.
 3. Result: named person, evidence, “Write {first}”.
 4. Brief is stored. Outcome `booked` (lead) or `chose_other` (the two extras).
-5. `/team/{id}#intake` opens `BriefIntake` with the wound already on the sheet.
-6. File → `POST /api/contact` type `work`, source `match`. Outcome `booked` again on file.
+5. `/direct/{id}` opens the written intake with the wound already on the sheet.
+6. File → `POST /api/contact` type `direct`, source `direct/{id}`. Outcome `booked` again on file.
 7. Aneeb (or that person) gets the email / Neon row / local `.data/submissions.jsonl`.
 
 ### Path B — Match → Check
@@ -111,9 +113,9 @@ Five days on `/check` are unchanged: Read, Trace, Map, Grade, Report. Verdict: k
 
 | Door | Type saved | Who reads it |
 |---|---|---|
-| `/team/{id}#intake` | `work` | The named person |
+| `/direct/{id}` | `direct` | The named person |
+| `/about` | `direct` · source `about` | Aneeb, with questions from the crew |
 | `/contact` | `contact` | Studio |
-| `/about` | `about` | Studio |
 | `/careers` | `careers` | Aneeb. Candidates are never charged. |
 
 `CrewSession.tsx` is leftover chrome. It is not wired. Do not put it back.

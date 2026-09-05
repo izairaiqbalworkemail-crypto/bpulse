@@ -18,6 +18,7 @@ const studioLinks = [
   { label: "Second Chair", href: "/second-chair" },
   { label: "The Check", href: "/check" },
   { label: "The Match", href: "/match" },
+  { label: "Direct line", href: "/direct" },
   { label: "Sample portal", href: "/demo" },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },

@@ -112,6 +112,14 @@ export type Specialist = {
   }[];
   photo?: string;
   photoStatus: "Photo" | "Photo pending";
+  /**
+   * Published bench. Ongoing lots (Sully, DeepIDV) mark those
+   * owners as on an engagement. Everyone else is available unless
+   * content says they are not taking new work. Never a live dot.
+   */
+  availability: "on an engagement" | "available" | "not taking new work";
+  /** One line: what to write to them about. */
+  writeAbout: string;
   stack: string[];
   focus: string[];
   philosophy: string;
