@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useReducedMotion } from "motion/react";
 import {
   Atmosphere,
@@ -55,8 +55,9 @@ function Episode({
 }: Readonly<{ children: ReactNode; labelledBy: string }>) {
   return (
     <section
-      aria-labelledby={labelledBy}
-      className="relative overflow-hidden bg-rag text-iron"
+      id={labelledBy}
+      aria-labelledby={`${labelledBy}-heading`}
+      className="relative scroll-mt-[5.75rem] overflow-hidden bg-rag text-iron md:scroll-mt-28"
     >
       <Atmosphere kind="light" opacity={0.22} />
       <div className="relative grid-container py-14 md:py-16">{children}</div>
@@ -88,7 +89,7 @@ function EpisodeHead({
           </p>
         </Reveal>
         <Rise delay={0.06}>
-          <h2 id={id} className={title}>
+          <h2 id={`${id}-heading`} className={title}>
             {heading}
           </h2>
         </Rise>
@@ -215,10 +216,24 @@ export function Landing() {
   const runner = getSpecialist(checkRunner.id);
   const [fit, setFit] = useState<PulseCheckSituation | null>(null);
 
+  function goTo(id: string) {
+    const node = document.getElementById(id);
+    if (!node) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    node.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+  }
+
   function pickFit(id: PulseCheckSituation) {
     setFit(id);
-    document.getElementById("intake")?.scrollIntoView({ behavior: "smooth" });
+    goTo("intake");
   }
+
+  useEffect(() => {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (!hash) return;
+    const frame = window.requestAnimationFrame(() => goTo(hash));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   return (
     <>
@@ -497,7 +512,7 @@ export function Landing() {
               </p>
               <Rise delay={0.06}>
                 <h2
-                  id="check"
+                  id="check-heading"
                   className="mt-2 max-w-[12ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-signal md:text-[34px]"
                 >
                   Five days. A verdict.
@@ -549,7 +564,7 @@ export function Landing() {
           </div>
         </Reveal>
         <Reveal delay={0.1} className="mt-8">
-          <div id="intake">
+          <div id="intake" className="scroll-mt-[5.75rem] pb-24 md:scroll-mt-28">
             <PulseCheckIntake
               key={fit ?? "open"}
               source="home"

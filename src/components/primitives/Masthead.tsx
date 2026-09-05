@@ -148,7 +148,7 @@ export function Masthead() {
               transition={{ type: "spring", stiffness: 380, damping: 24 }}
             >
               <Link
-                href="/check"
+                href={pathname === "/" ? "#intake" : "/check#intake"}
                 className="inline-flex rounded-full bg-signal px-4 py-2 font-plex-sans text-[14px] font-medium text-iron"
               >
                 Check · {checkPrice}
@@ -212,7 +212,7 @@ export function Masthead() {
 
           <div className="mt-auto px-5 pb-10 md:px-8">
             <Link
-              href="/check"
+              href={pathname === "/" ? "#intake" : "/check#intake"}
               onClick={closeMenu}
               className="inline-flex rounded-full bg-signal px-8 py-3.5 font-plex-sans text-[15px] font-medium text-iron"
             >

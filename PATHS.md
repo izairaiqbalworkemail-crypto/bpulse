@@ -12,17 +12,33 @@ Do not call the matcher AI. Do not show a score. Do not invent evidence.
 ```
 stuck product
     │
+    ├─ Home hero
+    │     ├─ Start the Check ── #intake ── condition sheet (fresh)
+    │     └─ Match it against the record ── #match ── home Match desk
+    │
     ├─ /match ── write the stuck part ── named person + reason
     │                 │
     │                 ├─ Write {name} ── /team/{id}#intake ── brief on their desk
     │                 └─ Or start a Check ── /check#intake ── condition on Aneeb's desk
     │
-    ├─ /  or  /check ── write the stuck part on the condition sheet
-    │                         └─ Put it on Aneeb's desk · $1,500
+    ├─ /check#intake ── same condition sheet, after the five days
     │
     └─ /contact  /about  /careers  /team/{id}
               same session chat, different door
 ```
+
+Home landing, from the hero down:
+
+| Button | Lands |
+|---|---|
+| Start the Check · $1,500 | `#intake` — desk opens fresh |
+| Match it against the record | `#match` |
+| Masthead / menu Check | `#intake` on home, `/check#intake` elsewhere |
+| Fit cards (almost / stalled / fragile) | `#intake` with that arrival marked |
+| Just an idea | `/contact` |
+| Locks, lots, path, crew | Their pages (`/demo`, `/work/…`, `/check`, `/team/…`) |
+| Start on this desk | `#intake` |
+| How the five days work | `/check` |
 
 Path is **Check $1,500 → Close $18k–$95k**. Standing $2–6k/mo is shown, not sold first.
 
@@ -130,6 +146,7 @@ After deploy: `pnpm db:migrate` so `0002_match.sql` creates `match_events` and `
 
 Hard-refresh first. The old Match form used to GET `/match?` and look dead.
 
+0. **Hero, started fresh.** `/` → Start the Check → the condition sheet, not `/check`. Match it → episode 06. Fit card → sheet with arrival marked.
 1. **Match happy path.** `/match` → try “Staging only” → Read it against the record → a named person and a lot link → Write {name} → brief already there → file → confirmation.
 2. **Match → Check.** Same describe → Or start a Check → `/check#intake` has the wound → Send through the open lines → Put it on Aneeb's desk → confirmation. No card.
 3. **Weak match.** Paste nonsense or an injection line → Aneeb, weak, honest sentence. No score.

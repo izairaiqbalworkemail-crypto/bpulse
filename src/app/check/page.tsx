@@ -146,7 +146,7 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
         </div>
       </section>
 
-      <section id="intake" className="w-full bg-rag pb-24">
+      <section id="intake" className="w-full scroll-mt-[5.75rem] bg-rag pb-24 md:scroll-mt-28">
         <div className="grid-container">
           <PulseCheckIntake prefill={prefill} source="check" />
           <div className="mt-8">

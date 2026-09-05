@@ -100,6 +100,20 @@
 
 html {
   overflow-x: clip;
+  scroll-padding-top: 5.75rem;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {

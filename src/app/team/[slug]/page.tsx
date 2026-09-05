@@ -185,7 +185,7 @@ export default async function SpecialistPage({ params }: PageProps) {
             </div>
           ) : null}
 
-          <div id="intake" className="mt-20">
+          <div id="intake" className="mt-20 scroll-mt-[5.75rem] md:scroll-mt-28">
             <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Direct line · {firstName}
             </p>
