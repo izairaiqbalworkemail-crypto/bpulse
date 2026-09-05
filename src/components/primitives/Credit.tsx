@@ -40,9 +40,9 @@ export function Credit({
   portraitAlt = name,
 }: CreditProps) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="card flex items-center gap-4 p-5">
       {portraitSrc && (
-        <div className="h-[72px] w-[72px] overflow-hidden rounded-surface bg-iron/10">
+        <div className="card-iron h-[72px] w-[72px]">
           <Image
             src={portraitSrc}
             alt={portraitAlt}

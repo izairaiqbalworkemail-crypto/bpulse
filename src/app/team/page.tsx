@@ -48,7 +48,7 @@ export default function TeamPage() {
             if (people.length === 0) return null;
             return (
               <Reveal key={group} delay={index * 0.06}>
-              <div className="border-t border-iron/15 py-8">
+              <div className="card mb-4 px-8 py-8">
                 <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
                   {group}
                 </p>

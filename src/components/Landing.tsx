@@ -41,7 +41,6 @@ import { getSpecialist, specialists } from "@/content/specialists";
 import type { Specialist } from "@/content/types";
 import { scrollToSection } from "@/lib/scroll-section";
 
-const plate = "rounded-[24px]";
 const title =
   "mt-2 max-w-[16ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-iron md:text-[34px]";
 const linkQuiet =
@@ -128,7 +127,7 @@ function CrewCard({ person }: Readonly<{ person: Specialist }>) {
     <Tilt intensity={8}>
       <Link href={`/team/${person.id}`} className="group block">
         <Wipe>
-          <div className={`relative aspect-[3/4] overflow-hidden bg-iron ${plate}`}>
+          <div className="card-iron relative aspect-[3/4]">
             {absent ? (
               <div className="grid h-full place-items-center">
                 <span className="font-newsreader text-[32px] leading-none text-rag">
@@ -149,14 +148,18 @@ function CrewCard({ person }: Readonly<{ person: Specialist }>) {
                 }`}
               />
             )}
+            <div className="absolute inset-x-3 bottom-3">
+              <p className="rounded-[12px] bg-rag/95 px-3 py-2 shadow-[var(--shadow-card)]">
+                <span className="block font-plex-sans text-[14px] font-medium text-iron">
+                  {person.name}
+                </span>
+                <span className="mt-0.5 block font-newsreader text-[13px] leading-[1.3] text-ink">
+                  {person.role}
+                </span>
+              </p>
+            </div>
           </div>
         </Wipe>
-        <p className="mt-2 font-plex-sans text-[14px] font-medium text-iron">
-          {person.name}
-        </p>
-        <p className="mt-0.5 font-newsreader text-[13px] leading-[1.3] text-ink/80">
-          {person.role}
-        </p>
       </Link>
     </Tilt>
   );
@@ -186,7 +189,7 @@ export function Landing() {
     <>
       <Episode labelledBy="argument">
         <Reveal>
-        <div className={`relative overflow-hidden bg-rag-card p-6 shadow-[var(--shadow-card)] md:p-8 ${plate}`}>
+        <div className="card relative p-6 md:p-8">
           <Atmosphere kind="paper" opacity={0.22} />
           <div className="relative grid items-center gap-8 sm:grid-cols-[1fr_1.1fr]">
             <Reveal delay={0.06}>
@@ -272,7 +275,7 @@ export function Landing() {
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {lots.map((lot, index) => (
             <Reveal key={lot.slug} delay={0.1 + index * 0.08}>
-              <LotPlate lot={lot} />
+              <LotPlate lot={lot} compact />
             </Reveal>
           ))}
         </div>
@@ -293,7 +296,7 @@ export function Landing() {
               <Tilt>
                 <Link
                   href={step.href}
-                  className={`group grid min-h-[10.5rem] overflow-hidden bg-iron sm:grid-cols-[1fr_10rem] ${plate}`}
+                  className="card-iron group grid min-h-[10.5rem] sm:grid-cols-[1fr_10rem]"
                 >
                   <div className="relative z-10 flex min-h-[10.5rem] flex-col justify-between p-5">
                     <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/70">
@@ -376,9 +379,7 @@ export function Landing() {
           the reason.
         </EpisodeHead>
         <Reveal delay={0.1} className="mt-8">
-          <div
-            className={`bg-rag-card p-5 shadow-[var(--shadow-card)] ring-1 ring-iron/10 md:p-8 ${plate}`}
-          >
+          <div className="card p-5 md:p-8">
             <MatchDesk compact />
           </div>
         </Reveal>
@@ -386,49 +387,47 @@ export function Landing() {
 
       <Episode labelledBy="check">
         <Reveal>
-          <div
-            className={`relative grid overflow-hidden bg-iron text-rag sm:grid-cols-[1fr_11rem] ${plate}`}
-          >
+          <div className="relative grid overflow-hidden rounded-[24px] bg-signal text-iron sm:grid-cols-[1fr_11rem]">
             <div className="relative p-6 md:p-8">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-iron/70">
                 07 · The Check
               </p>
               <Rise delay={0.06}>
                 <h2
                   id="check-heading"
-                  className="mt-2 max-w-[12ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-signal md:text-[34px]"
+                  className="mt-2 max-w-[12ch] font-newsreader text-[28px] leading-[1.08] tracking-[-0.03em] text-iron md:text-[34px]"
                 >
                   Five days. A verdict.
                 </h2>
               </Rise>
-              <p className="mt-4 font-newsreader text-[48px] leading-none tracking-[-0.04em] text-signal md:text-[56px]">
+              <p className="mt-4 font-newsreader text-[48px] leading-none tracking-[-0.04em] text-iron md:text-[56px]">
                 <Count prefix="$" to={offer.check.price} />
               </p>
               <ol className="mt-5 flex flex-wrap gap-1.5">
                 {homeDays.map((day, index) => (
                   <li key={day}>
                     <Reveal delay={0.2 + index * 0.05}>
-                      <span className="inline-block rounded-full border border-rag/20 bg-iron/40 px-3 py-1 font-plex-mono text-[11px] uppercase tracking-[0.06em] text-rag/80">
+                      <span className="inline-block rounded-full bg-iron/[0.08] px-3 py-1 font-plex-mono text-[11px] uppercase tracking-[0.06em] text-iron/80">
                         {index + 1} · {day}
                       </span>
                     </Reveal>
                   </li>
                 ))}
               </ol>
-              <p className="mt-4 max-w-[34ch] font-newsreader text-[16px] leading-[1.45] text-rag/80">
+              <p className="mt-4 max-w-[34ch] font-newsreader text-[16px] leading-[1.45] text-iron/85">
                 Keep, repair, or rebuild. Credited on a Close within 30 days.
               </p>
               <div className="mt-5 flex flex-wrap items-center gap-4">
                 <button
                   type="button"
                   onClick={() => scrollToSection("intake")}
-                  className="inline-flex items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+                  className="inline-flex items-center rounded-full bg-iron px-5 py-2.5 font-plex-sans text-[14px] font-medium text-rag"
                 >
                   Start on this desk
                 </button>
                 <Link
                   href="/check"
-                  className="font-plex-sans text-[14px] text-rag/80 underline decoration-rag/30 underline-offset-4 hover:text-rag"
+                  className="font-plex-sans text-[14px] text-iron/80 underline decoration-iron/30 underline-offset-4 hover:text-iron"
                 >
                   How the five days work
                 </Link>

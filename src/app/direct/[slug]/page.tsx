@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
 import { Atmosphere } from "@/components/landing/Atmosphere";
+import { PageHero } from "@/components/PageHero";
 import { DirectDesk } from "@/components/direct/DirectDesk";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { brand } from "@/config/brand";
@@ -45,21 +46,19 @@ export default async function DirectConversationPage({ params }: PageProps) {
           { name: first, url: `${brand.url}/direct/${specialist.id}` },
         ]}
       />
+      <PageHero
+        kicker="Direct line"
+        title={`Write ${first}.`}
+        dek={`A written intake, not a chatbot. Nobody is typing. ${first} reads every one and replies within one business day.`}
+        hideAction
+      />
       <section className="relative w-full overflow-hidden bg-rag">
-        <Atmosphere kind="paper" opacity={0.14} />
-        <div className="relative grid-container py-10 pb-24 md:py-14 md:pb-32">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-            Direct line · {first}
-          </p>
-          <h1 className="mt-3 max-w-[18ch] font-newsreader text-[32px] leading-[1.1] text-iron md:text-[40px]">
-            Write {first} about the part that will not ship.
-          </h1>
-          <div className="mt-8">
-            <DirectDesk
-              specialistId={specialist.id}
-              pageSource={`direct/${specialist.id}`}
-            />
-          </div>
+        <Atmosphere kind="paper" opacity={0.12} />
+        <div className="relative mx-auto max-w-[960px] px-5 py-8 pb-24 md:px-8 md:py-12 md:pb-32">
+          <DirectDesk
+            specialistId={specialist.id}
+            pageSource={`direct/${specialist.id}`}
+          />
         </div>
       </section>
     </>

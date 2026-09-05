@@ -22,12 +22,12 @@ export function TierTable({ tiers, caption }: TierTableProps) {
           {caption}
         </p>
       ) : null}
-      <div className="divide-y divide-iron/15 border-t border-iron/20">
+      <div className="flex flex-col gap-3">
         {tiers.map((tier, index) => (
           <Reveal key={tier.name} delay={index * 0.04}>
             <div
-              className={`grid gap-3 py-8 md:grid-cols-[9rem_1fr] md:items-baseline ${
-                tier.featured ? "border-l-2 border-signal pl-5" : ""
+              className={`card grid gap-3 px-8 py-8 md:grid-cols-[9rem_1fr] md:items-baseline ${
+                tier.featured ? "ring-1 ring-signal/40" : ""
               }`}
             >
               <p

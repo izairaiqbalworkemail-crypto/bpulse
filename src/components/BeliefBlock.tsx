@@ -20,7 +20,7 @@ export function BeliefBlock({
 }: BeliefBlockProps) {
   return (
     <Reveal>
-      <article className="border-t border-iron/20 py-10 md:py-14">
+      <article className="card mb-4 px-8 py-10 md:px-10 md:py-14">
         <Rise>
           <h2 className="max-w-[18ch] font-newsreader text-[32px] leading-[1.08] tracking-[-0.03em] text-iron md:text-[56px]">
             {statement}

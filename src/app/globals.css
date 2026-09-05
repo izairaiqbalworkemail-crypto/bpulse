@@ -48,7 +48,7 @@
   --spacing-36: 144px;
 
   /* ── Radii ── */
-  --radius-surface: 16px;
+  --radius-surface: 24px;
   --radius-input: 8px;
   --radius-pill: 999px;
   --radius-button: var(--radius-pill);
@@ -81,13 +81,13 @@
 
   /* Paper-ground shadow system (brand-tinted, no pure black) */
   --shadow-card:
-    0 1px 2px -1px rgba(16, 22, 28, 0.06),
-    0 10px 24px -18px rgba(16, 22, 28, 0.16),
-    0 22px 42px -30px rgba(16, 22, 28, 0.12);
+    0 1px 2px rgba(16, 22, 28, 0.04),
+    0 10px 28px -10px rgba(16, 22, 28, 0.12),
+    0 28px 56px -24px rgba(16, 22, 28, 0.14);
   --shadow-raised:
-    0 1px 2px -1px rgba(16, 22, 28, 0.08),
-    0 14px 28px -18px rgba(16, 22, 28, 0.2),
-    0 28px 52px -32px rgba(16, 22, 28, 0.14);
+    0 2px 6px rgba(16, 22, 28, 0.05),
+    0 18px 36px -12px rgba(16, 22, 28, 0.16),
+    0 40px 72px -28px rgba(16, 22, 28, 0.18);
   --shadow-artifact:
     0 2px 6px -2px rgba(16, 22, 28, 0.08),
     0 18px 34px -20px rgba(16, 22, 28, 0.22),
@@ -209,6 +209,26 @@ p,
 }
 
 /* Surface primitives */
+.card {
+  overflow: hidden;
+  border-radius: var(--radius-surface);
+  background: var(--color-rag-card);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 220ms ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-raised);
+}
+
+.card-iron {
+  overflow: hidden;
+  border-radius: var(--radius-surface);
+  background: var(--color-iron);
+  color: var(--color-rag);
+  box-shadow: var(--shadow-card);
+}
+
 .paper-card {
   border: 1px solid color-mix(in srgb, var(--color-iron) 12%, transparent);
   border-radius: var(--radius-surface);

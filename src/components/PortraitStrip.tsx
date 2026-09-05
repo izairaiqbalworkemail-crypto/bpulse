@@ -41,9 +41,10 @@ export function PortraitStrip({
               href={`/team/${person.id}`}
               className="group block underline-offset-4"
             >
+              <div className={`card-iron ${frame}`}>
               {absent ? (
                 <div
-                  className={`grid ${frame} place-items-center rounded-[20px] bg-iron text-rag`}
+                  className="grid h-full w-full place-items-center"
                 >
                   <span className="font-newsreader text-[28px] leading-none tracking-[-0.03em] md:text-[36px]">
                     {initials(person.name)}
@@ -56,9 +57,10 @@ export function PortraitStrip({
                   alt={person.name}
                   width={176}
                   height={176}
-                  className={`${frame} rounded-[20px] object-cover object-top grayscale transition-[filter,transform] duration-500 group-hover:scale-[1.04] group-hover:grayscale-0`}
+                  className="h-full w-full object-cover object-top grayscale transition-[filter,transform] duration-500 group-hover:scale-[1.04] group-hover:grayscale-0"
                 />
               )}
+              </div>
               <p className="mt-3 font-plex-sans text-[15px] font-medium text-iron underline decoration-iron/30 group-hover:decoration-iron">
                 {person.name}
               </p>

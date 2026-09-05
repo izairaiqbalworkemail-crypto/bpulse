@@ -71,9 +71,7 @@ function ResultCard({
 
   return (
     <article
-      className={`rounded-[20px] bg-rag-card p-5 shadow-[var(--shadow-card)] ${
-        featured ? "" : "ring-1 ring-iron/10"
-      }`}
+      className={`card p-6 ${featured ? "card-hover" : ""}`}
     >
       <div className="flex gap-4">
         <div className="h-16 w-16 shrink-0 overflow-hidden rounded-[14px] bg-iron">

@@ -44,7 +44,7 @@ export function VettedPay({
   return (
     <ul className={`grid grid-cols-2 gap-2 ${compact ? "" : ""}`}>
       {items.map((item) => (
-        <li key={item.kicker} className="rounded-[16px] bg-rag px-4 py-3 ring-1 ring-iron/10">
+        <li key={item.kicker} className="card px-5 py-4">
           <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
             {item.kicker}
           </p>

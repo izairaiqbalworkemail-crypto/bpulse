@@ -11,7 +11,8 @@ import {
   Atmosphere,
   AtmosphereNote,
 } from "@/components/landing/Atmosphere";
-import { Reveal, Tilt } from "@/components/landing/Reveal";
+import { Tilt } from "@/components/landing/Reveal";
+import { PageHero } from "@/components/PageHero";
 import { brand } from "@/config/brand";
 
 type PageProps = {
@@ -62,6 +63,14 @@ export default async function SpecialistPage({ params }: PageProps) {
         ]}
       />
 
+      <PageHero
+        kicker={specialist.role}
+        title={specialist.name}
+        dek={specialist.philosophy}
+        actionHref={`/direct/${specialist.id}`}
+        actionLabel={`Write ${firstName}`}
+      />
+
       <section className="relative w-full overflow-hidden bg-rag">
         <Atmosphere kind="paper" opacity={0.16} />
         <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-16">
@@ -72,10 +81,10 @@ export default async function SpecialistPage({ params }: PageProps) {
           <div className="mt-3 mb-10">
             <AtmosphereNote />
           </div>
-          <div className="grid items-start gap-10 md:grid-cols-[minmax(0,16rem)_1fr]">
-            <Tilt>
+          <Tilt>
+            <div className="card-iron mx-auto max-w-[20rem]">
             {absent ? (
-              <div className="grid h-64 w-full place-items-center rounded-[24px] bg-iron text-rag md:h-80">
+              <div className="grid h-64 w-full place-items-center md:h-80">
                 <span className="font-newsreader text-[72px] leading-none tracking-[-0.04em]">
                   {initials(specialist.name)}
                 </span>
@@ -87,24 +96,11 @@ export default async function SpecialistPage({ params }: PageProps) {
                 alt={specialist.name}
                 width={320}
                 height={400}
-                className="h-64 w-full rounded-[24px] object-cover object-top grayscale md:h-80"
+                className="h-64 w-full object-cover object-top grayscale md:h-80"
               />
             )}
-            </Tilt>
-            <Reveal>
-            <div>
-              <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-                {specialist.role}
-              </p>
-              <h1 className="mt-2 font-newsreader text-[32px] leading-[1.1] text-iron">
-                {specialist.name}
-              </h1>
-              <p className="mt-6 max-w-[22ch] font-newsreader text-[28px] leading-[1.15] tracking-[-0.03em] text-iron md:text-[40px]">
-                {specialist.philosophy}
-              </p>
             </div>
-            </Reveal>
-          </div>
+          </Tilt>
 
           <div className="mt-16 grid gap-12 md:grid-cols-2">
             <div>
@@ -135,7 +131,7 @@ export default async function SpecialistPage({ params }: PageProps) {
           </div>
 
           {specialist.id === "hamza" ? (
-            <section className="mt-14 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+            <section className="card mt-14 p-8">
               <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Legal scope</p>
               <p className="mt-2 max-w-[58ch] font-newsreader text-[18px] leading-[1.5] text-iron">
                 Hamza owns legal and risk routing for NDAs, IP assignment, and procurement legal questions.
@@ -153,7 +149,7 @@ export default async function SpecialistPage({ params }: PageProps) {
               <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
                 The lots, as a trace
               </p>
-              <div className="mt-4 rounded-[16px] bg-rag-card p-5 ring-1 ring-iron/10">
+              <div className="card-iron mt-4 px-6 py-8">
                 <Trace
                   spec={specFromLots(
                     specialist.id,
@@ -161,7 +157,7 @@ export default async function SpecialistPage({ params }: PageProps) {
                     `Lots ${firstName} worked on`,
                   )}
                   size="full"
-                  surface="paper"
+                  surface="iron"
                   labelled
                 />
               </div>
@@ -197,7 +193,7 @@ export default async function SpecialistPage({ params }: PageProps) {
                 {specialist.reviews.map((review) => {
                   const slack = review.source?.toLowerCase().startsWith("slack:");
                   return (
-                    <li key={review.quote} className="max-w-[60ch]">
+                    <li key={review.quote} className="card max-w-[60ch] px-8 py-8">
                       <blockquote className="font-newsreader text-[18px] leading-[1.5] text-ink">
                         “{review.quote}”
                       </blockquote>

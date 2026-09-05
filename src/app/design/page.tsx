@@ -113,7 +113,7 @@ export default function DesignPage() {
           ].map((c) => (
             <div
               key={c.name}
-              className="rounded-surface border border-iron/15 p-6"
+              className="card p-6"
             >
               <div
                 className="h-16 w-full rounded-surface"
@@ -210,7 +210,7 @@ export default function DesignPage() {
             <Mark size={64} ground="iron" />
             <Mark size={32} ground="iron" />
           </div>
-          <div className="flex items-end gap-6 rounded-surface border border-iron/15 bg-rag p-8">
+          <div className="flex items-end gap-6 card bg-rag p-8">
             <Mark size={64} ground="rag" />
             <Mark size={32} ground="rag" />
             <Mark size={32} mono />
@@ -284,7 +284,7 @@ export default function DesignPage() {
       {/* Primitives — DataLine */}
       <section className="mt-24">
         <SectionLabel>DataLine</SectionLabel>
-        <div className="max-w-[640px] rounded-surface border border-iron/15 p-8">
+        <div className="max-w-[640px] card p-8">
           <dl className="flex flex-col gap-4">
             <DataLine label="Client" value="Sully.ai" />
             <DataLine label="Scope" value="$42,000" />
@@ -297,7 +297,7 @@ export default function DesignPage() {
       {/* Primitives — Grade */}
       <section className="mt-24">
         <SectionLabel>Grade</SectionLabel>
-        <div className="flex flex-col gap-6 rounded-surface border border-iron/15 p-8 md:flex-row">
+        <div className="flex flex-col gap-6 card p-8 md:flex-row">
           <Grade grade="sound" label="Holding" date="12 Mar 2026" />
           <Grade grade="unsound" label="Not holding" date="12 Mar 2026" />
         </div>
@@ -310,7 +310,7 @@ export default function DesignPage() {
       {/* Primitives — Credit */}
       <section className="mt-24">
         <SectionLabel>Credit</SectionLabel>
-        <div className="flex flex-col gap-8 rounded-surface border border-iron/15 p-8 md:flex-row">
+        <div className="flex flex-col gap-8 card p-8 md:flex-row">
           <Credit
             name="Aneeb Iqbal"
             capability="Delivery"
@@ -332,7 +332,7 @@ export default function DesignPage() {
       {/* Primitives — Notice */}
       <section className="mt-24">
         <SectionLabel>Notice</SectionLabel>
-        <div className="max-w-[720px] rounded-surface border border-iron/15 p-8">
+        <div className="max-w-[720px] card p-8">
           <Notice
             question="Will the check see everything?"
             answer="No. A five-day assessment finds the blocking defects and the ones it can see clearly. It does not promise to surface every latent issue before any work begins — that would be a false claim."
@@ -347,7 +347,7 @@ export default function DesignPage() {
       {/* Primitives — Lot */}
       <section className="mt-24">
         <SectionLabel>Lot</SectionLabel>
-        <div className="rounded-surface border border-iron/15 p-8">
+        <div className="card p-8">
           <Lot
             lotNumber="LOT 034"
             title="A hospital platform that stopped at 80%"
@@ -379,7 +379,7 @@ export default function DesignPage() {
       {/* Motion — server-rendered label, client replay */}
       <section className="mt-24">
         <SectionLabel>Motion</SectionLabel>
-        <div className="max-w-[720px] rounded-surface border border-iron/15 p-8">
+        <div className="max-w-[720px] card p-8">
           <MotionReplay />
         </div>
       </section>

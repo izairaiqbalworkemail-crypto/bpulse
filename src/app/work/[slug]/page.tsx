@@ -19,6 +19,7 @@ import {
   AtmosphereNote,
 } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
+import { PageHero } from "@/components/PageHero";
 import { specFromLot, verifiedFigures } from "@/lib/lot-trace";
 
 type PageProps = {
@@ -67,29 +68,41 @@ export default async function LotPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="relative w-full overflow-hidden bg-rag">
-        <Atmosphere kind="desk" opacity={0.12} />
-        <div className="relative grid-container pt-10 md:pt-14">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-            {lot.lotNumber} · {lot.client}
-            {disclaimer ? ` · ${disclaimer}` : null}
-          </p>
-          <h1 className="mt-3 max-w-[22ch] font-newsreader text-[24px] leading-[1.15] text-iron">
-            {lot.title}
-          </h1>
-        </div>
+      <PageHero
+        kicker={`${lot.lotNumber} · ${lot.grade.label}`}
+        title={lot.client}
+        dek={lot.title}
+        hideAction
+      />
 
-        <div className="relative mt-8 w-full bg-iron py-8">
+      <section className="relative w-full overflow-hidden bg-rag">
+        <div className="relative w-full bg-iron py-10 md:py-14">
           <div className="grid-container">
-            <Trace spec={spec} size="full" surface="iron" labelled />
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">
+              The lot, as a trace
+            </p>
+            <div className="mt-6">
+              <Trace spec={spec} size="full" surface="iron" labelled />
+            </div>
           </div>
         </div>
 
-        <div className="relative grid-container pb-24 pt-12 md:pb-32 md:pt-16">
-          <PeopleRail
-            people={specialists.filter((person) => person.id === specialist.id)}
-            line="The name on this lot"
-          />
+        <Atmosphere kind="desk" opacity={0.12} />
+        <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-14">
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+            {lot.client}
+            {disclaimer ? ` · ${disclaimer}` : null}
+          </p>
+          <p className="mt-3 max-w-[22ch] font-newsreader text-[28px] leading-[1.15] text-iron md:text-[32px]">
+            {lot.title}
+          </p>
+
+          <div className="mt-10">
+            <PeopleRail
+              people={specialists.filter((person) => person.id === specialist.id)}
+              line="The name on this lot"
+            />
+          </div>
           <div className="mt-3 mb-10">
             <AtmosphereNote />
           </div>
@@ -111,11 +124,11 @@ export default async function LotPage({ params }: PageProps) {
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Findings
             </p>
-            <ul className="mt-4 flex flex-col">
+            <ul className="mt-4 flex flex-col gap-3">
               {findings.map((finding) => (
                 <li
                   key={finding.observed}
-                  className="border-t border-iron/15 py-5"
+                  className="card px-6 py-6"
                 >
                   <p className="font-newsreader text-[18px] text-iron">
                     {finding.observed}

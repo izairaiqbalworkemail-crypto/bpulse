@@ -46,7 +46,7 @@ export default function DemoOverviewPage() {
           const current = "current" in stage && Boolean(stage.current);
           const status = current ? "Current" : stage.done ? "Done" : "Ahead";
           return (
-            <li key={stage.id} className="border-t border-iron/15 pt-4">
+            <li key={stage.id} className="card p-5">
               <p className="font-plex-mono text-[13px] text-ink/60">{status}</p>
               <p className="mt-1 font-newsreader text-lot-title text-iron">
                 {stage.label}

@@ -2,9 +2,9 @@ import type { ReportFinding } from "@/content/reports/types";
 
 export function FindingLedger({ findings }: { findings: ReportFinding[] }) {
   return (
-    <ol className="mt-6 flex flex-col gap-0">
+    <ol className="mt-6 flex flex-col gap-3">
       {findings.map((finding, index) => (
-        <li key={finding.observed} className="border-t border-iron/15">
+        <li key={finding.observed} className="card px-6">
           <details className="group py-6" open>
             <summary className="cursor-pointer list-none">
               <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">

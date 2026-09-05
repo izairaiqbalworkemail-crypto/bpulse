@@ -12,7 +12,7 @@ export function DirectStrip() {
       <div className="h-px w-full bg-rag/10" aria-hidden="true" />
       <Link
         href="/direct"
-        className="grid-container flex h-14 items-center justify-between gap-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-signal"
+        className="flex h-14 w-full items-center justify-between gap-4 px-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-signal sm:px-8"
       >
         <span className="flex min-w-0 items-center gap-3">
           <span className="flex shrink-0 -space-x-2" aria-hidden="true">

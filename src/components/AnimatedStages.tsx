@@ -8,9 +8,9 @@ export function AnimatedStages({
   stages,
 }: Readonly<{ stages: readonly (typeof closeStages)[number][] }>) {
   return (
-    <ol className="mt-12 flex flex-col">
+    <ol className="mt-12 flex flex-col gap-0">
       {stages.map((stage, index) => (
-        <li key={stage.id} className="border-t border-iron/15 py-8">
+        <li key={stage.id} className="card mb-4 px-8 py-10">
           <Reveal delay={index * 0.04}>
             <Rise>
               <h2 className="font-newsreader text-[22px] leading-[1.2] text-iron md:text-[24px]">

@@ -13,7 +13,7 @@ export function PassAlong() {
   );
 
   return (
-    <aside className="rounded-[24px] bg-iron px-6 py-7 text-rag">
+    <aside className="card-iron px-8 py-10">
       <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
         Not your call?
       </p>

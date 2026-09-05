@@ -16,7 +16,7 @@ export function PageClose({
 
   return (
     <Reveal>
-      <aside className="mt-14 rounded-[24px] bg-rag-card px-6 py-8 shadow-[var(--shadow-card)]">
+      <aside className="card mt-14 px-8 py-10">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
           The Check · {price}
         </p>

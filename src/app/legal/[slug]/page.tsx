@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { getLegalDoc, legalOwner, clauseNumber, partyPair } from "@/content/documents";
 import { LEGAL_STATUS_META, LEGAL_FAMILY_LABEL } from "@/content/documents/types";
 
@@ -39,16 +40,23 @@ export default async function LegalDocPage({ params }: PageProps) {
   const [from, to] = partyPair(doc);
 
   return (
-    <section className="legal-print w-full bg-rag pb-24 md:pb-32">
-      <div className="grid-container pt-14 md:pt-20">
+    <section className="w-full bg-rag pb-24 md:pb-32">
+      <div className="print:hidden">
+        <PageHero
+          kicker={`${LEGAL_FAMILY_LABEL[doc.family]} · ${doc.reference}`}
+          title={doc.name}
+          dek={doc.lead}
+          hideAction
+        />
+      </div>
+      <div className="legal-print grid-container pt-10 md:pt-14">
         <Link
           href="/legal"
-          className="font-plex-sans text-sm text-ink/70 underline-offset-4 hover:underline"
+          className="font-plex-sans text-sm text-ink/70 underline-offset-4 hover:underline print:hidden"
         >
           ← Back to legal register
         </Link>
 
-        {/* Status chip + family */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-partial px-3 py-1 font-plex-sans text-[12px] font-medium text-white">
             <span aria-hidden="true">{status.dot}</span> {status.label}
@@ -58,15 +66,16 @@ export default async function LegalDocPage({ params }: PageProps) {
           </span>
         </div>
 
-        {/* Document body */}
-        <article className="mt-4 max-w-[66ch]">
-          <h1 className="font-newsreader text-[40px] leading-[1.05] tracking-[-0.01em] text-iron md:text-[54px]">
+        <article className="mt-8 max-w-[66ch]">
+          <h1 className="mb-4 hidden font-newsreader text-[40px] leading-[1.05] text-iron print:block">
             {doc.name}
           </h1>
-          <p className="mt-4 font-newsreader text-[18px] leading-[1.5] text-ink">{doc.lead}</p>
+          <p className="mb-6 hidden font-newsreader text-[18px] leading-[1.5] text-ink print:block">
+            {doc.lead}
+          </p>
 
           {/* Metadata card */}
-          <dl className="mt-6 rounded-[16px] border border-iron/20 bg-rag-card p-5 font-plex-sans text-[14px] md:grid md:grid-cols-3">
+          <dl className="mt-6 card p-5 font-plex-sans text-[14px] md:grid md:grid-cols-3">
             <div>
               <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
                 Reference
@@ -114,7 +123,7 @@ export default async function LegalDocPage({ params }: PageProps) {
           {from && to && (
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               {[from, to].map((party) => (
-                <div key={party.key} className="rounded-[16px] border border-iron/20 bg-rag-card p-4">
+                <div key={party.key} className="card p-4">
                   <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
                     {party.key === "bpulse" ? "From" : "To"}
                   </p>
@@ -130,7 +139,7 @@ export default async function LegalDocPage({ params }: PageProps) {
           )}
 
           {/* Legal owner — real crew profile */}
-          <div className="mt-6 flex flex-wrap items-start gap-4 rounded-[16px] border border-iron/20 bg-rag-card p-4">
+          <div className="mt-6 flex flex-wrap items-start gap-4 card p-4">
             <Image
               src="/team/hamza.jpg"
               alt={`${legalOwner.name} — ${legalOwner.role}`}
@@ -196,7 +205,7 @@ export default async function LegalDocPage({ params }: PageProps) {
           {doc.sections.map((section) => (
             <section
               key={section.number}
-              className="mt-8 scroll-mt-28 rounded-[16px] border border-iron/20 bg-rag-card p-5"
+              className="mt-8 scroll-mt-28 card p-5"
               aria-labelledby={`section-${section.number}`}
             >
               <h2
@@ -236,7 +245,7 @@ export default async function LegalDocPage({ params }: PageProps) {
 
           {/* Signature block */}
           {doc.signatureBlocks.length > 0 && (
-            <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+            <section className="mt-8 card p-5">
               <h3 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
                 Signatures
               </h3>
@@ -259,7 +268,7 @@ export default async function LegalDocPage({ params }: PageProps) {
           )}
 
           {/* Changelog */}
-          <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+          <section className="mt-8 card p-5">
             <h3 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
               Changelog
             </h3>
@@ -279,7 +288,7 @@ export default async function LegalDocPage({ params }: PageProps) {
 
           {/* Version history + diff */}
           {doc.versions && doc.versions.length > 0 && (
-            <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+            <section className="mt-8 card p-5">
               <h3 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
                 Version history
               </h3>

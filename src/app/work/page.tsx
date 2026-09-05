@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { WorkIndex } from "@/components/WorkIndex";
 import { PageClose } from "@/components/PageClose";
+import { Reveal } from "@/components/landing/Reveal";
 import { getCatalogue } from "@/content/catalogue";
 import { PeopleRail } from "@/components/PeopleRail";
 import {
@@ -30,15 +31,17 @@ export default function WorkPage() {
       />
 
       <div className="relative overflow-hidden">
-        <Atmosphere kind="desk" opacity={0.14} />
+        <Atmosphere kind="paper" opacity={0.16} />
         <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-14">
-          <PeopleRail
-            people={specialists.slice(0, 6)}
-            line="The names on the lots"
-          />
-          <div className="mt-3 mb-10">
-            <AtmosphereNote />
-          </div>
+<Reveal delay={0.06}>
+            <PeopleRail
+              people={specialists.slice(0, 6)}
+              line="The names on the lots"
+            />
+            <div className="mt-3 mb-10">
+              <AtmosphereNote />
+            </div>
+          </Reveal>
           <WorkIndex />
           <PageClose line="Your lot is not in the log yet. A Check is how it gets there." />
         </div>

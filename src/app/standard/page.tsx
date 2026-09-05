@@ -49,7 +49,7 @@ export default function StandardPage() {
           <GateCard key={gate.n} {...gate} />
         ))}
 
-        <div className="mt-12 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+        <div className="card mt-12 p-8">
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
             Gate 0 rubric (0-3 each)
           </p>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { GateCard } from "@/components/GateCard";
 import { PageHero } from "@/components/PageHero";
+import { SignalPlate } from "@/components/SignalPlate";
 import { BriefIntake } from "@/components/intake/BriefIntake";
 import { crewCommitments, crewGates } from "@/content/process";
 import { listRoles } from "@/lib/careers/store";
@@ -27,21 +28,42 @@ export default function CareersPage() {
         hideAction
       />
 
-      <div className="grid-container pt-8">
-        <section className="border-l-4 border-signal bg-signal/10 p-5">
-          <p className="font-newsreader text-[20px] leading-[1.45] text-iron">
-            What you get: published pay bands, paid Gate 2 sample, private status tracking, and a public crew profile with a dated credential when you clear Gate 4.
-          </p>
-          <p className="mt-3 font-plex-sans text-[14px] text-ink">
-            Example crew profile: <Link href="/team/hamza" className="underline underline-offset-4">/team/hamza</Link>
-          </p>
-        </section>
+      <SignalPlate
+        kicker="What you get"
+        title="Published bands. A paid sample."
+        line="No multiple-choice pass/fail gate. Gate 2 is paid whether or not you join."
+        facts={[
+          {
+            kicker: "Pay",
+            body: "Published pay bands on the role cards below. No candidate fee.",
+          },
+          {
+            kicker: "Gate 2",
+            body: "A paid work sample. You keep the money either way.",
+          },
+          {
+            kicker: "After Gate 4",
+            body: (
+              <>
+                A public crew profile with a dated credential. Example:{" "}
+                <Link href="/team/hamza" className="underline underline-offset-4">
+                  /team/hamza
+                </Link>
+                .
+              </>
+            ),
+          },
+        ]}
+        href="#intake"
+        action="Apply in five steps"
+      />
 
-        <section className="mt-12">
+      <div className="grid-container pt-12">
+        <section>
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">Hiring plan</p>
           <ul className="mt-4 space-y-3">
             {roles.map((role) => (
-              <li key={role.id} className="rounded-[14px] border border-iron/15 bg-rag-card p-4">
+              <li key={role.id} className="card p-6">
                 <p className="font-newsreader text-[21px] text-iron">{role.title}</p>
                 <p className="font-newsreader text-[16px] text-ink">
                   {role.band} · {role.location} · {role.summary}
@@ -63,7 +85,7 @@ export default function CareersPage() {
           ))}
         </section>
 
-        <section className="mt-12 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+        <section className="card mt-12 p-8">
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">Three commitments</p>
           <ul className="mt-3 space-y-2">
             {crewCommitments.map((item) => (

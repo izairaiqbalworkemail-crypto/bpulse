@@ -3,12 +3,14 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { PressButton, dismissKeyboard } from "@/components/PressButton";
+import { DataLine } from "@/components/primitives/DataLine";
 import {
   aboutDirectScript,
   askedByFor,
   BRIEF_LABEL,
   getDirectScript,
 } from "@/content/direct-scripts";
+import { crewCapability } from "@/content/crew-lines";
 import { getSpecialist } from "@/content/specialists";
 import { gateLine } from "@/lib/direct/gate";
 import {
@@ -47,7 +49,7 @@ function labelOf(field: Field, value: string) {
 
 function displayValue(field: Field, answers: Answers) {
   if (field.kind === "identity") {
-    return `${answers.name} · ${answers.email}`;
+    return [answers.name, answers.email].filter(Boolean).join(" · ");
   }
   if (field.kind === "chips" || field.kind === "chips-text") {
     return [labelOf(field, answers[field.name] ?? ""), answers[`${field.name}Note`]]
@@ -59,6 +61,59 @@ function displayValue(field: Field, answers: Answers) {
 
 function briefLabel(name: string) {
   return BRIEF_LABEL[name] ?? name;
+}
+
+function Portrait({
+  src,
+  name,
+  size,
+}: Readonly<{ src?: string; name: string; size: number }>) {
+  if (src) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt=""
+        width={size}
+        height={size}
+        className="h-full w-full object-cover object-top"
+      />
+    );
+  }
+  return (
+    <span className="font-newsreader text-[20px] text-rag">{initials(name)}</span>
+  );
+}
+
+function BriefPanel({
+  fields,
+  answers,
+  reader,
+}: Readonly<{ fields: Field[]; answers: Answers; reader: string }>) {
+  return (
+    <aside className="border-iron/10 bg-rag px-5 py-6 md:border-l">
+      <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
+        Your brief
+      </p>
+      <div className="mt-3 h-px bg-iron/10" aria-hidden="true" />
+      <div className="mt-5 flex flex-col gap-3">
+        {fields.map((field) => {
+          const key = field.kind === "identity" ? "email" : field.name;
+          return (
+            <DataLine
+              key={field.name}
+              label={briefLabel(key)}
+              value={displayValue(field, answers)}
+              mono={field.kind === "chips" || field.kind === "identity"}
+            />
+          );
+        })}
+      </div>
+      <p className="mt-8 font-newsreader text-[15px] leading-[1.4] text-ink/70">
+        This is what {reader} will read.
+      </p>
+    </aside>
+  );
 }
 
 export function DirectDesk({
@@ -87,6 +142,9 @@ export function DirectDesk({
   const visible = useMemo(() => visibleFields(script, answers), [script, answers]);
   const current = nextOpen(script, answers);
   const reviewing = !current;
+  const answered = visible.filter(
+    (field) => fieldComplete(field, answers) && current?.name !== field.name,
+  );
 
   useEffect(() => {
     if (answers.product) return;
@@ -106,6 +164,10 @@ export function DirectDesk({
     : getSpecialist("aneeb");
   const headerFirst = firstName(headerPerson.name);
   const gate = gateLine(headerPerson.id);
+  const photo =
+    headerPerson.photo && headerPerson.photoStatus === "Photo"
+      ? headerPerson.photo
+      : undefined;
 
   function write(partial: Answers) {
     saveDesk(script.id, {
@@ -188,40 +250,36 @@ export function DirectDesk({
     }
   }
 
-  const filledRows = visible.filter((field) => fieldComplete(field, answers));
-
   if (record) {
     const rows = visibleFields(script, record).filter((field) =>
       fieldComplete(field, record),
     );
     return (
-      <div className="overflow-hidden rounded-[16px] bg-rag-card p-6 shadow-[var(--shadow-card)] ring-1 ring-iron/10 md:p-8 print:shadow-none print:ring-0">
+      <article className="card p-6 md:p-8 print:shadow-none">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/60">
           Written intake · filed
         </p>
-        <h2 className="mt-3 font-newsreader text-[28px] leading-[1.15] text-iron">
+        <h2 className="mt-3 font-newsreader text-[32px] leading-[1.1] text-iron">
           {headerFirst} has the brief.
         </h2>
         <p className="mt-3 max-w-[42ch] font-newsreader text-[17px] leading-[1.4] text-ink">
           A person replies from a real inbox, within one business day. Nobody was
           typing.
         </p>
-        <dl className="mt-8 flex flex-col gap-4">
+        <div className="mt-8 flex flex-col gap-3">
           {rows.map((field) => (
-            <div key={field.name}>
-              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                {briefLabel(field.kind === "identity" ? "email" : field.name)}
-              </dt>
-              <dd className="mt-1 font-newsreader text-[17px] leading-[1.4] text-iron">
-                {displayValue(field, record)}
-              </dd>
-            </div>
+            <DataLine
+              key={field.name}
+              label={briefLabel(field.kind === "identity" ? "email" : field.name)}
+              value={displayValue(field, record)}
+              mono={field.kind === "chips" || field.kind === "identity"}
+            />
           ))}
-        </dl>
+        </div>
         <div className="mt-8 flex flex-wrap gap-3 print:hidden">
           <PressButton
             onPress={() => window.print()}
-            className="inline-flex min-h-11 items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag"
+            className="inline-flex min-h-11 items-center rounded-full bg-iron px-5 py-2.5 font-plex-sans text-[14px] font-medium text-rag"
           >
             Print this record
           </PressButton>
@@ -232,104 +290,79 @@ export function DirectDesk({
             Write someone else
           </Link>
         </div>
-      </div>
+      </article>
     );
   }
 
-  const portrait = headerPerson.photo && headerPerson.photoStatus === "Photo";
-
   return (
-    <div className="overflow-hidden rounded-[16px] bg-rag-card shadow-[var(--shadow-card)] ring-1 ring-iron/10">
-      <header className="border-b border-iron/10 bg-iron px-5 py-5 text-rag md:px-7">
+    <article className="card">
+      <header className="border-b border-rag/10 bg-iron px-5 py-6 text-rag md:px-8">
         <div className="flex items-start gap-4">
-          <span className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full bg-iron-2">
-            {portrait ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={headerPerson.photo}
-                alt=""
-                width={56}
-                height={56}
-                className="h-full w-full object-cover object-top"
-              />
-            ) : (
-              <span className="font-newsreader text-[20px] text-rag">
-                {initials(headerPerson.name)}
-              </span>
-            )}
+          <span className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-iron-2">
+            <Portrait src={photo} name={headerPerson.name} size={64} />
           </span>
           <div className="min-w-0">
-            <p className="font-newsreader text-[22px] leading-[1.15] text-rag">
+            <p className="font-newsreader text-[24px] leading-[1.15] text-rag">
               {headerPerson.name}
               <span className="text-rag/55">
                 {" "}
-                · {headerPerson.role.split("·")[0]?.trim()}
+                · {crewCapability[headerPerson.id] ?? headerPerson.role}
               </span>
             </p>
-            <p className="mt-1">
+            <p className="mt-2 font-plex-mono text-[12px] text-signal">
               <Link
                 href={gate.href}
-                className="font-plex-mono text-[12px] text-signal underline decoration-signal/40 underline-offset-4"
+                className="underline decoration-signal/40 underline-offset-4"
               >
+                {gate.clientFacing ? "✓ " : null}
                 {gate.label}
               </Link>
             </p>
-            <p className="mt-3 max-w-[52ch] font-newsreader text-[16px] leading-[1.4] text-rag/80">
+            <p className="mt-4 max-w-[52ch] font-newsreader text-[17px] leading-[1.4] text-rag/85">
               {script.banner}
             </p>
           </div>
         </div>
       </header>
 
-      <div className="grid md:grid-cols-[minmax(0,1fr)_16.5rem]">
-        <div className="min-w-0 px-5 py-6 md:px-7">
-          <div className="mb-6 rounded-[12px] bg-rag px-4 py-3 ring-1 ring-iron/10 md:hidden">
-            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-              Your brief
-            </p>
-            {filledRows.length === 0 ? (
-              <p className="mt-1 font-newsreader text-[15px] text-ink/70">
-                It fills as you answer.
-              </p>
-            ) : (
-              <dl className="mt-2 flex flex-col gap-2">
-                {filledRows.map((field) => (
-                  <div key={field.name} className="flex justify-between gap-3">
-                    <dt className="font-plex-mono text-[11px] uppercase tracking-[0.06em] text-ink/50">
-                      {briefLabel(field.kind === "identity" ? "email" : field.name)}
-                    </dt>
-                    <dd className="truncate font-newsreader text-[14px] text-iron">
-                      {displayValue(field, answers)}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            )}
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_19rem]">
+        <div className="min-w-0 px-5 py-6 md:px-8 md:py-8">
+          <div className="mb-6 lg:hidden">
+            <BriefPanel fields={visible} answers={answers} reader={headerFirst} />
           </div>
 
+          <ol className="flex flex-col gap-8">
+            {answered.map((field) => {
+              const who = firstName(
+                getSpecialist(askedByFor(script.id, field.name)).name,
+              );
+              return (
+                <li key={field.name}>
+                  <p className="font-plex-sans text-[14px] text-signal">
+                    {who} asks
+                  </p>
+                  <p className="mt-1 font-newsreader text-[20px] leading-[1.3] text-iron">
+                    {field.ask}
+                  </p>
+                  <p className="mt-3 font-newsreader text-[17px] leading-[1.4] text-ink">
+                    {displayValue(field, answers)}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
+
           {error ? (
-            <p role="alert" className="mb-4 font-newsreader text-[15px] text-iron">
+            <p role="alert" className="mt-6 font-newsreader text-[15px] text-iron">
               {error}
             </p>
           ) : null}
 
           {reviewing || !current ? (
-            <div>
+            <div className={answered.length ? "mt-10" : ""}>
               <p className="font-newsreader text-[22px] leading-[1.3] text-iron">
                 That&apos;s the brief. Check it, then send it.
               </p>
-              <dl className="mt-5 flex flex-col gap-3">
-                {visible.map((field) => (
-                  <div key={field.name}>
-                    <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                      {briefLabel(field.kind === "identity" ? "email" : field.name)}
-                    </dt>
-                    <dd className="mt-1 font-newsreader text-[17px] leading-[1.4] text-iron">
-                      {displayValue(field, answers)}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <PressButton
                   disabled={busy}
@@ -351,16 +384,16 @@ export function DirectDesk({
               </div>
             </div>
           ) : (
-            <div>
+            <div className={answered.length ? "mt-10" : ""}>
               <p className="font-plex-sans text-[14px] text-signal">
                 {askerFirst} asks
               </p>
-              <p className="mt-1 font-newsreader text-[22px] leading-[1.3] text-iron">
+              <p className="mt-1 font-newsreader text-[26px] leading-[1.25] text-iron md:text-[28px]">
                 {current.ask}
               </p>
 
               {current.kind === "chips" ? (
-                <ul className="mt-5 flex flex-wrap gap-2">
+                <ul className="mt-6 flex flex-wrap gap-2">
                   {current.chips?.map((chip) => (
                     <li key={chip.id}>
                       <PressButton
@@ -368,15 +401,15 @@ export function DirectDesk({
                           dismissKeyboard();
                           sendField(current, chip.id);
                         }}
-                        className="min-h-11 touch-manipulation rounded-full bg-rag px-4 py-2 font-newsreader text-[16px] text-iron ring-1 ring-iron/15"
+                        className="min-h-11 touch-manipulation rounded-[8px] bg-rag px-4 py-2 font-plex-mono text-[14px] text-iron ring-1 ring-iron/15"
                       >
-                        {chip.label}
+                        [ {chip.label.toLowerCase()} ]
                       </PressButton>
                     </li>
                   ))}
                 </ul>
               ) : current.kind === "identity" ? (
-                <div className="mt-5">
+                <div className="mt-6">
                   <label className="block">
                     <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
                       Name
@@ -386,7 +419,7 @@ export function DirectDesk({
                       onChange={(event) => setDraft(event.target.value)}
                       autoComplete="name"
                       enterKeyHint="next"
-                      className="mt-1 w-full rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron outline-none ring-1 ring-iron/15"
+                      className="mt-1 w-full rounded-[8px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron outline-none ring-1 ring-iron/15"
                     />
                   </label>
                   <label className="mt-3 block">
@@ -405,7 +438,7 @@ export function DirectDesk({
                           sendIdentity();
                         }
                       }}
-                      className="mt-1 w-full rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron outline-none ring-1 ring-iron/15"
+                      className="mt-1 w-full rounded-[8px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron outline-none ring-1 ring-iron/15"
                     />
                   </label>
                   <PressButton
@@ -416,7 +449,7 @@ export function DirectDesk({
                   </PressButton>
                 </div>
               ) : (
-                <div className="mt-5">
+                <div className="mt-6">
                   <textarea
                     value={draft}
                     onChange={(event) => setDraft(event.target.value)}
@@ -429,7 +462,7 @@ export function DirectDesk({
                         sendField(current, draft);
                       }
                     }}
-                    className="w-full resize-none rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] leading-[1.4] text-iron outline-none ring-1 ring-iron/15"
+                    className="w-full resize-none rounded-[8px] bg-rag px-4 py-3 font-newsreader text-[17px] leading-[1.4] text-iron outline-none ring-1 ring-iron/15"
                   />
                   <PressButton
                     onPress={() => sendField(current, draft)}
@@ -442,7 +475,7 @@ export function DirectDesk({
 
               <PressButton
                 onPress={back}
-                className="mt-4 min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
+                className="mt-5 min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
               >
                 Back
               </PressButton>
@@ -450,33 +483,9 @@ export function DirectDesk({
           )}
         </div>
 
-        <aside className="hidden border-l border-iron/10 bg-rag px-5 py-6 md:block">
-          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-            Your brief
-          </p>
-          <div className="mt-4 h-px bg-iron/10" aria-hidden="true" />
-          {filledRows.length === 0 ? (
-            <p className="mt-4 font-newsreader text-[15px] leading-[1.4] text-ink/70">
-              This is what {headerFirst} will read.
-            </p>
-          ) : (
-            <dl className="mt-4 flex flex-col gap-4">
-              {filledRows.map((field) => (
-                <div key={field.name}>
-                  <dt className="font-plex-mono text-[11px] uppercase tracking-[0.06em] text-ink/50">
-                    {briefLabel(field.kind === "identity" ? "email" : field.name)}
-                  </dt>
-                  <dd className="mt-1 font-newsreader text-[15px] leading-[1.4] text-iron">
-                    {displayValue(field, answers)}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          )}
-          <p className="mt-8 font-newsreader text-[14px] leading-[1.4] text-ink/60">
-            This is what {headerFirst} will read.
-          </p>
-        </aside>
+        <div className="hidden lg:block">
+          <BriefPanel fields={visible} answers={answers} reader={headerFirst} />
+        </div>
       </div>
 
       <label className="sr-only" htmlFor={`${script.id}-website`}>
@@ -491,6 +500,6 @@ export function DirectDesk({
         autoComplete="off"
         className="hidden"
       />
-    </div>
+    </article>
   );
 }

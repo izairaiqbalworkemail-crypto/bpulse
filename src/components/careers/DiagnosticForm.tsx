@@ -103,7 +103,7 @@ export function DiagnosticForm({ token, dueAt, seeded, submitted }: Props) {
   }
 
   return (
-    <div className="mt-8 rounded-[20px] border border-iron/20 bg-rag-card p-5 md:p-6">
+    <div className="card mt-8 p-6 md:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Window: 48 hours from opening · expected effort ~2 hours</p>
         <p className="font-plex-mono text-[12px] text-ink/80">{remainingLabel}</p>
@@ -135,7 +135,7 @@ export function DiagnosticForm({ token, dueAt, seeded, submitted }: Props) {
 
         <div className="mt-3 space-y-4">
           {form.findings.map((finding, index) => (
-            <div key={`${index}-${finding.observed.slice(0, 12)}`} className="rounded-[14px] border border-iron/15 p-4">
+            <div key={`${index}-${finding.observed.slice(0, 12)}`} className="card p-4">
               <p className="font-plex-mono text-[12px] text-ink/70">Finding {index + 1}</p>
               <textarea
                 value={finding.observed}

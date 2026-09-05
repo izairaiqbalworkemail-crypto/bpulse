@@ -192,7 +192,7 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
 
   if (done) {
     return (
-      <div className="overflow-hidden rounded-[24px] bg-iron px-6 py-10 text-rag ring-1 ring-rag/10 md:px-8">
+      <div className="card-iron px-6 py-10 md:px-8">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">
           Note filed
         </p>
@@ -207,7 +207,7 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
   }
 
   return (
-    <div className="overflow-hidden rounded-[24px] bg-rag-card shadow-[var(--shadow-card)] ring-1 ring-iron/10">
+    <div className="card">
       <header className="bg-iron px-5 py-5 text-rag md:px-7">
         <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/50">
           Structured intake · not a chatbot

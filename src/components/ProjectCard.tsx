@@ -33,7 +33,7 @@ export function ProjectCard({ lot, index = 0 }: ProjectCardProps) {
   return (
     <Link
       href={`/work/${lot.slug}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-surface border border-iron/10 bg-rag transition-all duration-300 hover:border-iron/30 hover:shadow-[0_8px_30px_-8px_rgba(16,22,28,0.12)]"
+      className="card card-hover group relative flex h-full flex-col"
       style={{ animationDelay: `${index * 80}ms` }}
     >
       {/* Image */}

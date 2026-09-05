@@ -31,9 +31,9 @@ export function FindingsFilter() {
         noun="sample findings"
         label="Filter sample findings"
       />
-      <ul className="mt-10 flex flex-col gap-10">
+      <ul className="mt-10 flex flex-col gap-3">
         {rows.map((finding) => (
-          <li key={finding.observed} className="border-t border-iron/15 pt-5">
+          <li key={finding.observed} className="card p-6">
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/60">
               {finding.status} · {finding.owner} · {finding.date} · sample
             </p>

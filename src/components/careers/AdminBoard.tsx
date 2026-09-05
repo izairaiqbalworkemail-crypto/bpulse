@@ -65,11 +65,11 @@ export function AdminBoard({ board, selectedDiagnosticToken, selectedPayload }: 
 
   return (
     <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-      <section className="rounded-[16px] border border-iron/20 bg-rag-card p-5">
+      <section className="card p-6">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Board by gate</p>
         <ul className="mt-4 space-y-3">
           {board.map((item) => (
-            <li key={item.id} className="rounded-[12px] border border-iron/15 p-3">
+            <li key={item.id} className="card p-4">
               <p className="font-newsreader text-[20px] text-iron">{item.name}</p>
               <p className="font-newsreader text-[16px] text-ink">{item.role} · {item.gateName}</p>
               <p className="font-plex-mono text-[12px] text-ink/70">
@@ -92,7 +92,7 @@ export function AdminBoard({ board, selectedDiagnosticToken, selectedPayload }: 
         </ul>
       </section>
 
-      <section className="rounded-[16px] border border-iron/20 bg-rag-card p-5">
+      <section className="card p-6">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Scoring view</p>
         {selectedPayload ? (
           <>

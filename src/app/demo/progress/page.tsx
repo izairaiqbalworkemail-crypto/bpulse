@@ -24,7 +24,7 @@ export default function DemoProgressPage() {
       </h3>
       <ul className="mt-4 flex flex-col gap-4">
         {progress.commits.map((commit) => (
-          <li key={commit.hash} className="border-t border-iron/15 pt-3">
+          <li key={commit.hash} className="card p-5">
             <p className="font-plex-mono text-data text-iron">{commit.hash}</p>
             <p className="mt-1 font-newsreader text-reading text-ink">
               {commit.message}
@@ -39,7 +39,7 @@ export default function DemoProgressPage() {
       </h3>
       <ul className="mt-4 flex flex-col gap-4">
         {progress.deploys.map((deploy) => (
-          <li key={deploy.env} className="border-t border-iron/15 pt-3">
+          <li key={deploy.env} className="card p-5">
             <p className="font-plex-mono text-data text-iron">
               {deploy.env} · {deploy.status}
             </p>

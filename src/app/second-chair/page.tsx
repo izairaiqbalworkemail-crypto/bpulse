@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/lib/JsonLd";
+import { PageHero } from "@/components/PageHero";
+import { SignalPlate } from "@/components/SignalPlate";
 import { StageRail } from "@/components/StageRail";
 import { TierTable } from "@/components/TierTable";
 import { Atmosphere } from "@/components/landing/Atmosphere";
@@ -39,19 +41,35 @@ export default function SecondChairPage() {
         price="2400"
       />
 
-      <section className="w-full bg-iron text-rag">
-        <div className="grid-container py-14 md:py-20">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/60">
-            Second Chair
-          </p>
-          <h1 className="mt-4 max-w-[18ch] font-newsreader text-[40px] leading-[1.08] tracking-[-0.03em] text-rag md:text-[56px]">
-            We finish it. Then we make sure you can keep it.
-          </h1>
-          <p className="mt-6 max-w-[46ch] font-newsreader text-[20px] leading-[1.4] text-rag/80">
-            {secondChair.reframe}
-          </p>
-        </div>
-      </section>
+      <PageHero
+        kicker="Second Chair"
+        title="We finish it. Then we make sure you can keep it."
+        dek={secondChair.reframe}
+        hideAction
+      />
+
+      <SignalPlate
+        kicker="Second Chair · monthly"
+        price="$2,400"
+        title="A named senior, on your repo."
+        line={secondChair.description}
+        facts={[
+          {
+            kicker: "Handover",
+            body: "Included in every Close. Two weeks with the engineer who built it.",
+          },
+          {
+            kicker: "Second Chair",
+            body: "$2,400/month. Weekly. Async between sessions. Curriculum from your codebase.",
+          },
+          {
+            kicker: "Team",
+            body: "$6,000/month. Up to six people, plus a monthly review of what they shipped.",
+          },
+        ]}
+        href="#intake"
+        action={`Write ${first}`}
+      />
 
       <section className="relative w-full overflow-hidden bg-rag">
         <Atmosphere kind="paper" opacity={0.16} />
@@ -62,10 +80,10 @@ export default function SecondChairPage() {
             </p>
           </Reveal>
           <Reveal className="mt-6">
-            <div className="overflow-hidden rounded-[24px] bg-rag-card shadow-[var(--shadow-card)] ring-1 ring-iron/10">
+            <div className="card">
               <div className="grid gap-8 p-6 md:grid-cols-[16rem_1fr] md:p-8">
                 {person.photo ? (
-                  <div className="aspect-[4/5] overflow-hidden rounded-[20px] bg-iron">
+                  <div className="card-iron aspect-[4/5]">
                     <Image
                       src={person.photo}
                       alt={person.name}
@@ -133,7 +151,7 @@ export default function SecondChairPage() {
           <div className="mt-16 flex flex-col gap-10">
             {secondChairSkills.map((skill) => (
               <Reveal key={skill.name}>
-                <div className="border-t border-iron/15 pt-8">
+                <div className="card px-8 py-10">
                   <h2 className="font-newsreader text-[28px] leading-[1.15] text-iron">
                     {skill.name}
                   </h2>
@@ -162,7 +180,7 @@ export default function SecondChairPage() {
               </p>
               <ul className="mt-6 flex flex-col gap-8">
                 {secondChairProof.map((item) => (
-                  <li key={item.quote} className="max-w-[60ch]">
+                  <li key={item.quote} className="card max-w-[60ch] px-8 py-8">
                     <blockquote className="font-newsreader text-[20px] leading-[1.4] text-iron">
                       “{item.quote}”
                     </blockquote>

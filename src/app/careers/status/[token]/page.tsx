@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
 import { getCandidateStatus } from "@/lib/careers/store";
+import { PageHero } from "@/components/PageHero";
 
 type PageProps = {
   params: Promise<{ token: string }>;
@@ -29,15 +30,15 @@ export default async function CareersStatusPage({ params }: PageProps) {
 
   return (
     <section className="w-full bg-rag pb-24">
-      <div className="grid-container pt-14">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Candidate status · private</p>
-        <h1 className="mt-2 font-newsreader text-[36px] leading-[1.08] text-iron md:text-[46px]">
-          {status.name} · {status.roleTitle}
-        </h1>
-        <p className="mt-4 font-newsreader text-[20px] text-iron">Current gate: {status.gateName}</p>
-        <p className="mt-2 font-newsreader text-[17px] leading-[1.5] text-ink">{status.next}</p>
+      <PageHero
+        kicker="Candidate status · private"
+        title={`${status.name} · ${status.roleTitle}`}
+        dek={`Current gate: ${status.gateName}. ${status.next}`}
+        hideAction
+      />
+      <div className="grid-container pt-10">
 
-        <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-5">
+        <section className="card mt-8 p-8">
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Timeline</p>
           <ul className="mt-3 space-y-3">
             {status.events.map((event) => (

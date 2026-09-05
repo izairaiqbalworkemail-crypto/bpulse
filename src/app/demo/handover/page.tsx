@@ -24,7 +24,7 @@ export default function DemoHandoverPage() {
       </h3>
       <ul className="mt-4 flex flex-col gap-4">
         {handover.credentials.map((row) => (
-          <li key={row.item} className="border-t border-iron/15 pt-3">
+          <li key={row.item} className="card p-5">
             <p className="font-newsreader text-reading text-iron">{row.item}</p>
             <p className="mt-1 font-plex-sans text-sm text-ink/60">
               Held by {row.heldBy} · until {row.until} · sample
@@ -43,7 +43,7 @@ export default function DemoHandoverPage() {
       </p>
       <ul className="mt-6 flex flex-col gap-6">
         {handover.revocation.map((row) => (
-          <li key={row.item} className="border-t border-iron/15 pt-4">
+          <li key={row.item} className="card p-6">
             <p className="font-plex-mono text-[13px] text-ink/60">
               Revoked {row.revokedOn} · sample
             </p>

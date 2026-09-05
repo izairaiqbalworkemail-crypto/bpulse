@@ -33,8 +33,8 @@ export default function MatchPage() {
               Other firms match on skills people typed about themselves. We
               match on evidence of work we have already shipped.
             </p>
-            <ol className="mt-8 flex flex-col gap-5">
-              <li className="border-t border-iron/15 pt-4">
+            <ol className="mt-8 flex flex-col gap-3">
+              <li className="card p-6">
                 <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
                   01 · You write the stuck part
                 </p>
@@ -44,7 +44,7 @@ export default function MatchPage() {
                   the closer the read.
                 </p>
               </li>
-              <li className="border-t border-iron/15 pt-4">
+              <li className="card p-6">
                 <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
                   02 · We check our record
                 </p>
@@ -54,7 +54,7 @@ export default function MatchPage() {
                   that is the match — and we show you why.
                 </p>
               </li>
-              <li className="border-t border-iron/15 pt-4">
+              <li className="card p-6">
                 <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/60">
                   03 · A named person, with a reason
                 </p>
@@ -66,7 +66,7 @@ export default function MatchPage() {
               </li>
             </ol>
           </div>
-          <div className="mx-auto mt-14 max-w-[40rem] rounded-[24px] bg-rag-card p-5 shadow-[var(--shadow-card)] ring-1 ring-iron/10 md:p-8">
+          <div className="card mx-auto mt-14 max-w-[40rem] p-5 md:p-8">
             <MatchDesk />
           </div>
         </div>

@@ -6,10 +6,12 @@ export function gateLine(specialistId: string) {
     return {
       label: "Operations · not client-facing",
       href: "/standard",
+      clientFacing: false,
     };
   }
   return {
     label: "Client-facing · Gate 4",
     href: "/standard",
+    clientFacing: true,
   };
 }

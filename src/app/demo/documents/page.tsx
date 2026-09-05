@@ -150,7 +150,7 @@ export default function DemoDocumentsPage() {
           </p>
         )}
         {changedSections.map((section) => (
-          <div key={section.number} className="border border-iron/15 bg-rag-card p-4">
+          <div key={section.number} className="card p-6">
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/60">
               Section {section.number} · {section.heading}
               {section.plainTermsChanged && (
@@ -212,7 +212,7 @@ export default function DemoDocumentsPage() {
       </h3>
       <ol className="mt-4 flex flex-col gap-6">
         {scopeVersions.map((version) => (
-          <li key={version.version} className="border-t border-iron/15 pt-4">
+          <li key={version.version} className="card p-6">
             <p className="font-plex-mono text-data text-iron">
               v{version.version} · {version.dated}
             </p>
@@ -220,7 +220,7 @@ export default function DemoDocumentsPage() {
           </li>
         ))}
         {changeOrders.map((order) => (
-          <li key={order.id} className="border-t border-iron/15 pt-4">
+          <li key={order.id} className="card p-6">
             <p className="font-plex-mono text-data text-iron">
               {order.id} · {order.price} · signed {order.signed}
             </p>

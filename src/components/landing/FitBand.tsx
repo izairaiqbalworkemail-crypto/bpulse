@@ -10,7 +10,6 @@ import {
 import { fitSymptoms } from "@/content/landing";
 import type { PulseCheckSituation } from "@/components/intake/PulseCheckIntake";
 
-const plate = "rounded-[24px]";
 const traceWidth = 640;
 const traceHeight = 150;
 
@@ -40,7 +39,7 @@ export function FitBand({
 
   return (
     <div
-      className={`relative overflow-hidden bg-rag-card p-6 shadow-[var(--shadow-card)] ring-1 ring-iron/10 md:p-8 ${plate}`}
+      className="card relative p-6 md:p-8"
     >
       <div className="grid gap-6 md:grid-cols-[5fr_7fr] md:gap-0">
         <div>

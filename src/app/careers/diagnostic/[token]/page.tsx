@@ -7,6 +7,7 @@ import {
   openDiagnostic,
 } from "@/lib/careers/store";
 import { DiagnosticForm } from "@/components/careers/DiagnosticForm";
+import { PageHero } from "@/components/PageHero";
 
 type PageProps = {
   params: Promise<{ token: string }>;
@@ -37,17 +38,16 @@ export default async function DiagnosticTokenPage({ params }: PageProps) {
 
   return (
     <section className="w-full bg-rag pb-24">
-      <div className="grid-container pt-12">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Gate 0 · Private diagnostic</p>
-        <h1 className="mt-2 max-w-[24ch] font-newsreader text-[38px] leading-[1.05] text-iron md:text-[50px]">
-          Condition report diagnostic.
-        </h1>
-        <p className="mt-5 max-w-[62ch] font-newsreader text-reading leading-reading text-ink">
-          {scenario.brief}
-        </p>
+      <PageHero
+        kicker="Gate 0 · Private diagnostic"
+        title="Condition report diagnostic."
+        dek={scenario.brief}
+        hideAction
+      />
+      <div className="grid-container pt-10">
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
-          <section className="rounded-[16px] border border-iron/20 bg-rag-card p-4">
+          <section className="card p-6">
             <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Repo tree</p>
             <ul className="mt-3 space-y-2 font-plex-mono text-[13px] text-ink/80">
               {scenario.tree.map((item) => (
@@ -55,7 +55,7 @@ export default async function DiagnosticTokenPage({ params }: PageProps) {
               ))}
             </ul>
           </section>
-          <section className="rounded-[16px] border border-iron/20 bg-rag-card p-4">
+          <section className="card p-6">
             <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Logs</p>
             <p className="mt-2 font-plex-mono text-[12px] text-ink/65">build.log</p>
             <ul className="mt-2 space-y-1 font-plex-mono text-[13px] text-ink/80">
@@ -72,7 +72,7 @@ export default async function DiagnosticTokenPage({ params }: PageProps) {
           </section>
         </div>
 
-        <section className="mt-8 rounded-[16px] border border-iron/20 bg-rag-card p-4">
+        <section className="card mt-8 p-6">
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Key files</p>
           <div className="mt-3 space-y-4">
             {Object.entries(scenario.keyFiles).map(([path, snippet]) => (

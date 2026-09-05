@@ -10,10 +10,10 @@ type GateCardProps = {
   proves: string;
 };
 
-export function GateCard({ n, title, mechanism, costs, proves }: GateCardProps) {
+export function GateCard({ n, title, mechanism, costs, proves }: Readonly<GateCardProps>) {
   return (
     <Reveal>
-      <article className="border-t border-iron/20 py-10">
+      <article className="card mb-4 px-8 py-10">
         <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/70">
           Gate {n}
         </p>

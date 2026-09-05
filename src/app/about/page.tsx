@@ -48,7 +48,7 @@ export default function AboutPage() {
             <AtmosphereNote />
           </div>
 
-          <div className="mt-12 overflow-hidden rounded-[16px]">
+          <div className="card mt-12">
             {/* SVG lockup — next/image is for raster. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

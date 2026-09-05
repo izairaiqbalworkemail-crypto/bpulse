@@ -41,9 +41,9 @@ export default async function MatchLogPage() {
             </dd>
           </div>
         </dl>
-        <ol className="mt-12 flex flex-col">
+        <ol className="mt-12 flex flex-col gap-3">
           {events.map((event) => (
-            <li key={event.id} className="border-t border-iron/15 py-5">
+            <li key={event.id} className="card px-6 py-6">
               <p className="font-plex-mono text-[12px] text-ink/70">
                 {event.createdAt} · {event.confidence} ·{" "}
                 {event.results.map((row) => row.specialistId).join(", ")}

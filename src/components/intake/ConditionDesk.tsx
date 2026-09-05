@@ -209,7 +209,7 @@ export function ConditionDesk({
 
   if (done) {
     return (
-      <div className="overflow-hidden rounded-[24px] bg-iron text-rag ring-1 ring-rag/10">
+      <div className="card-iron">
         <div className="px-6 py-10 md:px-8">
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">
             Condition filed · {done}
@@ -227,7 +227,7 @@ export function ConditionDesk({
   }
 
   return (
-    <div className="overflow-hidden rounded-[24px] bg-rag-card shadow-[var(--shadow-card)] ring-1 ring-iron/10">
+    <div className="card">
       <header className="flex items-end justify-between gap-4 bg-iron px-5 py-5 text-rag md:px-7">
         <div className="min-w-0">
           <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/50">

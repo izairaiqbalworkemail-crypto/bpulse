@@ -16,7 +16,7 @@ export default function DemoUpdatesPage() {
       </h2>
       <ul className="mt-10 flex flex-col gap-10">
         {updates.map((update) => (
-          <li key={update.week} className="border-t border-iron/15 pt-5">
+          <li key={update.week} className="card p-6">
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
               {update.week} · sample
             </p>

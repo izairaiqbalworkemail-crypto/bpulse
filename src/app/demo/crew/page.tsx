@@ -24,7 +24,7 @@ export default function DemoCrewPage() {
         {demoCrew.map((member) => {
           const person = getSpecialist(member.id);
           return (
-            <li key={member.id} className="border-t border-iron/15 pt-5">
+            <li key={member.id} className="card p-6">
               {person.photo ? (
                 <Image
                   src={person.photo}

@@ -77,7 +77,7 @@ export default async function ReportPage({ params }: PageProps) {
           <FindingLedger findings={[...report.findings]} />
         </section>
 
-        <section className="mt-14 border-t border-iron/15 pt-8">
+        <section className="card mt-14 px-8 py-8">
           <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
             What it takes
           </h2>
@@ -93,7 +93,7 @@ export default async function ReportPage({ params }: PageProps) {
           </p>
         </section>
 
-        <section className="mt-14 border-t border-iron/15 pt-8">
+        <section className="card mt-14 px-8 py-8">
           <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
             Who would do it
           </h2>
@@ -108,7 +108,7 @@ export default async function ReportPage({ params }: PageProps) {
           </p>
         </section>
 
-        <section className="mt-14 border-t border-iron/15 pt-8">
+        <section className="card mt-14 px-8 py-8">
           <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
             Limits
           </h2>

@@ -1,30 +1,50 @@
 import Link from "next/link";
-import { ProofRow } from "@/components/ProofRow";
 import { BrowserShot } from "@/components/catalog/BrowserShot";
+import { Surface } from "@/components/primitives/Surface";
 import { Trace } from "@/components/trace/Trace";
-import { figureDisclaimer } from "@/content/lots";
 import type { Lot } from "@/content/types";
 import { specFromLot, verifiedFigures } from "@/lib/lot-trace";
 
 type LotPlateProps = {
   lot: Lot;
   href?: string;
+  compact?: boolean;
 };
 
-export function LotPlate({ lot, href = `/work/${lot.slug}` }: Readonly<LotPlateProps>) {
+function FigureLine({ value, label }: Readonly<{ value: string; label: string }>) {
+  return (
+    <p className="flex items-baseline gap-3">
+      <span className="shrink-0 font-plex-mono text-[15px] tabular-nums text-iron">
+        {value}
+      </span>
+      <span
+        className="min-w-4 grow border-b border-dotted border-iron/20"
+        aria-hidden="true"
+      />
+      <span className="shrink-0 font-newsreader text-[15px] text-ink">{label}</span>
+    </p>
+  );
+}
+
+export function LotPlate({
+  lot,
+  href = `/work/${lot.slug}`,
+  compact = false,
+}: Readonly<LotPlateProps>) {
   const figures = verifiedFigures(lot);
-  const disclaimer = figureDisclaimer(lot);
   const spec = specFromLot(lot);
+  const gradeWord = lot.grade.label.replace(/ on arrival$/i, "");
+  const proof = figures[0];
 
   return (
-    <article className="h-full rounded-[16px] bg-rag-card p-8 shadow-[var(--shadow-card)] ring-1 ring-iron/[0.08] transition-shadow hover:shadow-[var(--shadow-raised)]">
-      <Link href={href} className="group flex h-full flex-col">
+    <Surface as="article" hover className="h-full">
+      <Link href={href} className="group flex h-full min-w-0 flex-col p-8">
         <div className="flex items-baseline justify-between gap-3">
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
             {lot.lotNumber}
           </p>
           <p className="font-plex-mono text-[12px] text-ink/70">
-            {lot.grade.label.replace(/ on arrival$/i, "")}
+            {gradeWord}
             <span
               className="ml-2 inline-block h-1.5 w-1.5 rounded-full"
               style={{
@@ -38,28 +58,36 @@ export function LotPlate({ lot, href = `/work/${lot.slug}` }: Readonly<LotPlateP
           </p>
         </div>
 
-        <div className="mt-5">
-          <Trace spec={spec} size="card" surface="paper" />
+        <div className={`relative ${compact ? "mt-5" : "mt-6"}`}>
+          <Trace spec={spec} size={compact ? "card" : "full"} surface="paper" />
+          {proof ? (
+            <p className="absolute bottom-2 left-0 rounded-[12px] bg-rag/95 px-3 py-2 shadow-[var(--shadow-card)]">
+              <span className="block font-plex-mono text-[18px] leading-none text-iron">
+                {proof.value}
+              </span>
+              <span className="mt-1 block font-plex-sans text-[11px] text-ink">
+                {proof.label}
+              </span>
+            </p>
+          ) : null}
         </div>
 
-        <div className="mt-5 h-px w-full bg-iron/10" aria-hidden="true" />
+        <div className="mt-6 h-px w-full bg-iron/[0.08]" aria-hidden="true" />
 
-        <h3 className="mt-5 font-newsreader text-[22px] leading-[1.15] text-iron underline decoration-iron/25 underline-offset-4 group-hover:decoration-iron">
+        <h3 className="mt-5 font-newsreader text-[24px] leading-[1.1] text-iron underline decoration-iron/25 underline-offset-4 group-hover:decoration-iron">
           {lot.client}
         </h3>
         <p className="mt-2 font-newsreader text-[16px] leading-[1.4] text-ink">
           {lot.summary}
         </p>
 
-        {figures.length > 0 ? (
-          <div className="mt-5">
-            {figures.map((line) => (
-              <ProofRow
+        {figures.length > 1 ? (
+          <div className="mt-5 flex flex-col gap-2">
+            {figures.slice(1).map((line) => (
+              <FigureLine
                 key={line.label}
                 value={line.value}
                 label={line.label}
-                source={lot.attribution.sourceUrl ?? lot.attribution.type}
-                unverified={Boolean(disclaimer)}
               />
             ))}
           </div>
@@ -75,6 +103,6 @@ export function LotPlate({ lot, href = `/work/${lot.slug}` }: Readonly<LotPlateP
           </div>
         ) : null}
       </Link>
-    </article>
+    </Surface>
   );
 }

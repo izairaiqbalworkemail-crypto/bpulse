@@ -11,7 +11,7 @@ export function BrowserShot({ src, url, client }: Readonly<BrowserShotProps>) {
   const host = displayHost(url) || client;
 
   return (
-    <figure className="max-h-[40%] min-h-0">
+    <figure className="max-h-[40%]">
       <div className="overflow-hidden rounded-[10px] bg-iron ring-1 ring-iron/15">
         <div className="flex items-center gap-2 border-b border-rag/10 px-3 py-1.5">
           <span className="flex gap-1" aria-hidden="true">
@@ -23,12 +23,12 @@ export function BrowserShot({ src, url, client }: Readonly<BrowserShotProps>) {
             {host}
           </p>
         </div>
-        <div className="relative aspect-[16/7] max-h-40 overflow-hidden bg-iron-2">
+        <div className="relative h-28 overflow-hidden bg-iron-2 sm:h-32">
           <Image
             src={src}
             alt={`${client} public site`}
             fill
-            sizes="(max-width: 768px) 100vw, 420px"
+            sizes="(max-width: 768px) 100vw, 520px"
             className="object-cover object-top"
           />
         </div>

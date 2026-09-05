@@ -17,7 +17,7 @@ type NoticeProps = {
  */
 export function Notice({ question, answer }: NoticeProps) {
   return (
-    <div className="border-t border-iron/15 py-8">
+    <div className="card px-8 py-8">
       <h3 className="font-newsreader text-lot-title leading-title text-iron">
         {question}
       </h3>
