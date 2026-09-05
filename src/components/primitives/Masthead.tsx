@@ -158,13 +158,13 @@ export function Masthead() {
               transition={{ type: "spring", stiffness: 380, damping: 24 }}
             >
               <Link
-                href="/check#intake"
+                href="/check"
                 onClick={(event) => {
                   if (pathname !== "/") return;
                   event.preventDefault();
                   scrollToSection("intake");
                 }}
-                className="inline-flex rounded-full bg-signal px-4 py-2 font-plex-sans text-[14px] font-medium text-iron"
+                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-4 py-2 font-plex-sans text-[14px] font-medium text-iron"
               >
                 Check · {checkPrice}
               </Link>
@@ -174,7 +174,7 @@ export function Masthead() {
               onClick={openMenu}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className="rounded-full border border-rag/15 px-4 py-2 font-plex-mono text-[13px] text-rag/75 hover:text-rag md:hidden"
+              className="min-h-11 touch-manipulation rounded-full border border-rag/15 px-4 py-2 font-plex-mono text-[13px] text-rag/75 hover:text-rag md:hidden"
             >
               Menu
             </button>
@@ -210,7 +210,7 @@ export function Masthead() {
             <button
               type="button"
               onClick={closeMenu}
-              className="rounded-full border border-rag/12 px-5 py-2.5 font-plex-mono text-[13px] text-rag/75 hover:text-rag"
+              className="min-h-11 touch-manipulation rounded-full border border-rag/12 px-5 py-2.5 font-plex-mono text-[13px] text-rag/75 hover:text-rag"
             >
               Close
             </button>
@@ -222,7 +222,7 @@ export function Masthead() {
                 key={item.href}
                 href={item.href}
                 onClick={closeMenu}
-                className="border-b border-rag/12 py-6"
+                className="touch-manipulation border-b border-rag/12 py-6"
               >
                 <span className="font-newsreader text-[32px] leading-[1.1] text-rag">
                   {item.label}
@@ -236,14 +236,14 @@ export function Masthead() {
 
           <div className="mt-auto px-5 pb-10 md:px-8">
             <Link
-              href="/check#intake"
+              href="/check"
               onClick={(event) => {
                 closeMenu();
                 if (pathname !== "/") return;
                 event.preventDefault();
                 scrollToSection("intake");
               }}
-              className="inline-flex rounded-full bg-signal px-8 py-3.5 font-plex-sans text-[15px] font-medium text-iron"
+              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-8 py-3.5 font-plex-sans text-[15px] font-medium text-iron"
             >
               Check · {checkPrice}
             </Link>

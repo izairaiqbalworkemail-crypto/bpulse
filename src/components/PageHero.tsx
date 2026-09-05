@@ -73,7 +73,7 @@ export function PageHero({
           >
             <Link
               href={actionHref}
-              className="inline-flex w-fit items-center gap-2 rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+              className="inline-flex min-h-11 w-fit touch-manipulation items-center gap-2 rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
             >
               {label}
               <span aria-hidden="true">→</span>

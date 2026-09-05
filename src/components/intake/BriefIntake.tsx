@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { PressButton, dismissKeyboard } from "@/components/PressButton";
 import { sessionFields } from "@/lib/intake/fields";
 import { applyWoundRead, readWound } from "@/lib/intake/read-wound";
 import {
@@ -147,10 +148,6 @@ export function BriefIntake({
   function push(turn: Turn) {
     setTurns((list) => [...list, turn]);
   }
-
-  useEffect(() => {
-    (textRef.current ?? inputRef.current)?.focus();
-  }, [current?.name]);
 
   useEffect(() => {
     logRef.current?.scrollTo({
@@ -342,7 +339,7 @@ export function BriefIntake({
             )}
           </div>
 
-          <div className="border-t border-iron/10 px-5 py-4 md:px-6">
+          <div className="sticky bottom-0 z-20 border-t border-iron/10 bg-rag-card px-5 py-4 md:static md:px-6">
             {error ? (
               <p role="alert" className="mb-3 font-newsreader text-[15px] text-iron">
                 {error}
@@ -350,29 +347,34 @@ export function BriefIntake({
             ) : null}
 
             {ready ? (
-              <button
-                type="button"
-                onClick={() => void submit()}
+              <PressButton
                 disabled={busy}
-                className="inline-flex items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+                onPress={() => {
+                  if (busy) return;
+                  dismissKeyboard();
+                  void submit();
+                }}
+                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
               >
                 {busy
                   ? "Filing…"
                   : type === "check"
                     ? "Put it on Aneeb's desk"
                     : `Put it on ${first}'s desk`}
-              </button>
+              </PressButton>
             ) : current && (current.type === "radio" || current.type === "select") ? (
               <ul className="flex flex-col gap-2">
                 {current.options.map((option) => (
                   <li key={option}>
-                    <button
-                      type="button"
-                      onClick={() => send(current, option)}
-                      className="w-full rounded-[14px] bg-rag px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
+                    <PressButton
+                      onPress={() => {
+                        dismissKeyboard();
+                        send(current, option);
+                      }}
+                      className="min-h-11 w-full touch-manipulation rounded-[14px] bg-rag px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
                     >
                       {option}
-                    </button>
+                    </PressButton>
                   </li>
                 ))}
               </ul>
@@ -390,6 +392,7 @@ export function BriefIntake({
                       }
                     }}
                     placeholder={current.placeholder}
+                    enterKeyHint="send"
                     rows={3}
                     className="w-full resize-none rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] leading-[1.4] text-iron outline-none ring-1 ring-iron/15 focus-visible:ring-2 focus-visible:ring-iron"
                   />
@@ -404,6 +407,7 @@ export function BriefIntake({
                           : "text"
                     }
                     autoComplete={current.autoComplete}
+                    enterKeyHint="send"
                     value={draft}
                     onChange={(event) => setDraft(event.target.value)}
                     onKeyDown={(event) => {
@@ -417,24 +421,22 @@ export function BriefIntake({
                   />
                 )}
                 <div className="mt-3 flex flex-wrap items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => send(current, draft)}
-                    className="inline-flex items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+                  <PressButton
+                    onPress={() => send(current, draft)}
+                    className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
                   >
                     Send
-                  </button>
+                  </PressButton>
                   {current.type === "textarea" ? (
-                    <span className="font-plex-mono text-[11px] text-ink/50">⌘ Enter</span>
+                    <span className="hidden font-plex-mono text-[11px] text-ink/50 md:inline">⌘ Enter</span>
                   ) : null}
                   {!current.required ? (
-                    <button
-                      type="button"
-                      onClick={() => skip(current)}
-                      className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
+                    <PressButton
+                      onPress={() => skip(current)}
+                      className="min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
                     >
                       Skip
-                    </button>
+                    </PressButton>
                   ) : null}
                 </div>
               </div>

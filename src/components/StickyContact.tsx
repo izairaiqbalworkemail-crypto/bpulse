@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { landSpring } from "@/components/landing/Reveal";
@@ -10,6 +11,22 @@ import { landSpring } from "@/components/landing/Reveal";
  */
 export function StickyContact() {
   const reduce = useReducedMotion();
+  const [typing, setTyping] = useState(false);
+
+  useEffect(() => {
+    const sync = () => {
+      const tag = document.activeElement?.tagName;
+      setTyping(tag === "INPUT" || tag === "TEXTAREA");
+    };
+    document.addEventListener("focusin", sync);
+    document.addEventListener("focusout", sync);
+    return () => {
+      document.removeEventListener("focusin", sync);
+      document.removeEventListener("focusout", sync);
+    };
+  }, []);
+
+  if (typing) return null;
 
   return (
     <motion.div

@@ -52,14 +52,14 @@ export function Hero() {
             <button
               type="button"
               onClick={() => scrollToSection("intake")}
-              className="inline-flex items-center rounded-full bg-signal px-6 py-3 font-plex-sans text-[15px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-6 py-3 font-plex-sans text-[15px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
             >
               {`Start the Check · $${offer.check.price.toLocaleString("en-US")}`}
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("match")}
-              className="inline-flex items-center gap-2 font-plex-sans text-[15px] text-rag/80 hover:text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rag"
+              className="inline-flex min-h-11 touch-manipulation items-center gap-2 font-plex-sans text-[15px] text-rag/80 hover:text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rag"
             >
               Match it against the record
               <span aria-hidden="true">→</span>

@@ -1,9 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { rootMetadata } from "@/lib/seo";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/JsonLd";
 import { SiteChrome } from "@/components/SiteChrome";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  interactiveWidget: "resizes-content",
+};
 
 const newsreader = Newsreader({
   subsets: ["latin"],

@@ -73,7 +73,7 @@ export default function AboutPage() {
             <PortraitStrip people={specialists} />
           </div>
 
-          <div id="intake" className="mt-20">
+          <div id="intake" className="mt-20 scroll-mt-[5.75rem] md:scroll-mt-28">
             <p className="mb-6 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Write the studio
             </p>

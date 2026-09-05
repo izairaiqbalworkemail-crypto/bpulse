@@ -223,8 +223,9 @@ export function Landing() {
   }
 
   useLayoutEffect(() => {
-    if (!window.location.hash) return;
-    window.history.replaceState(null, "", "/");
+    if (window.location.hash) {
+      window.history.replaceState(null, "", "/");
+    }
     window.scrollTo(0, 0);
   }, []);
 

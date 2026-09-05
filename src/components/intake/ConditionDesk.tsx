@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useMemo, useRef, useState, type RefObject } from "react";
+import { PressButton, dismissKeyboard } from "@/components/PressButton";
 import { sessionFields } from "@/lib/intake/fields";
 import { applyWoundRead, readWound } from "@/lib/intake/read-wound";
 import {
@@ -121,10 +122,6 @@ export function ConditionDesk({
   const current = nextOpen(answers);
   const ready = !current;
   const price = `$${offer.check.price.toLocaleString("en-US")}`;
-
-  useEffect(() => {
-    (textRef.current ?? inputRef.current)?.focus();
-  }, [current?.name]);
 
   function speak(text: string) {
     uid.current += 1;
@@ -306,14 +303,17 @@ export function ConditionDesk({
         </dl>
 
         {ready ? (
-          <button
-            type="button"
-            onClick={() => void submit()}
+          <PressButton
             disabled={busy}
-            className="mt-6 inline-flex items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+            onPress={() => {
+              if (busy) return;
+              dismissKeyboard();
+              void submit();
+            }}
+            className="mt-6 inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
           >
             {busy ? "Filing…" : `Put it on Aneeb's desk · ${price}`}
-          </button>
+          </PressButton>
         ) : null}
       </div>
 
@@ -366,16 +366,18 @@ function OpenLine({
             {error}
           </p>
         ) : null}
-        <ul className="flex flex-col gap-2">
+        <ul className="sticky bottom-0 z-20 flex flex-col gap-2 bg-rag py-2 md:static md:bg-transparent md:py-0">
           {field.options.map((option) => (
             <li key={option}>
-              <button
-                type="button"
-                onClick={() => onWrite(field, option)}
-                className="w-full rounded-[14px] bg-white px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10 hover:ring-iron/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
+              <PressButton
+                onPress={() => {
+                  dismissKeyboard();
+                  onWrite(field, option);
+                }}
+                className="min-h-11 w-full touch-manipulation rounded-[14px] bg-white px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10 hover:ring-iron/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
               >
                 {option}
-              </button>
+              </PressButton>
             </li>
           ))}
         </ul>
@@ -403,6 +405,7 @@ function OpenLine({
             }
           }}
           placeholder={field.placeholder}
+          enterKeyHint="send"
           rows={4}
           className="w-full resize-none bg-transparent font-newsreader text-[17px] leading-[1.4] text-iron outline-none"
         />
@@ -414,6 +417,7 @@ function OpenLine({
             field.input === "email" ? "email" : field.input === "url" ? "url" : "text"
           }
           autoComplete={field.autoComplete}
+          enterKeyHint="send"
           value={draft}
           onChange={(event) => onDraft(event.target.value)}
           onKeyDown={(event) => {
@@ -426,25 +430,23 @@ function OpenLine({
           className="w-full bg-transparent font-newsreader text-[17px] text-iron outline-none"
         />
       )}
-      <div className="mt-3 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => onWrite(field, draft)}
-          className="inline-flex items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+      <div className="sticky bottom-0 z-20 mt-3 flex flex-wrap items-center gap-3 bg-rag py-3 md:static md:bg-transparent md:py-0">
+        <PressButton
+          onPress={() => onWrite(field, draft)}
+          className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
         >
           Send
-        </button>
+        </PressButton>
         {field.type === "textarea" ? (
-          <span className="font-plex-mono text-[11px] text-ink/50">⌘ Enter</span>
+          <span className="hidden font-plex-mono text-[11px] text-ink/50 md:inline">⌘ Enter</span>
         ) : null}
         {!field.required ? (
-          <button
-            type="button"
-            onClick={() => onSkip(field)}
-            className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
+          <PressButton
+            onPress={() => onSkip(field)}
+            className="min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
           >
             Skip
-          </button>
+          </PressButton>
         ) : null}
       </div>
     </div>

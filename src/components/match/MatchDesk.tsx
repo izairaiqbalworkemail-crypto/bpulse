@@ -7,6 +7,8 @@ import { emptyMatchState } from "@/lib/match/action-state";
 import { getCatalogue } from "@/content/catalogue";
 import { getSpecialist } from "@/content/specialists";
 import { storeMatchBrief } from "@/lib/match/session";
+import { markIntakeJump } from "@/lib/scroll-section";
+import { PressButton } from "@/components/PressButton";
 import type { MatchConfidence, MatchResult } from "@/lib/match/types";
 
 const EXAMPLE =
@@ -136,18 +138,22 @@ function ResultCard({
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <Link
           href={`/team/${person.id}#intake`}
-          onClick={book}
-          className="inline-flex items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+          onClick={() => {
+            markIntakeJump();
+            book();
+          }}
+          className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
         >
           Write {first}
         </Link>
         <Link
           href="/check#intake"
           onClick={() => {
+            markIntakeJump();
             storeMatchBrief(description, eventId ?? undefined);
             logOutcome(eventId, "became_check");
           }}
-          className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+          className="min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
         >
           Or start a Check
         </Link>
@@ -160,7 +166,6 @@ export function MatchDesk({
   compact = false,
 }: Readonly<{ compact?: boolean }>) {
   const labelId = useId();
-  const areaRef = useRef<HTMLTextAreaElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const [state, action, pending] = useActionState(
     runMatchAction,
@@ -180,10 +185,6 @@ export function MatchDesk({
   const eventId = hide ? null : state.eventId;
 
   useEffect(() => {
-    if (!lead) areaRef.current?.focus();
-  }, [lead]);
-
-  useEffect(() => {
     if (lead && eventId) logOutcome(eventId, "viewed");
   }, [lead, eventId]);
 
@@ -197,7 +198,6 @@ export function MatchDesk({
     logOutcome(eventId, "abandoned");
     setHide(true);
     setDraft(state.description || draft);
-    requestAnimationFrame(() => areaRef.current?.focus());
   }
 
   return (
@@ -257,7 +257,6 @@ export function MatchDesk({
             Describe the stuck part
           </label>
           <textarea
-            ref={areaRef}
             id={labelId}
             name="description"
             value={draft}
@@ -274,17 +273,13 @@ export function MatchDesk({
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {EXAMPLES.map((item) => (
-              <button
+              <PressButton
                 key={item.label}
-                type="button"
-                onClick={() => {
-                  setDraft(item.text);
-                  areaRef.current?.focus();
-                }}
-                className="rounded-full bg-rag px-3 py-1.5 font-plex-sans text-[13px] text-iron ring-1 ring-iron/15 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+                onPress={() => setDraft(item.text)}
+                className="min-h-11 touch-manipulation rounded-full bg-rag px-3 py-1.5 font-plex-sans text-[13px] text-iron ring-1 ring-iron/15 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
               >
                 Try: {item.label}
-              </button>
+              </PressButton>
             ))}
           </div>
           {state.error ? (
@@ -295,7 +290,7 @@ export function MatchDesk({
           <button
             type="submit"
             disabled={pending}
-            className="relative z-10 mt-6 inline-flex items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+            className="relative z-10 mt-6 inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
           >
             {pending ? "Reading the record…" : "Read it against the record"}
           </button>
