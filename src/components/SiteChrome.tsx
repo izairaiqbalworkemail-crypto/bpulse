@@ -10,7 +10,6 @@ import { scrollToSection, takeIntakeJump } from "@/lib/scroll-section";
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const home = pathname === "/";
   const report =
     pathname.startsWith("/report/") ||
     pathname.startsWith("/studio/") ||
@@ -41,13 +40,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {home ? null : (
-        <header className="bg-rag px-5 pt-5 md:px-8 md:pt-7">
-          <div className="mx-auto max-w-[960px]">
-            <Masthead variant="solid" />
-          </div>
-        </header>
-      )}
+      {report ? null : <Masthead />}
       <main>{children}</main>
       {report ? null : (
         <>

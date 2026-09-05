@@ -3,7 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGroup, motion, useReducedMotion } from "motion/react";
+import {
+  LayoutGroup,
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+} from "motion/react";
 import { Mark } from "@/components/primitives/Mark";
 import { lots } from "@/content/lots";
 import { specialists } from "@/content/specialists";
@@ -40,21 +46,23 @@ const nav = [
 
 const FOCUS_TRAP_SELECTOR = "a[href], button:not([disabled])";
 const checkPrice = `$${offer.check.price.toLocaleString("en-US")}`;
+const bar = { type: "spring" as const, stiffness: 340, damping: 30 };
 
-type MastheadProps = {
-  /** Hero sits on paper — chocolate pill. Inner pages use the same pill. */
-  variant?: "transparent" | "solid";
-};
-
-export function Masthead({ variant = "solid" }: Readonly<MastheadProps>) {
+export function Masthead() {
   const pathname = usePathname();
   const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const [compact, setCompact] = useState(false);
   const [menuOpenAt, setMenuOpenAt] = useState<string | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
   const open = menuOpenAt === pathname;
   const closeMenu = () => setMenuOpenAt(null);
   const openMenu = () => setMenuOpenAt(pathname);
+
+  useMotionValueEvent(scrollY, "change", (y) => {
+    setCompact((was) => (was ? y > 20 : y > 64));
+  });
 
   useEffect(() => {
     if (!open) return;
@@ -84,7 +92,7 @@ export function Masthead({ variant = "solid" }: Readonly<MastheadProps>) {
         lastFocusable.focus();
       } else if (!event.shiftKey && document.activeElement === lastFocusable) {
         event.preventDefault();
-        lastFocusable.focus();
+        firstFocusable.focus();
       }
     };
 
@@ -97,83 +105,104 @@ export function Masthead({ variant = "solid" }: Readonly<MastheadProps>) {
 
   return (
     <>
-      <div
-        data-masthead={variant}
-        className="flex items-center justify-between gap-2 rounded-full border border-rag/12 bg-iron-2 p-2"
+      <motion.header
+        className="pointer-events-none fixed inset-x-0 top-0 z-40"
+        animate={{
+          paddingTop: compact ? 10 : 24,
+        }}
+        transition={reduce ? { duration: 0 } : bar}
       >
-        <Link
-          href="/"
-          onClick={(event) => {
-            if (pathname !== "/") return;
-            event.preventDefault();
-            closeMenu();
-            scrollToHero();
-          }}
-          className="flex shrink-0 items-center gap-2.5 pl-1.5"
-        >
-          <Mark size={36} />
-          <span className="hidden font-plex-sans text-[15px] font-medium tracking-[0.01em] text-rag sm:inline">
-            bpulse
-          </span>
-        </Link>
-
-        <LayoutGroup>
-          <nav aria-label="Primary" className="hidden items-center gap-0.5 md:flex">
-            {nav.map((item) => {
-              const on =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`relative rounded-full px-5 py-2.5 font-plex-sans text-[14px] font-medium transition-colors duration-150 ${
-                    on ? "text-rag" : "text-rag/75 hover:text-rag"
-                  }`}
-                >
-                  {item.label}
-                  {on ? (
-                    <motion.span
-                      layoutId="nav-pip"
-                      className="absolute inset-x-3 -bottom-0.5 h-[3px] rounded-full bg-signal"
-                      transition={{ type: "spring", stiffness: 380, damping: 28 }}
-                    />
-                  ) : null}
-                </Link>
-              );
-            })}
-          </nav>
-        </LayoutGroup>
-
-        <div className="flex items-center gap-1">
+        <div className="pointer-events-auto mx-auto max-w-[1120px] px-5 md:px-8">
           <motion.div
-            className="hidden md:block"
-            whileHover={reduce ? undefined : { scale: 1.04, y: -1 }}
-            whileTap={reduce ? undefined : { scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 380, damping: 24 }}
+            data-masthead={compact ? "compact" : "rest"}
+            className="flex items-center justify-between gap-2 rounded-full border border-rag/12 bg-iron-2 p-2"
+            animate={{ scale: compact ? 0.92 : 1 }}
+            style={{ originY: 0 }}
+            transition={reduce ? { duration: 0 } : bar}
           >
             <Link
-              href="/check"
+              href="/"
               onClick={(event) => {
                 if (pathname !== "/") return;
                 event.preventDefault();
-                scrollToSection("intake");
+                closeMenu();
+                scrollToHero();
               }}
-              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+              className="flex shrink-0 items-center gap-2.5 pl-1.5"
             >
-              Check · {checkPrice}
+              <Mark size={36} />
+              <span className="hidden font-plex-sans text-[15px] font-medium tracking-[0.01em] text-rag sm:inline">
+                bpulse
+              </span>
             </Link>
+
+            <LayoutGroup>
+              <nav
+                aria-label="Primary"
+                className="hidden items-center gap-0.5 md:flex"
+              >
+                {nav.map((item) => {
+                  const on =
+                    pathname === item.href ||
+                    pathname.startsWith(`${item.href}/`);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`relative rounded-full px-5 py-2.5 font-plex-sans text-[14px] font-medium transition-colors duration-150 ${
+                        on ? "text-rag" : "text-rag/75 hover:text-rag"
+                      }`}
+                    >
+                      {item.label}
+                      {on ? (
+                        <motion.span
+                          layoutId="nav-pip"
+                          className="absolute inset-x-3 -bottom-0.5 h-[3px] rounded-full bg-signal"
+                          transition={{
+                            type: "spring",
+                            stiffness: 380,
+                            damping: 28,
+                          }}
+                        />
+                      ) : null}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </LayoutGroup>
+
+            <div className="flex items-center gap-1">
+              <motion.div
+                className="hidden md:block"
+                whileHover={reduce ? undefined : { scale: 1.04, y: -1 }}
+                whileTap={reduce ? undefined : { scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 380, damping: 24 }}
+              >
+                <Link
+                  href="/check"
+                  onClick={(event) => {
+                    if (pathname !== "/") return;
+                    event.preventDefault();
+                    scrollToSection("intake");
+                  }}
+                  className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+                >
+                  Check · {checkPrice}
+                </Link>
+              </motion.div>
+              <button
+                type="button"
+                onClick={openMenu}
+                aria-expanded={open}
+                aria-controls="mobile-menu"
+                className="min-h-11 touch-manipulation rounded-full px-5 py-2.5 font-plex-mono text-[13px] text-rag/75 transition-colors duration-150 hover:text-rag md:hidden"
+              >
+                Menu
+              </button>
+            </div>
           </motion.div>
-          <button
-            type="button"
-            onClick={openMenu}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            className="min-h-11 touch-manipulation rounded-full px-5 py-2.5 font-plex-mono text-[13px] text-rag/75 transition-colors duration-150 hover:text-rag md:hidden"
-          >
-            Menu
-          </button>
         </div>
-      </div>
+      </motion.header>
 
       {open ? (
         <div

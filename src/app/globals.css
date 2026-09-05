@@ -207,27 +207,27 @@ p {
   padding-inline: var(--spacing-8);
 }
 
-/* Paper ground — heroes only. Do not stamp on every room. */
+/* Paper sides. Flat. No grain, no wash. */
 .paper-ground {
   background-color: var(--color-rag);
-  background-image:
-    radial-gradient(90rem 40rem at 8% -20%, rgba(242, 194, 48, 0.18), transparent 58%),
-    radial-gradient(70rem 36rem at 100% 120%, rgba(60, 42, 29, 0.07), transparent 52%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
 }
 
-/* Dark chocolate caramel plate — cream sides, one room inside. */
+/* Espresso plate. Honey yellow is reserved for the 20% and the Check. */
 .hero-plate {
   overflow: hidden;
   border-radius: 28px;
   color: var(--color-rag);
-  background:
-    radial-gradient(72rem 36rem at 88% -8%, rgba(242, 194, 48, 0.16), transparent 52%),
-    radial-gradient(48rem 28rem at 0% 110%, rgba(196, 112, 42, 0.1), transparent 48%),
-    linear-gradient(168deg, #3a2418 0%, #241610 58%, #1a100c 100%);
-  box-shadow:
-    0 1px 0 rgba(242, 194, 48, 0.08) inset,
-    var(--shadow-raised);
+  background: #1c130e;
+  box-shadow: var(--shadow-raised);
+}
+
+/* Gold window. Same architecture as the hero plate. */
+.signal-plate {
+  overflow: hidden;
+  border-radius: 28px;
+  color: var(--color-iron);
+  background: var(--color-signal);
+  box-shadow: var(--shadow-raised);
 }
 
 /* Section rhythm */

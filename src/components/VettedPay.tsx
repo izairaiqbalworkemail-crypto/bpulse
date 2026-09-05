@@ -8,7 +8,8 @@ import { offer } from "@/content/offer";
  */
 export function VettedPay({
   compact = false,
-}: Readonly<{ compact?: boolean }>) {
+  surface = "paper",
+}: Readonly<{ compact?: boolean; surface?: "paper" | "signal" }>) {
   const price = `$${offer.check.price.toLocaleString("en-US")}`;
 
   const items: { kicker: string; body: ReactNode }[] = [
@@ -41,10 +42,30 @@ export function VettedPay({
     },
   ];
 
+  if (surface === "signal") {
+    return (
+      <ul className="grid grid-cols-2 gap-0 border-t border-iron/15">
+        {items.map((item) => (
+          <li
+            key={item.kicker}
+            className="border-b border-iron/15 px-0 py-5 odd:pr-6 even:border-l even:border-iron/15 even:pl-6"
+          >
+            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron/70">
+              {item.kicker}
+            </p>
+            <p className="mt-1.5 font-newsreader text-[15px] leading-[1.35] text-iron">
+              {item.body}
+            </p>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
-    <ul className={`grid grid-cols-2 gap-2 ${compact ? "" : ""}`}>
+    <ul className="grid grid-cols-2 gap-2">
       {items.map((item) => (
-        <li key={item.kicker} className="card px-5 py-4">
+        <li key={item.kicker} className={`card ${compact ? "px-4 py-3" : "px-5 py-4"}`}>
           <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
             {item.kicker}
           </p>

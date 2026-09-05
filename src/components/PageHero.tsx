@@ -35,7 +35,7 @@ export function PageHero({
 
   return (
     <HeroFrame>
-      <div className="flex flex-1 flex-col justify-center px-6 py-14 md:px-12 md:py-20">
+      <div className="flex flex-1 flex-col justify-center px-6 pb-14 pt-24 md:px-12 md:pb-20 md:pt-28">
         <div className="mx-auto flex w-full max-w-[720px] flex-col">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 10 }}

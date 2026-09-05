@@ -1,16 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
-import { Tilt } from "@/components/landing/Reveal";
-import { getDemoOverview } from "@/content/demo";
+import { useEffect, useState, type PointerEvent } from "react";
 import {
-  heroPortalView,
-  type HeroPortalView,
-} from "@/lib/hero-portal-view";
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "motion/react";
+import { getDemoOverview } from "@/content/demo";
+import { heroPortalView, type HeroPortalView } from "@/lib/hero-portal-view";
 
-const desk = { type: "spring" as const, stiffness: 160, damping: 22 };
+const land = { type: "spring" as const, stiffness: 150, damping: 22 };
+const RING = 2 * Math.PI * 46;
 
 function useMinWidth(px: number) {
   const [matches, setMatches] = useState<boolean | null>(null);
@@ -26,232 +29,213 @@ function useMinWidth(px: number) {
   return matches;
 }
 
-function ProgressBar({ fill }: Readonly<{ fill: string }>) {
+function DayRing({
+  daysElapsed,
+  lockedDays,
+  usedPct,
+}: Readonly<{ daysElapsed: number; lockedDays: number; usedPct: number }>) {
   const reduce = useReducedMotion();
+  const offset = RING * (1 - Math.min(100, Math.max(0, usedPct)) / 100);
+
   return (
-    <div className="h-2 flex-1 overflow-hidden rounded-full bg-iron/10">
-      <motion.div
-        className="h-full bg-signal"
-        initial={reduce ? { width: fill } : { width: 0 }}
-        animate={{ width: fill }}
-        transition={
-          reduce
-            ? { duration: 0 }
-            : { delay: 0.72, duration: 0.9, ease: [0.16, 1, 0.3, 1] }
-        }
-      />
+    <div className="relative mx-auto h-[9.5rem] w-[9.5rem]">
+      <svg viewBox="0 0 120 120" className="-rotate-90" aria-hidden="true">
+        <circle
+          cx="60"
+          cy="60"
+          r="46"
+          fill="none"
+          stroke="rgba(244, 238, 230, 0.12)"
+          strokeWidth="1.5"
+        />
+        <motion.circle
+          cx="60"
+          cy="60"
+          r="46"
+          fill="none"
+          stroke="#f2c230"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeDasharray={RING}
+          initial={reduce ? { strokeDashoffset: offset } : { strokeDashoffset: RING }}
+          animate={{ strokeDashoffset: offset }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { delay: 0.7, duration: 1.4, ease: [0.16, 1, 0.3, 1] }
+          }
+        />
+      </svg>
+      <div className="absolute inset-0 grid place-items-center text-center">
+        <div>
+          <p className="font-newsreader text-[32px] leading-none tracking-[-0.03em] text-rag">
+            {daysElapsed}
+            <span className="text-rag/40">/{lockedDays}</span>
+          </p>
+          <p className="mt-1 font-plex-mono text-[10px] uppercase tracking-[0.14em] text-rag/70">
+            day
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
 
-function LiveChip() {
+function GlassFace({
+  view,
+  compact,
+}: Readonly<{ view: HeroPortalView; compact: boolean }>) {
   const reduce = useReducedMotion();
-  return (
-    <motion.span
-      className="shrink-0 font-plex-mono text-[12px] text-ink/70"
-      animate={reduce ? undefined : { opacity: [1, 0.55, 1] }}
-      transition={
-        reduce
-          ? undefined
-          : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
-      }
-    >
-      ◦ live sample
-    </motion.span>
-  );
-}
+  const px = useMotionValue(0.5);
+  const py = useMotionValue(0.5);
+  const tiltX = useSpring(useTransform(py, [0, 1], [5, -5]), {
+    stiffness: 140,
+    damping: 20,
+  });
+  const tiltY = useSpring(useTransform(px, [0, 1], [-6, 6]), {
+    stiffness: 140,
+    damping: 20,
+  });
+  const sheenX = useTransform(px, [0, 1], ["0%", "100%"]);
+  const sheenY = useTransform(py, [0, 1], ["0%", "100%"]);
 
-function CurrentPip({ current }: Readonly<{ current: boolean }>) {
-  const reduce = useReducedMotion();
-  if (!current) {
-    return <span aria-hidden="true">○</span>;
+  function onMove(event: PointerEvent<HTMLAnchorElement>) {
+    if (reduce) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    px.set((event.clientX - rect.left) / rect.width);
+    py.set((event.clientY - rect.top) / rect.height);
   }
+
+  function onLeave() {
+    px.set(0.5);
+    py.set(0.5);
+  }
+
   return (
-    <motion.span
-      aria-hidden="true"
-      animate={reduce ? undefined : { opacity: [1, 0.35, 1] }}
-      transition={
+    <motion.div
+      style={
         reduce
           ? undefined
-          : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
+          : { rotateX: tiltX, rotateY: tiltY, transformPerspective: 1100 }
       }
     >
-      ●
-    </motion.span>
-  );
-}
+      <Link
+        href="/demo"
+        aria-label={`Sample portal for ${view.client}. Open the live sample.`}
+        onPointerMove={onMove}
+        onPointerLeave={onLeave}
+        className="relative block overflow-hidden rounded-[22px] text-left text-rag ring-1 ring-rag/15"
+        style={{
+          background:
+            "linear-gradient(165deg, rgba(250, 246, 240, 0.1) 0%, rgba(250, 246, 240, 0.03) 48%, rgba(28, 19, 14, 0.4) 100%)",
+          boxShadow:
+            "inset 0 1px 0 rgba(250, 246, 240, 0.22), 0 28px 60px -28px rgba(0, 0, 0, 0.55)",
+        }}
+      >
+        <motion.span
+          aria-hidden="true"
+          className="pointer-events-none absolute h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            left: sheenX,
+            top: sheenY,
+            background:
+              "radial-gradient(circle, rgba(242, 194, 48, 0.2), transparent 70%)",
+          }}
+        />
+        {!reduce ? (
+          <motion.span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(115deg, transparent 35%, rgba(250, 246, 240, 0.16) 50%, transparent 65%)",
+              backgroundSize: "220% 220%",
+            }}
+            animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
+          />
+        ) : null}
 
-function HeroWindow({ view }: Readonly<{ view: HeroPortalView }>) {
-  const fill = `${Math.min(100, Math.max(0, view.usedPct))}%`;
+        <div className="relative px-6 py-6 md:px-7 md:py-7">
+          <div className="flex items-center justify-between gap-3">
+            <p className="font-plex-mono text-[11px] uppercase tracking-[0.14em] text-rag/70">
+              Sample
+            </p>
+            <p className="font-plex-mono text-[11px] uppercase tracking-[0.14em] text-signal">
+              {view.usedPct}% used
+            </p>
+          </div>
 
-  return (
-    <Link
-      href="/demo"
-      aria-label={`Sample portal for ${view.client}. Open the live sample.`}
-      className="block overflow-hidden rounded-[12px] bg-rag-card text-left text-iron shadow-[var(--shadow-artifact)] transition-shadow duration-300 hover:shadow-[var(--shadow-raised)]"
-    >
-      <div className="flex h-8 items-center gap-3 border-b border-iron/10 px-4">
-        <div className="flex items-center gap-1.5" aria-hidden="true">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#e36a5c]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#f2c230]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#4a8f6f]" />
-        </div>
-        <p className="min-w-0 flex-1 truncate rounded-full bg-iron/[0.06] px-3 py-0.5 text-center font-plex-mono text-[12px] text-ink/70">
-          app.bpulse.dev/northline
-        </p>
-        <LiveChip />
-      </div>
-
-      <div className="px-6 py-6">
-        <div className="flex items-baseline justify-between gap-4">
-          <h2 className="font-plex-sans text-[15px] font-medium tracking-[0.04em] text-iron uppercase">
+          <p className="mt-5 font-newsreader text-[26px] leading-[1.1] text-rag">
             {view.client}
-          </h2>
-          <p className="font-plex-mono text-[12px] tabular-nums text-ink/70">
-            day {view.daysElapsed} / {view.lockedDays}
           </p>
-        </div>
-
-        <ol className="mt-5 flex flex-wrap items-end gap-x-4 gap-y-2 border-t border-iron/10 pt-4">
-          {view.stages.map((stage) => {
-            const current = Boolean(stage.current);
-            const tick = stage.done ? (
-              <span aria-hidden="true">✓</span>
-            ) : (
-              <CurrentPip current={current} />
-            );
-            return (
-              <li key={stage.id} className="min-w-0">
-                <p
-                  className={`flex items-center gap-1.5 font-plex-mono text-[11px] uppercase tracking-[0.06em] ${
-                    current ? "text-iron" : "text-ink/70"
-                  }`}
-                >
-                  {tick}
-                  {stage.label}
-                </p>
-              </li>
-            );
-          })}
-        </ol>
-
-        <div className="mt-5 flex items-center gap-3">
-          <ProgressBar fill={fill} />
-          <p className="shrink-0 font-plex-mono text-[12px] tabular-nums text-ink/70">
-            {view.usedPct}%
+          <p className="mt-1 font-plex-mono text-[12px] text-rag/70">
+            v{view.scopeVersion} locked
           </p>
-        </div>
-        <p className="mt-2 font-plex-mono text-[12px] text-ink/70">
-          v{view.scopeVersion} locked
-        </p>
 
-        <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-iron/10 pt-5">
-          <div>
-            <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
-              Findings
-            </dt>
-            <dd className="mt-1 font-plex-sans text-[14px] text-iron">
-              {view.findingsOpen} open
-            </dd>
+          <div className="mt-8">
+            <DayRing
+              daysElapsed={view.daysElapsed}
+              lockedDays={view.lockedDays}
+              usedPct={view.usedPct}
+            />
           </div>
-          <div>
-            <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
-              Deploy
-            </dt>
-            <dd className="mt-1 font-plex-sans text-[14px] text-iron">
-              {view.deployLine}
-            </dd>
-          </div>
-          <div>
-            <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
-              Next
-            </dt>
-            <dd className="mt-1 font-plex-sans text-[14px] text-iron">
-              {view.nextMilestone}
-            </dd>
-          </div>
-        </dl>
-      </div>
-    </Link>
-  );
-}
 
-function HeroCard({ view }: Readonly<{ view: HeroPortalView }>) {
-  const reduce = useReducedMotion();
-  const fill = `${Math.min(100, Math.max(0, view.usedPct))}%`;
-  const current =
-    view.stages.find((stage) => stage.current)?.label ?? view.currentStage;
-
-  return (
-    <Link
-      href="/demo"
-      aria-label={`Sample portal for ${view.client}. Open the live sample.`}
-      className="block overflow-hidden rounded-[12px] bg-rag-card px-5 py-5 text-left text-iron shadow-[var(--shadow-artifact)]"
-    >
-      <LiveChip />
-      <h2 className="mt-3 font-plex-sans text-[15px] font-medium tracking-[0.04em] text-iron uppercase">
-        {view.client}
-      </h2>
-      <p className="mt-1 font-plex-mono text-[12px] tabular-nums text-ink/70">
-        day {view.daysElapsed} of {view.lockedDays}
-      </p>
-
-      <div className="mt-4 border-t border-iron/10 pt-4">
-        <p className="flex items-center gap-2" aria-label={`Stage ${current}`}>
-          {view.stages.map((stage) => {
-            const on = Boolean(stage.current);
-            return (
-              <motion.span
-                key={stage.id}
-                className={`h-2 w-2 rounded-full ${
-                  stage.done || on ? "bg-iron" : "bg-iron/20"
-                }`}
-                animate={
-                  reduce || !on ? undefined : { opacity: [1, 0.35, 1] }
-                }
-                transition={
-                  reduce || !on
-                    ? undefined
-                    : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
-                }
-                aria-hidden="true"
-              />
-            );
-          })}
-          <span className="ml-1 font-plex-mono text-[12px] text-iron">
-            {current}
-          </span>
-        </p>
-        <div className="mt-4 flex items-center gap-3">
-          <ProgressBar fill={fill} />
-          <p className="shrink-0 font-plex-mono text-[12px] tabular-nums text-ink/70">
-            {view.usedPct}%
-          </p>
+          {compact ? (
+            <p className="mt-6 font-plex-mono text-[12px] text-rag/75">
+              {view.currentStage} · {view.nextMilestone}
+            </p>
+          ) : (
+            <>
+              <ol className="mt-8 flex flex-col gap-2.5">
+                {view.stages.map((stage) => {
+                  const on = Boolean(stage.current);
+                  return (
+                    <li
+                      key={stage.id}
+                      className="flex items-center justify-between gap-3"
+                    >
+                      <span
+                        className={`font-plex-sans text-[13px] ${
+                          on ? "text-rag" : "text-rag/70"
+                        }`}
+                      >
+                        {stage.label}
+                      </span>
+                      <span
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          stage.done
+                            ? "bg-rag/45"
+                            : on
+                              ? "bg-signal"
+                              : "bg-rag/20"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        {on && !reduce ? (
+                          <motion.span
+                            className="block h-full w-full rounded-full bg-signal"
+                            animate={{ opacity: [1, 0.35, 1] }}
+                            transition={{
+                              duration: 2.2,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                          />
+                        ) : null}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-7 border-t border-rag/10 pt-5 font-newsreader text-[15px] leading-[1.4] text-rag/80">
+                Next · {view.nextMilestone}
+              </p>
+            </>
+          )}
         </div>
-        <p className="mt-2 font-plex-mono text-[12px] text-ink/70">
-          v{view.scopeVersion} locked
-        </p>
-      </div>
-
-      <dl className="mt-4 border-t border-iron/10 pt-4">
-        <div>
-          <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
-            Findings
-          </dt>
-          <dd className="mt-1 font-plex-sans text-[14px] text-iron">
-            {view.findingsOpen} open
-          </dd>
-        </div>
-        <div className="mt-3">
-          <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
-            Next
-          </dt>
-          <dd className="mt-1 font-plex-sans text-[14px] text-iron">
-            {view.nextMilestone}
-          </dd>
-        </div>
-      </dl>
-    </Link>
+      </Link>
+    </motion.div>
   );
 }
 
@@ -262,19 +246,15 @@ export function HeroPortal() {
 
   return (
     <motion.div
-      className="relative w-full"
-      initial={
-        reduce ? false : { opacity: 0, y: 40, scale: 0.96, rotate: 0.5 }
-      }
-      animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-      transition={reduce ? { duration: 0 } : { ...desk, delay: 0.34 }}
+      className="relative w-full max-w-[22rem] justify-self-end lg:max-w-[24rem]"
+      initial={reduce ? false : { opacity: 0, y: 28, rotate: 1.2, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+      transition={reduce ? { duration: 0 } : { ...land, delay: 0.28 }}
     >
       {wide === null ? (
-        <div className="h-[280px] w-full md:h-[380px]" aria-hidden="true" />
+        <div className="h-[280px] w-full" aria-hidden="true" />
       ) : (
-        <Tilt intensity={wide ? 6 : 0} className="[transform-style:preserve-3d]">
-          {wide ? <HeroWindow view={view} /> : <HeroCard view={view} />}
-        </Tilt>
+        <GlassFace view={view} compact={!wide} />
       )}
     </motion.div>
   );

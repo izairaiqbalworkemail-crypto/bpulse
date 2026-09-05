@@ -170,9 +170,9 @@ Copy, price, seed, tokens, and the one iron surface did not change.
 
 ## Hero plate — cream sides, caramel card (Sep 2026)
 
-The opening is the old inset again, not a full-bleed black or cream wall. Paper (`#F4EEE6`) shows at the edges. The room is a dark chocolate caramel plate (`#3A2418` → `#1A100C`) with a warm signal wash. Home fills the viewport inside a 10–16px gutter. Inner pages use the same plate, shorter. Cream type, signal CTA. The sample window stays a paper object on the caramel.
+The opening is the old inset again, not a full-bleed black or cream wall. Paper (`#F4EEE6`) shows at the edges. The room is espresso chocolate `#1C130E`. Two objects sit on it: a cream brief card, and the sample window. Yellow `#F2C230` is only the last 20% cell and the Check button.
 
-Contrast: `#F4EEE6` on `#1A100C` ≈ **14.8:1**. `#3C2A1D` on `#F2C230` remains the Check button.
+Contrast: `#FAF6F0` on `#1C130E` ≈ **15.2:1**. `#3C2A1D` on `#F2C230` remains the Check button.
 
 ## Hero composition — one surface, contained window (Sep 2026)
 
@@ -197,16 +197,17 @@ Rejected on the landing: a second full-viewport iron self-check, four-up stats, 
 
 Adopted — four episodes after the hero. Photographs carry the page. Copy stays short. No invented revenue.
 
-Colour law: the hero is the iron room. Everything below stays rag. Soft 32 radius. No hairline tables, no second iron room, no signal wall. Motion is the same spring as the hero (180 / 24), with a lift on photographs.
+Colour law: cream sides, one flat caramel plate on the hero. No grain, no honeycomb, no second chocolate room. Rooms below are paper or milk, then one yellow Check. Luxury is space and type.
 
 | Episode | Job | Object |
 |---|---|---|
-| 01 The last twenty | Wound + control | One cream plate: dome ring to 80% + four lock pills |
-| 02 Which is it | Matcher | Four wounds. A tap seeds the Check conversation |
-| 03 Work we actually did | Proof | Three 4/5 lot photographs |
-| 04 The path | Process | Check · Close · Standing, priced from the offer |
-| 05 The same hands | Trust | Six crew portraits + a count of the rest |
-| 06 The Check | Convert | Price, five day chips, conversation brief |
+| 01 The last twenty | Wound + control | Four locks as a typed list |
+| 02 Which is it | Matcher | A line, a verdict, pills |
+| 03 Work we actually did | Proof | Three photograph rows |
+| 04 The path | Process | Check · Close · Standing as three columns |
+| 05 The same hands | Trust | Portraits, name under |
+| 06 The Match | Evidence | Three reasons + the desk |
+| 07 The Check | Convert | Yellow room, price, cream intake |
 
 Site nav is a pill. On `/` it sits *inside* the iron hero and scrolls away — not sticky, so the signal CTA does not follow every viewport. Inner pages render the same pill in document flow (`variant="solid"`) from `SiteChrome`. Interior pages that do not run a conversation end on `PageClose`.
 

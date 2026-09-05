@@ -5,13 +5,11 @@ import type { ReactNode } from "react";
 
 type HeroFrameProps = {
   children: ReactNode;
-  /** Home: cream gutter, caramel plate fills the screen. Inner: the same plate, shorter. */
   tall?: boolean;
 };
 
 /**
- * Paper sides. One dark chocolate caramel card.
- * Same opening on every public path.
+ * Cream sides. One caramel plate. Nothing else.
  */
 export function HeroFrame({ children, tall = false }: HeroFrameProps) {
   const reduceMotion = useReducedMotion();
@@ -35,7 +33,7 @@ export function HeroFrame({ children, tall = false }: HeroFrameProps) {
               ? "hero-plate relative flex min-h-[calc(100svh-1.25rem)] flex-col md:min-h-[calc(100svh-2rem)]"
               : "hero-plate relative flex min-h-[min(68svh,38rem)] flex-col"
           }
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={
             reduceMotion

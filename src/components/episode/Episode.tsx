@@ -38,8 +38,7 @@ type EpisodeProps = {
 };
 
 /**
- * One room. Flat colour — paper grain lives only on heroes.
- * Cocoa, milk, signal, and paper each appear for a reason.
+ * One room. Flat colour. No texture, no overlay.
  */
 export function Episode({
   labelledBy,
@@ -52,7 +51,7 @@ export function Episode({
       aria-labelledby={labelledBy ? `${labelledBy}-heading` : undefined}
       className={`relative scroll-mt-[5.75rem] md:scroll-mt-28 ${surface[tone]}`}
     >
-      <div className="relative stage-container py-20 md:py-28">{children}</div>
+      <div className="relative stage-container py-24 md:py-32">{children}</div>
     </section>
   );
 }
