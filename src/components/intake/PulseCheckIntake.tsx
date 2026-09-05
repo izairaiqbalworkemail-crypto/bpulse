@@ -1,6 +1,8 @@
 "use client";
 
-import { CrewSession } from "@/components/intake/CrewSession";
+import { useSyncExternalStore } from "react";
+import { ConditionDesk } from "@/components/intake/ConditionDesk";
+import { readMatchBrief } from "@/lib/match/session";
 
 const SITUATIONS = [
   { id: "almost", label: "Almost done" },
@@ -21,22 +23,34 @@ type PulseCheckIntakeProps = {
   source?: string;
 };
 
-/**
- * The Check door. Same conversation engine as contact, about, and the
- * crew pages — not a stack of boxes.
- */
+function subscribe() {
+  return () => {
+    /* sessionStorage is read once for this visit */
+  };
+}
+
+function getMatchWound() {
+  return readMatchBrief().brief;
+}
+
+function emptyWound() {
+  return "";
+}
+
 export function PulseCheckIntake({
   prefill,
   source = "check",
 }: Readonly<PulseCheckIntakeProps>) {
+  const matchWound = useSyncExternalStore(subscribe, getMatchWound, emptyWound);
   const seeded: Record<string, string> = {};
   const situation = SITUATIONS.find((item) => item.id === prefill?.situation);
   if (situation) seeded.situation = situation.label;
   if (prefill?.stuckNote) seeded.build = prefill.stuckNote;
+  if (!seeded.build && matchWound) seeded.build = matchWound;
 
   return (
-    <CrewSession
-      type="check"
+    <ConditionDesk
+      key={`${seeded.situation ?? ""}:${seeded.build ? "wound" : "open"}`}
       source={source}
       prefill={Object.keys(seeded).length > 0 ? seeded : undefined}
     />

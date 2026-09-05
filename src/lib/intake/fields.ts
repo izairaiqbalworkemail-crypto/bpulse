@@ -1,4 +1,4 @@
-import type { FieldConfig, IntakeType } from "@/components/intake/CrewSession";
+import type { FieldConfig, IntakeType } from "@/lib/intake/types";
 import { BUDGET_BANDS } from "@/content/budgets";
 
 const BUDGETS = [...BUDGET_BANDS];
@@ -182,18 +182,18 @@ export const sessionFields: Record<IntakeType, FieldConfig[]> = {
   ],
   check: [
     {
-      name: "situation",
-      label: "Which is it",
-      type: "radio",
-      options: ["Almost done", "Stalled", "Live, but fragile", "Just an idea"],
-      required: true,
-    },
-    {
       name: "build",
       label: "What is stuck",
       type: "textarea",
       required: true,
       placeholder: "The last thing that will not ship",
+    },
+    {
+      name: "situation",
+      label: "Which is it",
+      type: "radio",
+      options: ["Almost done", "Stalled", "Live, but fragile", "Just an idea"],
+      required: true,
     },
     {
       name: "stack",

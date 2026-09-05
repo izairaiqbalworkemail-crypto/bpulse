@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { CrewSession } from "@/components/intake/CrewSession";
+import { BriefIntake } from "@/components/intake/BriefIntake";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
 import { Credit } from "@/components/primitives/Credit";
@@ -31,7 +31,7 @@ export default function ContactPage() {
       <PageHero
         kicker="Contact"
         title="A person replies within one business day."
-        dek="This is an intake form that reads like a conversation. No one is typing. If you will not fill a form, write the address below."
+        dek="Write the brief. A person reads it. If you will not fill a form, write the address below."
         hideAction
       />
 
@@ -56,7 +56,7 @@ export default function ContactPage() {
           </Reveal>
 
           <div id="intake" className="mt-12">
-            <CrewSession type="contact" source="contact" />
+            <BriefIntake type="contact" source="contact" />
             <div className="mt-8">
               <VettedPay />
             </div>

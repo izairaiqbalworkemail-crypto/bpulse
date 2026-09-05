@@ -288,6 +288,11 @@ function PrivacyPolicy() {
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           When you use an intake form, we store the fields you type: name,
           email, product description, budget, timeline, and how you found us.
+          When you use /match, we store the description you typed, the people
+          we suggested, and what you did next (viewed, wrote someone, started
+          a Check, or left). That
+          text is a business description, not a name or an email, and it never
+          appears in the URL.
           To stop abuse of the form we also briefly store the request IP in
           Redis for a one-minute rate limit. Private report pages log a
           timestamp and a slug — no IP, no cookie. We do not run analytics,
@@ -308,7 +313,8 @@ function PrivacyPolicy() {
         <LegalH2>3. Where your data goes</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
           Submissions are written to our Postgres database and emailed to the
-          studio inbox through Resend. Rate limits and report view counts use
+          studio inbox through Resend. Match reads are written to the same
+          database, or to a local file in development. Rate limits and report view counts use
           Upstash Redis. Those are infrastructure vendors, not marketing
           lists. We do not sell your data or use it for advertising.
         </p>
@@ -317,8 +323,8 @@ function PrivacyPolicy() {
       <section>
         <LegalH2>4. How long we keep it</LegalH2>
         <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-          There is no automated deletion job yet. Submissions stay in the
-          database until we delete them by hand. Email{" "}
+          There is no automated deletion job yet. Submissions and match
+          reads stay in the database until we delete them by hand. Email{" "}
           {brand.contact.email} and we will delete your row. A retention
           schedule will be published here once it is real.
         </p>

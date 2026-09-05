@@ -84,12 +84,20 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
             Verdict of keep, repair, or rebuild. Credited on a Close invoice
             within 30 days.
           </p>
-          <Link
-            href="#intake"
-            className="mt-8 inline-flex items-center rounded-full bg-iron px-6 py-3 font-plex-sans text-[15px] font-medium text-rag"
-          >
-            Start the Check
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Link
+              href="#intake"
+              className="inline-flex items-center rounded-full bg-iron px-6 py-3 font-plex-sans text-[15px] font-medium text-rag"
+            >
+              Start the Check
+            </Link>
+            <Link
+              href="/match"
+              className="font-plex-sans text-[15px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+            >
+              Or match it against the record
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -56,10 +56,10 @@ export function Hero() {
               {`Start the Check · $${offer.check.price.toLocaleString("en-US")}`}
             </Link>
             <Link
-              href="/demo"
+              href="/match"
               className="inline-flex items-center gap-2 font-plex-sans text-[15px] text-rag/80 hover:text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rag"
             >
-              See a live engagement
+              Match it against the record
               <span aria-hidden="true">→</span>
             </Link>
           </motion.div>

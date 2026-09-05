@@ -4,6 +4,8 @@ This is the go-live book. You do not need to be an engineer. If a step says “a
 
 The site is a catalogue and a funnel. It does **not** take payment. It does **not** run a live client portal. A Check or a Close is still a conversation that starts from an email.
 
+The two new doors (5 Sep 2026) are **The Match** (`/match`) and **The Check session** (the condition sheet on `/check` and home). Walk every path in `PATHS.md` after this checklist.
+
 ---
 
 ## 1. Go-live checklist (in order)
@@ -16,8 +18,8 @@ Do these in this order. Do not skip ahead and “test the site” — the form w
 | 2 | Create **Upstash Redis** (free is enough). | You have `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`. |
 | 3 | Create **Resend**. Verify the sending domain (e.g. `bpulse.dev`). | You can send a test email from that domain. |
 | 4 | In **Vercel → Environment variables** (Production + Preview), add: `DATABASE_URL`, `RESEND_API_KEY`, `FOUNDER_EMAIL`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`. Optional: `RESEND_FROM`. | All five show as set. Redeploy after saving. |
-| 5 | From the project folder, run `pnpm db:migrate` against that `DATABASE_URL`. | The `submissions` table exists. |
-| 6 | Redeploy. Open the preview URL. Submit **four** real tests: Contact, Check, one specialist page, Careers. | Each time: an email in `FOUNDER_EMAIL`, and a row in the database. |
+| 5 | From the project folder, run `pnpm db:migrate` against that `DATABASE_URL`. | `submissions`, `match_events`, and `match_outcomes` exist (`0002_match.sql` is in the set). |
+| 6 | Redeploy. Open the preview URL. Walk **five** real tests: Match → Write {name}, Match → Check, Contact, Check from cold, Careers. | Each file: an email in `FOUNDER_EMAIL` and a row in `submissions`. Each Match: a row in `match_events`. `/studio/matches` shows the log. |
 | 7 | On the preview, submit the Check form **six times in a minute**. | The sixth should fail (“too many requests”). If it does not, Redis is not wired. |
 | 8 | Submit the same Check twice **at the same time** with the same request (refresh-spam the last step). | You get one row, not two. |
 | 9 | Paste `/`, `/check`, and one lot URL into Slack and LinkedIn. | The card shows “We finish what starts.” — not a blank box. |
@@ -76,12 +78,13 @@ Print: they can print to PDF. The nav and the Check button hide. The URL prints 
 
 **Where the email goes.** Whatever you set as `FOUNDER_EMAIL` in Vercel. Reply to that thread. The visitor’s address is the reply-to.
 
-**Where the admin inbox is.** There is no admin website. The database table is `submissions` (Neon console → Tables, or `pnpm db:studio`). Each row is one intake: type, email, budget, payload, time.
+**Where the admin inbox is.** Intakes: Neon table `submissions` (or `pnpm db:studio`). Match log: `/studio/matches` (not indexed) and tables `match_events` / `match_outcomes`. `/studio` is not a public product.
 
-**The two ratios that matter** (count them by hand at first):
+**The ratios that matter:**
 
 1. **Replies in one business day / submissions that week.** If this is not ~100%, the site is lying. Fix the inbox, or change the sentence.
-2. **Checks that become a Close in 30 days / Checks you invoiced.** This is whether the credit term is real. If you never credit, take the credit sentence off `/check`.
+2. **Match → wrote someone** and **wrote someone → started a Check** — on `/studio/matches`. “Check” here means they started the session, not that they paid.
+3. **Checks that become a Close in 30 days / Checks you invoiced.** This is whether the credit term is real. If you never credit, take the credit sentence off `/check`.
 
 You do not need a CRM for the first ten leads. When you do: buy Attio or Pipedrive. Do not build one.
 
@@ -135,7 +138,9 @@ The image URL should be `/opengraph-image` on the marketing site, and the per-re
 Look at each of these at **1440** and **375** wide. Write down anything that overflows, clips, or looks like a leftover decoration.
 
 - Home hero, including the pain list and the 80% bar
-- `/check`, `/work`, one lot, one specialist
+- `/match` (describe → result → Write {name} and Or start a Check)
+- `/check` including the condition sheet at `#intake`
+- `/work`, one lot, one specialist `#intake`
 - `/demo` and every tab (Overview through Handover). The **sample** banner must be obvious on all of them
 - `/how-it-works`, `/standard`, `/edpulse`
 - One report URL, including print preview (File → Print)

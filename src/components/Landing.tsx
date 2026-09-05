@@ -24,10 +24,11 @@ import {
   PulseCheckIntake,
   type PulseCheckSituation,
 } from "@/components/intake/PulseCheckIntake";
+import { MatchDesk } from "@/components/match/MatchDesk";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
 import { Mark } from "@/components/primitives/Mark";
-import { lotEntryState } from "@/content/catalogue";
+import { getCatalogue, lotEntryState } from "@/content/catalogue";
 import { checkRunner } from "@/content/check";
 import {
   homeCrew,
@@ -207,6 +208,7 @@ function CrewCard({ person }: Readonly<{ person: Specialist }>) {
 
 export function Landing() {
   const lots = homeLots.map((slug) => getLot(slug));
+  const recordCount = getCatalogue().length;
   const [lead, ...restLots] = lots;
   const crew = homeCrew.map((id) => getSpecialist(id));
   const more = specialists.length - crew.length;
@@ -459,6 +461,31 @@ export function Landing() {
         ) : null}
       </Episode>
 
+      <Episode labelledBy="match">
+        <EpisodeHead
+          n="06"
+          kicker="The Match"
+          id="match"
+          heading="Who should take this? Check the record."
+          aside={
+            <Link href="/match" className={linkQuiet}>
+              The full desk
+            </Link>
+          }
+        >
+          Not a guess and not a model. We read what you write against{" "}
+          {recordCount} real engagements, then name the person and
+          the reason.
+        </EpisodeHead>
+        <Reveal delay={0.1} className="mt-8">
+          <div
+            className={`bg-rag-card p-5 shadow-[var(--shadow-card)] ring-1 ring-iron/10 md:p-8 ${plate}`}
+          >
+            <MatchDesk compact />
+          </div>
+        </Reveal>
+      </Episode>
+
       <Episode labelledBy="check">
         <Reveal>
           <div
@@ -466,7 +493,7 @@ export function Landing() {
           >
             <div className="relative p-6 md:p-8">
               <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
-                06 · The Check
+                07 · The Check
               </p>
               <Rise delay={0.06}>
                 <h2

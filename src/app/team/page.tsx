@@ -76,6 +76,16 @@ export default function TeamPage() {
               </Reveal>
             );
           })}
+          <p className="mt-10 font-newsreader text-[18px] text-iron">
+            Not sure who you need?{" "}
+            <Link
+              href="/match"
+              className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+            >
+              Match it against the record
+            </Link>
+            .
+          </p>
           <PageClose line="The name on the Check is the name on the Close." />
         </div>
       </div>

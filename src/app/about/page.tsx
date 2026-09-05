@@ -8,7 +8,7 @@ import {
   Atmosphere,
   AtmosphereNote,
 } from "@/components/landing/Atmosphere";
-import { CrewSession } from "@/components/intake/CrewSession";
+import { BriefIntake } from "@/components/intake/BriefIntake";
 import { PassAlong } from "@/components/PassAlong";
 import { VettedPay } from "@/components/VettedPay";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
@@ -77,7 +77,7 @@ export default function AboutPage() {
             <p className="mb-6 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Write the studio
             </p>
-            <CrewSession type="about" source="about" />
+            <BriefIntake type="about" source="about" />
             <div className="mt-8">
               <VettedPay />
             </div>

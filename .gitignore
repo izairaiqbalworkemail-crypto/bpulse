@@ -27,6 +27,9 @@ yarn-error.log*
 # local intake desk (no Resend / Neon yet)
 .data/
 
+# brand kit zip — not a site asset
+/public/bpulse-brand.zip
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -12,7 +12,7 @@ import { Reveal } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 import { crewGates } from "@/content/process";
 import { specialists } from "@/content/specialists";
-import { CrewSession } from "@/components/intake/CrewSession";
+import { BriefIntake } from "@/components/intake/BriefIntake";
 
 export const metadata: Metadata = buildMetadata({
   title: "Careers",
@@ -67,7 +67,7 @@ export default function CareersPage() {
           <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
             The door
           </p>
-          <CrewSession type="careers" source="careers" />
+          <BriefIntake type="careers" source="careers" />
         </div>
 
         <div className="mt-20 border-t border-iron/20 pt-10">

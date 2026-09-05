@@ -1,4 +1,5 @@
-import type { FieldConfig, SessionCopy } from "@/components/intake/CrewSession";
+import type { SessionCopy } from "@/components/intake/CrewSession";
+import type { FieldConfig } from "@/lib/intake/types";
 import { BUDGET_BANDS } from "@/content/budgets";
 import type { Specialist } from "@/content/types";
 

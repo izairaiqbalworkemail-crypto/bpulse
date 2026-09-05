@@ -37,6 +37,7 @@ export const homeLocks = [
   { title: "You watch every day", href: "/demo" },
   { title: "Same hands throughout", href: "/team" },
   { title: "You leave with the keys", href: "/how-it-works" },
+  { title: "Matched against the record", href: "/match" },
 ] as const;
 
 /** Five Check days, names only — the essays live on /check. */

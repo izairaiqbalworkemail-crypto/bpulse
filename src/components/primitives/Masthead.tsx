@@ -36,6 +36,11 @@ const nav = [
     href: "/how-it-works",
     detail: "Six stages, written down",
   },
+  {
+    label: "Match",
+    href: "/match",
+    detail: "Against work we already did",
+  },
 ] as const;
 
 const FOCUS_TRAP_SELECTOR = "a[href], button:not([disabled])";

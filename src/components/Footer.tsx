@@ -16,6 +16,7 @@ const studioLinks = [
   { label: "The standard", href: "/standard" },
   { label: "Edpulse", href: "/edpulse" },
   { label: "The Check", href: "/check" },
+  { label: "The Match", href: "/match" },
   { label: "Sample portal", href: "/demo" },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },

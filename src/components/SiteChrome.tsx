@@ -8,7 +8,8 @@ import { StickyContact } from "@/components/StickyContact";
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const report = pathname.startsWith("/report/");
+  const report =
+    pathname.startsWith("/report/") || pathname.startsWith("/studio/");
 
   return (
     <>

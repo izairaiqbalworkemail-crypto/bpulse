@@ -5,7 +5,7 @@ import { PersonJsonLd, BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { specialists, getSpecialist } from "@/content/specialists";
 import { lots } from "@/content/lots";
 import { crewAttach, crewJourney } from "@/content/crew-lines";
-import { CrewSession } from "@/components/intake/CrewSession";
+import { MatchPrefill } from "@/components/match/MatchPrefill";
 import { PeopleRail } from "@/components/PeopleRail";
 import {
   Atmosphere,
@@ -189,7 +189,7 @@ export default async function SpecialistPage({ params }: PageProps) {
             <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
               Direct line · {firstName}
             </p>
-            <CrewSession type="work" workWith={specialist.id} />
+            <MatchPrefill specialistId={specialist.id} />
           </div>
         </div>
       </section>
