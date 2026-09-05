@@ -18,6 +18,10 @@ export default function DemoDocumentsPage() {
         Dated, with signature status. Files are labelled stubs — not live
         contracts.
       </p>
+      <p className="mt-3 max-w-measure font-newsreader text-[17px] leading-[1.5] text-ink">
+        This is the real set we sign on every Close: NDA, fixed-scope agreement,
+        IP assignment, and written change orders.
+      </p>
       <ul className="mt-10 flex flex-col gap-8">
         {documents.map((doc) => (
           <li key={doc.name} className="border-t border-iron/15 pt-5">

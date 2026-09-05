@@ -366,10 +366,10 @@ export const specialists: Specialist[] = [
   },
   {
     id: "hamza",
-    name: "Hamza",
-    role: "Backend Engineer",
+    name: "Hamza Khan",
+    role: "Backend Engineer · Legal & Risk Owner",
     funTitle: "The one who keeps the servers honest.",
-    bio: "Backend engineer focused on APIs, databases, and the infrastructure that holds it all together.",
+    bio: "Backend engineer focused on APIs and infrastructure, and named owner for NDAs, IP assignment, and legal-risk routing.",
     years: "3+ years",
     record: [
       {

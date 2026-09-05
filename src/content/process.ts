@@ -63,10 +63,18 @@ export const closeStages = [
 
 export const crewGates = [
   {
+    n: "00",
+    title: "The diagnostic",
+    mechanism:
+      "Async written diagnostic in a 48-hour window. Broken repo, logs, and brief. Candidate writes a condition report with limits required.",
+    costs: "Near-zero marginal cost at volume, before any senior interview time is spent.",
+    proves: "They can read someone else's mess and say something true, specific, and bounded.",
+  },
+  {
     n: "01",
     title: "Structured technical interview",
     mechanism:
-      "A senior human, same rubric every candidate. Live interview: system design, a broken codebase, a walkthrough of past work.",
+      "A senior human, same rubric every candidate. About 90 minutes within one week.",
     costs: "Two senior hours per candidate, every time. We do not outsource the first filter.",
     proves: "They can think in front of another senior. Not a vibe. Not a puzzle for its own sake.",
   },
@@ -106,7 +114,7 @@ export const crewCommitments = [
 ] as const;
 
 export const passRateNote =
-  "Pass rate: tracking from our first cohort — published here once it's real.";
+  "Gate 0 pass threshold: tracking from our first cohort - published once we have enough scored submissions.";
 
 export const edpulseTracks = [
   {
@@ -122,9 +130,9 @@ export const edpulseTracks = [
   {
     name: "Mastery",
     price: "Custom",
-    body: "For people already shipping. Scoped to the gap, priced in writing. Still the same four gates to join the crew.",
+    body: "For people already shipping. Scoped to the gap, priced in writing. Still the same five gates to join the crew.",
   },
 ] as const;
 
 export const edpulseJoinNote =
-  "Graduates who clear the four gates join the crew. Handover training is bundled into every Close — it is not an Edpulse upsell.";
+  "Graduates who clear the five gates join the crew. Handover training is bundled into every Close — it is not an Edpulse upsell.";

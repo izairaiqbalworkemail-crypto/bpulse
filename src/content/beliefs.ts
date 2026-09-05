@@ -42,8 +42,8 @@ export const crewBeliefs = [
   },
   {
     statement: "No multiple-choice pass/fail gate",
-    body: "A quiz is not a standard. The gates are a live interview, paid work, peer review, and supervised client work.",
-    example: "The four gates are published on this page. None of them is a form.",
+    body: "A quiz is not a standard. The gates are a written diagnostic, live interview, paid work sample, peer review, and supervised client work.",
+    example: "The five gates are published on this page. None of them is a multiple-choice pass/fail screen.",
     href: "/standard",
     lot: "The standard",
   },

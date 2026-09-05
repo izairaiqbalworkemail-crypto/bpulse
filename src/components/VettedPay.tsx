@@ -33,7 +33,7 @@ export function VettedPay({
             href="/standard"
             className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
           >
-            The four gates
+            The five gates
           </Link>
           .
         </>

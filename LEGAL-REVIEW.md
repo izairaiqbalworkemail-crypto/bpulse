@@ -1,60 +1,41 @@
-# LEGAL-REVIEW.md — Pages Pending Legal Review
+# LEGAL-REVIEW.md
 
-Every page listed below carries a visible draft banner. Only a lawyer's
-sign-off removes them. That is the founder's call to make with a lawyer.
+## Current operating position
 
-**Do not remove the draft banners.** They are the only thing standing
-between "we wrote this" and "this is in force."
+- Baseline in product copy: **Hamza Khan is legal owner, not legal reviewer**.
+- All five legal documents remain marked **Draft - pending qualified solicitor review**.
+- We do not claim jurisdictional legal advice for UK, EU, or US contract law.
 
----
+## Founder confirmations required (Hamza)
 
-## Pages requiring review
+Status as of 05 Sep 2026: **pending founder response**
 
-| Route | Page | What a solicitor needs to check |
-|---|---|---|
-| `/legal/terms-of-service` | Terms of Service | Governing law (Pakistan), liability cap, IP ownership clause, international B2B service delivery from Pakistan to UK/EU/US clients, consumer-versus-business protection distinctions |
-| `/legal/privacy-policy` | Privacy Policy | International data transfer (PK → EU/UK/US), lawful basis for processing, retention periods, intake form data handling, ICO registration (not applicable in PK — flag this), no-analytics/no-cookies accuracy |
-| `/legal/cookie-policy` | Cookie Policy | Accuracy of "zero cookies" claim — verify no analytics, no tracking, no session recording in production. If this changes, the page must be updated before deployment. |
-| `/legal/accessibility-statement` | Accessibility Statement | WCAG AA claim accuracy, known-issues list completeness, screen-reader audit status, Equality Act 2010 s.29 applicability (UK clients) |
-| `/legal/complaints` | Complaints and Dispute Resolution | Response windows (2-day ack, 10-day substantive), mediation preference, payment dispute guidance, escalation process |
+1. Advocate enrolment status
+   - Is Hamza an enrolled advocate with a bar council?
+   - If yes: council name and enrolment number.
 
----
+2. Review status for the five published documents
+   - Terms of Service
+   - Privacy Policy
+   - Cookie Policy
+   - Accessibility
+   - Complaints & Disputes
 
-## Key questions for the solicitor
+3. Jurisdiction qualification
+   - Is Hamza qualified to advise on UK, EU, or US contract law used by bpulse clients?
 
-1. **Governing law.** The Terms state Pakistan. For UK/EU/US B2B clients,
-   should governing law be England & Wales, or is Pakistan appropriate for
-   a Pakistan-registered studio serving international clients?
+## Switching rule
 
-2. **Data transfer.** The Privacy Policy describes transfers from Pakistan to
-   EU/UK/US. Does the studio need Standard Contractual Clauses (SCCs) or
-   other transfer mechanisms under GDPR?
+- If (1) and (2) are both confirmed with evidence, document copy can switch from owner wording to counsel wording and remove draft label only for reviewed documents.
+- If either is not confirmed, owner wording stays and draft banners remain.
 
-3. **Consumer vs business.** Are all clients B2B? If any B2C work is taken,
-   consumer protection laws in the client's jurisdiction may apply.
+## Why this is strict
 
-4. **ICO registration.** Not applicable in Pakistan. Should the Privacy
-   Policy note this explicitly for UK clients?
+- Procurement and legal teams will ask who reviewed terms and under what qualification.
+- A visible draft label is less harmful than implying sign-off that did not happen.
 
-5. **Cookie accuracy.** The Cookie Policy claims zero cookies. This must be
-   verified against the production build. If analytics or any tracking is
-   added later, both the Cookie Policy and Privacy Policy must be updated
-   before deployment.
+## Scope owner responsibilities now
 
-6. **Complaints process.** The 10-day substantive response window — is this
-   reasonable and enforceable? Should it be longer?
-
----
-
-## Process
-
-1. Founder reviews these pages and the questions above.
-2. Founder engages a solicitor with international B2B experience.
-3. Solicitor reviews each page and returns edits.
-4. Founder applies edits and removes draft banners.
-5. `LEGAL-REVIEW.md` is updated to reflect the sign-off date.
-
----
-
-*This file is project law. It records the pending review and must not be
-deleted until all draft banners are removed.*
+- Route legal enquiries to Hamza Khan.
+- Handle NDAs and IP assignment in writing.
+- Coordinate and instruct external solicitor review by jurisdiction.

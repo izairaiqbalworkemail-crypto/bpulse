@@ -831,16 +831,23 @@ p,
     visibility: hidden !important;
   }
   .print-cert-page,
-  .print-cert-page * {
+  .print-cert-page *,
+  .legal-print,
+  .legal-print * {
     visibility: visible !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  .print-cert-page {
+  .print-cert-page,
+  .legal-print {
     position: static !important;
     top: auto !important;
     left: auto !important;
     width: 100%;
+  }
+  .legal-print a {
+    color: #0d1218 !important;
+    text-decoration: none !important;
   }
 }
 

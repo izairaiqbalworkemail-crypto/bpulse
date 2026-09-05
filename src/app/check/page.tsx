@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ScrollIntakeLink } from "@/components/ScrollIntakeLink";
 import { buildMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/lib/JsonLd";
 import { StageRail } from "@/components/StageRail";
@@ -85,12 +86,9 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
             within 30 days.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link
-              href="#intake"
-              className="inline-flex items-center rounded-full bg-iron px-6 py-3 font-plex-sans text-[15px] font-medium text-rag"
-            >
+            <ScrollIntakeLink className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-iron px-6 py-3 font-plex-sans text-[15px] font-medium text-rag">
               Start the Check
-            </Link>
+            </ScrollIntakeLink>
             <Link
               href="/match"
               className="font-plex-sans text-[15px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
@@ -98,6 +96,13 @@ export default async function CheckPage({ searchParams }: CheckPageProps) {
               Or match it against the record
             </Link>
           </div>
+          <p className="mt-6 max-w-[44ch] font-plex-sans text-[14px] leading-[1.5] text-iron/85">
+            IP assigned in writing before code. NDA from day zero. See{" "}
+            <Link href="/legal/terms" className="underline underline-offset-4">
+              legal terms
+            </Link>
+            .
+          </p>
         </div>
       </section>
 

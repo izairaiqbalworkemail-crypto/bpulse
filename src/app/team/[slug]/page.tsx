@@ -136,6 +136,19 @@ export default async function SpecialistPage({ params }: PageProps) {
             ) : null}
           </div>
 
+          {specialist.id === "hamza" ? (
+            <section className="mt-14 border-l-4 border-signal bg-signal/10 p-5">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Legal scope</p>
+              <p className="mt-2 max-w-[58ch] font-newsreader text-[18px] leading-[1.5] text-iron">
+                Hamza owns legal and risk routing for NDAs, IP assignment, and procurement legal questions.
+                Draft legal documents stay marked draft until qualified solicitor review in the client jurisdiction.
+              </p>
+              <p className="mt-3 font-plex-sans text-[14px] text-ink">
+                See <Link href="/legal" className="underline underline-offset-4">/legal</Link> for the register.
+              </p>
+            </section>
+          ) : null}
+
           {specialistLots.length > 0 ? (
             <div className="mt-16">
               <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">

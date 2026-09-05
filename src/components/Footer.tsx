@@ -14,6 +14,7 @@ const studioLinks = [
   { label: "How it works", href: "/how-it-works" },
   { label: "The crew", href: "/team" },
   { label: "The standard", href: "/standard" },
+  { label: "Security", href: "/security" },
   { label: "Edpulse", href: "/edpulse" },
   { label: "The Check", href: "/check" },
   { label: "The Match", href: "/match" },
@@ -26,10 +27,10 @@ const studioLinks = [
 const contactLinks = [{ label: "Get in touch", href: "/contact" }];
 
 const legalLinks = [
-  { label: "Terms of Service", href: "/legal/terms-of-service" },
+  { label: "Terms of Service", href: "/legal/terms" },
   { label: "Privacy Policy", href: "/legal/privacy-policy" },
   { label: "Cookie Policy", href: "/legal/cookie-policy" },
-  { label: "Accessibility Statement", href: "/legal/accessibility-statement" },
+  { label: "Accessibility", href: "/legal/accessibility" },
   { label: "Complaints and Dispute Resolution", href: "/legal/complaints" },
 ];
 
@@ -130,6 +131,11 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <span className="font-plex-sans text-[15px] text-rag/80">
+                  Legal & risk: Hamza Khan
+                </span>
+              </li>
             </ul>
           </nav>
         </div>

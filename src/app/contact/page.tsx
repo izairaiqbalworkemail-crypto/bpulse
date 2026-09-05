@@ -55,7 +55,7 @@ export default function ContactPage() {
             />
           </Reveal>
 
-          <div id="intake" className="mt-12">
+          <div id="intake" className="mt-12 scroll-mt-[5.75rem] md:scroll-mt-28">
             <BriefIntake type="contact" source="contact" />
             <div className="mt-8">
               <VettedPay />
@@ -80,6 +80,16 @@ export default function ContactPage() {
               >
                 {brand.contact.email}
               </a>
+            </p>
+            <p className="mt-4 max-w-[48ch] font-newsreader text-[17px] leading-[1.5] text-ink">
+              Legal enquiries route to Hamza Khan, Legal & Risk: {" "}
+              <a
+                href="mailto:hamza@bpulse.dev"
+                className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+              >
+                hamza@bpulse.dev
+              </a>
+              .
             </p>
           </address>
         </div>
