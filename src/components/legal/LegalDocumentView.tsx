@@ -28,7 +28,7 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
   ];
 
   return (
-    <section className="w-full bg-rag text-iron">
+    <section className="ribbon w-full bg-rag text-iron">
       <div className="legal-chrome">
         <PageHero
           kicker={`${LEGAL_FAMILY_LABEL[doc.family]} · ${doc.reference}`}

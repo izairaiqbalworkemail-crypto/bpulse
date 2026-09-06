@@ -15,8 +15,12 @@ const studioLinks = [
   { label: "Admitted", href: "/team" },
   { label: "The standard", href: "/standard" },
   { label: "Security", href: "/security" },
-  { label: "Second Chair", href: "/second-chair" },
+  { label: "The Read", href: "/read" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "The Session", href: "/session" },
   { label: "The Check", href: "/check" },
+  { label: "The First Slice", href: "/first-slice" },
+  { label: "Second Chair", href: "/second-chair" },
   { label: "Assignment", href: "/match" },
   { label: "Direct line", href: "/direct" },
   { label: "The platform", href: "/demo" },
@@ -38,11 +42,11 @@ const legalLinks = [
 const copyrightYear = edition.date.split(" ").pop() ?? "";
 
 const linkClass =
-  "font-plex-sans text-[15px] text-rag/80 transition-colors duration-200 hover:text-rag";
+  "font-plex-sans text-[15px] text-rag/80 transition-colors duration-200 hover:text-signal";
 
 export function Footer() {
   return (
-    <footer className="on-iron relative w-full overflow-hidden bg-iron-2 text-rag">
+    <footer className="ribbon on-iron relative w-full overflow-hidden bg-iron-2 text-rag">
       <Atmosphere kind="ring" opacity={0.28} />
       <div className="relative z-10 grid-container pt-14 pb-10 md:pt-[72px] md:pb-12 lg:pt-[100px] lg:pb-16">
         <Reveal>

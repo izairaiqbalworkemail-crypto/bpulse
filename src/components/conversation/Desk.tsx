@@ -2,15 +2,23 @@
 
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
-import { PressButton, dismissKeyboard } from "@/components/PressButton";
+import { dismissKeyboard } from "@/components/PressButton";
 import {
-  fieldComplete,
-  nextOpen,
-  visibleFields,
-} from "@/lib/conversation/script";
+  Docket,
+  DocketChoices,
+  DocketFile,
+  DocketFiled,
+  DocketNext,
+  DocketReview,
+  DocketWrite,
+} from "@/components/intake/docket/Docket";
 import {
   checkScript,
   educationScript,
+  fieldComplete,
+  nextOpen,
+  readScript,
+  visibleFields,
 } from "@/lib/conversation/script";
 import {
   clearDesk,
@@ -24,25 +32,39 @@ import type { Answers, Field } from "@/lib/conversation/types";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const LABELS: Record<string, string> = {
-  product: "What you're building",
+  product: "The product",
   stage: "Where it is",
-  attemptedProduction: "Production attempted",
+  attemptedProduction: "Production",
   lastBreak: "What broke",
-  shipWound: "When you try to ship",
+  shipWound: "When you ship",
   modelOnData: "On real data",
   duration: "How long",
   whoBuilt: "Who built it",
-  docsLeft: "What's written down",
+  docsLeft: "What's written",
   deadline: "The deadline",
   name: "Name",
   email: "Email",
+  identity: "Where to send it",
   whoSits: "Who sits",
   whatTheyHold: "What they hold",
   whatBreaks: "What breaks",
 };
 
+const ADDRESSEE: Record<string, string> = {
+  check: "Aneeb",
+  read: "Aneeb",
+  "second-chair": "Hassan",
+};
+
+const ADDRESSEE_NOTE: Record<string, string> = {
+  check: "He reads it himself. A person replies within one business day.",
+  read: "He reads it himself. A written reply within one business day.",
+  "second-chair": "Hassan reads it. A person replies within one business day.",
+};
+
 const SCRIPTS = {
   check: checkScript,
+  read: readScript,
   "second-chair": educationScript,
 } as const;
 
@@ -56,6 +78,18 @@ function labelOf(field: Field, value: string) {
   return chip?.label ?? value;
 }
 
+function display(field: Field, answers: Answers) {
+  if (field.kind === "identity") {
+    return [answers.name, answers.email].filter(Boolean).join(" · ");
+  }
+  if (field.kind === "chips" || field.kind === "chips-text") {
+    return [labelOf(field, answers[field.name] ?? ""), answers[`${field.name}Note`]]
+      .filter(Boolean)
+      .join(" · ");
+  }
+  return answers[field.name] ?? "";
+}
+
 export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
   const script = SCRIPTS[scriptId];
   const router = useRouter();
@@ -67,6 +101,7 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
   const answers = stored.answers;
   const [draft, setDraft] = useState("");
   const [note, setNote] = useState("");
+  const [heldChip, setHeldChip] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<string | null>(null);
@@ -80,6 +115,8 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
   const visible = useMemo(() => visibleFields(script, answers), [script, answers]);
   const current = nextOpen(script, answers);
   const reviewing = !current;
+  const filled = visible.filter((field) => fieldComplete(field, answers));
+  const index = reviewing ? visible.length : filled.length + 1;
 
   function write(partial: Answers) {
     saveDesk(script.id, {
@@ -88,6 +125,7 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
     });
     setDraft("");
     setNote("");
+    setHeldChip("");
     setError(null);
   }
 
@@ -118,23 +156,34 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
     write({ name, email });
   }
 
-  function back() {
-    const filled = visible.filter((field) => fieldComplete(field, answers));
-    const last = filled.at(-1);
-    if (!last) return;
+  function rewind(fromName: string) {
+    const at = filled.findIndex((field) => field.name === fromName);
+    if (at < 0) return;
     dismissKeyboard();
+    const drop = filled.slice(at);
     const next = { ...answers };
-    delete next[last.name];
-    if (last.kind === "chips-text") delete next[`${last.name}Note`];
-    if (last.kind === "identity") {
-      delete next.name;
-      delete next.email;
+    for (const field of drop) {
+      delete next[field.name];
+      if (field.kind === "chips-text") delete next[`${field.name}Note`];
+      if (field.kind === "identity") {
+        delete next.name;
+        delete next.email;
+      }
     }
     saveDesk(script.id, {
       answers: next,
-      seen: stored.seen.filter((name) => name !== last.name),
+      seen: stored.seen.filter((name) => !drop.some((field) => field.name === name)),
     });
+    setDraft("");
+    setNote("");
+    setHeldChip("");
     setError(null);
+  }
+
+  function back() {
+    const last = filled.at(-1);
+    if (!last) return;
+    rewind(last.name);
   }
 
   async function submit() {
@@ -192,232 +241,147 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
 
   if (done) {
     return (
-      <div className="card-iron px-6 py-10 md:px-8">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">
-          Note filed
-        </p>
-        <p className="mt-3 font-newsreader text-[32px] leading-[1.1] text-rag">
-          Hassan has the note.
-        </p>
-        <p className="mt-4 max-w-[36ch] font-newsreader text-[18px] leading-[1.4] text-rag/75">
-          A person replies from a real inbox, within one business day.
-        </p>
-      </div>
+      <DocketFiled
+        kicker="Docket filed"
+        heading="Hassan has the note."
+        body="A person replies from a real inbox, within one business day."
+      />
     );
   }
 
+  const who = ADDRESSEE[script.id] ?? "Aneeb";
+  const ask = reviewing
+    ? `Send it to ${who}.`
+    : (current?.ask ?? "Write what is stuck.");
+  const writing =
+    current &&
+    current.kind !== "chips" &&
+    current.kind !== "chips-text";
+
   return (
-    <div className="card">
-      <header className="bg-iron px-5 py-5 text-rag md:px-7">
-        <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/50">
-          Structured intake · not a chatbot
-        </p>
-        <p className="mt-2 max-w-[48ch] font-newsreader text-[17px] leading-[1.4] text-rag/85">
-          {script.banner}
-        </p>
-      </header>
-
-      <ol className="flex flex-col gap-5 px-5 py-6 md:px-7">
-        {visible
-          .filter((field) => fieldComplete(field, answers) && current?.name !== field.name)
-          .map((field) => (
-            <li key={field.name}>
-              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                {LABELS[field.name] ?? field.ask}
-              </p>
-              <p className="mt-1 font-newsreader text-[17px] leading-[1.4] text-iron">
-                {field.kind === "identity"
-                  ? `${answers.name} · ${answers.email}`
-                  : field.kind === "chips" || field.kind === "chips-text"
-                    ? [labelOf(field, answers[field.name] ?? ""), answers[`${field.name}Note`]]
-                        .filter(Boolean)
-                        .join(" — ")
-                    : answers[field.name]}
-              </p>
-            </li>
-          ))}
-      </ol>
-
-      <div className="sticky bottom-0 z-20 border-t border-iron/10 bg-rag-card px-5 py-5 md:static md:px-7">
-        {error ? (
-          <p role="alert" className="mb-3 font-newsreader text-[15px] text-iron">
-            {error}
-          </p>
-        ) : null}
-
-        {reviewing ? (
-          <div>
-            <p className="font-newsreader text-[20px] leading-[1.3] text-iron">
-              That&apos;s the brief. Check it, then send it.
-            </p>
-            <dl className="mt-4 flex flex-col gap-3">
-              {visible.map((field) => (
-                <div key={field.name}>
-                  <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                    {LABELS[field.name] ?? field.ask}
-                  </dt>
-                  <dd className="mt-0.5 font-newsreader text-[16px] leading-[1.4] text-iron">
-                    {field.kind === "identity"
-                      ? `${answers.name} · ${answers.email}`
-                      : field.kind === "chips" || field.kind === "chips-text"
-                        ? [labelOf(field, answers[field.name] ?? ""), answers[`${field.name}Note`]]
-                            .filter(Boolean)
-                            .join(" — ")
-                        : answers[field.name]}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <PressButton
-                disabled={busy}
-                onPress={() => {
-                  if (busy) return;
-                  dismissKeyboard();
-                  void submit();
-                }}
-                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40"
-              >
-                {busy
-                  ? "Filing…"
-                  : ending === "read"
-                    ? "Write the read"
-                    : "Put it on Hassan's desk"}
-              </PressButton>
-              <PressButton
-                onPress={back}
-                className="min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
-              >
-                Back
-              </PressButton>
-            </div>
-          </div>
-        ) : current?.kind === "chips" || current?.kind === "chips-text" ? (
-          <div>
-            <p className="font-newsreader text-[20px] leading-[1.3] text-iron">
-              {current.ask}
-            </p>
-            <ul className="mt-4 flex flex-col gap-2">
-              {current.chips?.map((chip) => (
-                <li key={chip.id}>
-                  <PressButton
-                    onPress={() => {
-                      dismissKeyboard();
-                      sendField(current, chip.id);
-                    }}
-                    className="min-h-11 w-full touch-manipulation rounded-[14px] bg-rag px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10"
-                  >
-                    {chip.label}
-                  </PressButton>
-                </li>
-              ))}
-            </ul>
-            {current.kind === "chips-text" ? (
-              <textarea
-                value={note}
-                onChange={(event) => setNote(event.target.value)}
-                placeholder={current.extraPlaceholder}
-                rows={2}
-                className="mt-3 w-full resize-none rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[16px] text-iron outline-none ring-1 ring-iron/15"
-              />
-            ) : null}
-            <PressButton
-              onPress={back}
-              className="mt-4 min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
+    <>
+      <Docket
+        to={script.id === "read" ? undefined : who}
+        kicker={script.id === "read" ? `To ${who}` : undefined}
+        note={script.id === "read" ? undefined : ADDRESSEE_NOTE[script.id]}
+        step={index}
+        of={visible.length}
+        ask={ask}
+        hint={writing ? "Enter to continue" : undefined}
+        error={error}
+        prior={
+          reviewing
+            ? undefined
+            : filled.map((field) => ({
+                label: LABELS[field.name] ?? field.ask,
+                value: display(field, answers),
+                onEdit: () => rewind(field.name),
+              }))
+        }
+        onBack={back}
+        canBack={filled.length > 0}
+        actions={
+          reviewing ? (
+            <DocketFile
+              disabled={busy}
+              onPress={() => {
+                if (busy) return;
+                dismissKeyboard();
+                void submit();
+              }}
             >
-              Back
-            </PressButton>
+              {busy
+                ? "Sending…"
+                : ending === "read"
+                  ? `Send it to ${who}`
+                  : `File it for ${who}`}
+            </DocketFile>
+          ) : current?.kind === "chips" ? null : current?.kind === "chips-text" ? (
+            <DocketNext
+              disabled={!heldChip}
+              onPress={() => sendField(current, heldChip)}
+            >
+              Continue
+            </DocketNext>
+          ) : current?.kind === "identity" ? (
+            <DocketNext onPress={sendIdentity}>Continue</DocketNext>
+          ) : current ? (
+            <DocketNext
+              disabled={!draft.trim()}
+              onPress={() => sendField(current, draft)}
+            >
+              Continue
+            </DocketNext>
+          ) : null
+        }
+      >
+        {reviewing ? (
+          <DocketReview
+            rows={visible.map((field) => ({
+              label: LABELS[field.name] ?? field.ask,
+              value: display(field, answers),
+            }))}
+          />
+        ) : current?.kind === "chips" ? (
+          <DocketChoices
+            options={current.chips ?? []}
+            onPick={(id) => {
+              dismissKeyboard();
+              sendField(current, id);
+            }}
+          />
+        ) : current?.kind === "chips-text" ? (
+          <div>
+            <DocketChoices
+              options={current.chips ?? []}
+              selected={heldChip}
+              onPick={setHeldChip}
+            />
+            <div className="mt-5">
+              <DocketWrite
+                value={note}
+                onChange={setNote}
+                onSubmit={() => {
+                  if (heldChip) sendField(current, heldChip);
+                }}
+                placeholder={current.extraPlaceholder}
+                type="textarea"
+                rows={3}
+              />
+            </div>
           </div>
         ) : current?.kind === "identity" ? (
-          <div>
-            <p className="font-newsreader text-[20px] leading-[1.3] text-iron">
-              {current.ask}
-            </p>
-            <label className="mt-4 block">
-              <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                Name
-              </span>
-              <input
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                autoComplete="name"
-                enterKeyHint="next"
-                className="mt-1 w-full rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron outline-none ring-1 ring-iron/15"
-              />
-            </label>
-            <label className="mt-3 block">
-              <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                Email
-              </span>
-              <input
-                value={note}
-                onChange={(event) => setNote(event.target.value)}
-                type="email"
-                autoComplete="email"
-                enterKeyHint="send"
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    sendIdentity();
-                  }
-                }}
-                className="mt-1 w-full rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron outline-none ring-1 ring-iron/15"
-              />
-            </label>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              <PressButton
-                onPress={sendIdentity}
-                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag"
-              >
-                Send
-              </PressButton>
-              <PressButton
-                onPress={back}
-                className="min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
-              >
-                Back
-              </PressButton>
-            </div>
+          <div className="docket-split">
+            <DocketWrite
+              label="Name"
+              name="name"
+              value={draft}
+              onChange={setDraft}
+              onSubmit={() => document.getElementById("docket-email")?.focus()}
+              autoComplete="name"
+            />
+            <DocketWrite
+              label="Email"
+              name="email"
+              value={note}
+              onChange={setNote}
+              onSubmit={sendIdentity}
+              type="email"
+              autoComplete="email"
+              autoFocus={false}
+            />
           </div>
         ) : current ? (
-          <div>
-            <p className="font-newsreader text-[20px] leading-[1.3] text-iron">
-              {current.ask}
-            </p>
-            <textarea
-              value={draft}
-              onChange={(event) => setDraft(event.target.value)}
-              placeholder={current.placeholder}
-              enterKeyHint="send"
-              rows={4}
-              onKeyDown={(event) => {
-                if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
-                  event.preventDefault();
-                  sendField(current, draft);
-                }
-              }}
-              className="mt-4 w-full resize-none rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] leading-[1.4] text-iron outline-none ring-1 ring-iron/15"
-            />
-            <div className="mt-3 flex flex-wrap items-center gap-3">
-              <PressButton
-                onPress={() => {
-                  sendField(current, draft);
-                }}
-                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag"
-              >
-                Send
-              </PressButton>
-              <PressButton
-                onPress={back}
-                className="min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
-              >
-                Back
-              </PressButton>
-            </div>
-          </div>
+          <DocketWrite
+            value={draft}
+            onChange={setDraft}
+            onSubmit={() => sendField(current, draft)}
+            placeholder={current.placeholder}
+            type="textarea"
+            rows={current.name === "product" || current.name === "shipWound" ? 4 : 3}
+          />
         ) : null}
-      </div>
-
+      </Docket>
       <label className="sr-only" htmlFor={`${script.id}-website`}>
         Company site
       </label>
@@ -430,6 +394,6 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
         autoComplete="off"
         className="hidden"
       />
-    </div>
+    </>
   );
 }

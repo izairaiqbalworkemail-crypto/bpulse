@@ -59,7 +59,8 @@ export async function POST(request: Request) {
     typeof body.requestId === "string" && body.requestId
       ? body.requestId
       : token;
-  const read = generateRead(answers, token);
+  const source = body.source === "read" ? "read" : "check-intake";
+  const read = generateRead(answers, token, undefined, source);
   const readUrl = `${brand.url}/read/${token}`;
 
   try {
@@ -73,8 +74,8 @@ export async function POST(request: Request) {
       await getDb()
         .insert(submissions)
         .values({
-          type: "check-intake",
-          source: "check-intake",
+          type: source,
+          source,
           payload: { ...answers, readToken: token },
           email,
           requestId,
@@ -83,8 +84,8 @@ export async function POST(request: Request) {
     } catch {
       await saveLocalSubmission({
         id: requestId,
-        type: "check-intake",
-        source: "check-intake",
+        type: source,
+        source,
         email,
         payload: { ...answers, readToken: token },
         requestId,
@@ -93,8 +94,8 @@ export async function POST(request: Request) {
   } else {
     await saveLocalSubmission({
       id: requestId,
-      type: "check-intake",
-      source: "check-intake",
+      type: source,
+      source,
       email,
       payload: { ...answers, readToken: token },
       requestId,
@@ -109,6 +110,7 @@ export async function POST(request: Request) {
         readUrl,
         title: read.title,
         payload: { ...answers, readUrl },
+        source,
       });
     } catch (error) {
       return fail(
@@ -124,6 +126,7 @@ export async function POST(request: Request) {
         readUrl,
         title: read.title,
         payload: { ...answers, readUrl },
+        source,
       });
     } catch (error) {
       console.error("[read] email failed; the read is still filed", error);

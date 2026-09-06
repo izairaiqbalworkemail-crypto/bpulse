@@ -1,12 +1,38 @@
+import { ladderPrices, money } from "@/content/ladder";
+
 export const closeStages = [
   {
-    id: "discovery",
-    label: "Discovery",
-    demoHref: "/demo",
+    id: "read",
+    label: "The Read",
+    href: "/read",
+    hrefLabel: "Start the Read",
     happens:
-      "We read what exists — the product, the repo if you have one, the thing that is stuck. You see the same questions we use on a Check.",
-    receive: "A written read of the arrival state. Not a pitch.",
-    sign: "Nothing yet. Discovery is how we decide whether a Close is honest.",
+      "You describe what is stuck. A senior engineer writes back: what we think is happening, what we would look at, and what we could not tell from your description.",
+    receive: "A written read, delivered at a private URL, within one business day.",
+    sign: "Nothing. The Read is free. Nothing on it asks for a meeting.",
+    see: "The document itself, the same shape as a condition report.",
+  },
+  {
+    id: "session",
+    label: "The Session",
+    href: "/session",
+    hrefLabel: "Book the Session",
+    happens:
+      "Ninety minutes with a senior engineer, on your actual problem. Not a sales call.",
+    receive: "A written scope and a range.",
+    sign: "Nothing yet. The Session is credited against anything you buy in 30 days.",
+    see: "The written scope you leave with.",
+  },
+  {
+    id: "discovery",
+    label: "The Check",
+    demoHref: "/demo",
+    href: "/check",
+    hrefLabel: "How the five days work",
+    happens:
+      "Five days inside your repository. A written verdict: keep, repair or rebuild, with what each would take.",
+    receive: "The written report, a readout, and a fixed quote if you want the work.",
+    sign: "Payment for the Check. Credited in full against a build in 30 days.",
     see: "Overview in the portal: current stage, next milestone, days on the clock.",
   },
   {
@@ -24,7 +50,7 @@ export const closeStages = [
     label: "Scope locked",
     demoHref: "/demo/scope",
     happens:
-      "Scope is versioned and signed before any code. A change is a change order — priced and re-signed. Nothing is absorbed silently.",
+      "Scope is versioned and signed before any code. A change is a change order, priced and re-signed. Nothing is absorbed silently.",
     receive: "Scope vN, the diff from the last version, and every change order with its price.",
     sign: "The locked scope, and each change order after that.",
     see: "The scope lock and the diff. This is why a client accepts a written number.",
@@ -44,7 +70,7 @@ export const closeStages = [
     label: "Handover",
     demoHref: "/demo/handover",
     happens:
-      "Runbook, credentials transfer, training. Then we revoke what we held. No hostage codebases — written down.",
+      "Runbook, credentials transfer, training. Then we revoke what we held. No hostage codebases. Written down.",
     receive: "The runbook, the transfer log, the access revocation log, and the training.",
     sign: "Handover acceptance. Training is bundled into every Close.",
     see: "The revocation log with dates. Empty dates mean handover has not happened yet.",
@@ -54,7 +80,7 @@ export const closeStages = [
     label: "Standing",
     demoHref: "/demo",
     happens:
-      "Optional post-launch support, priced in writing. You can run it without us. Standing is if you want us, not because you have to.",
+      `Optional post-launch support, priced from ${money(ladderPrices.standingMin)} a month. You can run it without us. Standing is if you want us, not because you have to.`,
     receive: "A written standing agreement, or nothing. Both are fine.",
     sign: "Only if you take Standing.",
     see: "The stage tracker moves to Standing. The revocation log stays.",
@@ -105,7 +131,7 @@ export const crewGates = [
 ] as const;
 
 export const standingReview =
-  "Quarterly standing review against real delivered work — not a self-assessment, not a pulse survey.";
+  "Quarterly standing review against real delivered work, not a self-assessment, not a pulse survey.";
 
 export const standingConsequence =
   "If standing falls below the bar: paused placement and mentored work. Not dismissal. The person stays admitted until they hold again, or they leave the standard in writing.";

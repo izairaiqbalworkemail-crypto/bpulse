@@ -1,36 +1,25 @@
 "use client";
 
-import { useActionState, useEffect, useId, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { runMatchAction } from "@/app/match/actions";
 import {
   emptyMatchState,
   type MatchActionState,
 } from "@/lib/match/action-state";
-import { getCatalogue } from "@/content/catalogue";
 import { type SignalId } from "@/content/signals";
-import { PressButton } from "@/components/PressButton";
+import {
+  Docket,
+  DocketFile,
+  DocketWrite,
+} from "@/components/intake/docket/Docket";
 import { MatchResult } from "@/components/match/MatchResult";
+import { emptyDesk, loadDesk, saveDesk } from "@/lib/conversation/persist";
 import type { MatchOutcome } from "@/lib/match/types";
 
 const EXAMPLE =
   "We built a payroll tool over eight months. It works on staging. We've never deployed to production and nobody left knows how the auth was wired.";
 
-const EXAMPLES = [
-  {
-    label: "Staging only",
-    text: EXAMPLE,
-  },
-  {
-    label: "Auth nobody owns",
-    text: "The product is live for a small team. SSO was wired by someone who left. Every new customer waits on a manual invite and we cannot see why tokens expire.",
-  },
-  {
-    label: "Model in production",
-    text: "We shipped a RAG assistant into the app. It hallucinates on policy questions. We have no evals and inference is too slow for the support queue.",
-  },
-] as const;
-
-const recordCount = getCatalogue().length;
+const MATCH_ID = "match";
 
 function logOutcome(
   eventId: string | null,
@@ -47,8 +36,8 @@ function logOutcome(
 export function MatchDesk({
   compact = false,
 }: Readonly<{ compact?: boolean }>) {
-  const labelId = useId();
   const resultRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const [state, action, pending] = useActionState(
     runMatchAction,
     emptyMatchState,
@@ -63,6 +52,19 @@ export function MatchDesk({
       ? crypto.randomUUID()
       : `session-${Date.now()}`,
   );
+
+  useEffect(() => {
+    const saved = loadDesk(MATCH_ID).answers.description;
+    if (saved) setDraft(saved);
+  }, []);
+
+  function remember(value: string) {
+    setDraft(value);
+    saveDesk(MATCH_ID, {
+      answers: { description: value },
+      seen: emptyDesk().seen,
+    });
+  }
 
   const current = rerun ?? state;
   const showResults = current.outcome != null && view === "result" && !pending;
@@ -118,16 +120,16 @@ export function MatchDesk({
 
   function again() {
     logOutcome(current.eventId, "abandoned");
-    setDraft(current.description || draft);
+    remember(current.description || draft);
     setView("form");
     setRemoved([]);
     setRerun(null);
   }
 
   return (
-    <div className={compact ? "" : "mx-auto max-w-[40rem]"}>
+    <div className={compact ? "" : "max-w-[36rem]"}>
       {showResults && current.outcome ? (
-        <div ref={resultRef} className="mt-2">
+        <div ref={resultRef}>
           <MatchResult
             key={current.eventId ?? "run"}
             outcome={current.outcome}
@@ -140,68 +142,49 @@ export function MatchDesk({
           <button
             type="button"
             onClick={again}
-            className="mt-10 font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+            className="mt-10 font-plex-sans text-[14px] text-ink/55 underline decoration-iron/20 underline-offset-4 hover:text-iron"
           >
             Describe it again
           </button>
         </div>
       ) : (
         <form
+          ref={formRef}
           action={action}
           onSubmit={() => {
             setView("result");
             setRemoved([]);
             setRerun(null);
+            saveDesk(MATCH_ID, {
+              answers: { description: draft },
+              seen: [],
+            });
           }}
-          className="mt-2"
         >
           <input type="hidden" name="session" value={session} />
-          <label htmlFor={labelId} className="kicker flex items-center gap-2">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal pulse-dot" />
-            Describe the stuck part
-          </label>
-          <textarea
-            id={labelId}
-            name="description"
-            value={draft}
-            onChange={(event) => setDraft(event.target.value)}
-            placeholder={EXAMPLE}
-            rows={compact ? 6 : 8}
-            maxLength={10_000}
-            autoComplete="off"
-            spellCheck
-            className="input mt-3 resize-y"
-          />
-          <p className="mt-2 font-plex-mono text-[11px] text-ink/70">
-            Specific is what makes the read good. This never goes in the URL.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {EXAMPLES.map((item) => (
-              <PressButton
-                key={item.label}
-                onPress={() => setDraft(item.text)}
-                className="chip chip-line min-h-9 touch-manipulation font-plex-sans text-[13px] hover:bg-rag hover:text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
-              >
-                Try: {item.label}
-              </PressButton>
-            ))}
-          </div>
-          {current.error ? (
-            <p role="alert" className="mt-3 font-newsreader text-[15px] text-iron">
-              {current.error}
-            </p>
-          ) : null}
-          <button
-            type="submit"
-            disabled={pending}
-            className="btn btn-signal mt-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+          <Docket
+            kicker="The match"
+            step={1}
+            of={1}
+            ask="What will not ship?"
+            error={current.error}
+            actions={
+              <DocketFile submit disabled={pending}>
+                {pending ? "Reading…" : "Read it"}
+              </DocketFile>
+            }
           >
-            {pending ? "Reading the record…" : "Read it against the record"}
-          </button>
-          <p className="mt-4 font-plex-mono text-[11px] text-ink/65">
-            Matched against {recordCount} real engagements. Not a model. Not a
-            score.
-          </p>
+            <DocketWrite
+              name="description"
+              value={draft}
+              onChange={remember}
+              onSubmit={() => formRef.current?.requestSubmit()}
+              placeholder={EXAMPLE}
+              type="textarea"
+              rows={compact ? 3 : 3}
+              maxLength={10_000}
+            />
+          </Docket>
         </form>
       )}
     </div>

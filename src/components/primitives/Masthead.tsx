@@ -150,7 +150,7 @@ export function Masthead() {
                       key={item.href}
                       href={item.href}
                       className={`relative rounded-full px-5 py-2.5 font-plex-sans text-[14px] font-medium transition-colors duration-150 ${
-                        on ? "text-rag" : "text-rag/75 hover:text-rag"
+                        on ? "text-rag" : "text-rag/75 hover:text-signal"
                       }`}
                     >
                       {item.label}
@@ -244,7 +244,7 @@ export function Masthead() {
                 key={item.href}
                 href={item.href}
                 onClick={closeMenu}
-                className="touch-manipulation border-b border-rag/12 py-6"
+                className="touch-manipulation border-b border-rag/12 py-6 hover:text-signal"
               >
                 <span className="font-newsreader text-[32px] leading-[1.1] text-rag">
                   {item.label}

@@ -2,17 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Count, Slide } from "@/components/landing/Reveal";
+import { Slide } from "@/components/landing/Reveal";
+import { PricingLadder } from "@/components/offer/PricingLadder";
 import { PulseCheckIntake } from "@/components/intake/PulseCheckIntake";
 import { SealedStill } from "@/components/SealedStill";
 import { VettedPay } from "@/components/VettedPay";
 import { checkRunner } from "@/content/check";
 import { termsCredit } from "@/content/home";
-import { offer } from "@/content/offer";
 import { getSpecialist } from "@/content/specialists";
 
 /**
- * 07 · THE TERMS — gold field, type, one still. No nested cards.
+ * 07 · THE TERMS — gold field, the published ladder, one still.
  */
 export function Terms() {
   const runner = getSpecialist(checkRunner.id);
@@ -21,7 +21,7 @@ export function Terms() {
     <section
       id="terms"
       aria-labelledby="terms-heading"
-      className="relative scroll-mt-[5.75rem] bg-signal text-iron md:scroll-mt-28"
+      className="ribbon relative scroll-mt-[5.75rem] bg-signal text-iron md:scroll-mt-28"
     >
       <div className="stage-container py-24 md:py-32">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-iron/70">
@@ -34,48 +34,8 @@ export function Terms() {
           Published. Before a call.
         </h2>
 
-        <div className="mt-16 grid items-start gap-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
-          <div>
-            <article className="border-t border-iron/15 pt-8">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-iron/70">
-                {offer.check.name}
-              </p>
-              <p className="mt-3 font-newsreader type-display-xl text-[64px] leading-none md:text-[80px]">
-                <Count prefix="$" to={offer.check.price} />
-              </p>
-              <p className="mt-3 font-plex-mono text-[13px] uppercase tracking-[0.06em] text-iron/70">
-                {offer.check.duration}
-              </p>
-              <p className="mt-4 max-w-[38ch] font-newsreader text-[18px] leading-[1.4] text-iron/80">
-                Keep, repair or rebuild — in writing. Credited in full if we
-                build within 30 days.
-              </p>
-            </article>
-
-            <article className="mt-10 border-t border-iron/15 pt-8">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-iron/70">
-                {offer.close.name}
-              </p>
-              <p className="mt-3 font-newsreader type-display-m text-[36px] leading-[1.05] md:text-[40px]">
-                {offer.close.priceRange}
-              </p>
-              <p className="mt-4 max-w-[38ch] font-newsreader text-[17px] leading-[1.4] text-iron/80">
-                {offer.close.description}
-              </p>
-            </article>
-
-            <article className="mt-10 border-t border-iron/15 pt-8">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-iron/70">
-                {offer.standing.name}
-              </p>
-              <p className="mt-3 font-newsreader type-display-m text-[36px] leading-[1.05] md:text-[40px]">
-                {offer.standing.priceRange}
-              </p>
-              <p className="mt-4 max-w-[38ch] font-newsreader text-[17px] leading-[1.4] text-iron/80">
-                After launch, until you don&apos;t need us.
-              </p>
-            </article>
-          </div>
+        <div className="mt-16 grid items-start gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+          <PricingLadder onGold />
 
           <Slide from="right" delay={0.08}>
             <SealedStill caption="Written. Sealed. You leave with the keys." />
@@ -108,10 +68,13 @@ export function Terms() {
           {termsCredit}
         </p>
 
-        <p className="mt-8">
+        <p className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          <Link href="/read" className="btn btn-iron min-h-12 px-6 text-[15px]">
+            Start with the Read
+          </Link>
           <Link
             href="/check"
-            className="btn btn-iron min-h-12 px-6 text-[15px]"
+            className="font-plex-sans text-[15px] underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
           >
             How the five days work
           </Link>
@@ -123,7 +86,7 @@ export function Terms() {
 
         <div
           id="intake"
-          className="mt-12 scroll-mt-[5.75rem] border-t border-iron/15 bg-rag p-6 text-iron md:scroll-mt-28 md:p-10"
+          className="mt-12 scroll-mt-[5.75rem] md:scroll-mt-28"
         >
           <PulseCheckIntake source="home" />
         </div>

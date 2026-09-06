@@ -44,7 +44,7 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
-      <body className="bg-rag text-ink">
+      <body className="bg-iron-2 text-ink">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         <SiteChrome>{children}</SiteChrome>

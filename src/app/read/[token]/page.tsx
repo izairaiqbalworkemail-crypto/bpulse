@@ -16,7 +16,7 @@ export async function generateMetadata({
   const { token } = await params;
   const read = await getRead(token);
   return {
-    title: read ? `Preliminary read — ${read.title}` : "Preliminary read",
+    title: read ? `The Read. ${read.title}` : "The Read",
     description:
       "A written read of what you described. Built from your words. Not a diagnosis of code we have not seen.",
     robots: { index: false, follow: false, nocache: true },
@@ -35,7 +35,7 @@ export default async function ReadPage({ params }: PageProps) {
     <article className="read-doc w-full bg-rag pb-24">
       <div className="grid-container py-12 md:py-16">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-          Preliminary read · prepared {preparedLabel(read.preparedAt)}
+          The Read · prepared {preparedLabel(read.preparedAt)}
         </p>
         <h1 className="mt-3 font-newsreader type-display text-[40px] leading-[1.1] text-iron md:text-[56px]">
           {read.title}
@@ -74,7 +74,7 @@ export default async function ReadPage({ params }: PageProps) {
 
         <section className="mt-12">
           <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-            What we&apos;d look at first
+            What we would look at first
           </h2>
           <ol className="mt-4 flex max-w-[58ch] flex-col gap-3">
             {read.lookFirst.map((item, index) => (
@@ -93,7 +93,7 @@ export default async function ReadPage({ params }: PageProps) {
 
         <section className="mt-14 border-t-2 border-iron pt-10">
           <h2 className="font-newsreader text-[28px] leading-[1.15] text-iron">
-            What this isn&apos;t
+            What this is not
           </h2>
           <p className="mt-4 max-w-[58ch] font-newsreader text-[20px] leading-[1.45] text-iron">
             {read.limits}
@@ -107,6 +107,12 @@ export default async function ReadPage({ params }: PageProps) {
               className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
             >
               Write {first}
+            </Link>
+            <Link
+              href="/session"
+              className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
+            >
+              The Session
             </Link>
             <Link
               href="/check"

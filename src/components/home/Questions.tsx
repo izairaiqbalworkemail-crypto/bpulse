@@ -35,7 +35,7 @@ export function Questions() {
           href="/check"
           className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
         >
-          The Check is $1,500. Five days.
+          The Read is free. The Check is $1,500.
         </Link>
       </p>
     </Episode>

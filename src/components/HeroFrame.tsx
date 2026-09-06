@@ -18,7 +18,7 @@ export function HeroFrame({ children, tall = false }: HeroFrameProps) {
     <section
       id={tall ? "hero" : undefined}
       data-surface="paper"
-      className="paper-ground relative"
+      className="ribbon paper-ground relative"
     >
       <div
         className={
@@ -33,8 +33,8 @@ export function HeroFrame({ children, tall = false }: HeroFrameProps) {
               ? "hero-plate on-iron relative flex min-h-[calc(100svh-1.25rem)] flex-col md:min-h-[calc(100svh-2rem)]"
               : "hero-plate on-iron relative flex min-h-[min(68svh,38rem)] flex-col"
           }
-          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={reduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={
             reduceMotion
               ? { duration: 0 }

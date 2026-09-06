@@ -56,7 +56,7 @@ describe("preliminary read", () => {
 
   it("carries what this isn't at full weight", () => {
     const read = generateRead(PAYROLL, "00000000-0000-4000-8000-000000000001");
-    expect(read.limits).toMatch(/haven't seen your code/i);
+    expect(read.limits).toMatch(/have not seen your code/i);
     expect(read.checkLine).toMatch(/\$1,500/);
   });
 

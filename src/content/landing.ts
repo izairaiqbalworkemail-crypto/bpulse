@@ -97,6 +97,14 @@ export const fitSymptoms = [
 
 export const homePath = [
   {
+    name: offer.read.name,
+    meter: "Free · one business day",
+    body: offer.read.description,
+    href: "/read",
+    label: "Start the Read",
+    image: "/team/aneeb.jpg",
+  },
+  {
     name: offer.check.name,
     meter: `$${offer.check.price.toLocaleString("en-US")} · ${offer.check.duration}`,
     body: offer.check.description,
@@ -105,20 +113,12 @@ export const homePath = [
     image: "/team/aneeb.jpg",
   },
   {
-    name: offer.close.name,
-    meter: `${offer.close.priceRange} · locked scope`,
-    body: offer.close.description,
-    href: "/how-it-works",
-    label: "The six stages",
+    name: offer.slice.name,
+    meter: `$${offer.slice.price.toLocaleString("en-US")} · two weeks`,
+    body: offer.slice.description,
+    href: "/first-slice",
+    label: "The First Slice",
     image: "/project-shots/project-sully.webp",
-  },
-  {
-    name: offer.standing.name,
-    meter: `${offer.standing.priceRange} · optional`,
-    body: "You can run it without us. Standing is if you want us, not because you have to.",
-    href: "/how-it-works",
-    label: "After handover",
-    image: "/team/hassan.jpg",
   },
 ] as const;
 

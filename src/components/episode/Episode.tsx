@@ -5,7 +5,7 @@ export type EpisodeTone = "paper" | "milk" | "cocoa" | "signal";
 
 const surface: Record<EpisodeTone, string> = {
   paper: "bg-rag text-iron",
-  milk: "border-y border-iron/8 bg-rag-card text-iron",
+  milk: "bg-rag text-iron",
   cocoa: "on-iron bg-iron-2 text-rag",
   signal: "bg-signal text-iron",
 };
@@ -38,27 +38,38 @@ const ruleTone: Record<EpisodeTone, string> = {
   signal: "text-iron",
 };
 
+type EpisodeSize = "short" | "default" | "tall";
+
 type EpisodeProps = {
   labelledBy?: string;
   children: ReactNode;
   tone?: EpisodeTone;
+  size?: EpisodeSize;
+};
+
+const roomPad: Record<EpisodeSize, string> = {
+  short: "py-20 md:py-24",
+  default: "py-28 md:py-36",
+  tall: "py-32 md:py-44",
 };
 
 /**
- * One room. Flat colour. Same stage, same rhythm.
+ * One room on the ribbon.
+ * First cocoa, second signal, third paper. Black stays behind.
  */
 export function Episode({
   labelledBy,
   children,
   tone = "paper",
+  size = "default",
 }: Readonly<EpisodeProps>) {
   return (
     <section
       id={labelledBy}
       aria-labelledby={labelledBy ? `${labelledBy}-heading` : undefined}
-      className={`relative scroll-mt-[5.75rem] md:scroll-mt-28 ${surface[tone]}`}
+      className={`ribbon relative scroll-mt-[5.75rem] md:scroll-mt-28 ${surface[tone]}`}
     >
-      <div className="relative stage-container py-24 md:py-32">{children}</div>
+      <div className={`relative stage-container ${roomPad[size]}`}>{children}</div>
     </section>
   );
 }

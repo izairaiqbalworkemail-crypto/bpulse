@@ -34,21 +34,18 @@ export function Slide({
   children,
   delay = 0,
   className,
-  from = "left",
 }: Readonly<MotionBox & { from?: "left" | "right" }>) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, view);
-  const x = from === "left" ? -40 : 40;
-
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0, x }}
-      animate={inView || reduce ? { opacity: 1, x: 0 } : { opacity: 0, x }}
+      initial={reduce ? false : { opacity: 0 }}
+      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
       transition={
-        reduce ? { duration: 0 } : { duration: landDuration, ease: landEase, delay }
+        reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
       }
     >
       {children}
@@ -65,12 +62,10 @@ export function Reveal({ children, delay = 0, className }: Readonly<MotionBox>) 
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 20 }}
-      animate={
-        inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-      }
+      initial={reduce ? false : { opacity: 0 }}
+      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
       transition={
-        reduce ? { duration: 0 } : { duration: landDuration, ease: landEase, delay }
+        reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
       }
     >
       {children}
@@ -126,11 +121,10 @@ export function Item({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0 },
         show: {
           opacity: 1,
-          y: 0,
-          transition: { duration: landDuration, ease: landEase },
+          transition: { duration: 0.3, ease: landEase },
         },
       }}
     >
@@ -146,19 +140,17 @@ export function Rise({ children, delay = 0, className }: Readonly<MotionBox>) {
   const inView = useInView(ref, { once: true, margin: "-10% 0px" });
 
   return (
-    <div ref={ref} className={className}>
-      <div className="overflow-hidden">
-        <motion.div
-          initial={reduce ? false : { y: "112%" }}
-          animate={inView || reduce ? { y: "0%" } : { y: "112%" }}
-          transition={
-            reduce ? { duration: 0 } : { duration: landDuration, ease: landEase, delay }
-          }
-        >
-          {children}
-        </motion.div>
-      </div>
-    </div>
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={reduce ? false : { opacity: 0 }}
+      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
+      transition={
+        reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
+      }
+    >
+      {children}
+    </motion.div>
   );
 }
 
@@ -172,16 +164,8 @@ export function Wipe({ children, delay = 0, className }: Readonly<MotionBox>) {
     <motion.div
       ref={ref}
       className={className}
-      initial={
-        reduce
-          ? false
-          : { clipPath: "inset(10% 8% 10% 8% round 32px)", scale: 1.06 }
-      }
-      animate={
-        inView || reduce
-          ? { clipPath: "inset(0% 0% 0% 0% round 32px)", scale: 1 }
-          : { clipPath: "inset(10% 8% 10% 8% round 32px)", scale: 1.06 }
-      }
+      initial={reduce ? false : { opacity: 0 }}
+      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
       transition={
         reduce ? { duration: 0 } : { duration: 0.85, ease: landEase, delay }
       }
@@ -196,29 +180,12 @@ export function Lift({
   className,
 }: Readonly<{ children: ReactNode; className?: string }>) {
   const reduce = useReducedMotion();
-  const x = useSpring(0, landSpring);
-  const y = useSpring(0, landSpring);
-
-  function onMove(event: PointerEvent<HTMLDivElement>) {
-    if (reduce) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    x.set((event.clientX - (rect.left + rect.width / 2)) * 0.06);
-    y.set((event.clientY - (rect.top + rect.height / 2)) * 0.06);
-  }
-
-  function reset() {
-    x.set(0);
-    y.set(0);
-  }
 
   return (
     <motion.div
       className={className}
-      style={reduce ? undefined : { x, y }}
       whileHover={reduce ? undefined : { y: -2 }}
       whileTap={reduce ? undefined : { y: 0 }}
-      onPointerMove={onMove}
-      onPointerLeave={reset}
       transition={landSpring}
     >
       {children}

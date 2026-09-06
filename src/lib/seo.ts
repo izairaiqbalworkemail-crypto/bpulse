@@ -16,7 +16,7 @@ export function buildMetadata(page: PageSEO): Metadata {
   const image = page.image ?? brand.ogImage;
 
   return {
-    title: `${page.title} — ${brand.name}`,
+    title: `${page.title} · ${brand.name}`,
     description: page.description,
     alternates: {
       canonical: url,
@@ -53,8 +53,8 @@ export function buildMetadata(page: PageSEO): Metadata {
 /** Default metadata for the root layout */
 export const rootMetadata: Metadata = {
   title: {
-    template: `%s — ${brand.name}`,
-    default: `${brand.name} — ${brand.tagline}`,
+    template: `%s · ${brand.name}`,
+    default: `${brand.name} · ${brand.tagline}`,
   },
   description: brand.description,
   metadataBase: new URL(brand.url),
@@ -80,7 +80,7 @@ export const rootMetadata: Metadata = {
         url: brand.ogImage,
         width: 1200,
         height: 630,
-        alt: `${brand.name} — ${brand.tagline}`,
+        alt: `${brand.name} · ${brand.tagline}`,
       },
     ],
   },

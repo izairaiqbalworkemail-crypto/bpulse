@@ -30,27 +30,27 @@ export const checkDays = [
 
 export const offerTiers = [
   {
+    name: offer.session.name,
+    price: `$${offer.session.price.toLocaleString("en-US")}`,
+    body: offer.session.description,
+    featured: false,
+  },
+  {
     name: offer.check.name,
     price: `$${offer.check.price.toLocaleString("en-US")}`,
     body: `${offer.check.duration}. ${offer.check.description}`,
     featured: true,
   },
   {
-    name: offer.close.name,
-    price: offer.close.priceRange,
-    body: offer.close.description,
-    featured: false,
-  },
-  {
-    name: offer.standing.name,
-    price: offer.standing.priceRange,
-    body: offer.standing.description,
+    name: offer.slice.name,
+    price: `$${offer.slice.price.toLocaleString("en-US")}`,
+    body: offer.slice.description,
     featured: false,
   },
 ];
 
 export const checkBadOutcome =
-  "The Check may conclude that you do not need us. The product is messy but holding, and a week of senior cleanup would finish it — no studio required. We will tell you that. The fee is still credited on a Close invoice within 30 days, or returned if you do not take a Close.";
+  "The Check may conclude that you do not need us. The product is messy but holding, and a week of senior cleanup would finish it. No studio required. We will tell you that. The fee is still credited on a Close invoice within 30 days, or returned if you do not take a Close.";
 
 export const checkRunner = {
   id: "aneeb",
@@ -62,7 +62,7 @@ export const checkNoHandoff =
 
 export const checkOffer = {
   verdict:
-    "A written verdict — keep, repair or rebuild — with what each would take.",
+    "A written verdict: keep, repair or rebuild, with what each would take.",
   credit: "Credited in full against a build within 30 days.",
   facts: [
     "5 days",
@@ -102,7 +102,7 @@ export const checkQuestions = [
   },
   {
     q: "Is this a way to sell me a build?",
-    a: "It's credited against one, so it's cheaper for us if you build. It's also the reason we can be honest — we're not paid to find problems.",
+    a: "It is credited against one, so it is cheaper for us if you build. It is also the reason we can be honest: we are not paid to find problems.",
   },
   {
     q: "Who owns the report?",
@@ -126,5 +126,5 @@ export const checkNext = {
     "Payment clears, we agree a start date.",
     "Day 1 begins.",
   ],
-  pay: "We take bank transfer and card. If your procurement needs a PO or a W-8BEN, say so and we'll have it ready before the invoice.",
+  pay: "We take bank transfer and card. If your procurement needs a PO or a W-8BEN, say so and we will have it ready before the invoice.",
 } as const;

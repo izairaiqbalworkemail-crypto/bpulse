@@ -41,24 +41,7 @@ export function CheckStart() {
         </Slide>
 
         <Reveal delay={0.08}>
-          <div className="room-card overflow-hidden">
-            <div className="border-b border-iron/8 px-6 py-6 md:px-8">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
-                The brief
-              </p>
-              <p className="mt-3 max-w-[36ch] font-newsreader text-[22px] leading-[1.3] text-iron">
-                What it is. Where it&apos;s stuck. Access you can give. How to
-                reach you.
-              </p>
-            </div>
-            <div className="px-6 py-6 md:px-8">
-              <PulseCheckIntake
-                source="check"
-                surface="plain"
-                submitTone="iron"
-              />
-            </div>
-          </div>
+          <PulseCheckIntake source="check" />
         </Reveal>
       </div>
     </Episode>

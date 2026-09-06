@@ -32,7 +32,7 @@ export const checkScript: Script = {
       ask: "What are you building?",
       kind: "textarea",
       required: true,
-      placeholder: "A payroll tool, a hospital scribe, a marketplace — one or two lines.",
+      placeholder: "A payroll tool, a hospital scribe, a marketplace. One or two lines.",
     },
     {
       name: "stage",
@@ -113,6 +113,49 @@ export const checkScript: Script = {
   ],
 };
 
+export const readScript: Script = {
+  id: "read",
+  source: "read",
+  banner:
+    "One question at a time. Back is always available. What you type stays if you refresh.",
+  fields: [
+    {
+      name: "product",
+      ask: "What are you building?",
+      kind: "textarea",
+      required: true,
+      placeholder: "A payroll tool, a hospital scribe, a marketplace. One or two lines.",
+    },
+    {
+      name: "stage",
+      ask: "Where is it now?",
+      kind: "chips",
+      required: true,
+      chips: STAGES,
+    },
+    {
+      name: "shipWound",
+      ask: "What happens when you try to ship it?",
+      kind: "textarea",
+      required: true,
+      placeholder: "The thing that stops the deploy, the review, or the launch.",
+    },
+    {
+      name: "duration",
+      ask: "How long has it been like this?",
+      kind: "textarea",
+      required: true,
+      placeholder: "Weeks, months, since the person who knew it left.",
+    },
+    {
+      name: "identity",
+      ask: "Where do we send it?",
+      kind: "identity",
+      required: true,
+    },
+  ],
+};
+
 export const educationScript: Script = {
   id: "second-chair",
   source: "second-chair",
@@ -124,7 +167,7 @@ export const educationScript: Script = {
       ask: "Who would sit in the sessions?",
       kind: "textarea",
       required: true,
-      placeholder: "A founder, two engineers, a new lead — names if you have them.",
+      placeholder: "A founder, two engineers, a new lead. Names if you have them.",
     },
     {
       name: "whatTheyHold",

@@ -16,5 +16,5 @@ export type PreliminaryRead = {
   limits: string;
   checkLine: string;
   answers: Record<string, string>;
-  source: "check-intake";
+  source: "check-intake" | "read";
 };

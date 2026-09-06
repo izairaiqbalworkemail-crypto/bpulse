@@ -103,47 +103,62 @@ export function DiagnosticForm({ token, dueAt, seeded, submitted }: Props) {
   }
 
   return (
-    <div className="card mt-8 p-6 md:p-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Window: 48 hours from opening · expected effort ~2 hours</p>
-        <p className="font-plex-mono text-[12px] text-ink/80">{remainingLabel}</p>
+    <div className="docket mt-8">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/45">
+            Diagnostic
+          </p>
+          <p className="mt-2 font-newsreader text-[22px] leading-[1.2] text-iron">
+            Forty-eight hours. About two hours of work.
+          </p>
+        </div>
+        <p className="font-plex-mono text-[12px] tabular-nums text-ink/45">
+          {remainingLabel}
+        </p>
       </div>
 
-      <label className="mt-5 block">
-        <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">The read</span>
+      <label className="mt-10 block">
+        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+          The read
+        </span>
         <textarea
           value={form.read}
           onChange={(event) => setForm((prev) => ({ ...prev, read: event.target.value }))}
           rows={5}
           disabled={submitted || closed}
-          className="mt-2 w-full rounded-[12px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron ring-1 ring-iron/15 outline-none"
+          className="docket-write"
         />
       </label>
 
-      <div className="mt-8">
-        <div className="flex items-center justify-between">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Findings (3-5 required)</p>
+      <div className="mt-10">
+        <div className="flex items-end justify-between gap-3">
+          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+            Findings · three to five
+          </p>
           <button
             type="button"
             disabled={submitted || closed || form.findings.length >= 5}
             onClick={() => setForm((prev) => ({ ...prev, findings: [...prev.findings, emptyFinding()] }))}
-            className="rounded-full border border-iron/20 px-3 py-1 font-plex-sans text-[13px]"
+            className="min-h-11 font-plex-sans text-[14px] text-ink/50 underline decoration-iron/15 underline-offset-4 hover:text-iron disabled:opacity-40"
           >
             Add finding
           </button>
         </div>
 
-        <div className="mt-3 space-y-4">
+        <div className="mt-4 space-y-8">
           {form.findings.map((finding, index) => (
-            <div key={`${index}-${finding.observed.slice(0, 12)}`} className="card p-4">
-              <p className="font-plex-mono text-[12px] text-ink/70">Finding {index + 1}</p>
+            <div key={`${index}-${finding.observed.slice(0, 12)}`} className="border-t border-iron/10 pt-5">
+              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+                Finding {String(index + 1).padStart(2, "0")}
+              </p>
               <textarea
                 value={finding.observed}
                 onChange={(event) => updateFinding(index, "observed", event.target.value)}
                 rows={2}
                 placeholder="Observed"
                 disabled={submitted || closed}
-                className="mt-2 w-full rounded-[10px] bg-rag px-3 py-2 font-newsreader text-[16px] ring-1 ring-iron/15"
+                className="docket-write mt-3"
               />
               <textarea
                 value={finding.consequence}
@@ -151,7 +166,7 @@ export function DiagnosticForm({ token, dueAt, seeded, submitted }: Props) {
                 rows={2}
                 placeholder="Consequence"
                 disabled={submitted || closed}
-                className="mt-2 w-full rounded-[10px] bg-rag px-3 py-2 font-newsreader text-[16px] ring-1 ring-iron/15"
+                className="docket-write mt-3"
               />
               <textarea
                 value={finding.closing}
@@ -159,60 +174,64 @@ export function DiagnosticForm({ token, dueAt, seeded, submitted }: Props) {
                 rows={2}
                 placeholder="Closing"
                 disabled={submitted || closed}
-                className="mt-2 w-full rounded-[10px] bg-rag px-3 py-2 font-newsreader text-[16px] ring-1 ring-iron/15"
+                className="docket-write mt-3"
               />
               <input
                 value={finding.evidence}
                 onChange={(event) => updateFinding(index, "evidence", event.target.value)}
                 placeholder="Evidence path or log line"
                 disabled={submitted || closed}
-                className="mt-2 w-full rounded-[10px] bg-rag px-3 py-2 font-newsreader text-[16px] ring-1 ring-iron/15"
+                className="docket-write mt-3"
               />
             </div>
           ))}
         </div>
       </div>
 
-      <label className="mt-8 block">
-        <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">What it takes</span>
+      <label className="mt-10 block">
+        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+          What it takes
+        </span>
         <textarea
           value={form.whatItTakes}
           onChange={(event) => setForm((prev) => ({ ...prev, whatItTakes: event.target.value }))}
           rows={4}
           disabled={submitted || closed}
-          className="mt-2 w-full rounded-[12px] bg-rag px-4 py-3 font-newsreader text-[17px] ring-1 ring-iron/15"
+          className="docket-write"
         />
       </label>
 
-      <label className="mt-5 block">
-        <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Limits (minimum one, required)</span>
+      <label className="mt-8 block">
+        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+          Limits · at least one
+        </span>
         <textarea
           value={form.limits}
           onChange={(event) => setForm((prev) => ({ ...prev, limits: event.target.value }))}
           rows={3}
           disabled={submitted || closed}
-          className="mt-2 w-full rounded-[12px] bg-rag px-4 py-3 font-newsreader text-[17px] ring-1 ring-iron/15"
+          className="docket-write"
         />
       </label>
 
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="mt-8 flex flex-wrap items-center gap-4">
         <button
           type="button"
           onClick={() => void saveDraft()}
           disabled={submitted || closed || saving}
-          className="rounded-full border border-iron/20 px-4 py-2 font-plex-sans text-[14px]"
+          className="docket-next"
         >
-          {saving ? "Saving..." : "Save draft"}
+          {saving ? "Saving…" : "Save draft"}
         </button>
         <button
           type="button"
           onClick={() => void submit()}
           disabled={submitted || closed || submitting}
-          className="rounded-full bg-iron px-5 py-2 font-plex-sans text-[14px] text-rag"
+          className="docket-file"
         >
-          {submitting ? "Submitting..." : "Submit diagnostic"}
+          {submitting ? "Filing…" : "File the diagnostic"}
         </button>
-        <p className="font-newsreader text-[16px] text-ink">{message}</p>
+        <p className="font-newsreader text-[15px] text-ink">{message}</p>
       </div>
     </div>
   );

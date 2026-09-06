@@ -17,7 +17,7 @@ export function Hero() {
     <section
       id="pulse"
       aria-labelledby="pulse-heading"
-      className="on-iron relative scroll-mt-[5.75rem] bg-iron-2 text-rag md:scroll-mt-28"
+      className="ribbon on-iron relative scroll-mt-[5.75rem] bg-iron-2 text-rag md:scroll-mt-28"
     >
       <div className="stage-container flex min-h-[100svh] flex-col justify-end pb-16 pt-28 md:pb-20 md:pt-32">
         <motion.p

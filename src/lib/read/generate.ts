@@ -96,8 +96,12 @@ function toldFrom(answers: Answers) {
   if (wound) bits.push(wound);
   const model = quote(answers.modelOnData);
   if (model) bits.push(`On real data: ${model}`);
-  const duration = DURATION_LINE[answers.duration ?? ""];
-  if (duration) bits.push(`Like this for ${duration}.`);
+  const durationChip = DURATION_LINE[answers.duration ?? ""];
+  if (durationChip) bits.push(`Like this for ${durationChip}.`);
+  else {
+    const duration = quote(answers.duration);
+    if (duration) bits.push(duration);
+  }
   if (answers.whoBuilt === "left") bits.push("The people who built it have left.");
   if (answers.whoBuilt === "mixed") bits.push("Some of the people who built it have left.");
   const whoNote = quote(answers.whoBuiltNote);
@@ -143,6 +147,7 @@ export function generateRead(
   answers: Answers,
   token: string,
   preparedAt = new Date().toISOString(),
+  source: PreliminaryRead["source"] = "check-intake",
 ): PreliminaryRead {
   return {
     token,
@@ -152,10 +157,13 @@ export function generateRead(
     pattern: patternFor(answers),
     lookFirst: lookFirst(answers),
     limits:
-      "This is built from what you typed. We haven't seen your code, your logs, or your infrastructure. We can't tell you whether the problem is one week or ten until we look.",
-    checkLine: `That's what the Check is. Five days, ${PRICE}, credited back if we build.`,
+      "This is built from what you typed. We have not seen your code, your logs, or your infrastructure. We cannot tell you whether this is one week or ten until we look.",
+    checkLine:
+      source === "read"
+        ? "If you want us to look at the code, that is the Check."
+        : `That is what the Check is. Five days, ${PRICE}, credited in full against a build in 30 days.`,
     answers,
-    source: "check-intake",
+    source,
   };
 }
 

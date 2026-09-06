@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/lib/JsonLd";
 import { CheckOffer } from "@/components/check/CheckOffer";
+import { CheckSits } from "@/components/check/CheckSits";
 import { CheckReports } from "@/components/check/CheckReports";
 import { CheckDays } from "@/components/check/CheckDays";
 import { CheckRunner } from "@/components/check/CheckRunner";
@@ -34,6 +35,7 @@ export default async function CheckPage({ searchParams }: Readonly<PageProps>) {
         price={offer.check.price}
       />
       <CheckOffer />
+      <CheckSits />
       <CheckReports />
       <CheckDays />
       <CheckRunner />

@@ -14,11 +14,12 @@ export function Record() {
   );
 
   return (
-    <Episode labelledBy="record" tone="paper">
+    <Episode labelledBy="record" tone="cocoa">
       <EpisodeHead
         n="04"
         kicker="THE RECORD"
         id="record"
+        tone="cocoa"
         heading="What arrived unfinished."
         aside={
           <Link href="/work" className="aside-chip">
@@ -40,7 +41,7 @@ export function Record() {
         )}
       </div>
 
-      <ul className="mt-10 divide-y divide-iron/8 border-y border-iron/8">
+      <ul className="mt-10 divide-y divide-rag/12 border-y border-rag/12">
         {rest.map((lot) => {
           const tag = figureDisclaimer(lot);
           return (
@@ -61,15 +62,15 @@ export function Record() {
                   ) : null}
                 </span>
                 <span className="min-w-0 grow">
-                  <span className="block font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
+                  <span className="block font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/60">
                     {lot.lotNumber}
                     {tag ? ` · ${tag}` : null}
                   </span>
-                  <span className="mt-0.5 block font-newsreader text-[20px] text-iron">
+                  <span className="mt-0.5 block font-newsreader text-[20px] text-rag">
                     {lot.client}
                   </span>
                 </span>
-                <span className="hidden shrink-0 font-newsreader text-[15px] text-ink sm:block">
+                <span className="hidden shrink-0 font-newsreader text-[15px] text-rag/70 sm:block">
                   {lot.grade.label.replace(/ on arrival$/i, "")}
                 </span>
               </Link>

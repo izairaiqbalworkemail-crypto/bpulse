@@ -3,6 +3,7 @@ import { brand } from "@/config/brand";
 export const siteNav = [
   { label: "Work", href: "/work" },
   { label: "Check", href: "/check" },
+  { label: "Pricing", href: "/pricing" },
   { label: "How it works", href: "/how-it-works" },
   { label: "Team", href: "/team" },
   { label: "Careers", href: "/careers" },

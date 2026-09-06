@@ -55,7 +55,7 @@ export const readingSymptoms = [
 ] as const;
 
 export const readingNote =
-  "A rough self-check. The real read takes five days.";
+  "A rough self-check. The written Read is free and arrives in one business day.";
 
 export const ledgerRows = [
   {
@@ -104,7 +104,7 @@ export const ledgerConcede = {
 export const homeQuestions = [
   {
     q: "Why are you cheaper than a US studio?",
-    a: "The Check is $1,500. A Close is a published band, agreed in writing. We are a studio in Lahore, not a US firm with US overhead. We are also not cheap by local standards: the price is the seniority of the people on the keyboard.",
+    a: "The Read is free. The Session is $400. The Check is $1,500. A Close is a published band, agreed in writing. We are a studio in Lahore, not a US firm with US overhead. We are also not cheap by local standards: the price is the seniority of the people on the keyboard.",
   },
   {
     q: "What happens if you disappear?",
@@ -115,7 +115,7 @@ export const homeQuestions = [
     a: "You do. The sample portal shows an IP assignment in the documents drawer. We revoke what we held on handover day. No hostage codebases.",
   },
   {
-    q: "You're twelve people — what if my project is bigger?",
+    q: "You are twelve people. What if my project is bigger?",
     a: "Then the Check says so. We take work the named crew can finish. If the honest read is that you need a bench we do not have, we will write that down rather than staff a fiction.",
   },
   {
@@ -124,9 +124,9 @@ export const homeQuestions = [
   },
   {
     q: "What are you bad at?",
-    a: "Brand identity, marketing design, and anything that lives between a product and its audience. We are engineers — we build and fix what exists. If you need a logo, a deck, or a go-to-market, we will tell you who does that better. We also turn down work that is fine as it is: if nothing is stuck at eighty, there is nothing for us to do.",
+    a: "Brand identity, marketing design, and anything that lives between a product and its audience. We are engineers. We build and fix what exists. If you need a logo, a deck, or a go-to-market, we will tell you who does that better. We also turn down work that is fine as it is: if nothing is stuck at eighty, there is nothing for us to do.",
   },
 ] as const;
 
 export const termsCredit =
-  "The Check may conclude you don't need us. The fee is still credited or returned.";
+  "The Check may conclude you do not need us. The fee is still credited or returned.";

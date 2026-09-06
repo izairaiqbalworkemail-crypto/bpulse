@@ -5,9 +5,9 @@ import { PageHero } from "@/components/PageHero";
 import { SignalPlate } from "@/components/SignalPlate";
 import { StageRail } from "@/components/StageRail";
 import { AnimatedStages } from "@/components/AnimatedStages";
-import { PageClose } from "@/components/PageClose";
 import { Episode } from "@/components/episode/Episode";
 import { closeStages } from "@/content/process";
+import { ladder, money, noDiscount } from "@/content/ladder";
 import { offer } from "@/content/offer";
 import { guarantees, pageFrame } from "@/content/platform";
 
@@ -34,36 +34,53 @@ export default function HowItWorksPage() {
       />
 
       <SignalPlate
-        kicker={`${offer.close.name} · locked scope`}
+        kicker="The ladder · published"
         price={offer.close.priceRange}
-        line={offer.close.description}
+        line="The Close is the full deployment. The rungs before it are how you get there without negotiating."
         facts={[
           {
-            kicker: "The Check first",
-            body: `$${offer.check.price.toLocaleString("en-US")} · ${offer.check.duration}. Credited if we Close within 30 days.`,
+            kicker: "The Read",
+            body: "Free. Written. One business day. Nothing on it asks for a meeting.",
           },
           {
-            kicker: "The Close",
-            body: "Fixed scope agreed in writing before any code. You watch every stage.",
+            kicker: "The Session",
+            body: `${money(offer.session.price)}. Ninety minutes. Credited against anything you buy in 30 days.`,
           },
           {
-            kicker: "Standing, if you want it",
-            body: `${offer.standing.priceRange}. Optional. You can run it without us.`,
+            kicker: "The Check",
+            body: `${money(offer.check.price)}. ${offer.check.duration}. Credited in full against a build in 30 days.`,
           },
         ]}
-        href="/check"
-        action={`Start the Check · $${offer.check.price.toLocaleString("en-US")}`}
+        href="/read"
+        action="Start with the Read"
       />
 
       <Episode tone="paper">
-        <p className="max-w-[48ch] font-newsreader text-[18px] leading-[1.5] text-ink">
-          Portal screenshots are not on file yet. Each stage opens the live
-          sample view instead.
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-ink/70">
+          The stages
+        </p>
+        <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.3] text-iron">
+          The Read and the Session come first. Portal screenshots are not on
+          file yet. Later stages open the live sample.
         </p>
         <div className="mt-10">
           <StageRail stages={rail} />
         </div>
         <AnimatedStages stages={closeStages} />
+        <p className="mt-12 max-w-[52ch] font-plex-sans text-[15px] leading-[1.55] text-ink">
+          {noDiscount}
+        </p>
+        <p className="mt-6 font-plex-sans text-[15px] text-ink">
+          {ladder.length} rungs, all published.{" "}
+          <Link
+            href="/first-slice"
+            className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+          >
+            The First Slice
+          </Link>{" "}
+          is for an idea that needs to become real before it needs to become
+          finished.
+        </p>
       </Episode>
 
       <Episode tone="cocoa">
@@ -84,13 +101,20 @@ export default function HowItWorksPage() {
                   {row.proof}
                 </span>
                 <span className="mt-3 block font-plex-sans text-[14px] text-rag/80 underline decoration-rag/25 underline-offset-4 hover:decoration-rag">
-                  Where this is provable →
+                  Where this is provable
                 </span>
               </Link>
             </li>
           ))}
         </ul>
-        <PageClose line="The sample is the same stages, with sample data labelled sample." />
+        <p className="mt-16 font-newsreader text-[20px] text-rag">
+          <Link
+            href="/read"
+            className="underline decoration-rag/30 underline-offset-4 hover:decoration-rag"
+          >
+            Start with the Read. Free. One business day.
+          </Link>
+        </p>
       </Episode>
     </>
   );

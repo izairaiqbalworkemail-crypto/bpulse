@@ -1,3 +1,9 @@
+import {
+  closeRange,
+  ladderPrices,
+  standingRange,
+} from "@/content/ladder";
+
 export const brand = {
   name: "bpulse",
   legalName: "Breakthrough Pulse",
@@ -38,23 +44,47 @@ export const brand = {
   ],
 
   offers: {
+    read: {
+      name: "The Read",
+      price: ladderPrices.read,
+      currency: "USD",
+      duration: "one business day",
+      description:
+        "A written read of what you described. Free. Nothing on it asks for a meeting.",
+    },
+    session: {
+      name: "The Session",
+      price: ladderPrices.session,
+      currency: "USD",
+      duration: "ninety minutes",
+      description:
+        "A senior engineer on your actual problem. Written scope and a range. Credited against anything you buy in 30 days.",
+    },
     check: {
       name: "The Check",
-      price: 1500,
+      price: ladderPrices.check,
       currency: "USD",
       duration: "5 business days",
       description:
-        "Verdict of keep, repair, or rebuild. Credited on a Close invoice within 30 days.",
+        "Verdict of keep, repair or rebuild. Credited in full against a build in 30 days.",
+    },
+    slice: {
+      name: "The First Slice",
+      price: ladderPrices.slice,
+      currency: "USD",
+      duration: "two weeks",
+      description:
+        "One thing that works, in production, that you can show someone. A beginning, not a finish.",
     },
     close: {
       name: "The Close",
-      priceRange: "$18,000–$95,000",
+      priceRange: closeRange,
       description: "Fixed scope agreed in writing before any code.",
     },
     standing: {
       name: "Standing",
-      priceRange: "$2,000–$6,000/month",
-      description: "Post-launch support.",
+      priceRange: standingRange,
+      description: "After launch, until you do not need us.",
     },
   },
 } as const;

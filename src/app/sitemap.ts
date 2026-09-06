@@ -10,6 +10,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const indexedRoutes = [
     "/",
     "/check",
+    "/read",
+    "/pricing",
+    "/session",
+    "/first-slice",
     "/how-it-works",
     "/standard",
     "/edpulse",

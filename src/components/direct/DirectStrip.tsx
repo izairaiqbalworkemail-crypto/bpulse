@@ -8,7 +8,7 @@ export function DirectStrip() {
   const faces = STRIP_IDS.map((id) => getSpecialist(id));
 
   return (
-    <div className="w-full bg-iron-2 text-rag">
+    <div className="ribbon w-full bg-iron-2 text-rag">
       <div className="h-px w-full bg-rag/10" aria-hidden="true" />
       <Link
         href="/direct"

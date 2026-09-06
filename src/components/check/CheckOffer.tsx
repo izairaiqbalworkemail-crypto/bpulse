@@ -10,7 +10,7 @@ export function CheckOffer() {
     <section
       id="offer"
       aria-labelledby="offer-heading"
-      className="relative flex min-h-[100svh] flex-col bg-signal text-iron"
+      className="ribbon relative flex min-h-[100svh] flex-col bg-signal text-iron"
     >
       <div className="stage-container flex flex-1 flex-col justify-center pt-28 pb-16 md:pt-32">
         <Reveal>

@@ -19,7 +19,7 @@ export function SignalFrame({
       id={id}
       aria-labelledby={labelledBy ? `${labelledBy}-heading` : undefined}
       data-surface="signal"
-      className="paper-ground relative scroll-mt-[5.75rem] md:scroll-mt-28"
+      className="ribbon paper-ground relative scroll-mt-[5.75rem] md:scroll-mt-28"
     >
       <div className="relative z-10 p-2.5 md:p-4">
         <div className="signal-plate">

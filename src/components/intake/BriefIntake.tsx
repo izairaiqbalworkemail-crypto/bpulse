@@ -1,34 +1,35 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { PressButton, dismissKeyboard } from "@/components/PressButton";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { dismissKeyboard } from "@/components/PressButton";
+import {
+  Docket,
+  DocketChoices,
+  DocketFile,
+  DocketFiled,
+  DocketNext,
+  DocketReview,
+  DocketWrite,
+} from "@/components/intake/docket/Docket";
 import { sessionFields } from "@/lib/intake/fields";
 import { applyWoundRead, readWound } from "@/lib/intake/read-wound";
-import {
-  arrivalGrade,
-  askLine,
-  docketLabel,
-  fromTheWords,
-  readBack,
-} from "@/lib/intake/session-voice";
+import { askLine, docketLabel } from "@/lib/intake/session-voice";
 import { getSpecialist } from "@/content/specialists";
-import { offer } from "@/content/offer";
 import { readMatchBrief } from "@/lib/match/session";
+import {
+  clearDesk,
+  emptyDesk,
+  loadDesk,
+  saveDesk,
+  subscribeDesk,
+} from "@/lib/conversation/persist";
 import type { FieldConfig, IntakeType } from "@/lib/intake/types";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LONG_FIELDS = new Set(["build", "detail", "idea"]);
 
-type Turn =
-  | { id: string; kind: "studio"; text: string }
-  | { id: string; kind: "you"; field: string; text: string };
-
 function applies(field: FieldConfig, answers: Record<string, string>) {
   return !field.when || field.when(answers);
-}
-
-function shortId(id: string) {
-  return id.replaceAll("-", "").slice(0, 8);
 }
 
 function validate(field: FieldConfig, value: string): string | null {
@@ -37,68 +38,33 @@ function validate(field: FieldConfig, value: string): string | null {
     return "That email looks off.";
   }
   if (LONG_FIELDS.has(field.name) && trimmed && trimmed.length < 10) {
-    return "A couple of lines — enough to take it seriously.";
+    return "A couple of lines. Enough to take it seriously.";
   }
   if (field.required && !trimmed) return "Say something, even a short one.";
   return null;
 }
 
-function opening(type: IntakeType, first: string, named: boolean): string {
-  if (named) {
-    return `${first} reads every line tomorrow. No one is typing now. Answer like a person — this session writes the brief.`;
-  }
-  if (type === "check") {
-    return `The Check. Five days. $${offer.check.price.toLocaleString("en-US")}. Write the stuck part. Aneeb reads it tomorrow.`;
-  }
-  if (type === "careers") {
-    return "Aneeb reads every application. Candidates are never charged. This session writes the note.";
-  }
-  return "A few turns. The brief writes itself. A person reads it within one business day.";
-}
-
-function bootTurns(
+function kickerOf(
   type: IntakeType,
+  source: string | undefined,
   first: string,
   named: boolean,
-  seeded: Record<string, string>,
-  fields: FieldConfig[],
-): Turn[] {
-  const start: Turn[] = [
-    {
-      id: "open",
-      kind: "studio",
-      text: opening(type, first, named),
-    },
-  ];
-  if (seeded.build) {
-    start.push({
-      id: "pre",
-      kind: "you",
-      field: "build",
-      text: seeded.build,
-    });
-    start.push({
-      id: "pre-read",
-      kind: "studio",
-      text: readBack(
-        { name: "build", label: "Build", type: "textarea", required: true },
-        seeded.build,
-        seeded,
-      ),
-    });
-  }
-  const firstField =
-    fields
-      .filter((field) => applies(field, seeded))
-      .find((field) => !(seeded[field.name] ?? "").trim()) ?? null;
-  if (firstField) {
-    start.push({
-      id: "ask0",
-      kind: "studio",
-      text: askLine(firstField, seeded),
-    });
-  }
-  return start;
+) {
+  if (named) return `Direct · ${first}`;
+  if (source === "session") return "The Session";
+  if (source === "first-slice") return "The First Slice";
+  if (type === "check") return "The Check";
+  if (type === "careers") return "Careers";
+  if (type === "contact") return "Contact";
+  if (type === "work") return "Work";
+  return "The brief";
+}
+
+function writeType(field: FieldConfig): "text" | "email" | "url" | "textarea" {
+  if (field.type === "textarea") return "textarea";
+  if (field.type === "input" && field.input === "email") return "email";
+  if (field.type === "input" && field.input === "url") return "url";
+  return "text";
 }
 
 type BriefIntakeProps = {
@@ -117,25 +83,32 @@ export function BriefIntake({
   const person = workWith ? getSpecialist(workWith) : null;
   const first = person?.name.split(" ")[0] ?? "Aneeb";
   const fields = sessionFields[type];
-  const seeded = { ...prefill };
-  const [answers, setAnswers] = useState<Record<string, string>>(() => seeded);
-  const [turns, setTurns] = useState<Turn[]>(() =>
-    bootTurns(type, first, Boolean(person), seeded, fields),
+  const persistId = `brief:${type}:${source ?? type}`;
+  const stored = useSyncExternalStore(
+    subscribeDesk,
+    () => loadDesk(persistId),
+    emptyDesk,
+  );
+  const answers = useMemo(
+    () => ({ ...prefill, ...stored.answers }),
+    [prefill, stored.answers],
   );
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [requestId] = useState(() =>
     typeof crypto !== "undefined" && "randomUUID" in crypto
       ? crypto.randomUUID()
       : `brief-${Date.now()}`,
   );
-  const textRef = useRef<HTMLTextAreaElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const logRef = useRef<HTMLDivElement>(null);
-  const uid = useRef(turns.length);
+
+  useEffect(() => {
+    if (Object.keys(stored.answers).length > 0) return;
+    if (!prefill || Object.keys(prefill).length === 0) return;
+    saveDesk(persistId, { answers: { ...prefill }, seen: [] });
+  }, [persistId, prefill, stored.answers]);
 
   const visible = useMemo(
     () => fields.filter((field) => applies(field, answers)),
@@ -143,18 +116,16 @@ export function BriefIntake({
   );
   const current =
     visible.find((field) => !(answers[field.name] ?? "").trim()) ?? null;
-  const ready = !current;
+  const filled = visible.filter((field) => (answers[field.name] ?? "").trim());
+  const reviewing = !current;
+  const index = reviewing ? visible.length : filled.length + 1;
+  const kicker = kickerOf(type, source, first, Boolean(person));
 
-  function push(turn: Turn) {
-    setTurns((list) => [...list, turn]);
+  function writeAnswers(next: Record<string, string>) {
+    saveDesk(persistId, { answers: next, seen: stored.seen });
+    setDraft("");
+    setError(null);
   }
-
-  useEffect(() => {
-    logRef.current?.scrollTo({
-      top: logRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [turns.length, ready]);
 
   function send(field: FieldConfig, value: string) {
     const message = validate(field, value);
@@ -164,45 +135,10 @@ export function BriefIntake({
     }
     const trimmed = value.trim();
     let next = { ...answers, [field.name]: trimmed };
-    let filled: string[] = [];
     if (type === "check" && field.name === "build") {
-      const applied = applyWoundRead(next, readWound(trimmed));
-      next = applied.answers;
-      filled = applied.filled;
+      next = applyWoundRead(next, readWound(trimmed)).answers;
     }
-    setAnswers(next);
-    setDraft("");
-    setError(null);
-    uid.current += 1;
-    push({ id: `you-${uid.current}`, kind: "you", field: field.name, text: trimmed });
-    uid.current += 1;
-    push({
-      id: `studio-${uid.current}`,
-      kind: "studio",
-      text: readBack(field, trimmed, next),
-    });
-    const heard = fromTheWords(filled);
-    if (heard) {
-      uid.current += 1;
-      push({ id: `heard-${uid.current}`, kind: "studio", text: heard });
-    }
-    const upcoming = fields
-      .filter((item) => applies(item, next))
-      .find((item) => !(next[item.name] ?? "").trim());
-    if (upcoming) {
-      uid.current += 1;
-      push({ id: `ask-${uid.current}`, kind: "studio", text: askLine(upcoming, next) });
-    } else {
-      uid.current += 1;
-      push({
-        id: `close-${uid.current}`,
-        kind: "studio",
-        text:
-          type === "check"
-            ? "That's the condition. Put it on Aneeb's desk — he reads it tomorrow."
-            : `That's the brief. Put it on ${first}'s desk.`,
-      });
-    }
+    writeAnswers(next);
   }
 
   function skip(field: FieldConfig) {
@@ -211,6 +147,17 @@ export function BriefIntake({
       return;
     }
     send(field, "I'd rather not say");
+  }
+
+  function back() {
+    const last = filled.at(-1);
+    if (!last) return;
+    dismissKeyboard();
+    const next = { ...answers };
+    delete next[last.name];
+    saveDesk(persistId, { answers: next, seen: stored.seen });
+    setDraft("");
+    setError(null);
   }
 
   async function submit() {
@@ -246,18 +193,19 @@ export function BriefIntake({
       if (!response.ok || !data.ok) {
         throw new Error(data.error ?? "The brief did not save.");
       }
-      const stored = readMatchBrief();
-      if (stored.eventId && type === "work") {
+      const storedMatch = readMatchBrief();
+      if (storedMatch.eventId && type === "work") {
         void fetch("/api/match/outcome", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
-            matchEventId: stored.eventId,
+            matchEventId: storedMatch.eventId,
             outcome: "booked",
           }),
         });
       }
-      setDone(shortId(data.id ?? requestId));
+      clearDesk(persistId);
+      setDone(true);
     } catch (error_) {
       setError(
         error_ instanceof Error ? error_.message : "The brief did not save.",
@@ -267,222 +215,103 @@ export function BriefIntake({
     }
   }
 
-  const docketKeys = visible
-    .map((field) => field.name)
-    .filter((name) => docketLabel[name]);
-
   if (done) {
     return (
-      <div className="card-iron anim-fade-up">
-        <div className="px-6 py-10 md:px-8">
-          <p className="flex items-center gap-2 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal pulse-dot" />
-            Session filed · {done}
-          </p>
-          <p className="mt-3 font-newsreader type-title text-[32px] leading-[1.1] text-rag">
-            {type === "check"
-              ? "The Check is on Aneeb's desk."
-              : `On ${first}'s desk.`}
-          </p>
-          <p className="mt-4 max-w-[34ch] font-newsreader text-[18px] leading-[1.4] text-rag/75">
-            A person replies from a real inbox, within one business day.
-          </p>
-        </div>
-      </div>
+      <DocketFiled
+        kicker="Docket filed"
+        heading={
+          type === "check"
+            ? "The Check is on Aneeb's desk."
+            : `On ${first}'s desk.`
+        }
+        body="A person replies from a real inbox, within one business day."
+      />
     );
   }
 
+  const ask = reviewing
+    ? "Check it, then file it."
+    : current
+      ? askLine(current, answers)
+      : "Write what is stuck.";
+
   return (
-    <div className="card">
-      <header className="flex items-center justify-between gap-3 bg-iron px-5 py-4 text-rag md:px-6">
-        <div className="min-w-0">
-          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/50">
-            Session · {type === "check" ? "The Check" : person ? `Direct · ${first}` : "The brief"}
-          </p>
-          <p className="mt-1 truncate font-newsreader text-[18px] text-rag">
-            {type === "check"
-              ? "The condition writes itself."
-              : "The brief writes itself."}
-          </p>
-        </div>
-        <p className="flex shrink-0 items-center gap-2 font-plex-mono text-[12px] text-rag/50">
-          <span
-            aria-hidden="true"
-            className={`h-2 w-2 rounded-full ${ready ? "bg-partial" : "bg-signal pulse-dot"}`}
-          />
-          {ready ? "Ready to file" : "Writing"}
-        </p>
-      </header>
-
-      <div className="grid md:grid-cols-[minmax(0,1fr)_16rem]">
-        <div className="flex min-h-[28rem] flex-col border-iron/10 md:border-r">
-          <div
-            ref={logRef}
-            className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-6 md:px-6"
-          >
-            {turns.map((turn) =>
-              turn.kind === "studio" ? (
-                <div key={turn.id} className="flex items-start gap-3">
-                  <span
-                    aria-hidden="true"
-                    className={`mt-2 h-2 w-2 shrink-0 rounded-full ${
-                      ready ? "bg-signal pulse-dot" : "bg-iron/40"
-                    }`}
-                  />
-                  <p className="max-w-[40ch] font-newsreader text-[18px] leading-[1.4] text-iron">
-                    {turn.text}
-                  </p>
-                </div>
-              ) : (
-                <blockquote
-                  key={turn.id}
-                  className="panel-sub ml-4 border-l-[3px] border-l-signal px-4 py-3"
+    <>
+      <Docket
+        kicker={kicker}
+        step={index}
+        of={visible.length}
+        ask={ask}
+        error={error}
+        onBack={back}
+        canBack={filled.length > 0}
+        actions={
+          reviewing ? (
+            <DocketFile
+              disabled={busy}
+              onPress={() => {
+                if (busy) return;
+                dismissKeyboard();
+                void submit();
+              }}
+            >
+              {busy
+                ? "Filing…"
+                : type === "check"
+                  ? "File the Check"
+                  : `File it for ${first}`}
+            </DocketFile>
+          ) : current && (current.type === "radio" || current.type === "select") ? null : current ? (
+            <div className="flex items-center gap-4">
+              {!current.required ? (
+                <button
+                  type="button"
+                  onClick={() => skip(current)}
+                  className="docket-back"
                 >
-                  <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/50">
-                    You · {docketLabel[turn.field as keyof typeof docketLabel] ?? turn.field}
-                  </p>
-                  <p className="mt-1 font-newsreader text-[17px] leading-[1.4] text-iron">
-                    {turn.text}
-                  </p>
-                </blockquote>
-              ),
-            )}
-          </div>
-
-          <div className="sticky bottom-0 z-20 border-t border-iron/10 bg-rag-card px-5 py-4 md:static md:px-6">
-            {error ? (
-              <p role="alert" className="mb-3 font-newsreader text-[15px] text-iron">
-                {error}
-              </p>
-            ) : null}
-
-            {ready ? (
-              <PressButton
-                disabled={busy}
-                onPress={() => {
-                  if (busy) return;
-                  dismissKeyboard();
-                  void submit();
-                }}
-                className="btn btn-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
-              >
-                {busy
-                  ? "Filing…"
-                  : type === "check"
-                    ? "Put it on Aneeb's desk"
-                    : `Put it on ${first}'s desk`}
-              </PressButton>
-            ) : current && (current.type === "radio" || current.type === "select") ? (
-              <ul className="flex flex-col gap-2">
-                {current.options.map((option) => (
-                  <li key={option}>
-                    <PressButton
-                      onPress={() => {
-                        dismissKeyboard();
-                        send(current, option);
-                      }}
-                      className="panel-sub min-h-11 w-full touch-manipulation px-4 py-3 text-left font-newsreader text-[17px] text-iron hover:ring-2 hover:ring-iron/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
-                    >
-                      {option}
-                    </PressButton>
-                  </li>
-                ))}
-              </ul>
-            ) : current ? (
-              <div>
-                {current.type === "textarea" ? (
-                  <textarea
-                    ref={textRef}
-                    value={draft}
-                    onChange={(event) => setDraft(event.target.value)}
-                    onKeyDown={(event) => {
-                      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
-                        event.preventDefault();
-                        send(current, draft);
-                      }
-                    }}
-                    placeholder={current.placeholder}
-                    enterKeyHint="send"
-                    rows={3}
-                    className="input resize-none"
-                  />
-                ) : (
-                  <input
-                    ref={inputRef}
-                    type={
-                      current.input === "email"
-                        ? "email"
-                        : current.input === "url"
-                          ? "url"
-                          : "text"
-                    }
-                    autoComplete={current.autoComplete}
-                    enterKeyHint="send"
-                    value={draft}
-                    onChange={(event) => setDraft(event.target.value)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.preventDefault();
-                        send(current, draft);
-                      }
-                    }}
-                    placeholder={current.placeholder}
-                    className="input"
-                  />
-                )}
-                <div className="mt-3 flex flex-wrap items-center gap-3">
-                  <PressButton
-                    onPress={() => send(current, draft)}
-                    className="btn btn-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
-                  >
-                    Send
-                  </PressButton>
-                  {current.type === "textarea" ? (
-                    <span className="hidden font-plex-mono text-[11px] text-ink/50 md:inline">⌘ Enter</span>
-                  ) : null}
-                  {!current.required ? (
-                    <PressButton
-                      onPress={() => skip(current)}
-                      className="min-h-11 touch-manipulation font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
-                    >
-                      Skip
-                    </PressButton>
-                  ) : null}
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </div>
-
-        <aside className="hidden bg-rag/60 px-5 py-6 md:block">
-          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/55">
-            {type === "check" ? "Condition on arrival" : "The brief so far"}
-          </p>
-          {type === "check" ? (
-            <p className="mt-3 font-newsreader text-[20px] leading-[1.2] text-iron">
-              {arrivalGrade(answers.situation ?? "")}
-            </p>
-          ) : null}
-          <dl className="mt-5 flex flex-col gap-3">
-            {docketKeys.map((name) => (
-              <div key={name}>
-                <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                  {docketLabel[name]}
-                </dt>
-                <dd className="mt-0.5 font-newsreader text-[15px] leading-[1.35] text-iron">
-                  {answers[name] ? answers[name] : "—"}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </aside>
-      </div>
-
-      <label className="sr-only" htmlFor="brief-website">
+                  Skip
+                </button>
+              ) : null}
+              <DocketNext onPress={() => send(current, draft)}>Continue</DocketNext>
+            </div>
+          ) : null
+        }
+      >
+        {reviewing ? (
+          <DocketReview
+            rows={visible.map((field) => ({
+              label: docketLabel[field.name] ?? field.label,
+              value: answers[field.name] ?? "",
+            }))}
+          />
+        ) : current && (current.type === "radio" || current.type === "select") ? (
+          <DocketChoices
+            options={current.options.map((option) => ({
+              id: option,
+              label: option,
+            }))}
+            onPick={(id) => {
+              dismissKeyboard();
+              send(current, id);
+            }}
+          />
+        ) : current ? (
+          <DocketWrite
+            value={draft}
+            onChange={setDraft}
+            onSubmit={() => send(current, draft)}
+            placeholder={current.type === "input" || current.type === "textarea" ? current.placeholder : undefined}
+            type={writeType(current)}
+            autoComplete={current.type === "input" ? current.autoComplete : undefined}
+            rows={2}
+          />
+        ) : null}
+      </Docket>
+      <label className="sr-only" htmlFor={`${persistId}-website`}>
         Company site
       </label>
       <input
-        id="brief-website"
+        id={`${persistId}-website`}
         name="website"
         value={honeypot}
         onChange={(event) => setHoneypot(event.target.value)}
@@ -490,11 +319,6 @@ export function BriefIntake({
         autoComplete="off"
         className="hidden"
       />
-
-      <p className="border-t border-iron/10 px-5 py-3 font-newsreader text-[13px] text-ink/60 md:px-6">
-        No one is typing. A person reads this tomorrow.
-        {type === "check" ? " This does not take a card." : ""}
-      </p>
-    </div>
+    </>
   );
 }

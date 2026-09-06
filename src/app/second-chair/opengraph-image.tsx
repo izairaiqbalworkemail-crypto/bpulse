@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Second Chair — we finish it. Then we make sure you can keep it.";
+export const alt = "Second Chair. We finish it. Then we make sure you can keep it.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -33,7 +33,7 @@ export default function SecondChairOg() {
         >
           We finish it. Then we make sure you can keep it.
         </div>
-        <div style={{ marginTop: 24, fontSize: 28, color: "#f2c230" }}>
+        <div style={{ marginTop: 24, fontSize: 28, color: "#f4eee6", opacity: 0.8 }}>
           A named senior, on your repo. Not a course.
         </div>
       </div>

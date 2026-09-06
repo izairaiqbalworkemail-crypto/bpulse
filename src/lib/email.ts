@@ -109,6 +109,7 @@ export async function sendReadEmails(input: {
   readUrl: string;
   title: string;
   payload: Record<string, unknown>;
+  source?: "read" | "check-intake";
 }): Promise<void> {
   if (!resend) {
     throw new Error("Email is not configured.");
@@ -117,12 +118,12 @@ export async function sendReadEmails(input: {
   const visitor = await resend.emails.send({
     from: env.RESEND_FROM,
     to: input.visitorEmail,
-    subject: `Your preliminary read from bpulse — ${input.title}`,
+    subject: `Your preliminary read from bpulse · ${input.title}`,
     html: `
       <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
         <p style="font-size:18px;line-height:1.4;">The written read of what you described is here:</p>
         <p><a href="${escapeHtml(input.readUrl)}">${escapeHtml(input.readUrl)}</a></p>
-        <p style="font-size:14px;color:#5a5a5a;">A person replies within one business day. This is not a diagnosis of code we have not seen.</p>
+        <p style="font-size:14px;color:#5a5a5a;">A person replies within one business day. We will not follow up twice. This is not a diagnosis of code we have not seen.</p>
       </div>
     `,
   });
@@ -130,11 +131,12 @@ export async function sendReadEmails(input: {
     throw new Error(`Resend send failed: ${visitor.error.message}`);
   }
 
+  const kind = input.source === "read" ? "Read" : "Check intake";
   const studio = await resend.emails.send({
     from: env.RESEND_FROM,
     to: env.FOUNDER_EMAIL,
     replyTo: input.visitorEmail,
-    subject: `Check intake — read filed — ${input.visitorEmail}`,
+    subject: `${kind} · read filed · ${input.visitorEmail}`,
     html: `
       <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
         <p>Read: <a href="${escapeHtml(input.readUrl)}">${escapeHtml(input.readUrl)}</a></p>

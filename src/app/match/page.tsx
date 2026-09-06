@@ -327,18 +327,8 @@ export default function MatchPage() {
             <PriceBand />
           </section>
 
-          <section id="desk" className="mx-auto mt-16 max-w-[44rem] scroll-mt-28 md:mt-20">
-            <p className="kicker flex items-center gap-2">
-              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-partial pulse-dot" />
-              Try the read
-            </p>
-            <p className="mt-2 max-w-[46ch] font-newsreader text-[17px] leading-[1.45] text-ink">
-              Write the stuck part. Specific is what makes the read good — the
-              closer your words sit to the record, the closer the match.
-            </p>
-            <div className="panel mt-5 p-5 md:p-8">
-              <MatchDesk />
-            </div>
+          <section id="desk" className="mx-auto mt-16 max-w-[36rem] scroll-mt-28 md:mt-20">
+            <MatchDesk />
           </section>
         </div>
       </div>

@@ -197,14 +197,19 @@ export type Notice = {
   source?: SourceRef;
 };
 
+export type PricedOffer = {
+  name: string;
+  price: number;
+  currency: string;
+  duration: string;
+  description: string;
+};
+
 export type Offer = {
-  check: {
-    name: string;
-    price: number;
-    currency: string;
-    duration: string;
-    description: string;
-  };
+  read: PricedOffer;
+  session: PricedOffer;
+  check: PricedOffer;
+  slice: PricedOffer;
   close: {
     name: string;
     priceRange: string;
