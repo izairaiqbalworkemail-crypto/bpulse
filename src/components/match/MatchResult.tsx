@@ -306,12 +306,12 @@ export function MatchResult({
       <Reveal>
         <p className="kicker flex items-center gap-2">
           <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal pulse-dot" />
-          The read
+          The platform would assign
         </p>
         <h2 className="mt-3 max-w-[34ch] font-newsreader type-display-m text-[32px] leading-[1.1] text-iron md:text-[40px]">
           {outcome.confidence === "exploratory"
-            ? "Nothing on record comes close — Aneeb reads it himself."
-            : `${leadName} could take this. The reason is on the record.`}
+            ? "The platform would assign Aneeb — nothing on record comes close."
+            : `The platform would assign ${leadPerson?.name ?? leadName}.`}
         </h2>
         <p className="mt-3 font-plex-mono text-[12px] text-ink/70">
           {confidenceLine(outcome.confidence)} No score. Not a model.
@@ -447,12 +447,12 @@ export function MatchResult({
           delay={60}
         >
           <SectionHead
-            label="Who could take it"
+            label="Why"
             tone="signal"
             note={
               outcome.confidence === "exploratory"
                 ? `${leadPerson?.name ?? "Aneeb"} is the fallback the record leaves us: no fabrication, a named person.`
-                : `Matched on what they have shipped before, not a score.`
+                : "Assigned from signals closed on the record, not a score."
             }
           />
           <div className="mt-5">

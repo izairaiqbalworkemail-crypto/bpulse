@@ -1,29 +1,30 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/lib/JsonLd";
-import { PageHero } from "@/components/PageHero";
-import { SignalPlate } from "@/components/SignalPlate";
-import { StageRail } from "@/components/StageRail";
-import { Credit } from "@/components/primitives/Credit";
-import { Episode } from "@/components/episode/Episode";
-import { Reveal } from "@/components/landing/Reveal";
-import { Desk } from "@/components/conversation/Desk";
-import { PassAlong } from "@/components/PassAlong";
-import { VettedPay } from "@/components/VettedPay";
+import { CheckOffer } from "@/components/check/CheckOffer";
+import { CheckReports } from "@/components/check/CheckReports";
+import { CheckDays } from "@/components/check/CheckDays";
+import { CheckRunner } from "@/components/check/CheckRunner";
+import { CheckCase } from "@/components/check/CheckCase";
+import { CheckQuestions } from "@/components/check/CheckQuestions";
+import { CheckStart } from "@/components/check/CheckStart";
+import { pageFrame } from "@/content/platform";
 import { offer } from "@/content/offer";
-import { checkBadOutcome, checkDays, checkRunner } from "@/content/check";
-import { getSpecialist } from "@/content/specialists";
+import { parseCheckCase } from "@/lib/check-case";
 
 export const metadata: Metadata = buildMetadata({
   title: "The Check",
-  description: `A conversation that produces a written read. Then ${offer.check.duration}, $${offer.check.price.toLocaleString("en-US")}, a verdict of keep, repair, or rebuild.`,
+  description: pageFrame.check,
   path: "/check",
 });
 
-export default function CheckPage() {
-  const runner = getSpecialist(checkRunner.id);
-  const price = `$${offer.check.price.toLocaleString("en-US")}`;
+type PageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function CheckPage({ searchParams }: Readonly<PageProps>) {
+  const params = await searchParams;
+  const view = parseCheckCase(params);
 
   return (
     <>
@@ -32,101 +33,13 @@ export default function CheckPage() {
         description={offer.check.description}
         price={offer.check.price}
       />
-
-      <PageHero
-        kicker="The Check"
-        title="Five days. A verdict."
-        dek="A written read of what you described. Then keep, repair, or rebuild. A person replies within one business day."
-        hideAction
-      />
-
-      <SignalPlate
-        kicker={`${offer.check.name} · ${offer.check.duration}`}
-        price={price}
-        line="Verdict of keep, repair, or rebuild. Credited on a Close invoice within 30 days."
-        facts={[
-          {
-            kicker: "What you leave with",
-            body: "A written condition report. Not a sales deck.",
-          },
-          {
-            kicker: "Who runs it",
-            body: `${runner.name}. The name on the Check is the name on the Close.`,
-          },
-          {
-            kicker: "If we Close",
-            body: `${price} is credited on that invoice within 30 days.`,
-          },
-        ]}
-        href="#intake"
-        action="Start on this desk"
-      />
-
-      <Episode labelledBy="intake" tone="paper">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-            02 · The conversation
-          </p>
-          <h2 id="intake-heading" className="mt-3 max-w-[18ch] font-newsreader type-display-m text-[32px] leading-[1.08] text-iron md:text-[40px]">
-            Tell us what happens when you try to ship it.
-          </h2>
-          <p className="mt-5 max-w-[46ch] type-lead text-iron">
-            A structured intake, not a chatbot.
-          </p>
-          <p className="mt-3 max-w-[46ch] font-newsreader text-[18px] leading-[1.5] text-ink">
-            You leave with a written read of what you described.
-          </p>
-          <div className="mt-10">
-            <Desk scriptId="check" ending="read" />
-          </div>
-      </Episode>
-
-      <Episode tone="milk">
-        <div>
-          <Reveal>
-            <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-              Five days
-            </p>
-          </Reveal>
-          <StageRail stages={checkDays} label="Check days" />
-
-          <Reveal className="mt-16">
-            <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-              Who runs it
-            </p>
-            <Credit
-              name={runner.name}
-              capability={runner.role}
-              line={checkRunner.line}
-              portraitSrc={runner.photo}
-              portraitAlt={runner.name}
-            />
-          </Reveal>
-
-<Reveal className="panel mt-16 max-w-[60ch] p-6 md:p-8">
-          <p className="kicker flex items-center gap-2">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blocked pulse-dot" />
-            The honest bad outcome
-          </p>
-          <p className="mt-3 font-newsreader text-[16px] leading-[1.55] text-ink">
-            {checkBadOutcome}
-          </p>
-        </Reveal>
-
-          <div className="mt-16">
-            <VettedPay />
-          </div>
-          <div className="mt-8">
-            <PassAlong />
-          </div>
-          <p className="mt-10 max-w-[44ch] font-plex-sans text-[14px] leading-[1.5] text-ink">
-            IP assigned in writing before code. NDA from day zero. See{" "}
-            <Link href="/legal/terms" className="underline underline-offset-4">
-              legal terms
-            </Link>
-            .
-          </p>
-        </div>
-      </Episode>
+      <CheckOffer />
+      <CheckReports />
+      <CheckDays />
+      <CheckRunner />
+      <CheckCase view={view} />
+      <CheckQuestions />
+      <CheckStart />
     </>
   );
 }

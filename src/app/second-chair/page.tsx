@@ -17,12 +17,13 @@ import {
   secondChairSkills,
   secondChairTiers,
 } from "@/content/second-chair";
+import { pageFrame } from "@/content/platform";
 import { getSpecialist } from "@/content/specialists";
 import { lots } from "@/content/lots";
 
 export const metadata: Metadata = buildMetadata({
   title: "Second Chair",
-  description: secondChair.description,
+  description: pageFrame.secondChair,
   path: "/second-chair",
 });
 
@@ -42,9 +43,9 @@ export default function SecondChairPage() {
       />
 
       <PageHero
-        kicker="Second Chair"
+        kicker="Capability transfer"
         title="We finish it. Then we make sure you can keep it."
-        dek={secondChair.reframe}
+        dek={pageFrame.secondChair}
         hideAction
       />
 
@@ -133,7 +134,7 @@ export default function SecondChairPage() {
                       href={`/team/${person.id}`}
                       className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
                     >
-                      Full profile
+                      Assignment record
                     </Link>
                   </p>
                 </div>

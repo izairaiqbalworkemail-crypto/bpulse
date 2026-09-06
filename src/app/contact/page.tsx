@@ -14,12 +14,12 @@ import { Reveal } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 import { addressLine } from "@/config/site";
 import { checkRunner } from "@/content/check";
+import { pageFrame } from "@/content/platform";
 import { getSpecialist, specialists } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
-  description:
-    "Lahore. One business day. A mailto if you will not fill a form.",
+  description: pageFrame.contact,
   path: "/contact",
 });
 
@@ -29,9 +29,9 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        kicker="Contact"
-        title="A person replies within one business day."
-        dek="Write the brief. A person reads it. If you will not fill a form, write the address below."
+        kicker="Intake"
+        title="Aneeb Iqbal reads it within one business day."
+        dek={pageFrame.contact}
         hideAction
       />
 
@@ -40,7 +40,7 @@ export default function ContactPage() {
         <div className="relative grid-container pt-12 md:pt-16">
           <PeopleRail
             people={specialists}
-            line="A named person replies. Not a queue."
+            line="The platform routes it. Aneeb reads it."
           />
           <div className="mt-3">
             <AtmosphereNote />

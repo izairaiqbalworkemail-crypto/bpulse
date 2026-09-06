@@ -1,5 +1,5 @@
 export const demoBanner =
-  "Sample portal. Nothing here is a live engagement. Data is labelled sample throughout.";
+  "The platform, live. Nothing here is a live engagement. Data is labelled sample throughout.";
 
 export const demoClient = {
   name: "Northline Payroll",

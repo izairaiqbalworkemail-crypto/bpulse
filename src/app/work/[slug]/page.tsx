@@ -10,14 +10,11 @@ import { Trace } from "@/components/trace/Trace";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { lots, getLot, figureDisclaimer } from "@/content/lots";
 import { stagesForLot } from "@/content/catalogue";
-import { getSpecialist, specialists } from "@/content/specialists";
+import { pageFrame } from "@/content/platform";
 import { brand } from "@/config/brand";
+import { assignedCrew, lotStatus } from "@/lib/assignment";
 import { PageClose } from "@/components/PageClose";
-import { PeopleRail } from "@/components/PeopleRail";
-import {
-  Atmosphere,
-  AtmosphereNote,
-} from "@/components/landing/Atmosphere";
+import { Atmosphere } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
 import { PageHero } from "@/components/PageHero";
 import { specFromLot, verifiedFigures } from "@/lib/lot-trace";
@@ -36,16 +33,17 @@ export async function generateMetadata({
   const { slug } = await params;
   const lot = getLot(slug);
   return buildMetadata({
-    title: `${lot.client} — ${lot.title}`,
-    description: lot.summary,
+    title: `${lot.lotNumber} · ${lot.client}`,
+    description: pageFrame.workSlug,
     path: `/work/${lot.slug}`,
   });
 }
 
-export default async function LotPage({ params }: PageProps) {
+export default async function LotPage({ params }: Readonly<PageProps>) {
   const { slug } = await params;
   const lot = getLot(slug);
-  const specialist = getSpecialist(lot.specialistId);
+  const crew = assignedCrew(lot);
+  const status = lotStatus(lot);
   const disclaimer = figureDisclaimer(lot);
   const figures = verifiedFigures(lot);
   const spec = specFromLot(lot);
@@ -60,18 +58,18 @@ export default async function LotPage({ params }: PageProps) {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: "Catalogue", url: `${brand.url}/work` },
+          { name: "The record", url: `${brand.url}/work` },
           {
-            name: `${lot.client} — ${lot.title}`,
+            name: `${lot.lotNumber} · ${lot.client}`,
             url: `${brand.url}/work/${lot.slug}`,
           },
         ]}
       />
 
       <PageHero
-        kicker={`${lot.lotNumber} · ${lot.grade.label}`}
+        kicker={`${lot.lotNumber} · engagement`}
         title={lot.client}
-        dek={lot.title}
+        dek={pageFrame.workSlug}
         hideAction
       />
 
@@ -90,24 +88,55 @@ export default async function LotPage({ params }: PageProps) {
         <Atmosphere kind="desk" opacity={0.12} />
         <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-14">
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-            {lot.client}
+            {lot.lotNumber}
             {disclaimer ? ` · ${disclaimer}` : null}
           </p>
           <p className="mt-3 max-w-[22ch] font-newsreader text-[28px] leading-[1.15] text-iron md:text-[32px]">
             {lot.title}
           </p>
 
-          <div className="mt-10">
-            <PeopleRail
-              people={specialists.filter((person) => person.id === specialist.id)}
-              line="The name on this lot"
-            />
-          </div>
-          <div className="mt-3 mb-10">
-            <AtmosphereNote />
-          </div>
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-            What arrived
+          <dl className="mt-10 max-w-[52ch] border-t border-iron/12 pt-8">
+            <div className="grid gap-2 py-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+                Assigned
+              </dt>
+              <dd className="font-newsreader text-[18px] leading-[1.4] text-iron">
+                {crew.map((row, index) => (
+                  <span key={row.person.id}>
+                    {index > 0 ? " · " : null}
+                    <Link
+                      href={`/team/${row.person.id}`}
+                      className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+                    >
+                      {row.person.name}
+                    </Link>
+                    , {row.capability}
+                    {row.lead ? " · lead" : null}
+                  </span>
+                ))}
+              </dd>
+            </div>
+            <div className="grid gap-2 border-t border-iron/8 py-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+                Arrived
+              </dt>
+              <dd className="font-newsreader text-[18px] text-iron">
+                {lot.grade.label}
+                {lot.grade.date ? ` · ${lot.grade.date}` : null}
+              </dd>
+            </div>
+            <div className="grid gap-2 border-t border-iron/8 py-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
+              <dt className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+                Closed
+              </dt>
+              <dd className="font-newsreader text-[18px] text-iron">
+                {status ?? "Duration is not on the public record."}
+              </dd>
+            </div>
+          </dl>
+
+          <p className="mt-14 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+            Condition on arrival
           </p>
           <div className="mt-3">
             <Grade
@@ -201,21 +230,25 @@ export default async function LotPage({ params }: PageProps) {
 
           <Reveal className="mt-14">
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-              Crew
+              Assigned crew
             </p>
-            <div className="mt-4">
-              <Link href={`/team/${specialist.id}`} className="inline-block">
-                <Credit
-                  name={specialist.name}
-                  capability={lot.specialistCapability}
-                  portraitSrc={specialist.photo}
-                  portraitAlt={specialist.name}
-                />
-              </Link>
-            </div>
+            <ul className="mt-4 flex flex-col gap-4">
+              {crew.map((row) => (
+                <li key={row.person.id}>
+                  <Link href={`/team/${row.person.id}`} className="inline-block">
+                    <Credit
+                      name={row.person.name}
+                      capability={`${row.capability}${row.lead ? " · lead" : ""}`}
+                      portraitSrc={row.person.photo}
+                      portraitAlt={row.person.name}
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Reveal>
 
-          <PageClose line="This lot entered unfinished. Yours can too." />
+          <PageClose line="This engagement entered unfinished. Yours can too." />
         </div>
       </section>
     </>

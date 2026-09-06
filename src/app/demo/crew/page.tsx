@@ -6,7 +6,7 @@ import { demoCrew } from "@/content/demo";
 import { getSpecialist } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sample portal — crew",
+  title: "The platform — crew",
   description: "Named people on this sample Close, linked to their public pages.",
   path: "/demo/crew",
 });

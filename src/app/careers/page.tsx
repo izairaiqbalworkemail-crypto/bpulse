@@ -5,13 +5,13 @@ import { GateCard } from "@/components/GateCard";
 import { PageHero } from "@/components/PageHero";
 import { SignalPlate } from "@/components/SignalPlate";
 import { BriefIntake } from "@/components/intake/BriefIntake";
+import { pageFrame } from "@/content/platform";
 import { crewCommitments, crewGates } from "@/content/process";
 import { listRoles } from "@/lib/careers/store";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Careers",
-  description:
-    "Five-gate hiring pipeline with a written Gate 0 diagnostic. Paid work sample and no candidate fee.",
+  title: "Applying to the standard",
+  description: pageFrame.careers,
   path: "/careers",
 });
 
@@ -22,9 +22,9 @@ export default function CareersPage() {
   return (
     <section className="w-full bg-rag pb-24 md:pb-32">
       <PageHero
-        kicker="Careers"
+        kicker="Applying to the standard"
         title="A written Gate 0. Then the rest of the gates."
-        dek="No multiple-choice pass/fail gate. Gate 2 is paid whether or not you join."
+        dek={pageFrame.careers}
         hideAction
       />
 
@@ -45,7 +45,7 @@ export default function CareersPage() {
             kicker: "After Gate 4",
             body: (
               <>
-                A public crew profile with a dated credential. Example:{" "}
+                A public assignment record. Example:{" "}
                 <Link href="/team/hamza" className="underline underline-offset-4">
                   /team/hamza
                 </Link>
@@ -60,7 +60,7 @@ export default function CareersPage() {
 
       <div className="grid-container pt-12">
         <section>
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">Hiring plan</p>
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">Admission plan</p>
           <ul className="mt-4 space-y-3">
             {roles.map((role) => (
               <li key={role.id} className="card p-6">

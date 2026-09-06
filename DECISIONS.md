@@ -239,7 +239,7 @@ Home is separate (headline · sub · buttons · cropped portal). Every other pub
 | `/edpulse` | `TierTable` with Accelerator weighted |
 | `/contact` | Address + mailto, then `CrewSession` contact |
 | `/notices` | Jump index + two-column masonry, last notice is the limitation |
-| `/legal/[slug]` | 66ch measure + sticky section index. Draft banner stays |
+| `/legal/[slug]` | 66ch measure + sticky section index. Status is In force (iron), never Active green |
 | `/demo` | Dense labelled sample (24 findings, 6 commits, 3 deploys) |
 
 ### Better-than-brief
@@ -359,3 +359,58 @@ Ground rhythm: espresso · espresso · paper · paper · espresso · paper · go
 | 08 | `#questions` | Paper. Two-column stagger, no accordion. “What are you bad at?” is the notices answer plus the turn-down. Close is one Check link. |
 
 Closest-lot pairing uses real lot signals only. No percentage. Hash is not stripped on load so mid-page links work.
+
+---
+
+## Platform-first interior pages (Sep 2026)
+
+The landing argues the platform is accountable. Every other page now states its relationship to that platform in the first 60 words (`src/content/platform.ts`). Vocabulary is locked in `src/content/vocabulary.ts`. Routes were not renamed.
+
+### Honest deviations from the brief
+
+- **No gate clearance dates.** `gate.ts` still has none. Admission renders “Client-facing · Gate 4” or “Operations · not client-facing” plus “Clearance dates are not on the public record.” No 08 Jan / 22 Jan invented ladder.
+- **No “eleven haven’t.”** Twelve people are admitted. Fail counts are unpublished (`passRateNote`).
+- **No duration, no “available from.”** Closed line uses the lot’s Status data line. Missing status says so. Assignment status is `assigned` / `available` / `limited` mapped from published `availability` only.
+- **DeepIDV lead is Mehak, not Hassan.** Assignment history is `lotsForPerson`: lot owner plus published record orgs. Hassan appears on DeepIDV and Sully as supporting crew because those orgs are on his record.
+- **No portal screenshots.** `/how-it-works` links each stage to the live sample view. The guarantees table links to `/demo/scope`, `/work`, `/demo/progress`, `/demo/handover`, `/standard`.
+- **Signals closed** are unique signals on lots that person is on. Not `signalsAddressed` guesswork, not a count we do not have.
+- **`/work` stays `/work`.** Framing is “the record.” Renaming is a post-launch option.
+
+---
+
+## /check — the money page (Sep 2026)
+
+Seven rooms, each answering one reason to close the tab. Gold fill is **section 01 only**. The reserve control in 07 is iron on paper. Sitewide masthead Check stays gold (project law); it is not a second gold *room*.
+
+### Honest deviation: the keep report
+
+The brief asked for two complete anonymised reports — one repair, one “you don’t need us” — with **never invented findings**.
+
+No public Check on the record concluded keep. Every published lot arrived unfinished. Inventing a fintech, “8 months in,” or four fabricated findings would be the generic template the brief forbids.
+
+- **Repair** is WearMeOut redacted (`src/content/check-reports.ts`). The read is that lot’s `condition`. Findings are its arrival signals in the published taxonomy voice. Outcome is quoted. Duration is stated as absent. Limits stay verbatim. Client name does not appear.
+- **Keep** is the written verdict (`checkBadOutcome`), labelled as having no public engagement file. Findings list is empty on purpose.
+
+Day 1 now says “You receive nothing today.” The no-handoff sentence is in section 04. Query `?signals=` personalises section 05 and quotes only words present in the query; the home reading passes the exact labels tapped. Generic fallback is labelled generic.
+
+Payment path (reserve → invoice → clear → Day 1) is above the intake. W-8BEN and PO are named. Intake submits `source: check`.
+
+### One large object per page (no two pages share a composition)
+
+| Page | Large object |
+|---|---|
+| `/how-it-works` | Six-stage platform rail + guarantee rows that each link to proof |
+| `/work` | Two `LotPlate`s, then compact assigned rows |
+| `/work/[slug]` | Assignment file (assigned / arrived / closed) above the trace |
+| `/team` | Large `PortraitStrip`, then capability groups with standing + status |
+| `/team/[slug]` | Admission + assignment history; philosophy after |
+| `/match` | Four-pass assignment engine; output framed “the platform would assign” |
+| `/check` | Seven rooms. Gold offer first; two full reports |
+| `/standard` | Vertical GateCards, then standing consequence and three commitments |
+| `/demo` | Dense labelled sample (banner persists) |
+| `/second-chair` | Assigned engineer with Gate 4 line |
+| `/careers` | Gates + intake |
+| `/notices` | Jump index, all answers visible |
+| `/contact` | Named intake (Aneeb) |
+| `/security` | Vendor + disclosure cards |
+| `/legal` | Document register |

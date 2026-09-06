@@ -356,12 +356,76 @@ p {
   color: var(--color-rag);
 }
 
+/* Bound report — a document on the desk, not a marketing tile. */
+.check-document {
+  border-radius: var(--radius-surface);
+  background: var(--color-rag-card);
+  border: 1px solid color-mix(in srgb, var(--color-iron) 10%, transparent);
+  box-shadow: var(--shadow-card);
+}
+
 .episode-rule {
   width: 2rem;
   height: 1px;
   margin-top: 1rem;
   background: currentColor;
   opacity: 0.22;
+}
+
+/* Legal reading system — one language for register, document, transfers. */
+.legal-plain {
+  border-left: 1px solid color-mix(in srgb, var(--color-iron) 18%, transparent);
+  background: var(--color-rag-card);
+  padding: 0.85rem 1.1rem;
+}
+
+.legal-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.legal-table th,
+.legal-table td {
+  vertical-align: top;
+}
+
+.legal-table thead th {
+  padding: 0.75rem 1.5rem 0.75rem 0;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-iron) 12%, transparent);
+}
+
+.legal-table tbody th,
+.legal-table tbody td {
+  padding: 1rem 1.5rem 1rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-iron) 8%, transparent);
+}
+
+.legal-table tbody tr {
+  transition: background-color 180ms ease;
+}
+
+.legal-table tbody tr:hover {
+  background: color-mix(in srgb, var(--color-iron) 3%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legal-table tbody tr {
+    transition: none;
+  }
+}
+
+@media print {
+  .legal-chrome {
+    display: none !important;
+  }
 }
 
 .contrast-plate {

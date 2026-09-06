@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { demoBanner, demoViews } from "@/content/demo";
+import { pageFrame } from "@/content/platform";
 import { PageHero } from "@/components/PageHero";
 
 export default function DemoLayout({ children }: { children: ReactNode }) {
@@ -11,9 +12,9 @@ export default function DemoLayout({ children }: { children: ReactNode }) {
         {demoBanner}
       </div>
       <PageHero
-        kicker="Sample portal"
+        kicker="The platform"
         title="You would be in charge."
-        dek="A click-through of what a locked Close looks like before anyone pays. Every number here is sample data."
+        dek={pageFrame.demo}
         actionHref="/check"
         actionLabel="Start with a Check"
       />

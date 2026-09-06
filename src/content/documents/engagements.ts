@@ -1,4 +1,5 @@
 import type { LegalDoc } from "./types";
+import { subProcessors } from "@/content/legal/vendors";
 
 /** bpulse as a party in every engagement document. */
 export const bpulseParty = {
@@ -31,7 +32,7 @@ export const mutualNda: LegalDoc = {
   version: "v1.2",
   issuedAt: "14 Sep 2026",
   updatedAt: "14 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "Signed before the first technical conversation, repo access, or production credentials.",
@@ -199,7 +200,8 @@ export const masterServices: LegalDoc = {
   version: "v2.0",
   issuedAt: "14 Sep 2026",
   updatedAt: "14 Sep 2026",
-  status: "active",
+  status: "current",
+  initialsOnEachPage: true,
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "The frame for a long-running relationship: services, payment, liability, termination.",
@@ -318,7 +320,7 @@ export const masterServices: LegalDoc = {
       number: "8",
       heading: "Governing law",
       plainTerms:
-        "The forum for any dispute is set here by the reviewing solicitor.",
+        "Governing law and the forum for disputes are stated in the signed copy.",
       clauses: [
         {
           text: "Governing law and forum: [to be inserted by qualified solicitor before execution].",
@@ -357,7 +359,8 @@ export const sow: LegalDoc = {
   version: "v2.1",
   issuedAt: "28 Aug 2026",
   updatedAt: "03 Sep 2026",
-  status: "active",
+  status: "current",
+  initialsOnEachPage: true,
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "The scope-lock document: deliverables, exclusions, acceptance, timeline.",
@@ -515,7 +518,7 @@ export const changeOrder: LegalDoc = {
   version: "v1.0",
   issuedAt: "03 Sep 2026",
   updatedAt: "03 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "The priced, signed amendment appended to the SOW. Nothing is absorbed silently.",
@@ -575,7 +578,7 @@ export const ipAssignment: LegalDoc = {
   version: "v1.0",
   issuedAt: "14 Sep 2026",
   updatedAt: "14 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "Explicit transfer of new work on payment, naming what is assigned and what stays ours.",
@@ -643,7 +646,7 @@ export const ipAssignment: LegalDoc = {
     {
       number: "5",
       heading: "Governing law",
-      plainTerms: "Set by the reviewing solicitor before execution.",
+      plainTerms: "Governing law and the forum for disputes are stated in the signed copy.",
       clauses: [
         { text: "Governing law and forum: [to be inserted by qualified solicitor before execution]." },
       ],
@@ -667,7 +670,7 @@ export const dataProcessing: LegalDoc = {
   version: "v1.0",
   issuedAt: "14 Sep 2026",
   updatedAt: "14 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "Signed with any client that sends personal data. Non-optional for EU engagements.",
@@ -709,10 +712,9 @@ export const dataProcessing: LegalDoc = {
       heading: "Sub-processors",
       plainTerms: "bpulse only uses the named sub-processors, with data hosted where listed.",
       clauses: [
-        { text: "Vercel — hosting and edge infrastructure." },
-        { text: "Neon — managed Postgres for intake and application records; host region per deployment and recorded in the sub-processor register." },
-        { text: "Upstash — Redis for rate limits and selected counters." },
-        { text: "Resend — transactional email delivery." },
+        ...subProcessors.map((row) => ({
+          text: `${row.name} — ${row.role}. ${row.region}`,
+        })),
         {
           text: "bpulse will not add a sub-processor without notice and written consent, which may not be unreasonably withheld.",
         },
@@ -791,7 +793,7 @@ export const handoverCertificate: LegalDoc = {
   version: "v1.0",
   issuedAt: "—",
   updatedAt: "14 Sep 2026",
-  status: "not-reached",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "Records what was delivered, credentials transferred, and access revoked with a dated log.",
@@ -856,6 +858,102 @@ export const handoverCertificate: LegalDoc = {
   ],
 };
 
+export const standardContractualClauses: LegalDoc = {
+  slug: "standard-contractual-clauses",
+  aliases: ["scc", "uk-addendum"],
+  name: "STANDARD CONTRACTUAL CLAUSES AND UK ADDENDUM",
+  family: "engagement",
+  reference: "SCC-2026-001",
+  version: "v0.1",
+  issuedAt: "06 Sep 2026",
+  updatedAt: "06 Sep 2026",
+  status: "current",
+  owner: "Hamza Khan",
+  role: "Legal & Risk",
+  lead: "The cover for the official SCC text. We do not rewrite the mandatory clauses.",
+  parties: [bpulseParty, clientParty],
+  reviewNote:
+    "Solicitor to attach Commission Implementing Decision (EU) 2021/914 Module Two unmodified, complete Annex I–III, and attach the current UK International Data Transfer Addendum for UK matters.",
+  signatureBlocks: [
+    { party: "bpulse", name: "Authorised bpulse representative", title: "—" },
+    { party: "client", name: "Authorised client representative", title: "—" },
+  ],
+  sections: [
+    {
+      number: "1",
+      heading: "What this document is",
+      plainTerms:
+        "This is a cover. The governing transfer clauses are the official Commission text, attached, not rewritten here.",
+      clauses: [
+        {
+          text: "Where the client is in the EEA and transfers personal data to bpulse as processor, the parties use Module Two of the Standard Contractual Clauses in Commission Implementing Decision (EU) 2021/914.",
+        },
+        {
+          text: "The mandatory clauses of that instrument cannot be modified. This document does not reproduce them. The official text is attached at execution.",
+        },
+        {
+          text: "This cover exists so a procurement team can see the chosen module, the annexes still to complete, and the Pakistan position before the official pages are stapled on.",
+        },
+      ],
+    },
+    {
+      number: "2",
+      heading: "Why SCCs are required",
+      plainTerms:
+        "Pakistan has no EU adequacy decision. SCCs are the transfer tool. A Transfer Impact Assessment is still required.",
+      clauses: [
+        {
+          text: "Pakistan has no enacted general data protection law and is not the subject of an EU adequacy decision.",
+        },
+        {
+          text: "SCCs alone are not sufficient. The exporter documents a Transfer Impact Assessment. The studio's current statement of that assessment is at /legal/data.",
+        },
+      ],
+    },
+    {
+      number: "3",
+      heading: "The UK addendum",
+      plainTerms:
+        "UK clients use the UK International Data Transfer Addendum to the EU SCCs, not the EU set on its own.",
+      clauses: [
+        {
+          text: "For a UK client transferring personal data to bpulse, the parties execute the UK International Data Transfer Addendum to the EU Standard Contractual Clauses.",
+        },
+        {
+          text: "UK adequacy for transfers from the EU to the UK is a separate fact and does not cover transfers from the UK to Pakistan.",
+        },
+      ],
+      reviewNote:
+        "Solicitor to confirm the current ICO addendum version and complete it for the matter.",
+    },
+    {
+      number: "4",
+      heading: "Annexes still blank",
+      plainTerms:
+        "Annex I–III are matter-specific. We do not invent a dataset, a region, or a contact that is not on the file.",
+      clauses: [
+        {
+          text: "Annex I (parties and transfer) is completed per engagement: exporter, importer, categories of data, and frequency.",
+        },
+        {
+          text: "Annex II (technical and organisational measures) points to /security and /legal/data as they stand on the execution date.",
+        },
+        {
+          text: `Annex III (sub-processors) is the current list: ${subProcessors.map((row) => row.name).join(", ")}.`,
+        },
+      ],
+    },
+  ],
+  changelog: [
+    {
+      version: "v0.1",
+      date: "06 Sep 2026",
+      change: "Cover draft. Official SCC text not reproduced.",
+      reason: "Give EU and UK procurement a named instrument without inventing clause text.",
+    },
+  ],
+};
+
 export const engagementDocs = [
   mutualNda,
   masterServices,
@@ -863,5 +961,6 @@ export const engagementDocs = [
   changeOrder,
   ipAssignment,
   dataProcessing,
+  standardContractualClauses,
   handoverCertificate,
 ];

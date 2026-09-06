@@ -419,6 +419,10 @@ export const signalTaxonomy: Signal[] = [
 
 const signalById = new Map(signalTaxonomy.map((signal) => [signal.id, signal]));
 
+export function isSignalId(value: string): value is SignalId {
+  return signalById.has(value as SignalId);
+}
+
 export function getSignal(id: SignalId): Signal {
   const signal = signalById.get(id);
   if (!signal) throw new Error(`Unknown signal: ${id}`);

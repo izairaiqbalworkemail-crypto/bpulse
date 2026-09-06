@@ -21,6 +21,8 @@ export type PulseCheckPrefill = {
 type PulseCheckIntakeProps = {
   prefill?: PulseCheckPrefill;
   source?: string;
+  surface?: "card" | "plain";
+  submitTone?: "signal" | "iron";
 };
 
 function subscribe() {
@@ -40,6 +42,8 @@ function emptyWound() {
 export function PulseCheckIntake({
   prefill,
   source = "check",
+  surface = "card",
+  submitTone = "signal",
 }: Readonly<PulseCheckIntakeProps>) {
   const matchWound = useSyncExternalStore(subscribe, getMatchWound, emptyWound);
   const seeded: Record<string, string> = {};
@@ -53,6 +57,8 @@ export function PulseCheckIntake({
       key={`${seeded.situation ?? ""}:${seeded.build ? "wound" : "open"}`}
       source={source}
       prefill={Object.keys(seeded).length > 0 ? seeded : undefined}
+      surface={surface}
+      submitTone={submitTone}
     />
   );
 }

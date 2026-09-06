@@ -75,7 +75,7 @@ export default function AboutPage() {
 
           <div className="mt-20 border-t border-iron/20 pt-10">
             <p className="mb-8 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-              The crew
+              Admitted to the standard
             </p>
             <PortraitStrip people={specialists} />
           </div>

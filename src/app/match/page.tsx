@@ -6,6 +6,7 @@ import { Atmosphere } from "@/components/landing/Atmosphere";
 import { Rise, Stagger, Item } from "@/components/landing/Reveal";
 import { MatchDesk } from "@/components/match/MatchDesk";
 import { getCatalogue } from "@/content/catalogue";
+import { pageFrame } from "@/content/platform";
 import { signalTaxonomy, signalCategoryLabel } from "@/content/signals";
 import { offer } from "@/content/offer";
 
@@ -13,8 +14,8 @@ const recordCount = getCatalogue().length;
 const checkPrice = `$${offer.check.price.toLocaleString("en-US")}`;
 
 export const metadata: Metadata = buildMetadata({
-  title: "The Match",
-  description: `Matched against ${recordCount} real engagements. Not a guess. We check what you describe against what we have actually fixed.`,
+  title: "The assignment engine",
+  description: pageFrame.match,
   path: "/match",
 });
 
@@ -92,22 +93,22 @@ function SignalBand() {
   }
 
   return (
-    <div className="rounded-[24px] bg-signal p-6 text-iron md:p-10">
-      <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron/70">
+    <div className="border-t border-iron/12 py-8">
+      <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
         The evidence language
       </p>
       <div className="mt-4 flex flex-wrap items-end justify-between gap-6">
         <h2 className="max-w-[18ch] font-newsreader type-title text-[28px] leading-[1.1] text-iron md:text-[36px]">
           Heard from your words. Named by the record.
         </h2>
-        <p className="max-w-[34ch] font-newsreader text-[16px] leading-[1.45] text-iron/80">
+        <p className="max-w-[34ch] font-newsreader text-[16px] leading-[1.45] text-ink">
           {signalTaxonomy.length} conditions, four lanes. If your words carry
           one, the read can tell you — and show the file it lives in.
         </p>
       </div>
       <div className="mt-8 grid gap-6 md:grid-cols-4">
         {[...groups.entries()].map(([category, list]) => (
-          <div key={category} className="rounded-[16px] bg-rag-card/80 p-4">
+          <div key={category}>
             <p className="flex items-center gap-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron">
               <span
                 aria-hidden="true"
@@ -211,9 +212,9 @@ export default function MatchPage() {
   return (
     <section className="w-full bg-rag">
       <PageHero
-        kicker="The Match"
-        title="Matched against the work we already did."
-        dek={`Not a guess. ${recordCount} real engagements. The reason is the product.`}
+        kicker="Assignment"
+        title="Describe what’s stuck. The platform assigns."
+        dek={pageFrame.match}
         hideAction
       />
       <div className="relative overflow-hidden">
@@ -222,8 +223,8 @@ export default function MatchPage() {
           <section className="mx-auto max-w-[44rem] text-center">
             <Rise>
               <h2 className="font-newsreader type-title text-[26px] leading-[1.25] text-iron md:text-[34px]">
-                Other firms match on skills people typed about themselves. We
-                match on evidence of work we have already shipped.
+                Other firms match on skills people typed about themselves. The
+                platform assigns from evidence of work already shipped.
               </h2>
             </Rise>
             <Rise delay={0.12}>

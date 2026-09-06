@@ -108,11 +108,11 @@ export function arrivalGrade(situation: string): string {
 }
 
 export const docketLabel: Record<string, string> = {
-  situation: "Arrival",
-  build: "Wound",
+  situation: "Where it's stuck",
+  build: "What it is",
   stack: "Floor",
-  access: "Keys",
-  name: "From",
+  access: "Access you can give",
+  name: "How to reach you",
   email: "Inbox",
   codeLocation: "Repo",
   company: "Org",

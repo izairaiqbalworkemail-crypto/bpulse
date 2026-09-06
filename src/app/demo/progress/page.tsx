@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { progress } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sample portal — progress",
+  title: "The platform — progress",
   description: "Sample commits, deploys, and burndown. Not a live feed.",
   path: "/demo/progress",
 });

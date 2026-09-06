@@ -6,11 +6,11 @@ import { PageClose } from "@/components/PageClose";
 import { Atmosphere } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
 import { notices } from "@/content/notices";
+import { pageFrame } from "@/content/platform";
 
 export const metadata: Metadata = buildMetadata({
   title: "Notices",
-  description:
-    "Questions we get asked, answered plainly. No accordion. The last one is what we are bad at.",
+  description: pageFrame.notices,
   path: "/notices",
 });
 
@@ -30,7 +30,7 @@ export default function NoticesPage() {
         <PageHero
           kicker="Notices"
           title="Questions we get asked, answered plainly."
-          dek="No accordion. The last one is what we are bad at."
+          dek={pageFrame.notices}
           hideAction
         />
         <div className="relative overflow-hidden">

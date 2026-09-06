@@ -7,7 +7,7 @@ import { diffSections } from "@/lib/legal/diff";
 import { documents, changeOrders, scopeVersions } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sample portal — documents",
+  title: "The platform — documents",
   description:
     "Dated documents with signature status. Sample stubs only; living templates stay on /legal.",
   path: "/demo/documents",

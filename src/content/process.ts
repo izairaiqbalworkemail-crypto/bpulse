@@ -107,6 +107,9 @@ export const crewGates = [
 export const standingReview =
   "Quarterly standing review against real delivered work — not a self-assessment, not a pulse survey.";
 
+export const standingConsequence =
+  "If standing falls below the bar: paused placement and mentored work. Not dismissal. The person stays admitted until they hold again, or they leave the standard in writing.";
+
 export const crewCommitments = [
   "Candidates are never charged a fee at any stage.",
   "No multiple-choice test is ever a pass/fail gate.",

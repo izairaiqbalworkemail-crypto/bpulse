@@ -183,14 +183,14 @@ export const sessionFields: Record<IntakeType, FieldConfig[]> = {
   check: [
     {
       name: "build",
-      label: "What is stuck",
+      label: "What it is",
       type: "textarea",
       required: true,
       placeholder: "The last thing that will not ship",
     },
     {
       name: "situation",
-      label: "Which is it",
+      label: "Where it's stuck",
       type: "radio",
       options: ["Almost done", "Stalled", "Live, but fragile", "Just an idea"],
       required: true,
@@ -205,7 +205,7 @@ export const sessionFields: Record<IntakeType, FieldConfig[]> = {
     },
     {
       name: "access",
-      label: "Access",
+      label: "Access you can give",
       type: "radio",
       options: ["Full access", "Partial", "Not yet"],
       required: true,

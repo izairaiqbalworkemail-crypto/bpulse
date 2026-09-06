@@ -6,14 +6,18 @@ import { PortraitStrip } from "@/components/PortraitStrip";
 import { PageClose } from "@/components/PageClose";
 import { specialists } from "@/content/specialists";
 import { crewCapability, crewCapabilityLine } from "@/content/crew-lines";
+import { pageFrame } from "@/content/platform";
 import { Episode } from "@/components/episode/Episode";
-import { AtmosphereNote } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
+import {
+  admission,
+  assignmentStatus,
+  assignmentStatusLabel,
+} from "@/lib/assignment";
 
 export const metadata: Metadata = buildMetadata({
-  title: "The crew",
-  description:
-    "The named specialists who do the work. No subcontracting to strangers mid-build.",
+  title: "Admitted to the standard",
+  description: pageFrame.team,
   path: "/team",
 });
 
@@ -23,63 +27,69 @@ export default function TeamPage() {
   return (
     <>
       <PageHero
-        kicker="The crew"
-        title="The people who ship it."
-        dek="Named. No grey boxes. A missing photograph is initials, not a hole."
+        kicker="Admitted"
+        title="Admitted to the standard."
+        dek={pageFrame.team}
         hideAction
       />
 
       <Episode tone="cocoa">
-          <PortraitStrip people={specialists} size="large" />
-          <div className="mt-4">
-            <AtmosphereNote tone="rag" />
-          </div>
+        <PortraitStrip people={specialists} size="large" />
       </Episode>
 
       <Episode tone="paper">
         <div>
           {groups.map((group, index) => {
             const people = specialists.filter(
-              (person) => crewCapability[person.id] === group
+              (person) => crewCapability[person.id] === group,
             );
             if (people.length === 0) return null;
             return (
               <Reveal key={group} delay={index * 0.06}>
-              <div className="card mb-4 px-8 py-8">
-                <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-                  {group}
-                </p>
-                <p className="mt-2 font-newsreader text-[16px] text-ink/80">
-                  {crewCapabilityLine[group]}
-                </p>
-                <ul className="mt-4 flex flex-col">
-                  {people.map((person) => (
-                    <li key={person.id}>
-                      <Link
-                        href={`/team/${person.id}`}
-                        className="flex flex-wrap items-baseline justify-between gap-3 border-b border-iron/15 py-3"
-                      >
-                        <span className="font-plex-sans text-[16px] text-iron underline decoration-iron/30 underline-offset-4">
-                          {person.name}
-                        </span>
-                        <span className="font-newsreader text-[16px] text-ink/80">
-                          {person.role}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div className="mb-12 border-t border-iron/12 pt-8">
+                  <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+                    {group}
+                  </p>
+                  <p className="mt-2 font-newsreader text-[16px] text-ink">
+                    {crewCapabilityLine[group]}
+                  </p>
+                  <ul className="mt-6 flex flex-col">
+                    {people.map((person) => {
+                      const line = admission(person);
+                      const status = assignmentStatus(person);
+                      return (
+                        <li key={person.id}>
+                          <Link
+                            href={`/team/${person.id}`}
+                            className="grid gap-1 border-b border-iron/10 py-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline"
+                          >
+                            <span>
+                              <span className="block font-plex-sans text-[16px] text-iron underline decoration-iron/30 underline-offset-4">
+                                {person.name}
+                              </span>
+                              <span className="mt-1 block font-newsreader text-[15px] text-ink">
+                                {line.standing}
+                              </span>
+                            </span>
+                            <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+                              {assignmentStatusLabel(status)}
+                            </span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </Reveal>
             );
           })}
-          <p className="mt-10 font-newsreader text-[18px] text-iron">
-            Not sure who you need?{" "}
+          <p className="mt-4 font-newsreader text-[18px] text-iron">
+            The platform assigns from this bench.{" "}
             <Link
               href="/match"
               className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
             >
-              Match it against the record
+              Describe what’s stuck
             </Link>
             .
           </p>

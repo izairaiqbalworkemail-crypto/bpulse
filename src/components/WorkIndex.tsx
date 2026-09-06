@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { LotPlate } from "@/components/catalog/LotPlate";
 import { Reveal } from "@/components/landing/Reveal";
 import { FilterBar } from "@/components/FilterBar";
 import { Trace } from "@/components/trace/Trace";
@@ -11,6 +12,8 @@ import {
   type CatalogueRow,
 } from "@/content/catalogue";
 import { brand } from "@/config/brand";
+import { getSpecialist } from "@/content/specialists";
+import { lotStatus } from "@/lib/assignment";
 import {
   specFromIndex,
   specFromLot,
@@ -40,11 +43,16 @@ function rowHref(row: CatalogueRow): string | undefined {
 }
 
 function rowMeta(row: CatalogueRow): string {
-  return row.kind === "lot"
-    ? `${row.entryState} · ${row.capability}`
-    : [row.project.year, row.project.stack, row.entryState]
-        .filter(Boolean)
-        .join(" · ");
+  if (row.kind === "lot") {
+    const assigned = getSpecialist(row.lot.specialistId).name;
+    const status = lotStatus(row.lot);
+    return [row.lot.grade.label.replace(/ on arrival$/i, ""), status, assigned]
+      .filter(Boolean)
+      .join(" · ");
+  }
+  return [row.project.year, row.project.stack, row.entryState]
+    .filter(Boolean)
+    .join(" · ");
 }
 
 /** A row in the ledger: trace, client + line, and a mono tail. No card box. */
@@ -108,6 +116,8 @@ export function WorkIndex() {
   const rows = useMemo(() => getCatalogue(), []);
   const visible = rows.filter((row) => matches(row, filter));
   const lots = visible.filter((row) => row.kind === "lot");
+  const featured = lots.slice(0, 2);
+  const compactLots = lots.slice(2);
   const indexRows = visible.filter((row) => row.kind === "index");
   const indexGroups = entryStates
     .map((state) => ({
@@ -128,7 +138,7 @@ export function WorkIndex() {
         />
       </Reveal>
 
-      {lots.length > 0 ? (
+      {featured.length > 0 ? (
         <>
           <Reveal delay={0.08}>
             <div className="mt-16 flex flex-wrap items-baseline justify-between gap-2 border-b border-iron/20 pb-3">
@@ -136,19 +146,28 @@ export function WorkIndex() {
                 01 · In depth
               </p>
               <p className="font-plex-mono text-[12px] text-ink/50">
-                {lots.length} {lots.length === 1 ? "lot" : "lots"}
+                {lots.length} {lots.length === 1 ? "engagement" : "engagements"}
               </p>
             </div>
           </Reveal>
-          <ul className="mt-2">
-            {lots.map((row, index) => (
-              <li key={row.id} className="border-b border-iron/15">
-                <Reveal delay={index * 0.04}>
-                  <LedgerRow row={row} />
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            {featured.map((row) =>
+              row.kind === "lot" ? (
+                <LotPlate key={row.id} lot={row.lot} />
+              ) : null,
+            )}
+          </div>
+          {compactLots.length > 0 ? (
+            <ul className="mt-10">
+              {compactLots.map((row, index) => (
+                <li key={row.id} className="border-b border-iron/15">
+                  <Reveal delay={index * 0.04}>
+                    <LedgerRow row={row} />
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </>
       ) : null}
 

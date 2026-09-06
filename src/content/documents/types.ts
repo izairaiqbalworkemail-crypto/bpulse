@@ -1,19 +1,20 @@
 /** The document system. One typed source, three renderers. */
 
 export type LegalStatus =
+  | "draft"
+  | "current"
   | "active"
   | "awaiting-signature"
   | "signed"
   | "superseded"
   | "not-reached";
 
-export type LegalFamily = "engagement" | "site" | "internal";
+export type LegalFamily = "public" | "engagement" | "candidate" | "crew";
 
 export type PartyKey = "bpulse" | "client" | "crew" | "candidate";
 
 export type Party = {
   key: PartyKey;
-  /** Short display name, e.g. "Northline Payroll". */
   name: string;
   entity: string;
   jurisdiction: string;
@@ -21,7 +22,6 @@ export type Party = {
 };
 
 export type Clause = {
-  /** Explicit number override, e.g. "1.1(a)". Auto-numbered as "S.i". */
   number?: string;
   text: string;
 };
@@ -29,10 +29,9 @@ export type Clause = {
 export type LegalSection = {
   number: string;
   heading: string;
-  /** One or two plain sentences. Must never drift from the clauses below. */
+  /** Web only. Never rendered in PDF or plain text. */
   plainTerms: string;
   clauses: Clause[];
-  /** Anything a solicitor must decide before this section is enforceable. */
   reviewNote?: string;
 };
 
@@ -49,7 +48,6 @@ export type ChangeEntry = {
   reason: string;
 };
 
-/** A past version, kept for version history and diffing. */
 export type LegalDocVersion = {
   version: string;
   issuedAt: string;
@@ -60,7 +58,6 @@ export type LegalDocVersion = {
 export type LegalDoc = {
   slug: string;
   aliases?: string[];
-  /** Display name for the masthead, e.g. "MUTUAL NON-DISCLOSURE AGREEMENT". */
   name: string;
   family: LegalFamily;
   reference: string;
@@ -68,31 +65,32 @@ export type LegalDoc = {
   issuedAt: string;
   updatedAt: string;
   status: LegalStatus;
-  /** Real legal owner. Never a reviewer unless confirmed. */
   owner: string;
   role: string;
-  /** One line on what this document is for. */
   lead: string;
   parties: Party[];
   sections: LegalSection[];
   signatureBlocks: SignatureBlock[];
   changelog: ChangeEntry[];
-  /** Optional version history; drives the diff view. */
   versions?: LegalDocVersion[];
-  /** Document-level solicitor flag (jurisdiction, SCC, etc.). */
   reviewNote?: string;
+  /** MSA and SOW carry initials boxes on every PDF page. */
+  initialsOnEachPage?: boolean;
 };
 
 export const LEGAL_STATUS_META = {
+  draft: { label: "Draft", dot: "○", class: "text-ink/70" },
+  current: { label: "In force", dot: "●", class: "text-iron" },
   active: { label: "Active", dot: "✓", class: "text-partial" },
-  "awaiting-signature": { label: "Awaiting signature", dot: "●", class: "text-signal" },
+  "awaiting-signature": { label: "Awaiting signature", dot: "●", class: "text-ink" },
   signed: { label: "Signed", dot: "✓", class: "text-partial" },
   superseded: { label: "Superseded", dot: "◇", class: "text-ink/50" },
   "not-reached": { label: "Not reached", dot: "○", class: "text-ink/50" },
 } as const;
 
 export const LEGAL_FAMILY_LABEL: Record<LegalFamily, string> = {
-  engagement: "Client-facing",
-  site: "Site legal",
-  internal: "Internal",
+  public: "Public",
+  engagement: "Engagement",
+  candidate: "Candidate",
+  crew: "Crew",
 } as const;

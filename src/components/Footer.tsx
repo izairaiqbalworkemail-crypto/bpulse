@@ -8,31 +8,31 @@ import { brand } from "@/config/brand";
 import { edition, addressLine } from "@/config/site";
 import pkg from "../../package.json";
 
-const workLinks = [{ label: "The catalogue", href: "/work" }];
+const workLinks = [{ label: "The record", href: "/work" }];
 
 const studioLinks = [
   { label: "How it works", href: "/how-it-works" },
-  { label: "The crew", href: "/team" },
+  { label: "Admitted", href: "/team" },
   { label: "The standard", href: "/standard" },
   { label: "Security", href: "/security" },
   { label: "Second Chair", href: "/second-chair" },
   { label: "The Check", href: "/check" },
-  { label: "The Match", href: "/match" },
+  { label: "Assignment", href: "/match" },
   { label: "Direct line", href: "/direct" },
-  { label: "Sample portal", href: "/demo" },
+  { label: "The platform", href: "/demo" },
   { label: "About", href: "/about" },
-  { label: "Careers", href: "/careers" },
+  { label: "Applying to the standard", href: "/careers" },
   { label: "Notices", href: "/notices" },
 ];
 
 const contactLinks = [{ label: "Get in touch", href: "/contact" }];
 
 const legalLinks = [
-  { label: "Terms of Service", href: "/legal/terms" },
-  { label: "Privacy Policy", href: "/legal/privacy-policy" },
-  { label: "Cookie Policy", href: "/legal/cookie-policy" },
-  { label: "Accessibility", href: "/legal/accessibility" },
-  { label: "Complaints and Dispute Resolution", href: "/legal/complaints" },
+  { label: "Legal register", href: "/legal" },
+  { label: "Where data goes", href: "/legal/data" },
+  { label: "Terms", href: "/legal/terms" },
+  { label: "Privacy", href: "/legal/privacy-policy" },
+  { label: "Cookies", href: "/legal/cookie-policy" },
 ];
 
 const copyrightYear = edition.date.split(" ").pop() ?? "";
@@ -62,9 +62,9 @@ export function Footer() {
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          <nav aria-label="Work">
+          <nav aria-label="The record">
             <p className="font-plex-mono text-[13px] tracking-[0.08em] text-rag/70 uppercase">
-              Work
+              The record
             </p>
             <ul className="mt-4 flex flex-col gap-3">
               {workLinks.map((item) => (

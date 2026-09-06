@@ -1,4 +1,6 @@
 import type { LegalDoc } from "./types";
+import { subProcessors } from "@/content/legal/vendors";
+import { vulnerabilityDisclosure } from "./internal";
 
 /** Pairs with the actual intake endpoints; claims must match code behaviour. */
 export const siteParties = {
@@ -21,12 +23,12 @@ export const siteTerms: LegalDoc = {
   slug: "terms",
   aliases: ["terms-of-service"],
   name: "TERMS OF SERVICE",
-  family: "site",
+  family: "public",
   reference: "BP-TERMS",
   version: "v0.3",
   issuedAt: "12 Sep 2026",
   updatedAt: "12 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "The rules for using bpulse's site and services when no signed client agreement applies.",
@@ -110,12 +112,12 @@ export const siteTerms: LegalDoc = {
 export const sitePrivacy: LegalDoc = {
   slug: "privacy-policy",
   name: "PRIVACY POLICY",
-  family: "site",
+  family: "public",
   reference: "BP-PRIVACY",
   version: "v0.4",
   issuedAt: "12 Sep 2026",
   updatedAt: "12 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "What the site collects from the fields people type in, and where it sits.",
@@ -138,7 +140,7 @@ export const sitePrivacy: LegalDoc = {
       plainTerms:
         "We do not run analytics, tracking pixels, session recording, or advertising cookies.",
       clauses: [
-        { text: "The site sets no marketing or analytics cookies." },
+        { text: "The site sets no cookies." },
         { text: "We do not use behavioural profiling systems on this marketing site." },
       ],
     },
@@ -151,6 +153,9 @@ export const sitePrivacy: LegalDoc = {
         { text: "Submission data is saved to managed Postgres (Neon) when configured, and to a local development store when no database is configured." },
         { text: "Rate limiting and view counters are backed by Upstash Redis. Email notifications are sent through Resend when enabled." },
         { text: "The site is hosted on Vercel." },
+        {
+          text: `Named sub-processors: ${subProcessors.map((row) => row.name).join(", ")}. Regions and roles are on /legal/sub-processors and /legal/data.`,
+        },
       ],
     },
     {
@@ -190,12 +195,12 @@ export const sitePrivacy: LegalDoc = {
 export const siteCookies: LegalDoc = {
   slug: "cookie-policy",
   name: "COOKIE POLICY",
-  family: "site",
+  family: "public",
   reference: "BP-COOKIE",
   version: "v0.2",
   issuedAt: "08 Sep 2026",
   updatedAt: "08 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "The site's cookie posture, stated as it currently is.",
@@ -207,6 +212,7 @@ export const siteCookies: LegalDoc = {
       heading: "We set no cookies",
       plainTerms: "The site currently sets no cookies.",
       clauses: [
+        { text: "The site sets no cookies." },
         { text: "No analytics, advertising, or session-recording cookies are used." },
         { text: "If this changes, this document and the privacy policy will be updated before deployment." },
       ],
@@ -241,12 +247,12 @@ export const siteAccessibility: LegalDoc = {
   slug: "accessibility",
   aliases: ["accessibility-statement"],
   name: "ACCESSIBILITY STATEMENT",
-  family: "site",
+  family: "public",
   reference: "BP-ACCESS",
   version: "v0.2",
   issuedAt: "08 Sep 2026",
   updatedAt: "08 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "Where the site is on accessibility and how to report a barrier.",
@@ -291,12 +297,12 @@ export const siteAccessibility: LegalDoc = {
 export const siteComplaints: LegalDoc = {
   slug: "complaints",
   name: "COMPLAINTS & DISPUTE RESOLUTION",
-  family: "site",
+  family: "public",
   reference: "BP-COMPLAINTS",
   version: "v0.1",
   issuedAt: "05 Sep 2026",
   updatedAt: "05 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "A written complaint route with response timings.",
@@ -346,4 +352,64 @@ export const siteComplaints: LegalDoc = {
   ],
 };
 
-export const siteDocs = [siteTerms, sitePrivacy, siteCookies, siteAccessibility, siteComplaints];
+export const siteSubProcessors: LegalDoc = {
+  slug: "sub-processors",
+  aliases: ["subprocessors"],
+  name: "SUB-PROCESSOR LIST",
+  family: "public",
+  reference: "BP-SUB",
+  version: "v0.2",
+  issuedAt: "12 Sep 2026",
+  updatedAt: "12 Sep 2026",
+  status: "current",
+  owner: "Hamza Khan",
+  role: "Legal & Risk",
+  lead: "The named vendors this site and the studio currently use, with what we can verify about region.",
+  parties: [siteParties.bpulse, siteParties.visitor],
+  signatureBlocks: [],
+  reviewNote:
+    "Confirm the live Neon region and record it in Annex I of any SCC set before a DPA is executed.",
+  sections: [
+    {
+      number: "1",
+      heading: "Who processes data for us",
+      plainTerms:
+        "Four named vendors. All four are US-incorporated. A region we have not recorded is left blank rather than guessed.",
+      clauses: subProcessors.map((row) => ({
+        text: `${row.name} (${row.entity}) — ${row.role}. ${row.region} Data: ${row.data}`,
+      })),
+    },
+    {
+      number: "2",
+      heading: "What a transfer means",
+      plainTerms:
+        "Because the vendors are US-incorporated, an EEA visitor's intake is an international transfer even when a processing region sits in the EU.",
+      clauses: [
+        {
+          text: "Pakistan is not covered by an EU adequacy decision. The transfer page at /legal/data states the SCC route, the UK addendum, and the Transfer Impact Assessment.",
+        },
+        {
+          text: "We will not add a sub-processor without updating this list and, for an executed DPA, giving notice.",
+        },
+      ],
+    },
+  ],
+  changelog: [
+    {
+      version: "v0.2",
+      date: "12 Sep 2026",
+      change: "Named the four live vendors from the actual stack, without invented regions.",
+      reason: "The DPA requires a public sub-processor list that matches the code.",
+    },
+  ],
+};
+
+export const siteDocs = [
+  siteTerms,
+  sitePrivacy,
+  siteCookies,
+  siteAccessibility,
+  siteComplaints,
+  siteSubProcessors,
+  vulnerabilityDisclosure,
+];

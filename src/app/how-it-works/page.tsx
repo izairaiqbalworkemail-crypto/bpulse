@@ -1,21 +1,19 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { SignalPlate } from "@/components/SignalPlate";
 import { StageRail } from "@/components/StageRail";
 import { AnimatedStages } from "@/components/AnimatedStages";
 import { PageClose } from "@/components/PageClose";
-import { PeopleRail } from "@/components/PeopleRail";
 import { Episode } from "@/components/episode/Episode";
-import { AtmosphereNote } from "@/components/landing/Atmosphere";
 import { closeStages } from "@/content/process";
-import { specialists } from "@/content/specialists";
 import { offer } from "@/content/offer";
+import { guarantees, pageFrame } from "@/content/platform";
 
 export const metadata: Metadata = buildMetadata({
   title: "How it works",
-  description:
-    "Six stages, written down. What happens, what you receive, what you sign, and what you can see in the portal.",
+  description: pageFrame.howItWorks,
   path: "/how-it-works",
 });
 
@@ -23,16 +21,15 @@ export default function HowItWorksPage() {
   const rail = closeStages.map((stage, index) => ({
     id: stage.id,
     label: stage.label,
-    status:
-      index === 0 ? ("current" as const) : ("upcoming" as const),
+    status: index === 0 ? ("current" as const) : ("upcoming" as const),
   }));
 
   return (
     <>
       <PageHero
-        kicker="How it works"
-        title="You can see the work."
-        dek="Until the founder’s portal screenshots land here, each stage links to the live sample view."
+        kicker="The platform"
+        title="A process you can open."
+        dek={pageFrame.howItWorks}
         hideAction
       />
 
@@ -59,18 +56,41 @@ export default function HowItWorksPage() {
       />
 
       <Episode tone="paper">
-          <PeopleRail
-            people={specialists.slice(0, 6)}
-            line="The same hands through every stage"
-          />
-          <div className="mt-3">
-            <AtmosphereNote />
-          </div>
-          <div className="mt-10">
-            <StageRail stages={rail} />
-          </div>
-          <AnimatedStages stages={closeStages} />
-          <PageClose line="The sample portal is the same stages, with sample data labelled sample." />
+        <p className="max-w-[48ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+          Portal screenshots are not on file yet. Each stage opens the live
+          sample view instead.
+        </p>
+        <div className="mt-10">
+          <StageRail stages={rail} />
+        </div>
+        <AnimatedStages stages={closeStages} />
+      </Episode>
+
+      <Episode tone="cocoa">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-rag/70">
+          What the platform guarantees
+        </p>
+        <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.3] text-rag">
+          A promise is a sentence. A system is a link.
+        </p>
+        <ul className="mt-12">
+          {guarantees.map((row) => (
+            <li key={row.claim} className="border-t border-rag/12 py-6">
+              <Link href={row.href} className="block">
+                <span className="block font-newsreader text-[22px] text-rag">
+                  {row.claim}
+                </span>
+                <span className="mt-1 block font-newsreader text-[16px] text-rag/70">
+                  {row.proof}
+                </span>
+                <span className="mt-3 block font-plex-sans text-[14px] text-rag/80 underline decoration-rag/25 underline-offset-4 hover:decoration-rag">
+                  Where this is provable →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <PageClose line="The sample is the same stages, with sample data labelled sample." />
       </Episode>
     </>
   );

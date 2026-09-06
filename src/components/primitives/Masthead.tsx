@@ -18,14 +18,14 @@ import { scrollToHero, scrollToSection } from "@/lib/scroll-section";
 
 const nav = [
   {
-    label: "Work",
+    label: "Record",
     href: "/work",
-    detail: `${lots.length} lots in the catalogue`,
+    detail: `${lots.length} engagements on the record`,
   },
   {
-    label: "Crew",
+    label: "Admitted",
     href: "/team",
-    detail: `${specialists.length} specialists`,
+    detail: `${specialists.length} admitted to the standard`,
   },
   {
     label: "Check",
@@ -35,12 +35,12 @@ const nav = [
   {
     label: "How",
     href: "/how-it-works",
-    detail: "Six stages, written down",
+    detail: "The platform, end to end",
   },
   {
-    label: "Match",
+    label: "Assign",
     href: "/match",
-    detail: "Against work we already did",
+    detail: "The platform assigns",
   },
 ] as const;
 

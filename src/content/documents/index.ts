@@ -3,18 +3,19 @@ import { engagementDocs } from "./engagements";
 import { siteDocs } from "./site";
 import { internalDocs } from "./internal";
 
-/** One source of truth for all fifteen documents. */
+/** One source of truth. Public + engagement + candidate + crew. */
 export const legalDocuments: LegalDoc[] = [
-  ...engagementDocs,
   ...siteDocs,
+  ...engagementDocs,
   ...internalDocs,
 ];
 
 export function documentsByFamily(): Record<LegalFamily, LegalDoc[]> {
   return {
-    engagement: engagementDocs,
-    site: siteDocs,
-    internal: internalDocs,
+    public: legalDocuments.filter((doc) => doc.family === "public"),
+    engagement: legalDocuments.filter((doc) => doc.family === "engagement"),
+    candidate: legalDocuments.filter((doc) => doc.family === "candidate"),
+    crew: legalDocuments.filter((doc) => doc.family === "crew"),
   };
 }
 
@@ -28,12 +29,10 @@ export function getLegalDoc(slug: string): LegalDoc | null {
   return slugMap.get(slug) ?? null;
 }
 
-/** Auto number a clause as "S.i" unless the clause carries an override. */
 export function clauseNumber(sectionNumber: string, index: number, override?: string) {
   return override ?? `${sectionNumber}.${index + 1}`;
 }
 
-/** The parties mini-table cards use. bpulse first. */
 export function partyPair(doc: LegalDoc): [Party | null, Party | null] {
   const bpulse = doc.parties.find((party) => party.key === "bpulse") ?? null;
   const other = doc.parties.find((party) => party.key !== "bpulse") ?? null;
@@ -42,18 +41,19 @@ export function partyPair(doc: LegalDoc): [Party | null, Party | null] {
 
 export const legalOwner = {
   name: "Hamza Khan",
-  role: "Backend Engineer · Legal & Risk Owner",
+  role: "Legal owner",
   email: "hamza@bpulse.dev",
-  line: "Named owner for NDAs, IP assignment, and legal-risk routing — backend engineer focused on APIs and infrastructure.",
+  line: "Handles NDAs and IP assignment, answers client legal questions, and instructs external counsel.",
 };
 
-/** Core set signed on every Close. DPA and change orders depend on the matter. */
+/** Core set signed on every Close. DPA and SCCs depend on the matter. */
 export const contractSet = [
   "mutual-nda",
   "master-services-agreement",
   "statement-of-work",
+  "change-order",
   "ip-assignment",
-  "handover-certificate",
+  "data-processing-agreement",
 ]
   .map((slug) => {
     const doc = slugMap.get(slug);
@@ -65,24 +65,10 @@ export const contractSet = [
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join(" "),
       line: doc.lead,
+      slug: doc.slug,
     };
   });
 
-export const occasionalDocs = ["data-processing-agreement", "change-order"];
-export const occasionalSet = occasionalDocs.map((slug) => {
-  const doc = slugMap.get(slug);
-  if (!doc) throw new Error(`occasional document missing: ${slug}`);
-  return {
-    name: doc.name
-      .toLowerCase()
-      .split(" ")
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(" "),
-    line: doc.lead,
-  };
-});
-
-/** Every section reviewNote plus doc reviewNotes, used to build LEGAL-REVIEW.md. */
 export function collectReviewNotes() {
   const rows: Array<{ slug: string; reference: string; note: string; where: string }> = [];
   for (const doc of legalDocuments) {

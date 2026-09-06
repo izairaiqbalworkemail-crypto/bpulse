@@ -23,7 +23,7 @@ export const notices: Notice[] = [
     id: "who-does-the-work",
     question: "Who actually does the work?",
     answer:
-      "The named specialists on the team page. No subcontracting to strangers mid-build. If a specialist without a portrait is named, it is because we do not have a usable photograph of them yet — not because they are not real.",
+      "The named specialists the standard has admitted. The platform assigns. No subcontracting to strangers mid-build. If a specialist without a portrait is named, it is because we do not have a usable photograph of them yet — not because they are not real.",
   },
   {
     id: "what-we-wont-take",
@@ -35,6 +35,6 @@ export const notices: Notice[] = [
     id: "what-are-we-bad-at",
     question: "What are you bad at?",
     answer:
-      "Brand identity, marketing design, and anything that lives in the space between a product and its audience. We are engineers — we build and fix what exists. If you need a logo, a deck, or a go-to-market strategy, we will tell you who does that better than we do. We are also not cheap by local standards, and we will not pretend otherwise: the price reflects the seniority of the people doing the work.",
+      "Brand identity, marketing design, and anything that lives in the space between a product and its audience. The platform is an engineering bench — we build and fix what exists. If you need a logo, a deck, or a go-to-market strategy, we will tell you who does that better. We are also not cheap by local standards, and we will not pretend otherwise: the price reflects the seniority of the people doing the work.",
   },
 ];

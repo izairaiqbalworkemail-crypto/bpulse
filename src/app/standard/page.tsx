@@ -10,18 +10,20 @@ import {
   AtmosphereNote,
 } from "@/components/landing/Atmosphere";
 import {
+  crewCommitments,
   crewGates,
+  standingConsequence,
   standingReview,
   passRateNote,
 } from "@/content/process";
+import { pageFrame } from "@/content/platform";
 import { crewBeliefs } from "@/content/beliefs";
 import { specialists } from "@/content/specialists";
 import { diagnosticRubric } from "@/lib/careers/store";
 
 export const metadata: Metadata = buildMetadata({
-  title: "The standard",
-  description:
-    "Five gates before anyone is client-facing. No candidate fee. No multiple-choice pass/fail.",
+  title: "Admission",
+  description: pageFrame.standard,
   path: "/standard",
 });
 
@@ -29,9 +31,9 @@ export default function StandardPage() {
   return (
     <section className="w-full bg-rag">
       <PageHero
-        kicker="The standard"
+        kicker="Admission"
         title="Five gates. Then standing review."
-        dek="Nobody is client-facing before Gate 4. No exceptions for urgency."
+        dek={pageFrame.standard}
         hideAction
       />
 
@@ -40,7 +42,7 @@ export default function StandardPage() {
         <div className="relative grid-container pb-24 pt-6 md:pb-32">
         <PeopleRail
           people={specialists}
-          line="Client-facing only after Gate 4"
+          line="Admitted. Client-facing only after Gate 4."
         />
         <div className="mt-3 mb-10">
           <AtmosphereNote />
@@ -68,8 +70,19 @@ export default function StandardPage() {
         </div>
 
         <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-ink">
-          {standingReview}
+          {standingReview} {standingConsequence}
         </p>
+
+        <ul className="mt-10 max-w-[60ch] border-t border-iron/12 pt-8">
+          {crewCommitments.map((line) => (
+            <li
+              key={line}
+              className="border-b border-iron/10 py-3 font-newsreader text-[17px] leading-[1.45] text-iron"
+            >
+              {line}
+            </li>
+          ))}
+        </ul>
 
         <div className="mt-16">
           {crewBeliefs.map((belief) => (

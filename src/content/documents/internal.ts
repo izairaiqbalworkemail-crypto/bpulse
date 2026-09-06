@@ -18,12 +18,12 @@ export const candidateParty = {
 export const crewAgreement: LegalDoc = {
   slug: "crew-agreement",
   name: "CREW AGREEMENT",
-  family: "internal",
+  family: "crew",
   reference: "BP-CREW",
   version: "v1.0",
   issuedAt: "14 Sep 2026",
   updatedAt: "14 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "Makes the 'under studio contract' claim real for every person on the crew.",
@@ -131,12 +131,12 @@ export const crewAgreement: LegalDoc = {
 export const gate2Sample: LegalDoc = {
   slug: "gate-2-work-sample",
   name: "GATE 2 WORK SAMPLE AGREEMENT",
-  family: "internal",
+  family: "candidate",
   reference: "BP-GATE2",
   version: "v1.0",
   issuedAt: "14 Sep 2026",
   updatedAt: "14 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "The terms for the paid Gate 2 sample: payment, IP in the sample, confidentiality.",
@@ -224,12 +224,12 @@ export const gate2Sample: LegalDoc = {
 export const vulnerabilityDisclosure: LegalDoc = {
   slug: "vulnerability-disclosure",
   name: "VULNERABILITY DISCLOSURE POLICY",
-  family: "internal",
+  family: "public",
   reference: "BP-VDP",
   version: "v1.0",
   issuedAt: "14 Sep 2026",
   updatedAt: "14 Sep 2026",
-  status: "active",
+  status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
   lead: "How researchers can report a security issue and what we commit to in return. Public.",
@@ -310,4 +310,4 @@ export const vulnerabilityDisclosure: LegalDoc = {
   ],
 };
 
-export const internalDocs = [crewAgreement, gate2Sample, vulnerabilityDisclosure];
+export const internalDocs = [crewAgreement, gate2Sample];

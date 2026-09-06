@@ -12,7 +12,7 @@ import { specFromLot } from "@/lib/lot-trace";
 import { closestReadingLot } from "@/lib/reading-match";
 import type { SignalId } from "@/content/signals";
 import { buildHeroTracePath, type HeroPainKey } from "@/lib/trace";
-import { scrollToSection } from "@/lib/scroll-section";
+import { checkHrefFromReading } from "@/lib/check-case";
 
 const WIDTH = 560;
 const HEIGHT = 280;
@@ -156,13 +156,16 @@ export function Reading() {
       </div>
 
       <p className="mt-10">
-        <button
-          type="button"
-          onClick={() => scrollToSection("terms")}
-          className="aside-chip aside-chip-rag"
+        <Link
+          href={checkHrefFromReading(
+            readingSymptoms
+              .filter((row) => selected.includes(row.signal))
+              .map((row) => ({ signal: row.signal, label: row.label })),
+          )}
+          className="font-plex-sans text-[15px] text-rag underline decoration-rag/25 underline-offset-4 hover:decoration-rag"
         >
           Five days. A verdict.
-        </button>
+        </Link>
       </p>
     </Episode>
   );

@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { handover } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sample portal — handover",
+  title: "The platform — handover",
   description:
     "Runbook, credentials transfer, and the access revocation log. Sample.",
   path: "/demo/handover",

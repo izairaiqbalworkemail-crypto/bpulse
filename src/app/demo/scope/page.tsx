@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { changeOrders, demoClient, scopeDiff, scopeVersions } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sample portal — scope",
+  title: "The platform — scope",
   description:
     "Versioned locked scope with a diff and priced change orders. Sample.",
   path: "/demo/scope",

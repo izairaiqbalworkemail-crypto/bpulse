@@ -124,11 +124,11 @@ The image URL should be `/opengraph-image` on the marketing site, and the per-re
 - Real client logos, with written permission
 - Written permission for names and quotes
 - Attribution on the six crew-asserted lots (`FOUNDER-CONFIRM.md`)
-- A solicitor for the five legal pages (they say **Draft** on purpose)
+- A solicitor for the legal register (pages read as in force; counsel notes stay in LEGAL-REVIEW.md)
 
 **Blocked on a lawyer**
 
-- Terms, privacy, cookies, accessibility, complaints — not in force until reviewed
+- Terms, privacy, cookies, accessibility, complaints — in force on the site; solicitor still to confirm the counsel packet
 - Whether “one business day” and the 30-day credit belong in the terms or stay as site copy
 
 ---
@@ -158,6 +158,6 @@ If the logo in the tab looks stretched, the square icon set is already in `publi
 
 **Not ready as a funnel** — until the database, mail, and Redis are live and you have watched a test land in your inbox.
 
-**Not ready as a legal entity talking to a client** — until a solicitor has taken the Draft banner off, or you keep the banner and say so on the call.
+**Not ready as a legal entity talking to a client** — until a solicitor has taken the counsel packet in LEGAL-REVIEW.md.
 
-Put this in front of a paying client **after** checklist 1–9 and the inbox habit. Before that, you are showing a site that cannot accept a lead and legal pages that say they are not in force. That is a worse first impression than no site.
+Put this in front of a paying client **after** checklist 1–9 and the inbox habit. Before that, you are showing a site that cannot accept a lead. That is a worse first impression than no site.

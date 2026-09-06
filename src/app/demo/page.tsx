@@ -5,9 +5,9 @@ import { getDemoOverview } from "@/content/demo";
 import type { RailStage } from "@/content/types";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sample portal",
+  title: "The platform",
   description:
-    "A labelled sample of the client portal: stage tracker, locked scope, and handover.",
+    "The platform, live, with sample data. Stage tracker, locked scope, and handover.",
   path: "/demo",
 });
 

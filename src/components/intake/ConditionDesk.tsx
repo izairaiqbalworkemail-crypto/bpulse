@@ -15,13 +15,15 @@ import { offer } from "@/content/offer";
 import type { FieldConfig } from "@/lib/intake/types";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const SHEET = ["situation", "build", "stack", "access", "codeLocation", "name", "email"];
+const SHEET = ["build", "situation", "stack", "access", "codeLocation", "name", "email"];
 
 type Note = { id: string; text: string };
 
 type ConditionDeskProps = {
   source?: string;
   prefill?: Record<string, string>;
+  surface?: "card" | "plain";
+  submitTone?: "signal" | "iron";
 };
 
 function applies(field: FieldConfig, answers: Record<string, string>) {
@@ -94,6 +96,8 @@ function openingNotes(answers: Record<string, string>, filled: string[]): Note[]
 export function ConditionDesk({
   source = "check",
   prefill,
+  surface = "card",
+  submitTone = "signal",
 }: Readonly<ConditionDeskProps>) {
   const seeded = seedAnswers(prefill);
   const [answers, setAnswers] = useState(seeded.answers);
@@ -208,6 +212,22 @@ export function ConditionDesk({
   }
 
   if (done) {
+    if (surface === "plain") {
+      return (
+        <div>
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+            Condition filed · {done}
+          </p>
+          <p className="mt-3 font-newsreader text-[32px] leading-[1.1] text-iron">
+            The Check is on Aneeb&apos;s desk.
+          </p>
+          <p className="mt-4 max-w-[36ch] font-newsreader text-[18px] leading-[1.4] text-ink">
+            He reads it tomorrow. A person replies from a real inbox, within one
+            business day. {price}. Five days. A verdict.
+          </p>
+        </div>
+      );
+    }
     return (
       <div className="card-iron">
         <div className="px-6 py-10 md:px-8">
@@ -227,7 +247,22 @@ export function ConditionDesk({
   }
 
   return (
-    <div className="card">
+    <div className={surface === "plain" ? "" : "card"}>
+      {surface === "plain" ? (
+        <header className="flex items-end justify-between gap-4 border-b border-iron/10 pb-5">
+          <div className="min-w-0">
+            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
+              The Check · five days · {price}
+            </p>
+            <p className="mt-1 font-newsreader text-[22px] leading-[1.15] text-iron">
+              Write the stuck part.
+            </p>
+          </div>
+          <p className="shrink-0 font-plex-mono text-[12px] text-ink/70">
+            {ready ? "Ready to file" : current?.name === "build" ? "The wound" : "Writing"}
+          </p>
+        </header>
+      ) : (
       <header className="flex items-end justify-between gap-4 bg-iron px-5 py-5 text-rag md:px-7">
         <div className="min-w-0">
           <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/50">
@@ -241,8 +276,9 @@ export function ConditionDesk({
           {ready ? "Ready to file" : current?.name === "build" ? "The wound" : "Writing"}
         </p>
       </header>
+      )}
 
-      <div className="space-y-4 px-5 py-6 md:px-7">
+      <div className={surface === "plain" ? "space-y-4 py-6" : "space-y-4 px-5 py-6 md:px-7"}>
         {notes.slice(-2).map((note) => (
           <p
             key={note.id}
@@ -253,7 +289,13 @@ export function ConditionDesk({
         ))}
       </div>
 
-      <div className="mx-5 mb-6 rounded-[20px] bg-rag px-5 py-6 ring-1 ring-iron/10 md:mx-7 md:px-6">
+      <div
+        className={
+          surface === "plain"
+            ? "mb-6 py-2"
+            : "mx-5 mb-6 rounded-[20px] bg-rag px-5 py-6 ring-1 ring-iron/10 md:mx-7 md:px-6"
+        }
+      >
         <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/55">
           Condition on arrival
         </p>
@@ -289,6 +331,7 @@ export function ConditionDesk({
                         onDraft={setDraft}
                         onWrite={write}
                         onSkip={skip}
+                        surface={surface}
                       />
                     ) : (
                       <p className="font-newsreader text-[17px] leading-[1.4] text-iron">
@@ -310,7 +353,11 @@ export function ConditionDesk({
               dismissKeyboard();
               void submit();
             }}
-            className="mt-6 inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+            className={
+              submitTone === "iron"
+                ? "btn btn-iron mt-6 min-h-11 px-5 text-[14px] disabled:opacity-40"
+                : "mt-6 inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+            }
           >
             {busy ? "Filing…" : `Put it on Aneeb's desk · ${price}`}
           </PressButton>
@@ -330,7 +377,13 @@ export function ConditionDesk({
         className="hidden"
       />
 
-      <p className="border-t border-iron/10 px-5 py-3 font-newsreader text-[13px] text-ink/60 md:px-7">
+      <p
+        className={
+          surface === "plain"
+            ? "border-t border-iron/10 py-3 font-newsreader text-[13px] text-ink/70"
+            : "border-t border-iron/10 px-5 py-3 font-newsreader text-[13px] text-ink/60 md:px-7"
+        }
+      >
         No one is typing. Aneeb reads this tomorrow. This does not take a card.
       </p>
     </div>
@@ -346,6 +399,7 @@ type OpenLineProps = {
   onDraft: (value: string) => void;
   onWrite: (field: FieldConfig, value: string) => void;
   onSkip: (field: FieldConfig) => void;
+  surface: "card" | "plain";
 };
 
 function OpenLine({
@@ -357,6 +411,7 @@ function OpenLine({
   onDraft,
   onWrite,
   onSkip,
+  surface,
 }: Readonly<OpenLineProps>) {
   if (field.type === "radio" || field.type === "select") {
     return (
@@ -366,7 +421,13 @@ function OpenLine({
             {error}
           </p>
         ) : null}
-        <ul className="sticky bottom-0 z-20 flex flex-col gap-2 bg-rag py-2 md:static md:bg-transparent md:py-0">
+        <ul
+          className={
+            surface === "plain"
+              ? "flex flex-col"
+              : "sticky bottom-0 z-20 flex flex-col gap-2 bg-rag py-2 md:static md:bg-transparent md:py-0"
+          }
+        >
           {field.options.map((option) => (
             <li key={option}>
               <PressButton
@@ -374,7 +435,11 @@ function OpenLine({
                   dismissKeyboard();
                   onWrite(field, option);
                 }}
-                className="min-h-11 w-full touch-manipulation rounded-[14px] bg-white px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10 hover:ring-iron/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
+                className={
+                  surface === "plain"
+                    ? "min-h-11 w-full touch-manipulation border-b border-iron/10 py-3 text-left font-newsreader text-[17px] text-iron hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
+                    : "min-h-11 w-full touch-manipulation rounded-[14px] bg-white px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10 hover:ring-iron/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
+                }
               >
                 {option}
               </PressButton>
