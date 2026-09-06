@@ -1440,7 +1440,7 @@ export function CrewSession({
       </div>
 
       <div
-        className="relative mx-auto flex h-[32rem] w-full max-w-[26.5rem] flex-col overflow-hidden rounded-[28px] bg-iron text-rag shadow-[0_24px_60px_-24px_rgba(13,18,24,0.55)] ring-1 ring-rag/10"
+        className="relative mx-auto flex h-[32rem] w-full max-w-[26.5rem] flex-col overflow-hidden rounded-[28px] bg-iron text-rag shadow-[0_24px_60px_-24px_rgba(16,16,14,0.55)] ring-1 ring-rag/10"
         role="region"
         aria-label={`${sentenceCase(session.label)} desk`}
       >
@@ -1542,14 +1542,14 @@ export function CrewSession({
                   >
                     {yours ? (
                       <span
-                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-rag/15 font-plex-sans text-[10px] font-semibold uppercase tracking-wide text-rag/70"
+                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-rag/15 font-plex-sans text-[10px] font-medium uppercase tracking-wide text-rag/70"
                         aria-label="You"
                       >
                         You
                       </span>
                     ) : (
                       <span
-                        className="grid h-7 w-7 shrink-0 place-items-center overflow-hidden rounded-full bg-iron-2 text-[10px] font-bold text-signal"
+                        className="grid h-7 w-7 shrink-0 place-items-center overflow-hidden rounded-full bg-iron-2 text-[10px] font-medium text-signal"
                         aria-hidden
                       >
                         {lead.name[0]}
@@ -1636,7 +1636,7 @@ export function CrewSession({
                       className="check-stroke"
                     />
                   </svg>
-                  <p className="font-plex-sans text-[0.82rem] font-semibold tracking-tight text-rag">
+                  <p className="font-plex-sans text-[0.82rem] font-medium tracking-tight text-rag">
                     {msg.title}
                   </p>
                   <p className="max-w-[42ch] font-newsreader text-sm leading-reading text-rag/80">

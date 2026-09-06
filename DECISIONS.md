@@ -340,3 +340,22 @@ Found by capture inspection, not asserted: with the panel spring's `settled` sta
 - Traces are computed from each lot’s condition, arrival state, and highlights. Same lot, same path. All nine paths are tested for inequality. The hero FitBand trace (`src/lib/trace.ts`) is a different object and is not reused.
 - Proof rows on plates only show client-listed figures that contain a number. Crew-asserted lots show none.
 - Submissions from this desk use `type: "direct"` and `source` of `direct/{id}` or `about`, plus `with` for the specialist.
+
+---
+
+## The eight home sections (Sep 2026)
+
+Ground rhythm: espresso · espresso · paper · paper · espresso · paper · gold · paper.
+
+| # | Id | Composition (silhouette) |
+|---|-----|--------------------------|
+| 01 | `#pulse` | Full-bleed espresso. Display-xl claim (line two gold) + two actions + contained sample portal (~1000px) from `getDemoOverview()`. |
+| 02 | `#reading` | Espresso instrument. Six symptom rows left; visitor trace + closest lot trace behind at ≥2 shared signals. |
+| 03 | `#difference` | Paper ledger. Marketplace vs bpulse. Conceded row: thousands of engineers vs twelve named people. No marketplace named. |
+| 04 | `#record` | Paper. Two full `LotPlate`s (DeepIDV, Sully) then compact rows. `crew-reported, unverified` stays on crew-asserted lots. |
+| 05 | `#standard` | Espresso island. Vertical rail of the five published gates (00–04 in `process.ts` — the brief said four; the source has five). Crew gate lines, no invented clearance dates. Pass rate is the honest absence. |
+| 06 | `#view` | Paper. Stage tabs + sample pane from demo seed (scope versions, change orders, revocation log). No fabricated screenshots. CTA `/demo`. |
+| 07 | `#terms` | Full-bleed gold. Check / Close / Standing from `offer.ts`. Credit-back sentence. Intake desk. Only gold fill on the page. |
+| 08 | `#questions` | Paper. Two-column stagger, no accordion. “What are you bad at?” is the notices answer plus the turn-down. Close is one Check link. |
+
+Closest-lot pairing uses real lot signals only. No percentage. Hash is not stripped on load so mid-page links work.

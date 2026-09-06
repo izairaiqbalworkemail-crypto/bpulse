@@ -115,7 +115,7 @@ export function Masthead() {
         <div className="pointer-events-auto mx-auto max-w-[1120px] px-5 md:px-8">
           <motion.div
             data-masthead={compact ? "compact" : "rest"}
-            className="flex items-center justify-between gap-2 rounded-full border border-rag/12 bg-iron-2 p-2"
+            className="flex items-center justify-between gap-2 rounded-full border border-rag/12 bg-iron-2 p-2 shadow-[0_16px_40px_-20px_rgba(16,16,14,0.55)]"
             animate={{ scale: compact ? 0.92 : 1 }}
             style={{ originY: 0 }}
             transition={reduce ? { duration: 0 } : bar}

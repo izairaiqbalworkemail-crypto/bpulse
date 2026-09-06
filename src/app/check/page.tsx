@@ -66,12 +66,14 @@ export default function CheckPage() {
           <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
             02 · The conversation
           </p>
-          <h2 id="intake-heading" className="mt-3 max-w-[18ch] font-newsreader text-[32px] leading-[1.08] tracking-[-0.015em] text-iron md:text-[40px]">
+          <h2 id="intake-heading" className="mt-3 max-w-[18ch] font-newsreader type-display-m text-[32px] leading-[1.08] text-iron md:text-[40px]">
             Tell us what happens when you try to ship it.
           </h2>
-          <p className="mt-5 max-w-[46ch] font-newsreader text-[18px] leading-[1.45] text-ink">
-            A structured intake. Not a chatbot. You leave with a written read
-            of what you described.
+          <p className="mt-5 max-w-[46ch] type-lead text-iron">
+            A structured intake, not a chatbot.
+          </p>
+          <p className="mt-3 max-w-[46ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+            You leave with a written read of what you described.
           </p>
           <div className="mt-10">
             <Desk scriptId="check" ending="read" />

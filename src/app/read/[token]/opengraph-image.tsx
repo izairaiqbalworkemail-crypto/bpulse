@@ -22,18 +22,18 @@ export default async function ReadOg({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#0d1218",
+          backgroundColor: "#161614",
           padding: 64,
         }}
       >
-        <div style={{ fontSize: 22, color: "#efeae0", opacity: 0.7 }}>
+        <div style={{ fontSize: 22, color: "#f4eee6", opacity: 0.7 }}>
           Preliminary read · bpulse
         </div>
         <div
           style={{
             marginTop: 16,
             fontSize: 52,
-            color: "#efeae0",
+            color: "#f4eee6",
             lineHeight: 1.1,
             letterSpacing: "-0.03em",
             maxWidth: 980,

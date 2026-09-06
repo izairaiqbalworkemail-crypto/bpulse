@@ -9,7 +9,7 @@ type HeroFrameProps = {
 };
 
 /**
- * Cream sides. One caramel plate. Nothing else.
+ * Cream sides. One graphite plate. Nothing else.
  */
 export function HeroFrame({ children, tall = false }: HeroFrameProps) {
   const reduceMotion = useReducedMotion();
@@ -30,8 +30,8 @@ export function HeroFrame({ children, tall = false }: HeroFrameProps) {
         <motion.div
           className={
             tall
-              ? "hero-plate relative flex min-h-[calc(100svh-1.25rem)] flex-col md:min-h-[calc(100svh-2rem)]"
-              : "hero-plate relative flex min-h-[min(68svh,38rem)] flex-col"
+              ? "hero-plate on-iron relative flex min-h-[calc(100svh-1.25rem)] flex-col md:min-h-[calc(100svh-2rem)]"
+              : "hero-plate on-iron relative flex min-h-[min(68svh,38rem)] flex-col"
           }
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

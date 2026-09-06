@@ -22,7 +22,7 @@ export function BeliefBlock({
     <Reveal>
       <article className="card mb-4 px-8 py-10 md:px-10 md:py-14">
         <Rise>
-          <h2 className="max-w-[18ch] font-newsreader text-[32px] leading-[1.08] tracking-[-0.03em] text-iron md:text-[56px]">
+          <h2 className="max-w-[18ch] font-newsreader type-display text-[32px] leading-[1.08] text-iron md:text-[56px]">
             {statement}
           </h2>
         </Rise>

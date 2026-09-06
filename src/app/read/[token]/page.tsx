@@ -37,7 +37,7 @@ export default async function ReadPage({ params }: PageProps) {
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
           Preliminary read · prepared {preparedLabel(read.preparedAt)}
         </p>
-        <h1 className="mt-3 font-newsreader text-[40px] leading-[1.1] tracking-[-0.03em] text-iron md:text-[56px]">
+        <h1 className="mt-3 font-newsreader type-display text-[40px] leading-[1.1] text-iron md:text-[56px]">
           {read.title}
         </h1>
         <p className="mt-3 font-newsreader text-[18px] text-ink">

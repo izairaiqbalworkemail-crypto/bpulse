@@ -2,6 +2,8 @@ import { getDemoOverview } from "@/content/demo";
 
 export type HeroPortalView = {
   client: string;
+  engagement: string;
+  band: string;
   daysElapsed: number;
   lockedDays: number;
   usedPct: number;
@@ -29,6 +31,8 @@ export function heroPortalView(
 
   return {
     client: overview.client,
+    engagement: overview.engagement,
+    band: overview.band,
     daysElapsed: overview.daysElapsed,
     lockedDays: overview.lockedDays,
     usedPct: overview.usedPct,

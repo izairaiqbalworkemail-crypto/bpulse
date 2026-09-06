@@ -4,34 +4,33 @@ import { offer } from "@/content/offer";
  * Home episodes. Every line is a control the buyer keeps,
  * or a condition already on the record. No invented figures.
  */
-export const controlCards = [
+
+/**
+ * Home episode 01 — four ways a build stops. Type only. No invented figures.
+ */
+export const pulseBeats = [
   {
-    title: "Nothing starts until you sign the lock",
-    body: "Scope is written and signed before any code. A change is a change order — priced and re-signed. Nothing is absorbed silently.",
-    href: "/demo/scope",
-    label: "See a locked scope",
+    n: "01",
+    title: "The goal post was a demo",
+    body: "It looks finished in the screencast. Real users never touched it.",
   },
   {
-    title: "You watch every day of it",
-    body: "Findings, commits, days on the clock — the same portal as the window above. Sample data is labelled sample throughout.",
-    href: "/demo",
-    label: "Open the sample portal",
+    n: "02",
+    title: "Nobody owns the last mile",
+    body: "The build is done. No one is accountable for making it real.",
   },
   {
-    title: "The people who scope it ship it",
-    body: "No handoff to strangers mid-build. The name on the Check is the name on the Close.",
-    href: "/team",
-    label: "Meet the crew",
+    n: "03",
+    title: "The data was a friend",
+    body: "It holds on sample rows. It breaks on your customers.",
   },
   {
-    title: "You leave with the keys",
-    body: "Runbooks, not guesswork. The codebase is yours. Handover is the point of the engagement, not an extra.",
-    href: "/how-it-works",
-    label: "How handover works",
+    n: "04",
+    title: "Leaving looked like finishing",
+    body: "Staging was handed over and called a handover.",
   },
 ] as const;
 
-/** One-line locks for the home plate. Full cards live in controlCards. */
 export const homeLocks = [
   { title: "You sign the lock first", href: "/demo/scope" },
   { title: "You watch every day", href: "/demo" },

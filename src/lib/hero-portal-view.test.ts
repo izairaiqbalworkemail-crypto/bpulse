@@ -8,6 +8,8 @@ describe("hero portal seed", () => {
     const view = heroPortalView(overview);
 
     expect(view.client).toBe(overview.client);
+    expect(view.engagement).toBe(overview.engagement);
+    expect(view.band).toBe(overview.band);
     expect(view.daysElapsed).toBe(overview.daysElapsed);
     expect(view.lockedDays).toBe(overview.lockedDays);
     expect(view.usedPct).toBe(overview.usedPct);

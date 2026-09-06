@@ -308,7 +308,7 @@ export function MatchResult({
           <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal pulse-dot" />
           The read
         </p>
-        <h2 className="mt-3 max-w-[34ch] font-newsreader text-[32px] leading-[1.1] text-iron md:text-[40px]">
+        <h2 className="mt-3 max-w-[34ch] font-newsreader type-display-m text-[32px] leading-[1.1] text-iron md:text-[40px]">
           {outcome.confidence === "exploratory"
             ? "Nothing on record comes close — Aneeb reads it himself."
             : `${leadName} could take this. The reason is on the record.`}

@@ -67,7 +67,7 @@ export default async function LegalDocPage({ params }: PageProps) {
         </div>
 
         <article className="mt-8 max-w-[66ch]">
-          <h1 className="mb-4 hidden font-newsreader text-[40px] leading-[1.05] text-iron print:block">
+          <h1 className="mb-4 hidden font-newsreader type-display text-[40px] leading-[1.05] text-iron print:block">
             {doc.name}
           </h1>
           <p className="mb-6 hidden font-newsreader text-[18px] leading-[1.5] text-ink print:block">
@@ -252,7 +252,7 @@ export default async function LegalDocPage({ params }: PageProps) {
               <div className="mt-6 grid gap-8 sm:grid-cols-2">
                 {doc.signatureBlocks.map((block) => (
                   <div key={block.party}>
-                    <p className="font-plex-sans text-[15px] font-semibold text-iron">
+                    <p className="font-plex-sans text-[15px] font-medium text-iron">
                       For {block.party.toUpperCase()} — {block.name}
                     </p>
                     <p className="mt-0.5 font-plex-sans text-[15px] text-iron">

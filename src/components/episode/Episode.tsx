@@ -5,8 +5,8 @@ export type EpisodeTone = "paper" | "milk" | "cocoa" | "signal";
 
 const surface: Record<EpisodeTone, string> = {
   paper: "bg-rag text-iron",
-  milk: "bg-rag-card text-iron",
-  cocoa: "bg-iron text-rag",
+  milk: "border-y border-iron/8 bg-rag-card text-iron",
+  cocoa: "on-iron bg-iron-2 text-rag",
   signal: "bg-signal text-iron",
 };
 
@@ -31,6 +31,13 @@ const dekTone: Record<EpisodeTone, string> = {
   signal: "text-iron/80",
 };
 
+const ruleTone: Record<EpisodeTone, string> = {
+  paper: "text-iron",
+  milk: "text-iron",
+  cocoa: "text-rag",
+  signal: "text-iron",
+};
+
 type EpisodeProps = {
   labelledBy?: string;
   children: ReactNode;
@@ -38,7 +45,7 @@ type EpisodeProps = {
 };
 
 /**
- * One room. Flat colour. No texture, no overlay.
+ * One room. Flat colour. Same stage, same rhythm.
  */
 export function Episode({
   labelledBy,
@@ -80,15 +87,16 @@ export function EpisodeHead({
       <div className="min-w-0">
         <Reveal>
           <p
-            className={`font-plex-mono text-[12px] uppercase tracking-[0.08em] ${kickerTone[tone]}`}
+            className={`font-plex-mono text-[12px] uppercase tracking-[0.14em] ${kickerTone[tone]}`}
           >
             {n} · {kicker}
           </p>
         </Reveal>
+        <div className={`episode-rule ${ruleTone[tone]}`} aria-hidden="true" />
         <Rise delay={0.06}>
           <h2
             id={`${id}-heading`}
-            className={`mt-3 max-w-[18ch] font-newsreader text-[32px] leading-[1.12] tracking-[-0.015em] md:text-[42px] ${headingTone[tone]}`}
+            className={`mt-5 max-w-[16ch] font-newsreader type-display-m text-[34px] leading-[1.1] md:text-[44px] ${headingTone[tone]}`}
           >
             {heading}
           </h2>
@@ -96,20 +104,20 @@ export function EpisodeHead({
         {children ? (
           <Reveal delay={0.1}>
             <p
-              className={`mt-4 max-w-[40ch] font-newsreader text-[18px] leading-[1.5] md:text-[20px] ${dekTone[tone]}`}
+              className={`mt-4 max-w-[42ch] font-newsreader text-[18px] leading-[1.5] md:text-[20px] ${dekTone[tone]}`}
             >
               {children}
             </p>
           </Reveal>
         ) : null}
         {aside ? (
-          <Reveal delay={0.16} className="mt-5 sm:hidden">
+          <Reveal delay={0.16} className="mt-6 sm:hidden">
             {aside}
           </Reveal>
         ) : null}
       </div>
       {aside ? (
-        <Reveal delay={0.16} className="hidden shrink-0 pb-1 sm:block">
+        <Reveal delay={0.16} className="hidden shrink-0 pb-2 sm:block">
           {aside}
         </Reveal>
       ) : null}

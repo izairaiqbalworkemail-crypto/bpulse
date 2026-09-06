@@ -85,7 +85,7 @@ export default async function SpecialistPage({ params }: PageProps) {
             <div className="card-iron mx-auto max-w-[20rem]">
             {absent ? (
               <div className="grid h-64 w-full place-items-center md:h-80">
-                <span className="font-newsreader text-[72px] leading-none tracking-[-0.04em]">
+                <span className="font-newsreader type-display-xl text-[72px] leading-none">
                   {initials(specialist.name)}
                 </span>
               </div>

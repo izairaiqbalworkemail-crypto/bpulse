@@ -19,11 +19,11 @@ const FONT_SANS = "Plex Sans";
 const FONT_MONO = "Plex Mono";
 const FONT_SERIF = "Newsreader";
 
-const IRON = "#0d1218";
-const INK = "#38424e";
+const IRON = "#161614";
+const INK = "#3f3e39";
 const SIGNAL = "#f2c230";
-const RAG = "#efeae0";
-const RAG_CARD = "#f7f4ee";
+const RAG = "#f4eee6";
+const RAG_CARD = "#faf6f0";
 const PARTIAL = "#4a8f6f";
 
 const styles = StyleSheet.create({

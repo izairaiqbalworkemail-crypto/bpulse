@@ -19,7 +19,7 @@ type SignalPlateProps = {
 };
 
 /**
- * Gold window after the caramel hero. The still is the lock. The price is the ask.
+ * Gold window after the graphite hero. The still is the lock. The price is the ask.
  */
 export function SignalPlate({
   kicker,

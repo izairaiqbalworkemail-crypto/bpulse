@@ -14,7 +14,7 @@ type SealedStillProps = {
  */
 export function SealedStill({ caption }: Readonly<SealedStillProps>) {
   return (
-    <figure className="overflow-hidden rounded-[20px] bg-iron-2 ring-1 ring-iron/25">
+    <figure className="overflow-hidden bg-iron-2">
       <div className="relative aspect-[3/2]">
         <Image
           src={sealedVerdict.src}

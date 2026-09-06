@@ -279,7 +279,7 @@ export function BriefIntake({
             <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal pulse-dot" />
             Session filed · {done}
           </p>
-          <p className="mt-3 font-newsreader text-[32px] leading-[1.1] text-rag">
+          <p className="mt-3 font-newsreader type-title text-[32px] leading-[1.1] text-rag">
             {type === "check"
               ? "The Check is on Aneeb's desk."
               : `On ${first}'s desk.`}

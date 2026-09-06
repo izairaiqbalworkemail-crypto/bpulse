@@ -20,7 +20,7 @@ type PageHeroProps = {
 const checkPrice = `$${offer.check.price.toLocaleString("en-US")}`;
 
 /**
- * Interior opening. Same caramel plate as home. Cream type, one Check ask.
+ * Interior opening. Same graphite plate as home. Cream type, one Check ask.
  */
 export function PageHero({
   kicker,

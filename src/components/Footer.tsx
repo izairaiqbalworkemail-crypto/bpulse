@@ -42,7 +42,7 @@ const linkClass =
 
 export function Footer() {
   return (
-    <footer className="on-iron relative w-full overflow-hidden bg-iron text-rag">
+    <footer className="on-iron relative w-full overflow-hidden bg-iron-2 text-rag">
       <Atmosphere kind="ring" opacity={0.28} />
       <div className="relative z-10 grid-container pt-14 pb-10 md:pt-[72px] md:pb-12 lg:pt-[100px] lg:pb-16">
         <Reveal>

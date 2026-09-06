@@ -23,7 +23,7 @@ export function FilterBar({
   count,
   noun = "in the catalogue",
   label = "Filter the catalogue",
-}: FilterBarProps) {
+}: Readonly<FilterBarProps>) {
   const reduce = useReducedMotion();
 
   return (
@@ -31,7 +31,7 @@ export function FilterBar({
       <div
         role="radiogroup"
         aria-label={label}
-        className="flex flex-wrap gap-2"
+        className="flex flex-wrap gap-x-6 gap-y-2"
       >
         {options.map((option) => {
           const selected = option.id === value;
@@ -42,10 +42,10 @@ export function FilterBar({
               role="radio"
               aria-checked={selected}
               onClick={() => onChange(option.id)}
-              className={`rounded-full border px-4 py-2 font-plex-sans text-[14px] transition-colors duration-200 ${
+              className={`border-b pb-2 font-plex-sans text-[14px] ${
                 selected
-                  ? "border-iron bg-iron text-rag"
-                  : "border-iron/20 text-ink hover:border-iron"
+                  ? "border-iron text-iron"
+                  : "border-transparent text-ink/70 hover:text-iron"
               }`}
             >
               {option.label}

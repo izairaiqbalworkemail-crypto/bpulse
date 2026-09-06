@@ -31,7 +31,7 @@ export default async function LotOg({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#0d1218",
+          backgroundColor: "#161614",
           padding: 64,
         }}
       >
@@ -54,7 +54,7 @@ export default async function LotOg({
               y1={built.height / 2}
               x2={built.width}
               y2={built.height / 2}
-              stroke="#efeae0"
+              stroke="#f4eee6"
               strokeOpacity="0.12"
               strokeWidth="1"
             />
@@ -68,14 +68,14 @@ export default async function LotOg({
             />
           </svg>
         </div>
-        <div style={{ fontSize: 22, color: "#efeae0", opacity: 0.65 }}>
+        <div style={{ fontSize: 22, color: "#f4eee6", opacity: 0.65 }}>
           {lot.lotNumber}
         </div>
         <div
           style={{
             marginTop: 12,
             fontSize: 56,
-            color: "#efeae0",
+            color: "#f4eee6",
             lineHeight: 1.1,
             letterSpacing: "-0.03em",
           }}

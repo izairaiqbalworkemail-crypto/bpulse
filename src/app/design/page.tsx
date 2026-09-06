@@ -7,12 +7,14 @@ import { Grade } from "@/components/primitives/Grade";
 import { Credit } from "@/components/primitives/Credit";
 import { Notice } from "@/components/primitives/Notice";
 import { Lot } from "@/components/primitives/Lot";
+import { brand } from "@/config/brand";
+import { brandPosition, studio } from "@/content/studio";
 import { MotionReplay } from "./motion-replay";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Design",
+  title: "Brand",
   description:
-    "The bpulse styleguide — every token, primitive, and motion behaviour.",
+    "How bpulse sits next to talent networks — a Lahore studio, not a marketplace. Tokens, primitives, and motion.",
   path: "/design",
   robots: "noindex, nofollow",
 });
@@ -76,12 +78,54 @@ export default function DesignPage() {
   return (
     <>
       <PageHero
-        kicker="Design"
-        title="The system"
-        dek="Every token, primitive, and motion behaviour. This is the reference for how the work gets reviewed."
+        kicker="Brand"
+        title="A studio, not a network"
+        dek={brandPosition.claim}
         hideAction
       />
     <div className="grid-container py-16 md:py-24">
+
+      <section>
+        <SectionLabel>Position</SectionLabel>
+        <p className="max-w-[62ch] font-newsreader text-[20px] leading-[1.45] text-ink">
+          {brandPosition.dek}
+        </p>
+        <p className="mt-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+          {studio.place} · {brand.legalName} · {brand.tagline}
+        </p>
+        <div className="mt-10 overflow-x-auto">
+          <table className="w-full min-w-[36rem] border-collapse text-left">
+            <thead>
+              <tr className="border-b border-iron/15">
+                <th className="py-3 pr-4 font-plex-mono text-caption text-ink/60">
+                  Talent network
+                </th>
+                <th className="py-3 pr-4 font-plex-mono text-caption text-ink/60">
+                  This studio
+                </th>
+                <th className="py-3 font-plex-mono text-caption text-ink/60">
+                  Why it matters
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {brandPosition.rows.map((row) => (
+                <tr key={row.we} className="border-b border-iron/10">
+                  <td className="py-4 pr-4 font-newsreader text-[17px] text-ink/80">
+                    {row.they}
+                  </td>
+                  <td className="py-4 pr-4 font-newsreader text-[17px] text-iron">
+                    {row.we}
+                  </td>
+                  <td className="py-4 font-newsreader text-[16px] text-ink">
+                    {row.note}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       {/* Colours */}
       <section className="mt-24">
@@ -90,15 +134,15 @@ export default function DesignPage() {
           {[
             {
               name: "rag",
-              hex: "#EFEAE0",
+              hex: "#F4EEE6",
               note: "The ground — ~95% of surface area",
             },
             {
               name: "iron",
-              hex: "#10161C",
-              note: "Masthead and closing rule only",
+              hex: "#161614",
+              note: "Graphite primary — type, fills, plates",
             },
-            { name: "ink", hex: "#38424E", note: "Secondary text on paper" },
+            { name: "ink", hex: "#3F3E39", note: "Secondary text on paper" },
             { name: "signal", hex: "#F2C230", note: "One fill per viewport" },
             {
               name: "sound",

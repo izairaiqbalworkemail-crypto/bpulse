@@ -33,16 +33,16 @@ export function ProjectGrid({ lots }: ProjectGridProps) {
   return (
     <div>
       {/* Filter tabs */}
-      <div className="mb-8 flex flex-wrap gap-2 border-t border-iron/15 pt-6">
+      <div className="mb-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-iron/15 pt-6">
         {filters.map((f) => (
           <button
             key={f.value}
             type="button"
             onClick={() => setActive(f.value)}
-            className={`rounded-full border px-4 py-1.5 font-plex-mono text-[0.66rem] tracking-tight transition-all duration-200 ${
+            className={`border-b pb-2 font-plex-sans text-[14px] ${
               active === f.value
-                ? "border-iron bg-iron text-rag"
-                : "border-iron/15 text-ink/60 hover:border-iron/30 hover:text-iron"
+                ? "border-iron text-iron"
+                : "border-transparent text-ink/70 hover:text-iron"
             }`}
           >
             {f.label}

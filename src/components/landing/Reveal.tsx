@@ -30,6 +30,32 @@ type MotionBox = {
   className?: string;
 };
 
+export function Slide({
+  children,
+  delay = 0,
+  className,
+  from = "left",
+}: Readonly<MotionBox & { from?: "left" | "right" }>) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, view);
+  const x = from === "left" ? -40 : 40;
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={reduce ? false : { opacity: 0, x }}
+      animate={inView || reduce ? { opacity: 1, x: 0 } : { opacity: 0, x }}
+      transition={
+        reduce ? { duration: 0 } : { duration: landDuration, ease: landEase, delay }
+      }
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function Reveal({ children, delay = 0, className }: Readonly<MotionBox>) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);

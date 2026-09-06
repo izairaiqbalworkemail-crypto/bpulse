@@ -14,18 +14,18 @@ export default function SecondChairOg() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#0d1218",
+          backgroundColor: "#161614",
           padding: 64,
         }}
       >
-        <div style={{ fontSize: 22, color: "#efeae0", opacity: 0.7 }}>
+        <div style={{ fontSize: 22, color: "#f4eee6", opacity: 0.7 }}>
           Second Chair
         </div>
         <div
           style={{
             marginTop: 16,
             fontSize: 56,
-            color: "#efeae0",
+            color: "#f4eee6",
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             maxWidth: 980,

@@ -1,111 +1,85 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { HeroFrame } from "@/components/HeroFrame";
-import { HeroPortal } from "@/components/HeroPortal";
-import { Rise } from "@/components/landing/Reveal";
-import { offer } from "@/content/offer";
+import { SamplePortal } from "@/components/home/SamplePortal";
+import { Rise, landSpring } from "@/components/landing/Reveal";
+import { pulseCopy } from "@/content/home";
 import { scrollToSection } from "@/lib/scroll-section";
 
-const spring = { type: "spring" as const, stiffness: 180, damping: 26 };
-const draw = [0.16, 1, 0.3, 1] as const;
-
-function LastTwenty() {
-  const reduce = useReducedMotion();
-
-  return (
-    <div
-      className="mt-10 flex h-px w-48 overflow-hidden"
-      aria-hidden="true"
-    >
-      <motion.span
-        className="block h-full origin-left bg-rag/25"
-        style={{ width: "80%" }}
-        initial={reduce ? { scaleX: 1 } : { scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={
-          reduce ? { duration: 0 } : { delay: 0.4, duration: 0.8, ease: draw }
-        }
-      />
-      <motion.span
-        className="block h-full origin-left bg-signal"
-        style={{ width: "20%" }}
-        initial={reduce ? { scaleX: 1 } : { scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={
-          reduce ? { duration: 0 } : { delay: 1.15, duration: 0.35, ease: draw }
-        }
-      />
-    </div>
-  );
-}
-
+/**
+ * 01 · THE PULSE — type, two actions, the sample. No decoration.
+ */
 export function Hero() {
   const reduce = useReducedMotion();
 
   return (
-    <HeroFrame tall>
-      <div className="mx-auto grid w-full max-w-[1120px] flex-1 items-center gap-16 px-6 pb-16 pt-24 md:px-10 md:pb-20 md:pt-28 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,32rem)] lg:gap-20">
-        <motion.div
-          className="min-w-0"
-          initial={reduce ? false : { opacity: 0, y: 12 }}
+    <section
+      id="pulse"
+      aria-labelledby="pulse-heading"
+      className="on-iron relative scroll-mt-[5.75rem] bg-iron-2 text-rag md:scroll-mt-28"
+    >
+      <div className="stage-container flex min-h-[100svh] flex-col justify-end pb-16 pt-28 md:pb-20 md:pt-32">
+        <motion.p
+          className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-rag/70"
+          initial={reduce ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={reduce ? { duration: 0 } : { ...spring, delay: 0.06 }}
+          transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.08 }}
         >
-          <motion.p
-            className="font-plex-mono text-[12px] uppercase tracking-[0.16em] text-rag/70"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={reduce ? { duration: 0 } : { ...spring, delay: 0.12 }}
+          {pulseCopy.n} · {pulseCopy.kicker}
+        </motion.p>
+
+        <h1
+          id="pulse-heading"
+          className="mt-5 max-w-[14ch] font-newsreader type-display-xl text-[44px] leading-[1.02] md:text-[72px]"
+        >
+          <Rise delay={0.12}>
+            <span className="block text-rag">{pulseCopy.claim[0]}</span>
+          </Rise>
+          <Rise delay={0.2}>
+            <span className="mt-1 block text-rag">{pulseCopy.claim[1]}</span>
+          </Rise>
+        </h1>
+
+        <motion.p
+          className="mt-6 max-w-[32ch] font-newsreader text-[20px] leading-[1.4] text-rag/80 md:text-[22px]"
+          initial={reduce ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.26 }}
+        >
+          {pulseCopy.dek}
+        </motion.p>
+
+        <motion.div
+          className="mt-8 flex flex-wrap items-center gap-3"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.32 }}
+        >
+          <Link
+            href="/check"
+            className="btn btn-signal min-h-12 px-6 text-[15px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
           >
-            The last twenty
-          </motion.p>
-
-          <h1 className="mt-6 max-w-[12ch] font-newsreader text-[44px] leading-[1.05] tracking-[-0.02em] text-rag md:text-[64px]">
-            <Rise>
-              <span className="block">Everyone gets to 80%.</span>
-            </Rise>
-            <Rise delay={0.08}>
-              <span className="mt-1 block">We ship the rest.</span>
-            </Rise>
-          </h1>
-
-          <motion.p
-            className="mt-6 max-w-[28ch] font-newsreader text-[18px] leading-[1.45] text-rag/75 md:text-[20px]"
-            initial={reduce ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={reduce ? { duration: 0 } : { ...spring, delay: 0.18 }}
+            {pulseCopy.primary}
+          </Link>
+          <button
+            type="button"
+            onClick={() => scrollToSection("view")}
+            className="inline-flex min-h-12 items-center px-2 font-plex-sans text-[15px] text-rag/80 underline decoration-rag/25 underline-offset-4 hover:text-rag hover:decoration-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rag"
           >
-            Fixed scope. Senior only. You watch every day of it.
-          </motion.p>
-
-          <LastTwenty />
-
-          <motion.div
-            className="mt-10 flex flex-wrap items-center gap-6"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={reduce ? { duration: 0 } : { ...spring, delay: 0.28 }}
-          >
-            <button
-              type="button"
-              onClick={() => scrollToSection("intake")}
-              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
-            >
-              {`Start the Check · $${offer.check.price.toLocaleString("en-US")}`}
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("match")}
-              className="font-plex-sans text-[14px] text-rag/75 hover:text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rag"
-            >
-              Match the record
-            </button>
-          </motion.div>
+            {pulseCopy.secondary}
+          </button>
         </motion.div>
 
-        <HeroPortal />
+        <motion.div
+          className="mt-14"
+          initial={reduce ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.38 }}
+        >
+          <SamplePortal />
+        </motion.div>
       </div>
-    </HeroFrame>
+    </section>
   );
 }

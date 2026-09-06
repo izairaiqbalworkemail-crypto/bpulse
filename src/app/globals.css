@@ -7,16 +7,16 @@
 @theme inline {
   /* ── Surfaces ── */
   --color-rag: #f4eee6;
-  --color-rag-card: #faf6f0;
-  --color-iron: #3c2a1d;
-  --color-iron-2: #2f2118;
-  --color-iron-card: #4a3526;
-  --color-ink: #5c4a3d;
+  --color-rag-card: #faf7f1;
+  --color-iron: #161614;
+  --color-iron-2: #10100e;
+  --color-iron-card: #222220;
+  --color-ink: #3f3e39;
   --color-rag-mute: rgba(244, 238, 230, 0.78);
 
   /* ── Accent ── */
   --color-signal: #f2c230;
-  --color-signal-ink: #3c2a1d;
+  --color-signal-ink: #161614;
 
   /* ── Grades ── */
   --color-partial: #4a8f6f;
@@ -80,19 +80,19 @@
   --color-sound: var(--color-partial);
   --color-unsound: var(--color-blocked);
 
-  /* Paper-ground shadow system (brand-tinted, no pure black) */
+  /* Graphite shadow system — ink, not mud */
   --shadow-card:
-    0 1px 2px rgba(60, 42, 29, 0.04),
-    0 10px 28px -10px rgba(60, 42, 29, 0.1),
-    0 28px 56px -24px rgba(60, 42, 29, 0.12);
+    0 1px 2px rgba(16, 16, 14, 0.05),
+    0 12px 28px -12px rgba(16, 16, 14, 0.12),
+    0 28px 56px -24px rgba(16, 16, 14, 0.1);
   --shadow-raised:
-    0 2px 6px rgba(60, 42, 29, 0.05),
-    0 18px 36px -12px rgba(60, 42, 29, 0.14),
-    0 40px 72px -28px rgba(60, 42, 29, 0.16);
+    0 2px 8px rgba(16, 16, 14, 0.06),
+    0 20px 40px -14px rgba(16, 16, 14, 0.16),
+    0 44px 80px -32px rgba(16, 16, 14, 0.14);
   --shadow-artifact:
-    0 2px 6px -2px rgba(60, 42, 29, 0.07),
-    0 18px 34px -20px rgba(60, 42, 29, 0.18),
-    0 36px 68px -40px rgba(60, 42, 29, 0.14);
+    0 2px 6px -2px rgba(16, 16, 14, 0.08),
+    0 18px 34px -20px rgba(16, 16, 14, 0.16),
+    0 36px 68px -40px rgba(16, 16, 14, 0.12);
 }
 
 /* ──────────────────────────────────────────────
@@ -119,9 +119,9 @@ html {
 
 body {
   overflow-x: clip;
-  font-family: var(--font-plex-sans), "Source Sans 3", sans-serif;
+  font-family: var(--font-plex-sans), "Inter", sans-serif;
   font-size: var(--text-reading);
-  line-height: 1.65;
+  line-height: 1.75;
   color: var(--color-ink);
   background: var(--color-rag);
   -webkit-font-smoothing: antialiased;
@@ -129,7 +129,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Fraunces: soft optical axis. Headings stay calm, not engraved. */
+/* Fraunces: size-aware optical axis. Headings stay calm, not engraved.
+   Defaults are the small-display band; the .type-* role classes override
+   opsz for each size band so large type gets its low-contrast optical cut. */
 h1,
 h2,
 h3,
@@ -137,13 +139,69 @@ h3,
   font-family: var(--font-newsreader), "Fraunces", Georgia, serif;
   font-optical-sizing: auto;
   font-variation-settings:
-    "SOFT" 70,
-    "opsz" 36,
+    "SOFT" 85,
+    "opsz" 18,
     "wght" 500;
+  text-wrap: balance;
+}
+
+/* ── Type roles: opsz tied to the size band, weights capped at 500 ── */
+
+/* Big display, roughly ≥48px */
+.type-display-xl {
+  font-variation-settings:
+    "SOFT" 90,
+    "opsz" 72,
+    "WONK" 1;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+}
+
+/* Display, roughly 40–48px */
+.type-display {
+  font-variation-settings:
+    "SOFT" 90,
+    "opsz" 60,
+    "WONK" 1;
+  font-weight: 500;
+  letter-spacing: -0.014em;
+}
+
+/* Mid display, roughly 28–39px */
+.type-display-m {
+  font-variation-settings:
+    "SOFT" 85,
+    "opsz" 42;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Section title, roughly 24–39px */
+.type-title {
+  font-variation-settings:
+    "SOFT" 85,
+    "opsz" 32;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+}
+
+/* Lead sentence — 24px desktop / 20px mobile, full-strength iron */
+.type-lead {
+  font-family: var(--font-plex-sans), "Inter", sans-serif;
+  font-size: clamp(1.25rem, 0.5vw + 1.05rem, 1.5rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
 }
 
 p {
   font-optical-sizing: auto;
+  text-wrap: pretty;
+}
+
+/* Mono: tabular figures everywhere */
+.font-plex-mono {
+  font-variant-numeric: tabular-nums;
 }
 
 /* ──────────────────────────────────────────────
@@ -175,7 +233,7 @@ p {
 
   /* Line heights */
   --leading-title: 1.1;
-  --leading-reading: 1.6;
+  --leading-reading: 1.75;
 
   /* Letter spacing */
   --tracking-tight: -0.01em;
@@ -212,13 +270,27 @@ p {
   background-color: var(--color-rag);
 }
 
-/* Espresso plate. Honey yellow is reserved for the 20% and the Check. */
+/* Graphite plate. Yellow is reserved for the 20% and the Check. */
 .hero-plate {
   overflow: hidden;
   border-radius: 28px;
   color: var(--color-rag);
-  background: #1c130e;
-  box-shadow: var(--shadow-raised);
+  background: var(--color-iron-2);
+  box-shadow:
+    var(--shadow-raised),
+    inset 0 1px 0 rgba(244, 238, 230, 0.07);
+}
+
+/* Quiet plates. No gold spine. No glow. */
+.hero-glass,
+.hero-glass-quiet {
+  background: var(--color-iron-card);
+  border: 1px solid rgba(244, 238, 230, 0.1);
+}
+
+.glass-rag {
+  background: var(--color-rag-card);
+  border: 1px solid color-mix(in srgb, var(--color-iron) 8%, transparent);
 }
 
 /* Gold window. Same architecture as the hero plate. */
@@ -227,7 +299,9 @@ p {
   border-radius: 28px;
   color: var(--color-iron);
   background: var(--color-signal);
-  box-shadow: var(--shadow-raised);
+  box-shadow:
+    var(--shadow-raised),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 /* Section rhythm */
@@ -253,6 +327,129 @@ p {
 
 .card-hover:hover {
   box-shadow: var(--shadow-raised);
+}
+
+.lift-card {
+  border: 1px solid color-mix(in srgb, var(--color-iron) 9%, transparent);
+  box-shadow: var(--shadow-card);
+  transition:
+    box-shadow 280ms ease,
+    transform 280ms ease,
+    border-color 280ms ease;
+}
+
+/* Shared room language — every episode card. */
+.room-card {
+  border-radius: 24px;
+  background: var(--color-rag-card);
+  border: 1px solid color-mix(in srgb, var(--color-iron) 8%, transparent);
+  box-shadow: var(--shadow-card);
+}
+
+.room-card-rag {
+  background: var(--color-rag);
+}
+
+.room-card-iron {
+  background: var(--color-iron-card);
+  border-color: color-mix(in srgb, var(--color-rag) 10%, transparent);
+  color: var(--color-rag);
+}
+
+.episode-rule {
+  width: 2rem;
+  height: 1px;
+  margin-top: 1rem;
+  background: currentColor;
+  opacity: 0.22;
+}
+
+.contrast-plate {
+  display: grid;
+  gap: 0;
+  margin-top: 1.75rem;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--color-iron) 8%, transparent);
+  background: color-mix(in srgb, var(--color-rag-card) 86%, white);
+}
+
+.contrast-plate[data-surface="iron"] {
+  border-color: color-mix(in srgb, var(--color-rag) 12%, transparent);
+  background: color-mix(in srgb, var(--color-iron-card) 88%, black);
+}
+
+.contrast-plate[data-surface="signal"] {
+  border-color: color-mix(in srgb, var(--color-iron) 12%, transparent);
+  background: color-mix(in srgb, var(--color-rag) 72%, var(--color-signal));
+}
+
+@media (min-width: 640px) {
+  .contrast-plate {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contrast-cell {
+  padding: 1rem 1.15rem;
+}
+
+.contrast-cell + .contrast-cell {
+  border-top: 1px solid color-mix(in srgb, var(--color-iron) 8%, transparent);
+}
+
+@media (min-width: 640px) {
+  .contrast-cell + .contrast-cell {
+    border-top: 0;
+    border-left: 1px solid color-mix(in srgb, var(--color-iron) 8%, transparent);
+  }
+}
+
+.contrast-plate[data-surface="iron"] .contrast-cell + .contrast-cell {
+  border-color: color-mix(in srgb, var(--color-rag) 12%, transparent);
+}
+
+.aside-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-iron) 16%, transparent);
+  font-family: var(--font-plex-sans), sans-serif;
+  font-size: 13px;
+  color: var(--color-iron);
+  text-decoration: none;
+}
+
+.aside-chip-rag {
+  border-color: color-mix(in srgb, var(--color-rag) 22%, transparent);
+  color: var(--color-rag);
+}
+
+.lift-card:hover {
+  border-color: color-mix(in srgb, var(--color-iron) 18%, transparent);
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-2px);
+}
+
+.lift-card.lift-photo:hover,
+figure.lift-card:hover {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift-card:hover {
+    transform: none;
+  }
+}
+
+.aside-chip:hover {
+  border-color: color-mix(in srgb, var(--color-iron) 36%, transparent);
+}
+
+.aside-chip-rag:hover {
+  border-color: color-mix(in srgb, var(--color-rag) 40%, transparent);
 }
 
 .card-iron {
@@ -350,11 +547,21 @@ p {
 .btn-signal {
   background: var(--color-signal);
   color: var(--color-iron);
+  box-shadow: var(--shadow-card);
+  transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
 .btn-iron {
   background: var(--color-iron);
   color: var(--color-rag);
+  box-shadow: var(--shadow-card);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.btn-signal:hover:not(:disabled),
+.btn-iron:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-raised);
 }
 
 .btn:disabled {
@@ -730,12 +937,15 @@ p {
   }
 
   /* Transform-based hovers — disable scale/lift, keep colour */
-  .hover-lift {
+  .hover-lift,
+  .btn-signal:hover:not(:disabled),
+  .btn-iron:hover:not(:disabled) {
     transform: none !important;
     transition:
       color 200ms,
       border-color 200ms,
-      background-color 200ms !important;
+      background-color 200ms,
+      box-shadow 200ms !important;
   }
 }
 
@@ -819,7 +1029,7 @@ p {
    ────────────────────────────────────────────── */
 
 .artifact-stack {
-  --artifact-shadow: 0 2px 8px -2px rgba(16, 22, 28, 0.18);
+  --artifact-shadow: 0 2px 8px -2px rgba(16, 16, 14, 0.18);
   --artifact-sheen: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0) 0%,
@@ -841,7 +1051,7 @@ p {
   width: 100%;
   aspect-ratio: 3 / 4;
   background: var(--color-rag);
-  border: 1px solid rgba(16, 22, 28, 0.12);
+  border: 1px solid rgba(16, 16, 14, 0.12);
   border-radius: var(--radius-surface);
   padding: clamp(20px, 4vw, 32px);
   z-index: var(--leaf-index);
@@ -1064,7 +1274,7 @@ p {
   content: "";
   flex: 1;
   height: 1px;
-  background: rgba(16, 22, 28, 0.1);
+  background: rgba(16, 16, 14, 0.1);
 }
 
 @media (prefers-reduced-motion: reduce) {

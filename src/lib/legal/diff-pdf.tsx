@@ -15,8 +15,8 @@ registerLegalFonts();
 
 const LOGO = legalLogoDataUri();
 
-const IRON = "#0d1218";
-const INK = "#38424e";
+const IRON = "#161614";
+const INK = "#3f3e39";
 const PARTIAL = "#4a8f6f";
 const BLOCKED = "#b03a28";
 

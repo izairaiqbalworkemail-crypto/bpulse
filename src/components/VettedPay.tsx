@@ -44,16 +44,16 @@ export function VettedPay({
 
   if (surface === "signal") {
     return (
-      <ul className="grid grid-cols-2 gap-0 border-t border-iron/15">
+      <ul className="grid grid-cols-1 border-t border-iron/15 sm:grid-cols-2">
         {items.map((item) => (
           <li
             key={item.kicker}
-            className="border-b border-iron/15 px-0 py-5 odd:pr-6 even:border-l even:border-iron/15 even:pl-6"
+            className="border-b border-iron/15 py-5 sm:odd:pr-8 sm:even:pl-8"
           >
             <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron/70">
               {item.kicker}
             </p>
-            <p className="mt-1.5 font-newsreader text-[15px] leading-[1.35] text-iron">
+            <p className="mt-1.5 font-newsreader text-[16px] leading-[1.4] text-iron">
               {item.body}
             </p>
           </li>
@@ -63,13 +63,16 @@ export function VettedPay({
   }
 
   return (
-    <ul className="grid grid-cols-2 gap-2">
+    <ul className="grid grid-cols-1 border-t border-iron/10 sm:grid-cols-2">
       {items.map((item) => (
-        <li key={item.kicker} className={`card ${compact ? "px-4 py-3" : "px-5 py-4"}`}>
+        <li
+          key={item.kicker}
+          className={`border-b border-iron/10 ${compact ? "py-3" : "py-5"} sm:odd:pr-8 sm:even:pl-8`}
+        >
           <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
             {item.kicker}
           </p>
-          <p className="mt-1.5 font-newsreader text-[15px] leading-[1.35] text-iron">
+          <p className="mt-1.5 font-newsreader text-[16px] leading-[1.4] text-iron">
             {item.body}
           </p>
         </li>

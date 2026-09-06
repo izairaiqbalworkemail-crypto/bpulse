@@ -28,7 +28,7 @@ export default async function ReportOgImage({ params }: Props) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#EFEAE0",
+          backgroundColor: "#f4eee6",
           padding: 64,
         }}
       >
@@ -43,7 +43,7 @@ export default async function ReportOgImage({ params }: Props) {
           style={{
             fontSize: 20,
             fontFamily: "Arial, sans-serif",
-            color: "#38424E",
+            color: "#3f3e39",
             marginBottom: 16,
           }}
         >
@@ -54,7 +54,7 @@ export default async function ReportOgImage({ params }: Props) {
             fontSize: 36,
             fontFamily: "Georgia, serif",
             lineHeight: 1.25,
-            color: "#10161C",
+            color: "#161614",
             maxWidth: 1000,
           }}
         >

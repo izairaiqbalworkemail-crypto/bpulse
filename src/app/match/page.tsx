@@ -97,7 +97,7 @@ function SignalBand() {
         The evidence language
       </p>
       <div className="mt-4 flex flex-wrap items-end justify-between gap-6">
-        <h2 className="max-w-[18ch] font-newsreader text-[28px] leading-[1.1] text-iron md:text-[36px]">
+        <h2 className="max-w-[18ch] font-newsreader type-title text-[28px] leading-[1.1] text-iron md:text-[36px]">
           Heard from your words. Named by the record.
         </h2>
         <p className="max-w-[34ch] font-newsreader text-[16px] leading-[1.45] text-iron/80">
@@ -147,7 +147,7 @@ function PriceBand() {
       </p>
       <div className="mt-6 flex flex-wrap items-end justify-between gap-8">
         <div>
-          <p className="font-newsreader text-[52px] leading-[1] tracking-[-0.02em] text-iron md:text-[64px]">
+          <p className="font-newsreader type-display-xl text-[52px] leading-[1] text-iron md:text-[64px]">
             {checkPrice}
           </p>
           <p className="mt-3 max-w-[40ch] font-newsreader text-[17px] leading-[1.45] text-iron/85">
@@ -221,15 +221,17 @@ export default function MatchPage() {
         <div className="relative grid-container pb-24 pt-10 md:pb-32">
           <section className="mx-auto max-w-[44rem] text-center">
             <Rise>
-              <h2 className="font-newsreader text-[26px] leading-[1.25] text-iron md:text-[34px]">
+              <h2 className="font-newsreader type-title text-[26px] leading-[1.25] text-iron md:text-[34px]">
                 Other firms match on skills people typed about themselves. We
                 match on evidence of work we have already shipped.
               </h2>
             </Rise>
             <Rise delay={0.12}>
-              <p className="mx-auto mt-4 max-w-[44ch] font-newsreader text-[16px] leading-[1.5] text-ink">
-                Every engagement on file is tagged from its own condition text —
-                what came in broken, what the fix shipped. Your words are run
+              <p className="mx-auto mt-4 max-w-[44ch] type-lead text-iron">
+                Every engagement on file is tagged from its own condition text.
+              </p>
+              <p className="mx-auto mt-3 max-w-[44ch] font-newsreader text-[16px] leading-[1.5] text-ink">
+                What came in broken, what the fix shipped — your words are run
                 against the same language, and the page shows you the rows that
                 line up.
               </p>
@@ -258,7 +260,7 @@ export default function MatchPage() {
                           {step.label}
                         </span>
                       </div>
-                      <p className="mt-1 font-newsreader text-[20px] leading-[1.25] text-iron">
+                      <p className="mt-1 font-newsreader type-title text-[20px] leading-[1.25] text-iron">
                         {step.title}
                       </p>
                       <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-ink">

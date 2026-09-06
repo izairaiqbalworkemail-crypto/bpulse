@@ -37,7 +37,7 @@ export function StickyContact() {
     >
       <Link
         href="/contact"
-        className="group inline-flex items-center gap-2.5 rounded-full border border-iron/20 bg-rag/90 py-2.5 pr-4 pl-3 shadow-[0_8px_30px_-8px_rgba(16,22,28,0.15)] backdrop-blur-sm transition-all duration-200 hover:border-iron/40 hover:shadow-[0_12px_40px_-8px_rgba(16,22,28,0.2)]"
+        className="group inline-flex items-center gap-2.5 rounded-full border border-iron/20 bg-rag/90 py-2.5 pr-4 pl-3 shadow-[0_8px_30px_-8px_rgba(16,16,14,0.14)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-iron/40 hover:shadow-[0_16px_40px_-12px_rgba(16,16,14,0.22)]"
       >
         <span className="relative grid h-7 w-7 place-items-center rounded-full bg-iron text-rag">
           <svg

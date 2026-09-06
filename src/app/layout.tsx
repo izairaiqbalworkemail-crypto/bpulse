@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Source_Sans_3, Source_Code_Pro } from "next/font/google";
+import { Fraunces, Inter, Source_Code_Pro } from "next/font/google";
 import { rootMetadata } from "@/lib/seo";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/JsonLd";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -13,11 +13,12 @@ export const viewport: Viewport = {
 
 const display = Fraunces({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-newsreader",
   display: "swap",
 });
 
-const sans = Source_Sans_3({
+const sans = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-plex-sans",

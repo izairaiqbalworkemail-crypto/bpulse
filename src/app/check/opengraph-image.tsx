@@ -20,14 +20,14 @@ export default function CheckOg() {
           padding: 64,
         }}
       >
-        <div style={{ fontSize: 22, color: "#0d1218", opacity: 0.7 }}>
+        <div style={{ fontSize: 22, color: "#161614", opacity: 0.7 }}>
           The Check · five days
         </div>
         <div
           style={{
             marginTop: 12,
             fontSize: 96,
-            color: "#0d1218",
+            color: "#161614",
             lineHeight: 0.95,
             letterSpacing: "-0.04em",
           }}
@@ -38,7 +38,7 @@ export default function CheckOg() {
           style={{
             marginTop: 24,
             fontSize: 32,
-            color: "#0d1218",
+            color: "#161614",
             maxWidth: 900,
             lineHeight: 1.2,
           }}

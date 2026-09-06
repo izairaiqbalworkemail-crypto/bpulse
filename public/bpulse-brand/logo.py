@@ -4,7 +4,7 @@ OUT = "/mnt/user-data/outputs/bpulse-brand"
 for d in ("icon", "mark", "favicon", "social", "lockup"):
     os.makedirs(f"{OUT}/{d}", exist_ok=True)
 
-IRON  = "#0D1218"
+IRON  = "#161614"
 CREAM = "#F5F1E6"
 GOLD  = "#F2C230"
 DEEP  = "#7A5812"
@@ -66,7 +66,7 @@ def square(size, body, w, h, bg=IRON, rx_pct=0.225, scale_pct=0.52):
 def lockup(dark=True, w=1600, h=460):
     body, bw, bh = extrude(depth=44, steps=44)
     ink = CREAM if dark else IRON
-    bg  = IRON if dark else "#EFEAE0"
+    bg  = IRON if dark else "#F4EEE6"
     mh = 300.0
     s = mh / bh
     mw = bw * s
@@ -79,7 +79,7 @@ def lockup(dark=True, w=1600, h=460):
     {body}
   </g>
   <text x="{tx:.0f}" y="{h/2+62:.0f}" font-family="IBM Plex Sans, Inter, DejaVu Sans, sans-serif"
-        font-size="200" font-weight="600" letter-spacing="-8" fill="{ink}">bpulse</text>
+        font-size="200" font-weight="500" letter-spacing="-8" fill="{ink}">bpulse</text>
 </svg>'''
 
 
@@ -144,7 +144,7 @@ og = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1
     {og_body}
   </g>
   <text x="{96 + ow*s + 64:.0f}" y="300" font-family="IBM Plex Sans, Inter, DejaVu Sans, sans-serif"
-        font-size="112" font-weight="600" letter-spacing="-4" fill="{CREAM}">bpulse</text>
+        font-size="112" font-weight="500" letter-spacing="-4" fill="{CREAM}">bpulse</text>
   <text x="{96 + ow*s + 64:.0f}" y="376" font-family="IBM Plex Sans, Inter, DejaVu Sans, sans-serif"
         font-size="40" font-weight="400" fill="{GOLD}">We finish what starts.</text>
 </svg>'''
