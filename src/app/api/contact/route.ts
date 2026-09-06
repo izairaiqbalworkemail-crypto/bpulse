@@ -117,7 +117,9 @@ export async function POST(request: Request) {
         });
       }
     } catch (err) {
-      console.error("[intake] database write failed, saving locally", err);
+      console.error("[intake] database write failed, saving locally", err, {
+        cause: err instanceof Error ? err.cause : null,
+      });
       submissionId = await saveLocalSubmission({
         id: requestId,
         type,

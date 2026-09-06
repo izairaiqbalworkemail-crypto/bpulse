@@ -3,10 +3,12 @@ import Link from "next/link";
 import { demoBanner, demoViews } from "@/content/demo";
 import { pageFrame } from "@/content/platform";
 import { PageHero } from "@/components/PageHero";
+import { DemoAnalytics } from "@/components/analytics/DemoAnalytics";
 
 export default function DemoLayout({ children }: { children: ReactNode }) {
   return (
     <>
+      <DemoAnalytics />
       <div className="h-[5.25rem] bg-rag md:h-[5.75rem]" aria-hidden />
       <div className="bg-signal px-4 py-2 text-center font-plex-mono text-[13px] text-iron">
         {demoBanner}

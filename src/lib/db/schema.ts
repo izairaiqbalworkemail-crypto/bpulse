@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, jsonb, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, jsonb, uuid, numeric } from "drizzle-orm/pg-core";
 import type { MatchOutcome, MatchResult } from "@/lib/match/types";
 import type { PreliminaryRead } from "@/lib/read/types";
 
@@ -13,6 +13,9 @@ export const submissions = pgTable("submissions", {
   budget: text("budget"),
   timeline: text("timeline"),
   state: text("state"),
+  outcome: text("outcome").notNull().default("new"),
+  outcomeAt: timestamp("outcome_at", { withTimezone: true }),
+  valueUsd: numeric("value_usd", { precision: 12, scale: 2 }),
   requestId: text("request_id").notNull().unique(),
 });
 
@@ -80,8 +83,10 @@ export const diagnostics = pgTable("diagnostics", {
   dueAt: timestamp("due_at", { withTimezone: true }),
   submittedAt: timestamp("submitted_at", { withTimezone: true }),
   payload: jsonb("payload"),
+  draft: jsonb("draft"),
   scores: jsonb("scores"),
   reviewerIds: jsonb("reviewer_ids"),
+  reviewerNote: text("reviewer_note"),
 });
 
 export const gateEvents = pgTable("gate_events", {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { dismissKeyboard } from "@/components/PressButton";
 import {
@@ -28,6 +28,7 @@ import {
   subscribeDesk,
 } from "@/lib/conversation/persist";
 import type { Answers, Field } from "@/lib/conversation/types";
+import { track } from "@/lib/analytics/public";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -104,8 +105,9 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
   const [heldChip, setHeldChip] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState<string | null>(null);
+  const [done, setDone] = useState<{ id: string; emailed: boolean } | null>(null);
   const [honeypot, setHoneypot] = useState("");
+  const started = useRef(false);
   const [requestId] = useState(() =>
     typeof crypto !== "undefined" && "randomUUID" in crypto
       ? crypto.randomUUID()
@@ -117,6 +119,17 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
   const reviewing = !current;
   const filled = visible.filter((field) => fieldComplete(field, answers));
   const index = reviewing ? visible.length : filled.length + 1;
+
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
+    if (script.id === "read") {
+      track("read.started", { surface: script.source });
+    }
+    if (Object.keys(stored.answers).length > 0) {
+      track("intake.resumed", { surface: script.source });
+    }
+  }, [script.id, script.source, stored.answers]);
 
   function write(partial: Answers) {
     saveDesk(script.id, {
@@ -132,6 +145,7 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
   function sendField(field: Field, value: string) {
     const trimmed = value.trim();
     if (field.required && !trimmed) {
+      track("intake.error", { surface: script.source, field: field.name });
       setError("Say something, even a short one.");
       return;
     }
@@ -146,10 +160,12 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
     const name = draft.trim();
     const email = note.trim();
     if (!name) {
+      track("intake.error", { surface: script.source, field: "name" });
       setError("A first name is plenty.");
       return;
     }
     if (!EMAIL_RE.test(email)) {
+      track("intake.error", { surface: script.source, field: "email" });
       setError("That email looks off.");
       return;
     }
@@ -209,6 +225,7 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
         if (!response.ok || !data.ok || !data.token) {
           throw new Error(data.error ?? "The read did not save.");
         }
+        track("read.submitted", { surface: script.source });
         clearDesk(script.id);
         router.push(`/read/${data.token}`);
         return;
@@ -226,12 +243,17 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
           ...answers,
         }),
       });
-      const data = (await response.json()) as { ok?: boolean; error?: string };
+      const data = (await response.json()) as {
+        ok?: boolean;
+        id?: string;
+        emailed?: boolean;
+        error?: string;
+      };
       if (!response.ok || !data.ok) {
         throw new Error(data.error ?? "The note did not save.");
       }
       clearDesk(script.id);
-      setDone(answers.name ?? "filed");
+      setDone({ id: data.id ?? requestId, emailed: Boolean(data.emailed) });
     } catch (error_) {
       setError(error_ instanceof Error ? error_.message : "It did not save.");
     } finally {
@@ -241,12 +263,14 @@ export function Desk({ scriptId, ending }: Readonly<DeskProps>) {
 
   if (done) {
     return (
-      <DocketFiled
-        kicker="Docket filed"
-        heading="Hassan has the note."
-        body="A person replies from a real inbox, within one business day."
-      />
-    );
+        <DocketFiled
+          kicker="Docket filed"
+          heading="Hassan has the note."
+          body="A person replies from a real inbox, within one business day."
+          referenceId={done.id}
+          emailed={done.emailed}
+        />
+      );
   }
 
   const who = ADDRESSEE[script.id] ?? "Aneeb";

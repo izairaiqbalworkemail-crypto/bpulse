@@ -6,6 +6,7 @@ import { getReport } from "@/content/reports";
 import { getSpecialist } from "@/content/specialists";
 import { logReportView } from "@/lib/report-views";
 import { brand } from "@/config/brand";
+import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -37,6 +38,7 @@ export default async function ReportPage({ params }: PageProps) {
 
   return (
     <article className="report-page bg-rag text-ink">
+      <TrackOnMount event="report.opened" props={{ slug: report.slug }} />
       <div className="mx-auto max-w-[720px] px-6 py-16 md:py-24">
         <header className="border-b border-iron/15 pb-8">
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
@@ -135,6 +137,13 @@ export default async function ReportPage({ params }: PageProps) {
             Book the Check
             <span aria-hidden="true">→</span>
           </Link>
+          <p className="mt-4 font-plex-sans text-sm text-ink/70">
+            If you move forward, onboarding and delivery run in the portal on{" "}
+            <a href="https://app.bpulse.dev" className="underline underline-offset-4">
+              app.bpulse.dev
+            </a>
+            .
+          </p>
         </div>
 
         <p className="report-print-url mt-16 hidden font-plex-mono text-[12px] text-ink/60">

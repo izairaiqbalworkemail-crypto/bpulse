@@ -203,3 +203,65 @@ export async function sendMatchEmails(input: {
     throw new Error(`Resend send failed: ${studio.error.message}`);
   }
 }
+
+export async function sendStudioMagicLinkEmail(input: {
+  email: string;
+  link: string;
+}): Promise<void> {
+  if (!resend) {
+    throw new Error("Email is not configured.");
+  }
+
+  const safeLink = escapeHtml(input.link);
+  const result = await resend.emails.send({
+    from: env.RESEND_FROM,
+    to: input.email,
+    subject: "bpulse studio sign in",
+    html: `
+      <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
+        <p style="font-size:17px;line-height:1.45;">Use this sign in link to access the studio.</p>
+        <p><a href="${safeLink}">${safeLink}</a></p>
+        <p style="font-size:13px;color:#5a5a5a;">This link expires in 10 minutes. If you did not request it, ignore this email.</p>
+      </div>
+    `,
+    text: `Use this sign in link to access the studio:\n${input.link}\n\nThis link expires in 10 minutes.`,
+  });
+
+  if (result.error) {
+    throw new Error(`Resend send failed: ${result.error.message}`);
+  }
+}
+
+export async function sendAdminReplyEmail(input: {
+  to: string;
+  subject: string;
+  body: string;
+  fromActor: string;
+}): Promise<void> {
+  if (!resend) {
+    if (process.env.NODE_ENV !== "production") {
+      console.info("[admin-reply] email not configured, local preview", input);
+      return;
+    }
+    throw new Error("Email is not configured.");
+  }
+
+  const bodyHtml = escapeHtml(input.body).replace(/\n/g, "<br />");
+  const result = await resend.emails.send({
+    from: env.RESEND_FROM,
+    to: input.to,
+    replyTo: env.FOUNDER_EMAIL,
+    subject: input.subject,
+    html: `
+      <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
+        <p style="font-size:16px;line-height:1.5;">${bodyHtml}</p>
+        <p style="margin-top:18px;font-size:13px;color:#5a5a5a;">Sent by ${escapeHtml(input.fromActor)} from the bpulse operations desk.</p>
+      </div>
+    `,
+    text: `${input.body}\n\nSent by ${input.fromActor} from the bpulse operations desk.`,
+  });
+
+  if (result.error) {
+    throw new Error(`Resend send failed: ${result.error.message}`);
+  }
+}

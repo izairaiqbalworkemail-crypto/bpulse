@@ -19,12 +19,14 @@ export function ObjectPlate({
   children,
   tone = "paper",
   href,
+  onClick,
   className,
   flush = false,
 }: Readonly<{
   children: ReactNode;
   tone?: Tone;
   href?: string;
+  onClick?: () => void;
   className?: string;
   flush?: boolean;
 }>) {
@@ -39,7 +41,7 @@ export function ObjectPlate({
   if (href) {
     return (
       <Lift>
-        <Link href={href} className="block">
+        <Link href={href} className="block" onClick={onClick}>
           {plate}
         </Link>
       </Lift>

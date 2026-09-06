@@ -114,9 +114,9 @@ export const sitePrivacy: LegalDoc = {
   name: "PRIVACY POLICY",
   family: "public",
   reference: "BP-PRIVACY",
-  version: "v0.4",
+  version: "v0.5",
   issuedAt: "12 Sep 2026",
-  updatedAt: "12 Sep 2026",
+  updatedAt: "06 Sep 2026",
   status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
@@ -136,22 +136,25 @@ export const sitePrivacy: LegalDoc = {
     },
     {
       number: "2",
-      heading: "What we do not collect",
+      heading: "Analytics and tracking boundaries",
       plainTerms:
-        "We do not run analytics, tracking pixels, session recording, or advertising cookies.",
+        "Public pages use self-hosted cookieless analytics. Portal pages use product analytics after sign-in.",
       clauses: [
-        { text: "The site sets no cookies." },
-        { text: "We do not use behavioural profiling systems on this marketing site." },
+        { text: "Public pages use self-hosted Umami with no cookies." },
+        { text: "Umami records page path, referrer, country, device type, and a daily rotating non-reversible hash built from IP and user agent with salt." },
+        { text: "Umami does not record typed form text, email addresses, or company names." },
+        { text: "Portal product analytics use PostHog after login under signed engagement terms." },
       ],
     },
     {
       number: "3",
       heading: "Where data is processed",
       plainTerms:
-        "Data is processed through managed Postgres (Neon), Resend for mail delivery, and Upstash Redis for abuse protection and counters.",
+        "Data is processed through managed Postgres, Redis counters, transactional email, and self-hosted analytics infrastructure.",
       clauses: [
         { text: "Submission data is saved to managed Postgres (Neon) when configured, and to a local development store when no database is configured." },
         { text: "Rate limiting and view counters are backed by Upstash Redis. Email notifications are sent through Resend when enabled." },
+        { text: "Public analytics runs on a self-hosted Umami deployment on bpulse infrastructure. No visitor analytics request is sent to a third-party analytics host." },
         { text: "The site is hosted on Vercel." },
         {
           text: `Named sub-processors: ${subProcessors.map((row) => row.name).join(", ")}. Regions and roles are on /legal/sub-processors and /legal/data.`,
@@ -184,10 +187,10 @@ export const sitePrivacy: LegalDoc = {
   ],
   changelog: [
     {
-      version: "v0.4",
-      date: "12 Sep 2026",
-      change: "Aligned vendor list with security and legal pages.",
-      reason: "Keep the same facts consistent across surfaces.",
+      version: "v0.5",
+      date: "06 Sep 2026",
+      change: "Added public cookieless analytics and portal-only product analytics boundaries.",
+      reason: "Keep published policy accurate to deployed tracking behavior.",
     },
   ],
 };
@@ -197,9 +200,9 @@ export const siteCookies: LegalDoc = {
   name: "COOKIE POLICY",
   family: "public",
   reference: "BP-COOKIE",
-  version: "v0.2",
+  version: "v0.3",
   issuedAt: "08 Sep 2026",
-  updatedAt: "08 Sep 2026",
+  updatedAt: "06 Sep 2026",
   status: "current",
   owner: "Hamza Khan",
   role: "Legal & Risk",
@@ -209,21 +212,22 @@ export const siteCookies: LegalDoc = {
   sections: [
     {
       number: "1",
-      heading: "We set no cookies",
-      plainTerms: "The site currently sets no cookies.",
+      heading: "Public site cookies",
+      plainTerms: "The public site sets no cookies.",
       clauses: [
-        { text: "The site sets no cookies." },
-        { text: "No analytics, advertising, or session-recording cookies are used." },
-        { text: "If this changes, this document and the privacy policy will be updated before deployment." },
+        { text: "Public pages set no analytics, advertising, or session-recording cookies." },
+        { text: "Public analytics uses self-hosted Umami in cookieless mode." },
+        { text: "No consent banner is shown on public pages because no public cookie category requiring consent is in use." },
       ],
     },
     {
       number: "2",
-      heading: "No cookie banner",
-      plainTerms: "No banner is shown because no consented cookie categories are currently in use.",
+      heading: "Portal session cookie",
+      plainTerms: "The authenticated portal sets one session cookie for access control.",
       clauses: [
-        { text: "A banner for non-existent cookies is misleading." },
-        { text: "We will add consent controls if cookie-based tracking is introduced." },
+        { text: "Cookie name: __Host-bpulse-studio." },
+        { text: "Purpose: authenticated access to internal and portal routes." },
+        { text: "Flags: Secure, HttpOnly, SameSite=Strict, Path=/, short max-age." },
       ],
     },
     {
@@ -235,10 +239,10 @@ export const siteCookies: LegalDoc = {
   ],
   changelog: [
     {
-      version: "v0.2",
-      date: "08 Sep 2026",
-      change: "Rewrote to explicit zero-cookie claim and update requirement.",
-      reason: "Keep policy testable against production behaviour.",
+      version: "v0.3",
+      date: "06 Sep 2026",
+      change: "Split public cookieless posture from authenticated session cookie policy.",
+      reason: "Keep cookie policy accurate after portal auth and analytics changes.",
     },
   ],
 };
@@ -387,6 +391,9 @@ export const siteSubProcessors: LegalDoc = {
       clauses: [
         {
           text: "Pakistan is not covered by an EU adequacy decision. The transfer page at /legal/data states the SCC route, the UK addendum, and the Transfer Impact Assessment.",
+        },
+        {
+          text: "Umami is self-hosted on bpulse infrastructure and is not a third-party sub-processor for visitor analytics requests.",
         },
         {
           text: "We will not add a sub-processor without updating this list and, for an executed DPA, giving notice.",

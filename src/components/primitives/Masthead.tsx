@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutGroup,
   motion,
@@ -42,6 +42,11 @@ const nav = [
     href: "/match",
     detail: "The platform assigns",
   },
+  {
+    label: "Portal",
+    href: "/access",
+    detail: "Sign in to the client portal",
+  },
 ] as const;
 
 const FOCUS_TRAP_SELECTOR = "a[href], button:not([disabled])";
@@ -50,11 +55,24 @@ const bar = { type: "spring" as const, stiffness: 340, damping: 30 };
 
 export function Masthead() {
   const pathname = usePathname();
+  const router = useRouter();
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
   const [compact, setCompact] = useState(false);
   const [menuOpenAt, setMenuOpenAt] = useState<string | null>(null);
+  const [sessionEmail, setSessionEmail] = useState<string | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+
+  const navItems = sessionEmail
+    ? [
+        ...nav,
+        {
+          label: "Admin",
+          href: "/admin",
+          detail: "Operations and follow-up",
+        },
+      ]
+    : nav;
 
   const open = menuOpenAt === pathname;
   const closeMenu = () => setMenuOpenAt(null);
@@ -63,6 +81,28 @@ export function Masthead() {
   useMotionValueEvent(scrollY, "change", (y) => {
     setCompact((was) => (was ? y > 20 : y > 64));
   });
+
+  useEffect(() => {
+    let active = true;
+    void fetch("/api/studio/auth/session", { cache: "no-store" })
+      .then((response) => response.json() as Promise<{ authenticated?: boolean; email?: string }>)
+      .then((data) => {
+        if (!active) return;
+        if (data.authenticated && data.email) {
+          setSessionEmail(data.email);
+          return;
+        }
+        setSessionEmail(null);
+      })
+      .catch(() => {
+        if (!active) return;
+        setSessionEmail(null);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -103,6 +143,11 @@ export function Masthead() {
     };
   }, [open]);
 
+  async function logout() {
+    await fetch("/api/studio/auth/logout", { method: "POST" });
+    router.push("/");
+  }
+
   return (
     <>
       <motion.header
@@ -141,7 +186,7 @@ export function Masthead() {
                 aria-label="Primary"
                 className="hidden items-center gap-0.5 md:flex"
               >
-                {nav.map((item) => {
+                {navItems.map((item) => {
                   const on =
                     pathname === item.href ||
                     pathname.startsWith(`${item.href}/`);
@@ -172,24 +217,42 @@ export function Masthead() {
             </LayoutGroup>
 
             <div className="flex items-center gap-1">
-              <motion.div
-                className="hidden md:block"
-                whileHover={reduce ? undefined : { scale: 1.04, y: -1 }}
-                whileTap={reduce ? undefined : { scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 380, damping: 24 }}
-              >
-                <Link
-                  href="/check"
-                  onClick={(event) => {
-                    if (pathname !== "/") return;
-                    event.preventDefault();
-                    scrollToSection("intake");
-                  }}
-                  className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+              {sessionEmail ? (
+                <div className="hidden items-center gap-2 md:flex">
+                  <Link
+                    href="/admin"
+                    className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+                  >
+                    Open admin
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => void logout()}
+                    className="inline-flex min-h-11 touch-manipulation items-center rounded-full border border-rag/18 px-4 py-2.5 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/80 hover:text-rag"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <motion.div
+                  className="hidden md:block"
+                  whileHover={reduce ? undefined : { scale: 1.04, y: -1 }}
+                  whileTap={reduce ? undefined : { scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 380, damping: 24 }}
                 >
-                  Check · {checkPrice}
-                </Link>
-              </motion.div>
+                  <Link
+                    href="/check"
+                    onClick={(event) => {
+                      if (pathname !== "/") return;
+                      event.preventDefault();
+                      scrollToSection("intake");
+                    }}
+                    className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+                  >
+                    Check · {checkPrice}
+                  </Link>
+                </motion.div>
+              )}
               <button
                 type="button"
                 onClick={openMenu}
@@ -239,7 +302,7 @@ export function Masthead() {
           </div>
 
           <nav aria-label="Mobile" className="mt-12 flex flex-col px-5 md:px-8">
-            {nav.map((item) => (
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -257,18 +320,37 @@ export function Masthead() {
           </nav>
 
           <div className="mt-auto px-5 pb-10 md:px-8">
-            <Link
-              href="/check"
-              onClick={(event) => {
-                closeMenu();
-                if (pathname !== "/") return;
-                event.preventDefault();
-                scrollToSection("intake");
-              }}
-              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-8 py-3.5 font-plex-sans text-[15px] font-medium text-iron"
-            >
-              Check · {checkPrice}
-            </Link>
+            {sessionEmail ? (
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/admin"
+                  onClick={closeMenu}
+                  className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-8 py-3.5 font-plex-sans text-[15px] font-medium text-iron"
+                >
+                  Open admin
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => void logout()}
+                  className="min-h-11 touch-manipulation rounded-full border border-rag/18 px-6 py-3 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/80"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/check"
+                onClick={(event) => {
+                  closeMenu();
+                  if (pathname !== "/") return;
+                  event.preventDefault();
+                  scrollToSection("intake");
+                }}
+                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-8 py-3.5 font-plex-sans text-[15px] font-medium text-iron"
+              >
+                Check · {checkPrice}
+              </Link>
+            )}
           </div>
         </div>
       ) : null}

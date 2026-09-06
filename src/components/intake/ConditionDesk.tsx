@@ -23,6 +23,7 @@ import {
   subscribeDesk,
 } from "@/lib/conversation/persist";
 import type { FieldConfig } from "@/lib/intake/types";
+import { track } from "@/lib/analytics/public";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -81,7 +82,7 @@ export function ConditionDesk({
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState<{ id: string; emailed: boolean } | null>(null);
   const [honeypot, setHoneypot] = useState("");
   const [requestId] = useState(() =>
     typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -95,6 +96,13 @@ export function ConditionDesk({
     if (Object.keys(seeded).length === 0) return;
     saveDesk(persistId, { answers: seeded, seen: [] });
   }, [persistId, prefill, stored.answers]);
+
+  useEffect(() => {
+    if (Object.keys(stored.answers).length > 0) {
+      track("intake.resumed", { surface: source });
+    }
+    track("check.started", { surface: source });
+  }, [source, stored.answers]);
 
   const visible = useMemo(
     () => sessionFields.check.filter((field) => applies(field, answers)),
@@ -116,6 +124,7 @@ export function ConditionDesk({
   function write(field: FieldConfig, value: string) {
     const message = validate(field, value);
     if (message) {
+      track("intake.error", { surface: source, field: field.name });
       setError(message);
       return;
     }
@@ -151,6 +160,7 @@ export function ConditionDesk({
       if (!field.required) continue;
       const message = validate(field, answers[field.name] ?? "");
       if (message) {
+        track("intake.error", { surface: source, field: field.name });
         setError(message);
         return;
       }
@@ -173,13 +183,15 @@ export function ConditionDesk({
       const data = (await response.json()) as {
         ok?: boolean;
         id?: string;
+        emailed?: boolean;
         error?: string;
       };
       if (!response.ok || !data.ok) {
         throw new Error(data.error ?? "The condition did not save.");
       }
+      track("check.submitted", { surface: source });
       clearDesk(persistId);
-      setDone(true);
+      setDone({ id: data.id ?? requestId, emailed: Boolean(data.emailed) });
     } catch (error_) {
       setError(
         error_ instanceof Error ? error_.message : "The condition did not save.",
@@ -195,6 +207,8 @@ export function ConditionDesk({
         kicker="Docket filed"
         heading="The Check is on Aneeb's desk."
         body="He reads it tomorrow. A person replies from a real inbox, within one business day."
+        referenceId={done.id}
+        emailed={done.emailed}
       />
     );
   }

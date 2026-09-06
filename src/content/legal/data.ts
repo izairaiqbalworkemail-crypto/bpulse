@@ -75,7 +75,7 @@ export const transferPage = {
       "Transit is encrypted by the vendors (TLS on Vercel, Neon, Upstash, and Resend).",
       "Vendor-managed encryption at rest on Neon, Upstash, and the Vercel platform, on their terms.",
       "Access to intake records is limited to the people who read submissions. Aneeb reads Check intake. Hamza is the legal-risk contact.",
-      "No analytics, tracking pixels, advertising cookies, or session recording on this site.",
+      "Public analytics is self-hosted and cookieless. Portal analytics runs only after authentication.",
     ],
     notClaimed: [
       "We do not claim that encryption keys are held outside Pakistan. We do not operate our own key-management system. Keys are vendor-managed.",

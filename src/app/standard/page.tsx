@@ -20,6 +20,7 @@ import { pageFrame } from "@/content/platform";
 import { crewBeliefs } from "@/content/beliefs";
 import { specialists } from "@/content/specialists";
 import { diagnosticRubric } from "@/lib/careers/store";
+import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 
 export const metadata: Metadata = buildMetadata({
   title: "Admission",
@@ -30,6 +31,7 @@ export const metadata: Metadata = buildMetadata({
 export default function StandardPage() {
   return (
     <section className="w-full bg-rag">
+      <TrackOnMount event="standard.opened" props={{ surface: "standard" }} />
       <PageHero
         kicker="Admission"
         title="Five gates. Then standing review."

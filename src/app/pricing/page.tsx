@@ -9,6 +9,7 @@ import { PriceIncluded } from "@/components/pricing/PriceIncluded";
 import { PriceExcluded } from "@/components/pricing/PriceExcluded";
 import { PricePay } from "@/components/pricing/PricePay";
 import { PriceQuestions } from "@/components/pricing/PriceQuestions";
+import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 import { pricingStart } from "@/content/pricing";
 import { pageFrame } from "@/content/platform";
 
@@ -21,6 +22,7 @@ export const metadata: Metadata = buildMetadata({
 export default function PricingPage() {
   return (
     <>
+      <TrackOnMount event="pricing.viewed" props={{ surface: "pricing" }} />
       <Episode labelledBy="ladder" tone="signal" size="tall">
         <PriceLadder />
       </Episode>

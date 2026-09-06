@@ -1,4 +1,4 @@
-CREATE TABLE "match_events" (
+CREATE TABLE IF NOT EXISTS "match_events" (
 	"id" uuid PRIMARY KEY NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"input_hash" text NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE "match_events" (
 	"session" text NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "match_outcomes" (
+CREATE TABLE IF NOT EXISTS "match_outcomes" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"match_event_id" uuid NOT NULL,
 	"outcome" text NOT NULL,

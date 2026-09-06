@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { dismissKeyboard } from "@/components/PressButton";
 import {
   Docket,
@@ -24,6 +24,7 @@ import {
   subscribeDesk,
 } from "@/lib/conversation/persist";
 import type { FieldConfig, IntakeType } from "@/lib/intake/types";
+import { track } from "@/lib/analytics/public";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LONG_FIELDS = new Set(["build", "detail", "idea"]);
@@ -96,19 +97,48 @@ export function BriefIntake({
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState<{ id: string; emailed: boolean } | null>(null);
   const [honeypot, setHoneypot] = useState("");
   const [requestId] = useState(() =>
     typeof crypto !== "undefined" && "randomUUID" in crypto
       ? crypto.randomUUID()
       : `brief-${Date.now()}`,
   );
+  const started = useRef(false);
 
   useEffect(() => {
     if (Object.keys(stored.answers).length > 0) return;
     if (!prefill || Object.keys(prefill).length === 0) return;
     saveDesk(persistId, { answers: { ...prefill }, seen: [] });
   }, [persistId, prefill, stored.answers]);
+
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
+    if (Object.keys(stored.answers).length > 0) {
+      track("intake.resumed", { surface: source ?? type });
+    }
+    if (type === "check") {
+      track("check.started", { surface: source ?? "check" });
+      return;
+    }
+    if (type === "careers") {
+      track("careers.started", { surface: source ?? "careers" });
+      return;
+    }
+    if (source === "session") {
+      track("session.started", { surface: "session" });
+      return;
+    }
+    if (source === "first-slice") {
+      track("slice.started", { surface: "first-slice" });
+      return;
+    }
+    if (type === "contact") {
+      track("contact.started", { surface: source ?? "contact" });
+      return;
+    }
+  }, [source, stored.answers, type]);
 
   const visible = useMemo(
     () => fields.filter((field) => applies(field, answers)),
@@ -130,6 +160,7 @@ export function BriefIntake({
   function send(field: FieldConfig, value: string) {
     const message = validate(field, value);
     if (message) {
+      track("intake.error", { surface: source ?? type, field: field.name });
       setError(message);
       return;
     }
@@ -165,6 +196,7 @@ export function BriefIntake({
       if (!field.required) continue;
       const message = validate(field, answers[field.name] ?? "");
       if (message) {
+        track("intake.error", { surface: source ?? type, field: field.name });
         setError(message);
         return;
       }
@@ -188,10 +220,17 @@ export function BriefIntake({
       const data = (await response.json()) as {
         ok?: boolean;
         id?: string;
+        emailed?: boolean;
         error?: string;
       };
       if (!response.ok || !data.ok) {
         throw new Error(data.error ?? "The brief did not save.");
+      }
+      if (type === "check") {
+        track("check.submitted", { surface: source ?? "check" });
+      }
+      if (source === "session") {
+        track("read.submitted", { surface: "session" });
       }
       const storedMatch = readMatchBrief();
       if (storedMatch.eventId && type === "work") {
@@ -205,7 +244,7 @@ export function BriefIntake({
         });
       }
       clearDesk(persistId);
-      setDone(true);
+      setDone({ id: data.id ?? requestId, emailed: Boolean(data.emailed) });
     } catch (error_) {
       setError(
         error_ instanceof Error ? error_.message : "The brief did not save.",
@@ -225,6 +264,8 @@ export function BriefIntake({
             : `On ${first}'s desk.`
         }
         body="A person replies from a real inbox, within one business day."
+        referenceId={done.id}
+        emailed={done.emailed}
       />
     );
   }

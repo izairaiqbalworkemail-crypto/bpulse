@@ -71,6 +71,23 @@ export function Hero() {
           </button>
         </motion.div>
 
+        <motion.p
+          className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/75"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.35 }}
+        >
+          <a href="https://bpulse.dev" className="underline decoration-rag/25 underline-offset-4 hover:decoration-rag">
+            bpulse.dev
+          </a>
+          <a href="https://report.bpulse.dev" className="underline decoration-rag/25 underline-offset-4 hover:decoration-rag">
+            report.bpulse.dev
+          </a>
+          <a href="https://app.bpulse.dev" className="underline decoration-rag/25 underline-offset-4 hover:decoration-rag">
+            app.bpulse.dev
+          </a>
+        </motion.p>
+
         <motion.div
           className="mt-14"
           initial={reduce ? false : { opacity: 0, y: 10 }}

@@ -40,8 +40,8 @@ export default function SecurityPage() {
               ))}
             </ul>
             <p className="mt-4 max-w-[52ch] font-newsreader text-[17px] leading-[1.5] text-ink">
-              No analytics, tracking pixels, advertising cookies, or session
-              recording are used on this site. The site sets no cookies.
+              Public analytics is self-hosted. No visitor analytics request
+              reaches a third-party domain. Public pages set no cookies.
             </p>
           </section>
 

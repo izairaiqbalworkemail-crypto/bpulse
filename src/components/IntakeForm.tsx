@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { BUDGET_BANDS } from "@/content/budgets";
+import { SubmissionSuccess } from "@/components/intake/SubmissionSuccess";
 
 type IntakeVariant = "general" | "check" | "specialist";
 
@@ -112,7 +113,7 @@ export function IntakeForm({
     firstUnansweredIndex === -1 ? steps.length - 1 : firstUnansweredIndex
   );
   const [answers, setAnswers] = useState<Partial<FormData>>(initialAnswers);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState<{ id: string; emailed: boolean } | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [customInput, setCustomInput] = useState("");
@@ -171,9 +172,13 @@ export function IntakeForm({
         body: JSON.stringify(payload),
       });
 
-      const data = (await res.json()) as { ok?: boolean };
+      const data = (await res.json()) as {
+        ok?: boolean;
+        id?: string;
+        emailed?: boolean;
+      };
       if (!res.ok || !data.ok) throw new Error("Submission failed");
-      setSubmitted(true);
+      setSubmitted({ id: data.id ?? requestId, emailed: Boolean(data.emailed) });
     } catch {
       setError(
         "Something went wrong sending your intake. Please email us directly at contact@bpulse.dev."
@@ -193,21 +198,13 @@ export function IntakeForm({
   if (submitted) {
     return (
       <div className="p-6 md:p-8">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-sound/10 text-sound">
-            ✓
-          </span>
-          <p className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-ink/70">
-            {variantLabel} — submitted
-          </p>
-        </div>
-        <h3 className="font-newsreader text-lot-title leading-title text-iron">
-          Thank you. A real person will reply within one business day.
-        </h3>
-        <p className="mt-3 max-w-measure font-newsreader text-reading leading-reading text-ink">
-          Here is a record of what you submitted. You can print this page for
-          your records.
-        </p>
+        <SubmissionSuccess
+          kicker={`${variantLabel} filed`}
+          heading="Thank you. A real person will reply within one business day."
+          body="Here is a record of what you submitted. You can print this page for your records."
+          referenceId={submitted.id}
+          emailed={submitted.emailed}
+        />
 
         <dl className="mt-6 flex flex-col gap-3">
           {steps.map((s) => (

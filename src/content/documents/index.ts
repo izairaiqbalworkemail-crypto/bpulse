@@ -1,14 +1,17 @@
-import type { LegalDoc, LegalFamily, Party } from "./types";
+import type { LegalDoc, LegalFamily, LegalStatus, Party } from "./types";
 import { engagementDocs } from "./engagements";
 import { siteDocs } from "./site";
 import { internalDocs } from "./internal";
 
 /** One source of truth. Public + engagement + candidate + crew. */
-export const legalDocuments: LegalDoc[] = [
-  ...siteDocs,
-  ...engagementDocs,
-  ...internalDocs,
-];
+export const LEGAL_PUBLISH_STATUS: LegalStatus = "draft";
+
+const sourceDocuments: LegalDoc[] = [...siteDocs, ...engagementDocs, ...internalDocs];
+
+export const legalDocuments: LegalDoc[] = sourceDocuments.map((doc) => ({
+  ...doc,
+  status: LEGAL_PUBLISH_STATUS,
+}));
 
 export function documentsByFamily(): Record<LegalFamily, LegalDoc[]> {
   return {

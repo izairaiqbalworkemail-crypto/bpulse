@@ -12,7 +12,6 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const report =
     pathname.startsWith("/report/") ||
-    pathname.startsWith("/studio/") ||
     pathname.startsWith("/read/") ||
     pathname.startsWith("/match/");
 
@@ -42,7 +41,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   return (
     <>
       {report ? null : <Masthead />}
-      <main>{children}</main>
+      <main className={report ? "min-h-screen" : "min-h-screen bg-rag text-ink"}>{children}</main>
       {report ? null : (
         <>
           <DirectStrip />

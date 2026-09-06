@@ -7,6 +7,7 @@ import { legalTitle } from "@/components/legal/legal-ui";
 import {
   contractSet,
   documentsByFamily,
+  LEGAL_PUBLISH_STATUS,
   legalDocuments,
   legalOwner,
 } from "@/content/documents";
@@ -15,6 +16,7 @@ import {
   LEGAL_STATUS_META,
 } from "@/content/documents/types";
 import { pageFrame } from "@/content/platform";
+import { DRAFT_NOTICE } from "@/lib/legal/status";
 
 export const metadata: Metadata = buildMetadata({
   title: "Legal & Compliance",
@@ -48,6 +50,15 @@ export default function LegalIndexPage() {
       />
 
       <div className="stage-container py-16 md:py-24">
+        {LEGAL_PUBLISH_STATUS === "draft" ? (
+          <section className="border border-ink/20 bg-rag px-6 py-5">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink">{DRAFT_NOTICE}</p>
+            <p className="mt-3 max-w-[66ch] font-plex-sans text-[15px] leading-[1.6] text-ink">
+              Draft means legal counsel has not signed off yet. Text may change, and no document on this register is in force until review is recorded in LEGAL-REVIEW.md.
+            </p>
+          </section>
+        ) : null}
+
         {registerOrder.map((family) => {
           const rows = byFamily[family];
           if (rows.length === 0) return null;

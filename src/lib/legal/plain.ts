@@ -1,6 +1,7 @@
 import type { LegalDoc } from "@/content/documents/types";
 import { LEGAL_STATUS_META } from "@/content/documents/types";
 import { clauseNumber } from "@/content/documents";
+import { DRAFT_NOTICE, isDraftDocument } from "@/lib/legal/status";
 
 const RULE = "─".repeat(72);
 
@@ -12,6 +13,10 @@ export function renderPlainText(doc: LegalDoc): string {
   lines.push("bpulse — BREAKTHROUGH PULSE");
   lines.push("Lahore, Punjab, Pakistan");
   lines.push(RULE);
+  if (isDraftDocument(doc)) {
+    lines.push(DRAFT_NOTICE);
+    lines.push(RULE);
+  }
   lines.push("");
   lines.push(doc.name);
   lines.push("");

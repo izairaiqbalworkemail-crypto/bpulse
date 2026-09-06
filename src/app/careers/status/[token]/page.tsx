@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
-import { getCandidateStatus } from "@/lib/careers/store";
+import { getCandidateStatusData } from "@/lib/careers/repo";
 import { PageHero } from "@/components/PageHero";
 
 type PageProps = {
@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { token } = await params;
-  const status = getCandidateStatus(token);
+  const status = await getCandidateStatusData(token);
   if (!status) return {};
   return buildMetadata({
     title: "Application status",
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CareersStatusPage({ params }: PageProps) {
   const { token } = await params;
   if (!/^[A-Za-z0-9]{16}$/.test(token)) notFound();
-  const status = getCandidateStatus(token);
+  const status = await getCandidateStatusData(token);
   if (!status) notFound();
 
   return (

@@ -1,4 +1,4 @@
-CREATE TABLE "reads" (
+CREATE TABLE IF NOT EXISTS "reads" (
 	"token" uuid PRIMARY KEY NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"source" text NOT NULL,

@@ -4,10 +4,11 @@ import { buildMetadata } from "@/lib/seo";
 import { GateCard } from "@/components/GateCard";
 import { PageHero } from "@/components/PageHero";
 import { SignalPlate } from "@/components/SignalPlate";
-import { BriefIntake } from "@/components/intake/BriefIntake";
+import { JobsBoard } from "@/components/careers/JobsBoard";
 import { pageFrame } from "@/content/platform";
 import { crewCommitments, crewGates } from "@/content/process";
-import { listRoles } from "@/lib/careers/store";
+import { listRolesData } from "@/lib/careers/repo";
+import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 
 export const metadata: Metadata = buildMetadata({
   title: "Applying to the standard",
@@ -15,12 +16,12 @@ export const metadata: Metadata = buildMetadata({
   path: "/careers",
 });
 
-export default function CareersPage() {
-  const roles = listRoles();
-  const openRoles = roles.filter((role) => role.status === "open");
+export default async function CareersPage() {
+  const roles = await listRolesData();
 
   return (
     <section className="w-full bg-rag pb-24 md:pb-32">
+      <TrackOnMount event="careers.started" props={{ surface: "careers" }} />
       <PageHero
         kicker="Applying to the standard"
         title="A written Gate 0. Then the rest of the gates."
@@ -61,22 +62,7 @@ export default function CareersPage() {
       <div className="grid-container pt-12">
         <section>
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">Admission plan</p>
-          <ul className="mt-4 space-y-3">
-            {roles.map((role) => (
-              <li key={role.id} className="card p-6">
-                <p className="font-newsreader text-[21px] text-iron">{role.title}</p>
-                <p className="font-newsreader text-[16px] text-ink">
-                  {role.band} · {role.location} · {role.summary}
-                </p>
-                <p className="mt-1 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-                  {role.status}
-                </p>
-              </li>
-            ))}
-          </ul>
-          {openRoles.length === 0 ? (
-            <p className="mt-4 font-newsreader text-[17px] text-ink">No roles are currently open.</p>
-          ) : null}
+          <JobsBoard roles={roles} />
         </section>
 
         <section className="mt-14">
@@ -94,12 +80,8 @@ export default function CareersPage() {
           </ul>
         </section>
 
-        <section id="intake" className="mt-14 scroll-mt-28">
-          <p className="mb-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-            Apply · five short steps
-          </p>
-          <BriefIntake type="careers" source="careers-gate0" workWith="madiha" />
-          <p className="mt-5 font-newsreader text-[17px] text-ink">
+        <section className="mt-14 scroll-mt-28">
+          <p className="font-newsreader text-[17px] text-ink">
             On submit: you get a private status link and your Gate 0 brief within one business day.
           </p>
           <p className="mt-2 font-plex-sans text-[14px] text-ink/80">

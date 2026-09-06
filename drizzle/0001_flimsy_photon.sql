@@ -1,4 +1,4 @@
-CREATE TABLE "ops_audit_log" (
+CREATE TABLE IF NOT EXISTS "ops_audit_log" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"actor" text NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE "ops_audit_log" (
 	"metadata" jsonb
 );
 --> statement-breakpoint
-CREATE TABLE "ops_report_meta" (
+CREATE TABLE IF NOT EXISTS "ops_report_meta" (
 	"slug" text PRIMARY KEY NOT NULL,
 	"company" text NOT NULL,
 	"sent_at" timestamp with time zone,

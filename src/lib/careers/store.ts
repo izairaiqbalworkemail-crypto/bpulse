@@ -22,6 +22,8 @@ type Application = {
   source: string;
 };
 
+type RoleStatus = Role["status"];
+
 type Finding = {
   observed: string;
   consequence: string;
@@ -70,6 +72,15 @@ type GateEvent = {
 };
 
 const nowIso = () => new Date().toISOString();
+
+function makeToken(length = 16) {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+  let out = "";
+  for (let i = 0; i < length; i += 1) {
+    out += alphabet[Math.floor(Math.random() * alphabet.length)] ?? "";
+  }
+  return out;
+}
 
 const roles: Role[] = [
   {
@@ -253,6 +264,99 @@ function copyPayload(payload: DiagnosticPayload): DiagnosticPayload {
 
 export function listRoles() {
   return roles.map((item) => ({ ...item }));
+}
+
+export function upsertRole(input: {
+  id?: string;
+  title: string;
+  pod: string;
+  status: RoleStatus;
+  location: string;
+  band: string;
+  summary: string;
+}) {
+  const id = input.id?.trim() || `role-${roles.length + 1}`;
+  const existing = roles.find((role) => role.id === id);
+  if (existing) {
+    existing.title = input.title;
+    existing.pod = input.pod;
+    existing.status = input.status;
+    existing.location = input.location;
+    existing.band = input.band;
+    existing.summary = input.summary;
+    return { ok: true as const, id, created: false as const };
+  }
+
+  roles.push({
+    id,
+    title: input.title,
+    pod: input.pod,
+    status: input.status,
+    location: input.location,
+    band: input.band,
+    summary: input.summary,
+  });
+
+  return { ok: true as const, id, created: true as const };
+}
+
+export function createApplication(input: {
+  roleId: string;
+  name: string;
+  email: string;
+  source: string;
+}) {
+  const role = getRoleById(input.roleId);
+  if (!role) {
+    return { ok: false as const, error: "Role not found." };
+  }
+
+  const duplicate = applications.find(
+    (application) =>
+      application.roleId === input.roleId &&
+      application.email.toLowerCase() === input.email.toLowerCase(),
+  );
+  if (duplicate) {
+    return { ok: true as const, id: duplicate.id, token: duplicate.token, duplicate: true as const };
+  }
+
+  const id = `app-${applications.length + 1}`;
+  const token = makeToken();
+  const now = nowIso();
+  applications.push({
+    id,
+    token,
+    roleId: input.roleId,
+    name: input.name,
+    email: input.email,
+    gate: 0,
+    submittedAt: now,
+    updatedAt: now,
+    source: input.source,
+  });
+
+  gateEvents.push({
+    id: `evt-${gateEvents.length + 1}`,
+    applicationId: id,
+    gate: 0,
+    outcome: "applied",
+    occurredAt: now,
+    noteInternal: "Application received from careers page.",
+  });
+
+  return { ok: true as const, id, token, duplicate: false as const };
+}
+
+export function listRoleApplications() {
+  return applications
+    .map((application) => {
+      const role = getRoleById(application.roleId);
+      return {
+        ...application,
+        roleTitle: role?.title ?? "Role",
+      };
+    })
+    .sort((left, right) => (left.submittedAt > right.submittedAt ? -1 : 1));
 }
 
 export function getDiagnosticByToken(token: string) {
@@ -517,3 +621,4 @@ export const diagnosticScenarios = {
 } as const;
 
 export type DiagnosticPayloadInput = DiagnosticPayload;
+export type RoleInput = Role;

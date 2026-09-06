@@ -18,6 +18,7 @@ import { Atmosphere } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
 import { PageHero } from "@/components/PageHero";
 import { specFromLot, verifiedFigures } from "@/lib/lot-trace";
+import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -74,6 +75,7 @@ export default async function LotPage({ params }: Readonly<PageProps>) {
       />
 
       <section className="relative w-full overflow-hidden bg-rag">
+        <TrackOnMount event="lot.opened" props={{ slug: lot.slug }} />
         <div className="relative w-full bg-iron py-10 md:py-14">
           <div className="grid-container">
             <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">

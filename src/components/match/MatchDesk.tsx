@@ -15,6 +15,7 @@ import {
 import { MatchResult } from "@/components/match/MatchResult";
 import { emptyDesk, loadDesk, saveDesk } from "@/lib/conversation/persist";
 import type { MatchOutcome } from "@/lib/match/types";
+import { track } from "@/lib/analytics/public";
 
 const EXAMPLE =
   "We built a payroll tool over eight months. It works on staging. We've never deployed to production and nobody left knows how the auth was wired.";
@@ -42,11 +43,16 @@ export function MatchDesk({
     runMatchAction,
     emptyMatchState,
   );
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return loadDesk(MATCH_ID).answers.description ?? "";
+  });
   const [view, setView] = useState<"form" | "result">("form");
   const [removed, setRemoved] = useState<SignalId[]>([]);
   const [rerun, setRerun] = useState<MatchActionState | null>(null);
   const [busy, setBusy] = useState(false);
+  const started = useRef(false);
+  const completedFor = useRef<string | null>(null);
   const [session] = useState(() =>
     typeof crypto !== "undefined" && "randomUUID" in crypto
       ? crypto.randomUUID()
@@ -54,9 +60,10 @@ export function MatchDesk({
   );
 
   useEffect(() => {
-    const saved = loadDesk(MATCH_ID).answers.description;
-    if (saved) setDraft(saved);
-  }, []);
+    if (started.current) return;
+    started.current = true;
+    track("match.started", { surface: compact ? "match-compact" : "match" });
+  }, [compact]);
 
   function remember(value: string) {
     setDraft(value);
@@ -72,8 +79,12 @@ export function MatchDesk({
   useEffect(() => {
     if (showResults) {
       resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (current.eventId && completedFor.current !== current.eventId) {
+        completedFor.current = current.eventId;
+        track("match.completed", { surface: compact ? "match-compact" : "match" });
+      }
     }
-  }, [showResults]);
+  }, [compact, current.eventId, showResults]);
 
   async function toggleSignal(id: SignalId, remove: boolean) {
     if (busy || !current.description) return;

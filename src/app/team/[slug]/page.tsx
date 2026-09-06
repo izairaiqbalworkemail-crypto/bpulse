@@ -17,6 +17,7 @@ import {
   signalsClosed,
 } from "@/lib/assignment";
 import { specFromLots } from "@/lib/lot-trace";
+import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -78,6 +79,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
       />
 
       <section className="relative w-full overflow-hidden bg-rag">
+        <TrackOnMount event="crew.opened" props={{ slug: specialist.id }} />
         <Atmosphere kind="paper" opacity={0.16} />
         <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-16">
           <div className="grid items-start gap-12 md:grid-cols-[14rem_minmax(0,1fr)]">

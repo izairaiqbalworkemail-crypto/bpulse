@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { PressButton } from "@/components/PressButton";
+import { SubmissionSuccess } from "@/components/intake/SubmissionSuccess";
 
 export type DocketStep = {
   id: string;
@@ -288,12 +289,25 @@ export function DocketFile({
 export function DocketFiled({
   heading,
   body,
-}: Readonly<{ kicker?: string; heading: string; body: string }>) {
+  kicker,
+  referenceId,
+  emailed,
+}: Readonly<{
+  kicker?: string;
+  heading: string;
+  body: string;
+  referenceId?: string | null;
+  emailed?: boolean;
+}>) {
   return (
     <div className="docket">
-      <p className="docket-kicker">Filed</p>
-      <p className="docket-ask">{heading}</p>
-      <p className="docket-note">{body}</p>
+      <SubmissionSuccess
+        kicker={kicker}
+        heading={heading}
+        body={body}
+        referenceId={referenceId}
+        emailed={emailed}
+      />
     </div>
   );
 }

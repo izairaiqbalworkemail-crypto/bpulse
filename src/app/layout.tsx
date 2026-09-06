@@ -3,6 +3,7 @@ import { Fraunces, Inter, Source_Code_Pro } from "next/font/google";
 import { rootMetadata } from "@/lib/seo";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/JsonLd";
 import { SiteChrome } from "@/components/SiteChrome";
+import { PublicAnalytics } from "@/components/analytics/PublicAnalytics";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body className="bg-iron-2 text-ink">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
+        <PublicAnalytics />
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

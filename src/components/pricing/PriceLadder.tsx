@@ -5,6 +5,7 @@ import { EpisodeHead } from "@/components/episode/Episode";
 import { ObjectPlate } from "@/components/objects/ObjectPlate";
 import { pricingLadder } from "@/content/pricing";
 import { ladderPrices } from "@/content/ladder";
+import { track } from "@/lib/analytics/public";
 
 const counted: Partial<Record<(typeof pricingLadder)[number]["id"], number>> = {
   session: ladderPrices.session,
@@ -27,7 +28,12 @@ export function PriceLadder() {
           const amount = counted[rung.id];
           return (
             <Item key={rung.id} className={index === 0 ? "md:col-span-2" : undefined}>
-              <ObjectPlate href={rung.href} tone="paper" className="h-full bg-rag">
+              <ObjectPlate
+                href={rung.href}
+                tone="paper"
+                className="h-full bg-rag"
+                onClick={() => track("pricing.rung.clicked", { rung: rung.id })}
+              >
                 <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/60">
                   {rung.name}
                 </p>

@@ -4,6 +4,10 @@ import { runMatch } from "@/lib/match/engine";
 import { buildEvent, saveMatchEvent } from "@/lib/match/store";
 import { clipDescription } from "@/lib/match/normalize";
 import type { MatchInput, MatchStage, MatchUrgency } from "@/lib/match/types";
+import { env } from "@/lib/env";
+import { getDb } from "@/lib/db";
+import { submissions } from "@/lib/db/schema";
+import { saveLocalSubmission } from "@/lib/intake/local-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -50,6 +54,51 @@ export async function POST(request: Request) {
   const outcome = runMatch(input);
   const event = buildEvent(input, outcome, session);
   await saveMatchEvent(event);
+
+  const requestId =
+    typeof body.requestId === "string" && body.requestId
+      ? body.requestId
+      : `match-${event.id}`;
+  const payload = {
+    description,
+    stage: stage ?? null,
+    urgency: urgency ?? null,
+    stack,
+    eventId: event.id,
+  };
+
+  if (env.DATABASE_URL) {
+    try {
+      await getDb()
+        .insert(submissions)
+        .values({
+          type: "match",
+          source: "match",
+          payload,
+          email: null,
+          requestId,
+        })
+        .onConflictDoNothing({ target: submissions.requestId });
+    } catch {
+      await saveLocalSubmission({
+        id: requestId,
+        type: "match",
+        source: "match",
+        email: null,
+        payload,
+        requestId,
+      });
+    }
+  } else {
+    await saveLocalSubmission({
+      id: requestId,
+      type: "match",
+      source: "match",
+      email: null,
+      payload,
+      requestId,
+    });
+  }
 
   return NextResponse.json({
     ok: true,

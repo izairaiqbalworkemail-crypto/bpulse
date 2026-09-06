@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { dismissKeyboard } from "@/components/PressButton";
 import {
@@ -11,6 +11,7 @@ import {
   DocketReview,
   DocketWrite,
 } from "@/components/intake/docket/Docket";
+import { SubmissionSuccess } from "@/components/intake/SubmissionSuccess";
 import {
   aboutDirectScript,
   BRIEF_LABEL,
@@ -32,6 +33,7 @@ import {
 import { readMatchBrief } from "@/lib/match/session";
 import type { Answers, Field } from "@/lib/conversation/types";
 import { firstName } from "@/lib/lot-trace";
+import { track } from "@/lib/analytics/public";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -83,8 +85,13 @@ export function DirectDesk({
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [record, setRecord] = useState<Answers | null>(null);
+  const [record, setRecord] = useState<{
+    answers: Answers;
+    id: string;
+    emailed: boolean;
+  } | null>(null);
   const [honeypot, setHoneypot] = useState("");
+  const started = useRef(false);
   const [requestId] = useState(() =>
     typeof crypto !== "undefined" && "randomUUID" in crypto
       ? crypto.randomUUID()
@@ -106,6 +113,18 @@ export function DirectDesk({
     });
   }, [answers, script.id, stored.seen]);
 
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
+    if (Object.keys(answers).length > 0) {
+      track("intake.resumed", { surface: pageSource });
+    }
+    track("direct.started", {
+      surface: pageSource,
+      specialist: specialistId ?? "aneeb",
+    });
+  }, [answers, pageSource, specialistId]);
+
   const headerPerson = specialistId
     ? getSpecialist(specialistId)
     : getSpecialist("aneeb");
@@ -124,6 +143,7 @@ export function DirectDesk({
   function sendField(field: Field, value: string) {
     const trimmed = value.trim();
     if (field.required && !trimmed) {
+      track("intake.error", { surface: pageSource, field: field.name });
       setError("Say something, even a short one.");
       return;
     }
@@ -134,10 +154,12 @@ export function DirectDesk({
     const name = draft.trim();
     const email = note.trim();
     if (!name) {
+      track("intake.error", { surface: pageSource, field: "name" });
       setError("A first name is plenty.");
       return;
     }
     if (!EMAIL_RE.test(email)) {
+      track("intake.error", { surface: pageSource, field: "email" });
       setError("That email looks off.");
       return;
     }
@@ -178,11 +200,16 @@ export function DirectDesk({
           ...answers,
         }),
       });
-      const data = (await response.json()) as { ok?: boolean; error?: string };
+      const data = (await response.json()) as {
+        ok?: boolean;
+        id?: string;
+        emailed?: boolean;
+        error?: string;
+      };
       if (!response.ok || !data.ok) {
         throw new Error(data.error ?? "The note did not save.");
       }
-      setRecord(answers);
+      setRecord({ answers, id: data.id ?? requestId, emailed: Boolean(data.emailed) });
       clearDesk(script.id);
     } catch (error_) {
       setError(error_ instanceof Error ? error_.message : "It did not save.");
@@ -192,25 +219,22 @@ export function DirectDesk({
   }
 
   if (record) {
-    const rows = visibleFields(script, record).filter((field) =>
-      fieldComplete(field, record),
+    const rows = visibleFields(script, record.answers).filter((field) =>
+      fieldComplete(field, record.answers),
     );
     return (
       <div className="docket">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/45">
-          Filed
-        </p>
-        <p className="mt-8 max-w-[14ch] font-newsreader text-[36px] leading-[1.1] text-iron md:text-[44px]">
-          {headerFirst} has the brief.
-        </p>
-        <p className="mt-5 max-w-[32ch] font-newsreader text-[18px] leading-[1.4] text-ink">
-          A person replies from a real inbox, within one business day.
-        </p>
+        <SubmissionSuccess
+          heading={`${headerFirst} has the brief.`}
+          body="A person replies from a real inbox, within one business day."
+          referenceId={record.id}
+          emailed={record.emailed}
+        />
         <div className="mt-10">
           <DocketReview
             rows={rows.map((field) => ({
               label: briefLabel(field.kind === "identity" ? "email" : field.name),
-              value: displayValue(field, record),
+              value: displayValue(field, record.answers),
             }))}
           />
         </div>

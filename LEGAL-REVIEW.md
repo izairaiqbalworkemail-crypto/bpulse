@@ -7,6 +7,12 @@ Addendum — by those names.
 
 Until that person signs off, every public surface stays **Draft**.
 
+## Sign-off ledger
+
+- Status: No solicitor sign-off recorded.
+- Last checked: 06 Sep 2026.
+- Jurisdiction sign-off entries: none.
+
 ---
 
 ## Hamza Khan — owner, not reviewer

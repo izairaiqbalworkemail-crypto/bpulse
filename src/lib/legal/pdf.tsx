@@ -2,6 +2,7 @@ import { Document, Page, View, Text, Image, StyleSheet } from "@react-pdf/render
 import type { LegalDoc } from "@/content/documents/types";
 import { LEGAL_STATUS_META } from "@/content/documents/types";
 import { clauseNumber } from "@/content/documents";
+import { DRAFT_NOTICE, isDraftDocument } from "@/lib/legal/status";
 import { registerLegalFonts, legalLogoDataUri } from "./fonts";
 
 registerLegalFonts();
@@ -44,6 +45,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.75,
     borderBottomColor: IRON,
     marginBottom: 14,
+  },
+  draftBanner: {
+    marginBottom: 10,
+    borderWidth: 0.75,
+    borderColor: INK,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+  },
+  draftBannerText: {
+    fontFamily: FONT_MONO,
+    fontSize: 8.5,
+    color: INK,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
   title: {
     fontFamily: FONT_SANS,
@@ -195,6 +210,18 @@ const styles = StyleSheet.create({
     fontSize: 7,
     color: INK,
   },
+  draftWatermark: {
+    position: "absolute",
+    top: "50%",
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    fontFamily: FONT_MONO,
+    fontSize: 72,
+    letterSpacing: 8,
+    color: "#8a8778",
+    opacity: 0.14,
+  },
 });
 
 function MetaRow({ label, value }: { label: string; value: string }) {
@@ -208,6 +235,7 @@ function MetaRow({ label, value }: { label: string; value: string }) {
 
 export function LegalPdf({ doc }: { doc: LegalDoc }) {
   const status = LEGAL_STATUS_META[doc.status];
+  const isDraft = isDraftDocument(doc);
   const client = doc.parties.find((party) => party.key !== "bpulse");
 
   return (
@@ -217,6 +245,7 @@ export function LegalPdf({ doc }: { doc: LegalDoc }) {
       producer="bpulse"
     >
       <Page size="A4" style={styles.page} wrap>
+        {isDraft ? <Text fixed style={styles.draftWatermark}>DRAFT</Text> : null}
         <View>
           <View style={styles.brandRow}>
             {/* eslint-disable-next-line jsx-a11y/alt-text -- @react-pdf Image has no alt */}
@@ -224,6 +253,11 @@ export function LegalPdf({ doc }: { doc: LegalDoc }) {
             <Text style={styles.wordmark}>bpulse</Text>
           </View>
           <View style={styles.rule} />
+          {isDraft ? (
+            <View style={styles.draftBanner}>
+              <Text style={styles.draftBannerText}>{DRAFT_NOTICE}</Text>
+            </View>
+          ) : null}
           <Text style={styles.title}>{doc.name}</Text>
           <View style={styles.metaGrid}>
             <MetaRow label="Reference" value={doc.reference} />

@@ -21,7 +21,6 @@ export const landSpring = { type: "spring" as const, stiffness: 160, damping: 22
 
 /** Apple / Linear emphasized ease — opacity + 20px, ~700ms. */
 export const landEase = [0.16, 1, 0.3, 1] as const;
-const landDuration = 0.7;
 const view = { once: true, margin: "-12% 0px" } as const;
 
 type MotionBox = {
@@ -147,27 +146,6 @@ export function Rise({ children, delay = 0, className }: Readonly<MotionBox>) {
       animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
       transition={
         reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
-      }
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-/** Photo enter: crop opens, then the frame settles. */
-export function Wipe({ children, delay = 0, className }: Readonly<MotionBox>) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-16% 0px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      className={className}
-      initial={reduce ? false : { opacity: 0 }}
-      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
-      transition={
-        reduce ? { duration: 0 } : { duration: 0.85, ease: landEase, delay }
       }
     >
       {children}

@@ -12,9 +12,14 @@ import {
 import { clauseNumber, legalOwner } from "@/content/documents";
 import { LEGAL_FAMILY_LABEL, LEGAL_STATUS_META } from "@/content/documents/types";
 import type { LegalDoc } from "@/content/documents/types";
+import { DRAFT_NOTICE, isDraftDocument } from "@/lib/legal/status";
 
 export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
   const status = LEGAL_STATUS_META[doc.status];
+  const isDraft = isDraftDocument(doc);
+  const sectionReviewNotes = doc.sections
+    .filter((section) => section.reviewNote)
+    .map((section) => ({ section: section.number, note: section.reviewNote as string }));
   const index = [
     ...doc.sections.map((section) => ({
       id: `section-${section.number}`,
@@ -39,6 +44,11 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
       </div>
 
       <div className="legal-chrome stage-container pt-10 md:pt-12">
+        {isDraft ? (
+          <div className="rounded-[10px] border border-ink/30 bg-rag px-5 py-4">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink">{DRAFT_NOTICE}</p>
+          </div>
+        ) : null}
         <Reveal>
           <dl className="grid gap-6 border-t border-iron/12 pt-7 font-plex-mono text-[12px] uppercase tracking-[0.08em] sm:grid-cols-2 lg:grid-cols-4">
             <div>
@@ -86,6 +96,20 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
             The register
           </Link>
         </p>
+
+        {doc.reviewNote || sectionReviewNotes.length > 0 ? (
+          <div className="mt-8 border border-ink/20 bg-rag px-5 py-4">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/80">Open legal review items</p>
+            {doc.reviewNote ? (
+              <p className="mt-3 font-plex-sans text-[15px] leading-[1.6] text-iron">{doc.reviewNote}</p>
+            ) : null}
+            {sectionReviewNotes.map((item) => (
+              <p key={`${item.section}-${item.note}`} className="mt-2 font-plex-sans text-[15px] leading-[1.6] text-iron">
+                Section {item.section}: {item.note}
+              </p>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       <div className="stage-container grid items-start gap-16 py-16 md:grid-cols-[13.5rem_minmax(0,1fr)] md:py-24">

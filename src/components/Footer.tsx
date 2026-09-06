@@ -24,6 +24,8 @@ const studioLinks = [
   { label: "Assignment", href: "/match" },
   { label: "Direct line", href: "/direct" },
   { label: "The platform", href: "/demo" },
+  { label: "Handover sample", href: "/demo/handover" },
+  { label: "Admin access", href: "/access" },
   { label: "About", href: "/about" },
   { label: "Applying to the standard", href: "/careers" },
   { label: "Notices", href: "/notices" },

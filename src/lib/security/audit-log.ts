@@ -25,8 +25,11 @@ export async function recordAuditEvent(input: {
         metadata: input.metadata ?? null,
       });
   } catch (err) {
-    // Audit logging must never break the action it's logging.
-    console.error("[audit-log] write failed", err);
+    const message = "Audit logging failed. Request blocked until logging is restored.";
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(message, { cause: err });
+    }
+    console.warn("[audit-log] write failed in non-production; continuing", err);
   }
 }
 
