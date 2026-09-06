@@ -84,6 +84,7 @@ export const indexProjects: IndexProject[] = [
     line: "Ecommerce operations and app stack support on a mature Rails ecosystem.",
     stack: "Rails, PostgreSQL, Redis, Sidekiq, Shopify",
     entryState: "taken over mid-flight",
+    signals: ["legacy-coupling"],
   },
   {
     id: "logistics",

@@ -30,6 +30,15 @@ export const specialists: Specialist[] = [
     writeAbout: "Scope, who is left, and whether a Check is the right door.",
     stack: ["TypeScript", "Next.js", "Node", "React", "React Native", "AWS"],
     focus: ["HIPAA production", "product architecture", "scoping", "rescue"],
+    signalsAddressed: [
+      "single-point-knowledge",
+      "scope-unbounded",
+      "stalled-long",
+      "no-release-owner",
+      "no-deploy-path",
+      "manual-release",
+    ],
+    domains: ["healthcare", "crypto", "marketplaces", "verification", "product rescue"],
     philosophy: "Ship the smallest thing that proves the biggest risk wrong.",
     funFacts: [
       "Reads spec docs for fun",
@@ -87,6 +96,8 @@ export const specialists: Specialist[] = [
     writeAbout: "Architecture — what you refuse to build, and why.",
     stack: ["React", "Node.js", "TypeScript", "PostgreSQL", "AWS", "REST"],
     focus: ["full-stack architecture", "system design", "TypeScript"],
+    signalsAddressed: ["env-drift", "no-observability", "legacy-coupling", "scope-unbounded"],
+    domains: ["healthcare", "verification", "full-stack architecture"],
     philosophy: "Architecture is deciding what you refuse to build.",
     funFacts: [
       "Thinks in TypeScript types",
@@ -128,6 +139,16 @@ export const specialists: Specialist[] = [
     writeAbout: "Getting a build across the line — the last twenty percent.",
     stack: ["Next.js", "React", "Astro", "Node", "Firebase", "Python", "TypeScript"],
     focus: ["full-stack", "SEO lead-gen", "AI integrations", "architecture"],
+    signalsAddressed: [
+      "staging-only",
+      "no-deploy-path",
+      "manual-release",
+      "no-observability",
+      "auth-undocumented",
+      "third-party-sprawl",
+      "api-contract-drift",
+    ],
+    domains: ["healthcare", "ai integrations", "seo", "lead generation"],
     philosophy: "The hard 20% is where the money hides.",
     funFacts: [
       "Has never met a legacy codebase she could not read",
@@ -175,6 +196,15 @@ export const specialists: Specialist[] = [
     writeAbout: "Messy requirements, compliance paths, a system that holds.",
     stack: ["React", "Node.js", "AWS", "PostgreSQL", "System Design"],
     focus: ["solution architecture", "compliance workflows", "specs"],
+    signalsAddressed: [
+      "auth-undocumented",
+      "api-contract-drift",
+      "legacy-coupling",
+      "migration-not-idempotent",
+      "third-party-sprawl",
+      "scope-unbounded",
+    ],
+    domains: ["verification", "compliance", "healthcare", "ecommerce"],
     philosophy: "Messy requirements are just systems that have not been drawn yet.",
     funFacts: [
       "Turns meetings into diagrams",
@@ -218,6 +248,14 @@ export const specialists: Specialist[] = [
     writeAbout: "Models, RAG, and whether it holds on real data.",
     stack: ["Python", "RAG", "LLMs", "FastAPI", "Evals", "TensorFlow"],
     focus: ["RAG", "LLMs", "evals", "model ops"],
+    signalsAddressed: [
+      "notebook-only",
+      "no-evals",
+      "no-fallback",
+      "latency-unbounded",
+      "hallucination-unguarded",
+    ],
+    domains: ["healthcare", "verification", "ai research"],
     philosophy: "A model is a decision you can measure, not magic you trust.",
     funFacts: [
       "Reads eval reports like novels",
@@ -261,6 +299,15 @@ export const specialists: Specialist[] = [
     writeAbout: "Deploys, staging, and whether production has ever existed.",
     stack: ["AWS", "Kubernetes", "Terraform", "CI/CD", "Docker"],
     focus: ["CI/CD", "uptime", "AWS", "cloud infra"],
+    signalsAddressed: [
+      "no-deploy-path",
+      "staging-only",
+      "manual-release",
+      "no-rollback",
+      "env-drift",
+      "no-observability",
+    ],
+    domains: ["healthcare", "verification", "cloud infrastructure"],
     philosophy: "If a deploy is exciting, the pipeline is not done.",
     funFacts: [
       "Sleeps through deploys on purpose",
@@ -304,6 +351,8 @@ export const specialists: Specialist[] = [
     writeAbout: "What users actually do, in the field.",
     stack: ["WordPress", "React", "TypeScript", "Frontend"],
     focus: ["client delivery", "field work", "shipping"],
+    signalsAddressed: ["staging-only", "scope-unbounded", "manual-release"],
+    domains: ["healthcare", "marketplaces", "frontend delivery"],
     philosophy: "The field knows which feature matters before the roadmap does.",
     funFacts: [
       "Lives inside client Slack",
@@ -336,6 +385,8 @@ export const specialists: Specialist[] = [
     writeAbout: "What was tested, what was not, and what would break a release.",
     stack: ["QA", "Test Automation", "CI/CD", "Regression Testing"],
     focus: ["QA", "regression", "release safety"],
+    signalsAddressed: ["no-observability", "no-rollback", "manual-release"],
+    domains: ["quality", "release safety"],
     philosophy: "Shipping that breaks quietly is not shipping.",
     funFacts: [
       "Writes the test the dev forgot",
@@ -369,6 +420,8 @@ export const specialists: Specialist[] = [
     writeAbout: "Full-stack delivery — APIs, the page, and the change that has to ship.",
     stack: ["React", "Node.js", "TypeScript", "PostgreSQL", "Next.js"],
     focus: ["full-stack", "frontend", "API design"],
+    signalsAddressed: ["no-deploy-path", "staging-only", "no-observability"],
+    domains: ["full-stack", "infrastructure"],
     philosophy: "Clean code is not about style — it is about speed of change.",
     funFacts: [
       "Refactors for fun on weekends",
@@ -401,6 +454,8 @@ export const specialists: Specialist[] = [
     writeAbout: "NDAs, IP assignment, and what you should not sign yet.",
     stack: ["Node.js", "Python", "PostgreSQL", "AWS", "Docker"],
     focus: ["backend", "APIs", "databases", "infrastructure"],
+    signalsAddressed: ["no-release-owner", "scope-unbounded"],
+    domains: ["legal", "risk", "backend"],
     philosophy: "A good API is one you never have to think about twice.",
     funFacts: [
       "Writes tests before code",
@@ -433,6 +488,8 @@ export const specialists: Specialist[] = [
     writeAbout: "The interface — what people see, and what they cannot use.",
     stack: ["React", "TypeScript", "Tailwind", "Next.js", "Framer Motion"],
     focus: ["frontend", "UI/UX", "accessibility", "performance"],
+    signalsAddressed: ["staging-only", "no-observability"],
+    domains: ["frontend", "interface design"],
     philosophy: "The best interface is the one you never notice.",
     funFacts: [
       "Lighthouse 100 or bust",
@@ -465,6 +522,8 @@ export const specialists: Specialist[] = [
     writeAbout: "Who is on the build, and how the studio talks to you.",
     stack: ["Operations", "People Management", "Client Relations"],
     focus: ["operations", "hiring", "client success"],
+    signalsAddressed: [],
+    domains: ["operations", "people"],
     philosophy: "The best operations are invisible — everything just works.",
     funFacts: [
       "Reads every message herself",

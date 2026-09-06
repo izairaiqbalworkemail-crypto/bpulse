@@ -1,3 +1,5 @@
+import type { SignalId } from "@/content/signals";
+
 export type SourceRef = {
   kind:
     | "client-engagement"
@@ -45,6 +47,12 @@ export type ArrivalGrade = {
 export type Lot = {
   slug: string;
   lotNumber: string;
+  /**
+   * The signals this lot arrived with — the repeatable conditions in its
+   * arrival state. Tagged from the condition text only; empty where the
+   * source does not support a tag.
+   */
+  signals: SignalId[];
   client: string;
   clientUrl?: string;
   logoUrl?: string;
@@ -122,6 +130,13 @@ export type Specialist = {
   writeAbout: string;
   stack: string[];
   focus: string[];
+  /**
+   * The signals a specialist addresses — the repeatable conditions their
+   * work on record closes. Tagged from record lines only.
+   */
+  signalsAddressed: SignalId[];
+  /** Real-world lanes of their work (healthcare, crypto, marketplaces…). */
+  domains: string[];
   philosophy: string;
   funFacts: string[];
   reviews?: {
@@ -161,6 +176,11 @@ export type IndexProject = {
   entryState: EntryState;
   url?: string;
   year?: string;
+  /**
+   * Signals an index row tags, tagged from its one line only. Index rows are
+   * thin on purpose; most carry no tags rather than an invented one.
+   */
+  signals?: SignalId[];
 };
 
 export type RailStage = {

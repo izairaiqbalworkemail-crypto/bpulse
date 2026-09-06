@@ -13,6 +13,7 @@ export const lots: Lot[] = [
   {
     slug: "deepidv",
     lotNumber: "LOT 031",
+    signals: ["third-party-sprawl", "api-contract-drift", "scope-unbounded"],
     client: "DeepIDV",
     clientUrl: "https://deepidv.com",
     logoUrl: "/logos/deepidv.svg",
@@ -59,6 +60,7 @@ export const lots: Lot[] = [
   {
     slug: "sully",
     lotNumber: "LOT 034",
+    signals: ["no-release-owner", "single-point-knowledge"],
     client: "Sully.ai",
     clientUrl: "https://sully.ai",
     logoUrl: "/logos/sully.svg",
@@ -105,6 +107,7 @@ export const lots: Lot[] = [
   {
     slug: "myusta",
     lotNumber: "LOT 028",
+    signals: ["no-deploy-path", "scope-unbounded"],
     client: "myUsta",
     clientUrl: "https://app.myusta.al",
     imageUrl: "/project-shots/project-myusta.webp",
@@ -144,6 +147,7 @@ export const lots: Lot[] = [
   {
     slug: "wearmeout",
     lotNumber: "LOT 036",
+    signals: ["staging-only", "no-deploy-path"],
     client: "WearMeOut.ai",
     clientUrl: "https://wearmeout-frontend.onrender.com/",
     logoUrl: "/logos/wearmeout.svg",
@@ -183,6 +187,7 @@ export const lots: Lot[] = [
   {
     slug: "mythos-archive",
     lotNumber: "LOT 037",
+    signals: ["single-point-knowledge"],
     client: "Mythos Archive",
     clientUrl: "https://www.mythosarchive.org/",
     logoUrl: "/logos/mythos-archive.svg",
@@ -222,6 +227,7 @@ export const lots: Lot[] = [
   {
     slug: "sba504",
     lotNumber: "LOT 038",
+    signals: ["no-release-owner"],
     client: "SBA 504 Loan Hub",
     clientUrl: "https://sba504loanhub.com",
     imageUrl: "/project-shots/project-sba504.webp",
@@ -258,6 +264,7 @@ export const lots: Lot[] = [
   {
     slug: "clearance",
     lotNumber: "LOT 039",
+    signals: ["no-deploy-path"],
     client: "Clearance.ai",
     clientUrl: "https://clearance.ai",
     logoUrl: "/logos/clearance.svg",
@@ -293,6 +300,7 @@ export const lots: Lot[] = [
   {
     slug: "evidero",
     lotNumber: "LOT 040",
+    signals: [],
     client: "Evidero",
     clientUrl: "https://evidero.com",
     logoUrl: "/logos/evidero.svg",
@@ -328,6 +336,7 @@ export const lots: Lot[] = [
   {
     slug: "fullscript",
     lotNumber: "LOT 041",
+    signals: ["third-party-sprawl", "api-contract-drift"],
     client: "Fullscript",
     clientUrl: "https://fullscript.com",
     logoUrl: "/logos/fullscript.svg",

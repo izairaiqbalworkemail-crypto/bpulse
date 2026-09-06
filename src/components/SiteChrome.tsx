@@ -13,7 +13,8 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   const report =
     pathname.startsWith("/report/") ||
     pathname.startsWith("/studio/") ||
-    pathname.startsWith("/read/");
+    pathname.startsWith("/read/") ||
+    pathname.startsWith("/match/");
 
   useLayoutEffect(() => {
     if ("scrollRestoration" in history) {

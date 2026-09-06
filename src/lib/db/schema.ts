@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, jsonb, uuid } from "drizzle-orm/pg-core";
-import type { MatchResult } from "@/lib/match/types";
+import type { MatchOutcome, MatchResult } from "@/lib/match/types";
 import type { PreliminaryRead } from "@/lib/read/types";
 
 export const submissions = pgTable("submissions", {
@@ -30,6 +30,7 @@ export const matchEvents = pgTable("match_events", {
   results: jsonb("results").$type<MatchResult[]>().notNull(),
   confidence: text("confidence").notNull(),
   session: text("session").notNull(),
+  outcome: jsonb("outcome").$type<MatchOutcome>(),
 });
 
 export const reads = pgTable("reads", {

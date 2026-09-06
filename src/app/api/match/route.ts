@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { isRateLimited } from "@/lib/rate-limit";
-import { createMatcher } from "@/lib/match";
+import { runMatch } from "@/lib/match/engine";
 import { buildEvent, saveMatchEvent } from "@/lib/match/store";
 import { clipDescription } from "@/lib/match/normalize";
 import type { MatchInput, MatchStage, MatchUrgency } from "@/lib/match/types";
@@ -47,13 +47,15 @@ export async function POST(request: Request) {
       : crypto.randomUUID();
 
   const input: MatchInput = { description, stage, stack, urgency };
-  const results = await createMatcher().match(input);
-  const event = buildEvent(input, results, session);
+  const outcome = runMatch(input);
+  const event = buildEvent(input, outcome, session);
   await saveMatchEvent(event);
 
   return NextResponse.json({
     ok: true,
     eventId: event.id,
-    results,
+    token: event.id,
+    results: event.results,
+    outcome,
   });
 }

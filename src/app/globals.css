@@ -244,10 +244,11 @@ p {
 /* Surface primitives */
 .card {
   overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-iron) 10%, transparent);
   border-radius: var(--radius-surface);
   background: var(--color-rag-card);
   box-shadow: var(--shadow-card);
-  transition: box-shadow 220ms ease;
+  transition: box-shadow 220ms ease, border-color 220ms ease;
 }
 
 .card-hover:hover {
@@ -256,6 +257,7 @@ p {
 
 .card-iron {
   overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-rag) 12%, transparent);
   border-radius: var(--radius-surface);
   background: var(--color-iron);
   color: var(--color-rag);
@@ -267,6 +269,235 @@ p {
   border-radius: var(--radius-surface);
   background: var(--color-rag-card);
   box-shadow: var(--shadow-card);
+}
+
+/* ── Read surfaces ─────────────────────────────
+   Open panels — hairline edge, no heavy box.
+   Used for the read-out sections so the screen
+   breathes instead of stacking identical boxes.
+   ───────────────────────────────────────────── */
+
+.panel {
+  border: 1px solid color-mix(in srgb, var(--color-iron) 10%, transparent);
+  border-radius: var(--radius-surface);
+  background: var(--color-rag-card);
+}
+
+.panel-sub {
+  border: 1px solid color-mix(in srgb, var(--color-iron) 12%, transparent);
+  border-radius: 16px;
+  background: var(--color-rag-card);
+}
+
+/* ── Eyebrow label — consistent mono kicker ── */
+
+.kicker {
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--color-ink) 62%, transparent);
+}
+
+/* ── Pill chips ─────────────────────────────── */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.chip-soft {
+  background: color-mix(in srgb, var(--color-iron) 8%, transparent);
+  color: var(--color-ink);
+}
+
+.chip-line {
+  border: 1px solid color-mix(in srgb, var(--color-iron) 15%, transparent);
+  color: var(--color-ink);
+}
+
+.chip-solid {
+  background: var(--color-iron);
+  color: var(--color-rag);
+}
+
+/* ── Buttons ────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  font-family: var(--font-plex-sans), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.btn-signal {
+  background: var(--color-signal);
+  color: var(--color-iron);
+}
+
+.btn-iron {
+  background: var(--color-iron);
+  color: var(--color-rag);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+}
+
+/* ── Inputs — textarea / text / email ─────────
+   Ring via box-shadow so focus-visible can swap
+   the ink ring without a layout shift.          */
+
+.input {
+  width: 100%;
+  border-radius: 16px;
+  background: var(--color-rag);
+  padding: 12px 16px;
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-iron);
+  outline: none;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-iron) 15%, transparent);
+  transition: box-shadow 160ms ease;
+}
+
+.input::placeholder {
+  color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+}
+
+.input:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-iron);
+}
+
+/* ── Motion ────────────────────────────────────
+   One easing curve, one reveal rhythm. Applied
+   by the <Reveal> primitive or the anim- classes.
+   Colour comes from the theme, never free CSS.   */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* Scroll reveal — <Reveal> toggles .is-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered child entrance inside a Reveal */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+.reveal.is-visible .stagger > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Mount-time entrances (no observer needed) */
+.anim-fade-up {
+  animation: fade-up 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.anim-fade-in {
+  animation: fade-in 0.6s ease both;
+}
+
+.anim-delay-1 {
+  animation-delay: 0.12s;
+}
+
+.anim-delay-2 {
+  animation-delay: 0.24s;
+}
+
+.anim-delay-3 {
+  animation-delay: 0.36s;
+}
+
+.pulse-dot {
+  animation: pulse-soft 1.9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible,
+  .stagger > *,
+  .anim-fade-up,
+  .anim-fade-in,
+  .pulse-dot {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
 }
 
 .paper-card-raised {

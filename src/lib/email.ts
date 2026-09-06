@@ -149,3 +149,55 @@ export async function sendReadEmails(input: {
     throw new Error(`Resend send failed: ${studio.error.message}`);
   }
 }
+
+export async function sendMatchEmails(input: {
+  visitorEmail: string;
+  token: string;
+  matchUrl: string;
+  brief: string;
+  requestId: string;
+}): Promise<void> {
+  if (!resend) {
+    throw new Error("Email is not configured.");
+  }
+
+  const brief = escapeHtml(input.brief.slice(0, 600));
+
+  const visitor = await resend.emails.send({
+    from: env.RESEND_FROM,
+    to: input.visitorEmail,
+    subject: `Your match read from bpulse`,
+    html: `
+      <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
+        <p style="font-size:18px;line-height:1.4;">The match for what you described is here:</p>
+        <p><a href="${escapeHtml(input.matchUrl)}">${escapeHtml(input.matchUrl)}</a></p>
+        <p style="font-size:14px;color:#5a5a5a;">Matched against real engagements, not a model and not a score. A person replies within one business day.</p>
+      </div>
+    `,
+  });
+  if (visitor.error) {
+    throw new Error(`Resend send failed: ${visitor.error.message}`);
+  }
+
+  const studio = await resend.emails.send({
+    from: env.RESEND_FROM,
+    to: env.FOUNDER_EMAIL,
+    replyTo: input.visitorEmail,
+    subject: `Match read requested — ${input.visitorEmail}`,
+    html: `
+      <div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;">
+        <p>Match: <a href="${escapeHtml(input.matchUrl)}">${escapeHtml(input.matchUrl)}</a></p>
+        <p style="font-size:13px;color:#5a5a5a;">Request ${escapeHtml(input.requestId)}</p>
+        <table style="border-collapse:collapse;width:100%;">
+          <tr>
+            <td style="padding:6px 12px 6px 0;color:#5a5a5a;vertical-align:top;white-space:nowrap;font-size:13px;">What they described</td>
+            <td style="padding:6px 0;font-size:14px;">${brief}</td>
+          </tr>
+        </table>
+      </div>
+    `,
+  });
+  if (studio.error) {
+    throw new Error(`Resend send failed: ${studio.error.message}`);
+  }
+}

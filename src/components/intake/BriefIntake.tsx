@@ -273,9 +273,10 @@ export function BriefIntake({
 
   if (done) {
     return (
-      <div className="card-iron">
+      <div className="card-iron anim-fade-up">
         <div className="px-6 py-10 md:px-8">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">
+          <p className="flex items-center gap-2 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/55">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal pulse-dot" />
             Session filed · {done}
           </p>
           <p className="mt-3 font-newsreader text-[32px] leading-[1.1] text-rag">
@@ -304,7 +305,11 @@ export function BriefIntake({
               : "The brief writes itself."}
           </p>
         </div>
-        <p className="shrink-0 font-plex-mono text-[12px] text-rag/50">
+        <p className="flex shrink-0 items-center gap-2 font-plex-mono text-[12px] text-rag/50">
+          <span
+            aria-hidden="true"
+            className={`h-2 w-2 rounded-full ${ready ? "bg-partial" : "bg-signal pulse-dot"}`}
+          />
           {ready ? "Ready to file" : "Writing"}
         </p>
       </header>
@@ -317,19 +322,24 @@ export function BriefIntake({
           >
             {turns.map((turn) =>
               turn.kind === "studio" ? (
-                <p
-                  key={turn.id}
-                  className="max-w-[40ch] font-newsreader text-[18px] leading-[1.4] text-iron"
-                >
-                  {turn.text}
-                </p>
+                <div key={turn.id} className="flex items-start gap-3">
+                  <span
+                    aria-hidden="true"
+                    className={`mt-2 h-2 w-2 shrink-0 rounded-full ${
+                      ready ? "bg-signal pulse-dot" : "bg-iron/40"
+                    }`}
+                  />
+                  <p className="max-w-[40ch] font-newsreader text-[18px] leading-[1.4] text-iron">
+                    {turn.text}
+                  </p>
+                </div>
               ) : (
                 <blockquote
                   key={turn.id}
-                  className="ml-4 border-l-2 border-signal pl-4"
+                  className="panel-sub ml-4 border-l-[3px] border-l-signal px-4 py-3"
                 >
-                  <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/50">
-                    You
+                  <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/50">
+                    You · {docketLabel[turn.field as keyof typeof docketLabel] ?? turn.field}
                   </p>
                   <p className="mt-1 font-newsreader text-[17px] leading-[1.4] text-iron">
                     {turn.text}
@@ -354,7 +364,7 @@ export function BriefIntake({
                   dismissKeyboard();
                   void submit();
                 }}
-                className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+                className="btn btn-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
               >
                 {busy
                   ? "Filing…"
@@ -371,7 +381,7 @@ export function BriefIntake({
                         dismissKeyboard();
                         send(current, option);
                       }}
-                      className="min-h-11 w-full touch-manipulation rounded-[14px] bg-rag px-4 py-3 text-left font-newsreader text-[17px] text-iron ring-1 ring-iron/10 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
+                      className="panel-sub min-h-11 w-full touch-manipulation px-4 py-3 text-left font-newsreader text-[17px] text-iron hover:ring-2 hover:ring-iron/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iron"
                     >
                       {option}
                     </PressButton>
@@ -394,7 +404,7 @@ export function BriefIntake({
                     placeholder={current.placeholder}
                     enterKeyHint="send"
                     rows={3}
-                    className="w-full resize-none rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] leading-[1.4] text-iron outline-none ring-1 ring-iron/15 focus-visible:ring-2 focus-visible:ring-iron"
+                    className="input resize-none"
                   />
                 ) : (
                   <input
@@ -417,13 +427,13 @@ export function BriefIntake({
                       }
                     }}
                     placeholder={current.placeholder}
-                    className="w-full rounded-[14px] bg-rag px-4 py-3 font-newsreader text-[17px] text-iron outline-none ring-1 ring-iron/15 focus-visible:ring-2 focus-visible:ring-iron"
+                    className="input"
                   />
                 )}
                 <div className="mt-3 flex flex-wrap items-center gap-3">
                   <PressButton
                     onPress={() => send(current, draft)}
-                    className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-iron px-4 py-2 font-plex-sans text-[14px] font-medium text-rag focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+                    className="btn btn-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
                   >
                     Send
                   </PressButton>

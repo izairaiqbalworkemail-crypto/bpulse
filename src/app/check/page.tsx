@@ -100,14 +100,15 @@ export default function CheckPage() {
             />
           </Reveal>
 
-          <Reveal className="card mt-16 max-w-[60ch] px-8 py-10">
-            <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-              The honest bad outcome
-            </p>
-            <p className="mt-3 font-newsreader text-[16px] leading-[1.55] text-ink">
-              {checkBadOutcome}
-            </p>
-          </Reveal>
+<Reveal className="panel mt-16 max-w-[60ch] p-6 md:p-8">
+          <p className="kicker flex items-center gap-2">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blocked pulse-dot" />
+            The honest bad outcome
+          </p>
+          <p className="mt-3 font-newsreader text-[16px] leading-[1.55] text-ink">
+            {checkBadOutcome}
+          </p>
+        </Reveal>
 
           <div className="mt-16">
             <VettedPay />

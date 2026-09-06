@@ -2,7 +2,13 @@ import { createHash } from "node:crypto";
 import { appendFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { matchEvents, matchOutcomes } from "@/lib/db/schema";
-import type { MatchConfidence, MatchInput, MatchResult } from "./types";
+import { eq } from "drizzle-orm";
+import type {
+  MatchConfidence,
+  MatchInput,
+  MatchOutcome,
+  MatchResult,
+} from "./types";
 
 export type MatchOutcomeKind =
   | "viewed"
@@ -22,6 +28,8 @@ export type StoredMatchEvent = {
   results: MatchResult[];
   confidence: MatchConfidence;
   session: string;
+  /** The whole pipeline that produced the results — enough to render /match/[token]. */
+  outcome: MatchOutcome;
 };
 
 export type StoredMatchOutcome = {
@@ -61,6 +69,23 @@ async function db() {
   return getDb();
 }
 
+function rowFromDb(row: unknown): StoredMatchEvent {
+  const r = row as Record<string, unknown>;
+  return {
+    id: String(r.id),
+    createdAt: new Date(r.createdAt as string).toISOString(),
+    inputHash: String(r.inputHash),
+    description: String(r.description),
+    stage: r.stage == null ? undefined : String(r.stage),
+    stack: Array.isArray(r.stack) ? (r.stack as string[]) : [],
+    urgency: r.urgency == null ? undefined : String(r.urgency),
+    results: (r.results ?? []) as MatchResult[],
+    confidence: (r.confidence ?? "exploratory") as MatchConfidence,
+    session: String(r.session),
+    outcome: (r.outcome ?? null) as MatchOutcome,
+  };
+}
+
 export async function saveMatchEvent(row: StoredMatchEvent): Promise<void> {
   const connection = await db();
   if (connection) {
@@ -76,10 +101,11 @@ export async function saveMatchEvent(row: StoredMatchEvent): Promise<void> {
         results: row.results,
         confidence: row.confidence,
         session: row.session,
+        outcome: row.outcome,
       });
       return;
-    } catch {
-      // fall through to local
+    } catch (error) {
+      console.error("[match] database write failed, saving locally", error);
     }
   }
   await appendJsonl("match-events.jsonl", row);
@@ -113,18 +139,7 @@ export async function listMatchLog(limit = 40): Promise<{
       const outcomes = await connection.select().from(matchOutcomes);
       return {
         events: events
-          .map((row) => ({
-            id: row.id,
-            createdAt: row.createdAt.toISOString(),
-            inputHash: row.inputHash,
-            description: row.description,
-            stage: row.stage ?? undefined,
-            stack: row.stack ?? [],
-            urgency: row.urgency ?? undefined,
-            results: row.results,
-            confidence: row.confidence as MatchConfidence,
-            session: row.session,
-          }))
+          .map((row) => rowFromDb(row))
           .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
           .slice(0, limit),
         outcomes: outcomes.map((row) => ({
@@ -144,12 +159,32 @@ export async function listMatchLog(limit = 40): Promise<{
   return { events, outcomes };
 }
 
+/** Fetch one match by its unguessable token (= event id) for /match/[token]. */
+export async function getMatch(token: string): Promise<StoredMatchEvent | null> {
+  if (!/^[0-9a-f-]{36}$/i.test(token)) return null;
+  const connection = await db();
+  if (connection) {
+    try {
+      const [row] = await connection
+        .select()
+        .from(matchEvents)
+        .where(eq(matchEvents.id, token))
+        .limit(1);
+      if (row) return rowFromDb(row);
+    } catch {
+      // local
+    }
+  }
+  const local = await readJsonl<StoredMatchEvent>("match-events.jsonl");
+  return local.find((row) => row.id === token) ?? null;
+}
+
 export function buildEvent(
   input: MatchInput,
-  results: MatchResult[],
+  outcome: MatchOutcome,
   session: string,
 ): StoredMatchEvent {
-  const confidence = results[0]?.confidence ?? "weak";
+  const confidence = outcome.confidence ?? outcome.results[0]?.confidence ?? "exploratory";
   return {
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
@@ -158,8 +193,9 @@ export function buildEvent(
     stage: input.stage,
     stack: input.stack ?? [],
     urgency: input.urgency,
-    results,
+    results: outcome.results,
     confidence,
+    outcome,
     session,
   };
 }
