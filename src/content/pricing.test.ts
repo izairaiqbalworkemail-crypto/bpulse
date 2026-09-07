@@ -19,6 +19,19 @@ function blob(value: unknown) {
 }
 
 describe("pricing page copy", () => {
+  it("never renders a paid price as zero or missing", () => {
+    for (const rung of pricingLadder) {
+      expect(rung.price.length).toBeGreaterThan(0);
+      if (rung.id === "read") {
+        expect(rung.price).toBe("Free");
+        continue;
+      }
+      expect(rung.price).toBe(ladder.find((item) => item.id === rung.id)?.price);
+      expect(rung.price).toMatch(/\$[1-9]/);
+      expect(rung.price).not.toMatch(/\$0\b/);
+    }
+  });
+
   it("publishes all six rungs with no form to see them", () => {
     expect(pricingLadder.map((rung) => rung.id)).toEqual(ladder.map((rung) => rung.id));
     expect(pricingMatchesLadder).toBe(true);

@@ -40,11 +40,13 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  const adminLogin = pathname === "/admin/login";
   if (
+    pathname === "/access" ||
     pathname === "/studio" ||
     pathname.startsWith("/studio/") ||
     pathname === "/admin" ||
-    pathname.startsWith("/admin/") ||
+    (pathname.startsWith("/admin/") && !adminLogin) ||
     pathname === "/portal" ||
     pathname.startsWith("/portal/")
   ) {

@@ -13,6 +13,7 @@ function clip(text: string, max = 52) {
 
 export function askLine(field: FieldConfig, answers: Record<string, string>): string {
   if (field.name === "build") {
+    if (field.label === "What do you need") return "What do you need?";
     const wound = answers.situation ?? answers.stage ?? "";
     if (/stalled/i.test(wound)) return "Who left, and what is still in the repo?";
     if (/fragile|live/i.test(wound)) return "What is live, and what breaks when you ship?";

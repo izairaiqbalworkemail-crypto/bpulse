@@ -1,20 +1,14 @@
-import type { Metadata } from "next";
-import { AdminAccessForm } from "@/components/admin/AdminAccessForm";
-import { buildMetadata } from "@/lib/seo";
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { readSessionFromCookieHeader } from "@/lib/security/studio-auth";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Access",
-  description: "Internal access request page.",
-  path: "/access",
-  robots: "noindex, nofollow",
-});
+export const metadata = {
+  robots: { index: false, follow: false },
+};
 
-export default function AccessPage() {
-  return (
-    <section className="w-full bg-rag pb-24">
-      <div className="grid-container pt-16">
-        <AdminAccessForm />
-      </div>
-    </section>
-  );
+export default async function AccessPage() {
+  const cookieHeader = (await headers()).get("cookie");
+  const session = readSessionFromCookieHeader(cookieHeader);
+  if (!session) notFound();
+  redirect("/admin");
 }

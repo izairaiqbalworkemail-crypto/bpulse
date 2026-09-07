@@ -1,13 +1,10 @@
 "use client";
 
 import {
-  animate,
   motion,
   useInView,
-  useMotionValue,
   useReducedMotion,
   useSpring,
-  useTransform,
 } from "motion/react";
 import {
   useEffect,
@@ -217,31 +214,10 @@ export function Count({
   prefix = "",
   className,
 }: Readonly<{ to: number; prefix?: string; className?: string }>) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-20% 0px" });
-  const value = useMotionValue(reduce ? to : 0);
-  const rounded = useTransform(value, (latest) => Math.round(latest));
-  const [shown, setShown] = useState(reduce ? to : 0);
-
-  useEffect(() => {
-    const unsub = rounded.on("change", (latest) => setShown(latest));
-    return unsub;
-  }, [rounded]);
-
-  useEffect(() => {
-    if (!inView || reduce) return;
-    const controls = animate(value, to, {
-      duration: 1.35,
-      ease: [0.16, 0.84, 0.32, 1],
-    });
-    return () => controls.stop();
-  }, [inView, reduce, to, value]);
-
   return (
-    <span ref={ref} className={className}>
+    <span className={className}>
       {prefix}
-      {shown.toLocaleString("en-US")}
+      {to.toLocaleString("en-US")}
     </span>
   );
 }

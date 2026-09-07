@@ -42,11 +42,6 @@ const nav = [
     href: "/match",
     detail: "The platform assigns",
   },
-  {
-    label: "Portal",
-    href: "/access",
-    detail: "Sign in to the client portal",
-  },
 ] as const;
 
 const FOCUS_TRAP_SELECTOR = "a[href], button:not([disabled])";

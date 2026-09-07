@@ -5,14 +5,12 @@ import { type FormEvent, useState } from "react";
 export function AdminAccessForm() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [devLink, setDevLink] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function requestLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
     setMessage("");
-    setDevLink(null);
 
     try {
       const response = await fetch("/api/studio/auth/request", {
@@ -23,15 +21,11 @@ export function AdminAccessForm() {
       const data = (await response.json()) as {
         ok?: boolean;
         error?: string;
-        devLink?: string;
       };
       if (!response.ok || data.ok === false) {
         setMessage(data.error ?? "Could not request sign in link.");
       } else {
-        setMessage("If this address is on the allowlist, the sign in link is sent.");
-        if (data.devLink) {
-          setDevLink(data.devLink);
-        }
+        setMessage("If this address can sign in, the link is sent.");
       }
     } catch {
       setMessage("Could not request sign in link.");
@@ -42,17 +36,21 @@ export function AdminAccessForm() {
 
   return (
     <>
-      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Internal access</p>
-      <h1 className="mt-3 font-newsreader text-[38px] leading-[1.08] text-iron">Studio sign in</h1>
-      <p className="mt-4 max-w-[52ch] font-plex-sans text-[16px] leading-[1.6] text-ink">
-        Enter an allowlisted email address to receive a one-time sign in link.
+      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+        Sign in
       </p>
-      <p className="mt-2 max-w-[52ch] font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/65">
-        Local setup: add your email to STUDIO_ADMIN_ALLOWLIST in .env.local.
+      <h1 className="mt-3 font-newsreader text-[38px] leading-[1.08] text-iron">
+        Studio
+      </h1>
+      <p className="mt-4 max-w-[52ch] font-plex-sans text-[16px] leading-[1.6] text-ink">
+        Enter your work email. If it is on the list, a one-time link arrives.
       </p>
 
       <form className="mt-8 max-w-[28rem]" onSubmit={requestLink}>
-        <label className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70" htmlFor="email">
+        <label
+          className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70"
+          htmlFor="email"
+        >
           Work email
         </label>
         <input
@@ -73,11 +71,8 @@ export function AdminAccessForm() {
         </button>
       </form>
 
-      {message ? <p className="mt-4 font-plex-sans text-[14px] text-ink">{message}</p> : null}
-      {devLink ? (
-        <p className="mt-2 font-plex-mono text-[12px] text-ink/75">
-          Local dev link: <a href={devLink} className="underline underline-offset-4">{devLink}</a>
-        </p>
+      {message ? (
+        <p className="mt-4 font-plex-sans text-[14px] text-ink">{message}</p>
       ) : null}
     </>
   );
