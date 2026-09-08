@@ -29,7 +29,7 @@ export default async function CareersStatusPage({ params }: PageProps) {
   if (!status) notFound();
 
   return (
-    <section className="w-full bg-rag pb-24">
+    <section className="w-full bg-paper pb-24">
       <PageHero
         kicker="Candidate status · private"
         title={`${status.name} · ${status.roleTitle}`}
@@ -38,17 +38,17 @@ export default async function CareersStatusPage({ params }: PageProps) {
       />
       <div className="grid-container pt-10">
 
-        <section className="card mt-8 p-8">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Timeline</p>
+        <section className="mt-8 border-t border-ink/10 pt-8">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">Timeline</p>
           <ul className="mt-3 space-y-3">
             {status.events.map((event) => (
-              <li key={`${event.gate}-${event.occurredAt}`} className="border-l-2 border-iron/20 pl-4">
-                <p className="font-newsreader text-[17px] text-iron">Gate {event.gate}: {event.outcome}</p>
-                <p className="font-plex-mono text-[12px] text-ink/70">{new Date(event.occurredAt).toLocaleString()}</p>
+              <li key={`${event.gate}-${event.occurredAt}`} className="border-l-2 border-ink/20 pl-4">
+                <p className="font-newsreader text-[17px] text-ink">Gate {event.gate}: {event.outcome}</p>
+                <p className="font-plex-mono text-[12px] text-quill/70">{new Date(event.occurredAt).toLocaleString()}</p>
               </li>
             ))}
           </ul>
-          <p className="mt-5 font-plex-mono text-[12px] text-ink/70">
+          <p className="mt-5 font-plex-mono text-[12px] text-quill/70">
             Last updated {new Date(status.updatedAt).toLocaleString()}
           </p>
         </section>

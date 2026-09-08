@@ -14,7 +14,7 @@ export default function NotFound() {
       <div className="grid-container py-16">
         <Link
           href="/work"
-          className="font-plex-sans text-sm text-ink/60 underline-offset-4 hover:underline"
+          className="font-plex-sans text-sm text-quill/60 underline-offset-4 hover:underline"
         >
           Or browse the work →
         </Link>

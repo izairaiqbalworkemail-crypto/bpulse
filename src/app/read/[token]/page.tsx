@@ -32,57 +32,57 @@ export default async function ReadPage({ params }: PageProps) {
   const price = `$${offer.check.price.toLocaleString("en-US")}`;
 
   return (
-    <article className="read-doc w-full bg-rag pb-24">
+    <article className="read-doc w-full bg-paper pb-24">
       <div className="grid-container py-12 md:py-16">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
           The Read · prepared {preparedLabel(read.preparedAt)}
         </p>
-        <h1 className="mt-3 font-newsreader type-display text-[40px] leading-[1.1] text-iron md:text-[56px]">
+        <h1 className="mt-3 font-newsreader type-display text-[40px] leading-[1.1] text-ink md:text-[56px]">
           {read.title}
         </h1>
-        <p className="mt-3 font-newsreader text-[18px] text-ink">
+        <p className="mt-3 font-newsreader text-[18px] text-quill">
           From your description
         </p>
 
         <section className="mt-12">
-          <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+          <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
             What you told us
           </h2>
-          <p className="mt-4 max-w-[58ch] font-newsreader text-[20px] leading-[1.45] text-iron">
+          <p className="mt-4 max-w-[58ch] font-newsreader text-[20px] leading-[1.45] text-ink">
             {read.told}
           </p>
         </section>
 
         {read.pattern ? (
           <section className="mt-12">
-            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
               What that usually means
             </h2>
-            <p className="mt-4 max-w-[58ch] font-newsreader text-[20px] leading-[1.45] text-iron">
+            <p className="mt-4 max-w-[58ch] font-newsreader text-[20px] leading-[1.45] text-ink">
               {read.pattern.claim}
             </p>
             <p className="mt-4">
               <Link
                 href={`/work/${read.pattern.lotSlug}`}
-                className="font-plex-sans text-[15px] text-iron underline decoration-iron/30 underline-offset-4"
+                className="font-plex-sans text-[15px] text-ink underline decoration-ink/30 underline-offset-4"
               >
-                See how {read.pattern.lotName} arrived
+                See how {read.pattern.lotName} came to us
               </Link>
             </p>
           </section>
         ) : null}
 
         <section className="mt-12">
-          <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+          <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
             What we would look at first
           </h2>
           <ol className="mt-4 flex max-w-[58ch] flex-col gap-3">
             {read.lookFirst.map((item, index) => (
               <li
                 key={item}
-                className="font-newsreader text-[20px] leading-[1.4] text-iron"
+                className="font-newsreader text-[20px] leading-[1.4] text-ink"
               >
-                <span className="font-plex-mono text-[13px] text-ink/60">
+                <span className="font-plex-mono text-[13px] text-quill/60">
                   {index + 1}
                 </span>{" "}
                 {item}
@@ -91,32 +91,32 @@ export default async function ReadPage({ params }: PageProps) {
           </ol>
         </section>
 
-        <section className="mt-14 border-t-2 border-iron pt-10">
-          <h2 className="font-newsreader text-[28px] leading-[1.15] text-iron">
+        <section className="mt-14 border-t-2 border-ink pt-10">
+          <h2 className="font-newsreader text-[28px] leading-[1.15] text-ink">
             What this is not
           </h2>
-          <p className="mt-4 max-w-[58ch] font-newsreader text-[20px] leading-[1.45] text-iron">
+          <p className="mt-4 max-w-[58ch] font-newsreader text-[20px] leading-[1.45] text-ink">
             {read.limits}
           </p>
-          <p className="mt-6 max-w-[46ch] font-newsreader text-[20px] leading-[1.45] text-iron">
+          <p className="mt-6 max-w-[46ch] font-newsreader text-[20px] leading-[1.45] text-ink">
             {read.checkLine}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href={`/team/${runner.id}`}
-              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+              className="inline-flex min-h-11 touch-manipulation items-center rounded-full bg-gold px-5 py-2.5 font-plex-sans text-[14px] font-medium text-ink"
             >
               Write {first}
             </Link>
             <Link
               href="/session"
-              className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
+              className="font-plex-sans text-[14px] text-ink underline decoration-ink/30 underline-offset-4"
             >
               The Session
             </Link>
             <Link
               href="/check"
-              className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4"
+              className="font-plex-sans text-[14px] text-ink underline decoration-ink/30 underline-offset-4"
             >
               The Check · {price}
             </Link>

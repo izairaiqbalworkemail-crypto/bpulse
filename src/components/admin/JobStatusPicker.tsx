@@ -67,7 +67,7 @@ export function JobStatusPicker({
         value={next}
         onChange={(event) => setNext(event.target.value as (typeof statuses)[number])}
         disabled={pending}
-        className="border border-iron/25 bg-rag px-2 py-1 font-plex-mono text-[12px]"
+        className="border border-ink/25 bg-paper px-2 py-1 font-plex-mono text-[12px]"
       >
         {statuses.map((item) => (
           <option key={item} value={item}>{item}</option>
@@ -77,11 +77,11 @@ export function JobStatusPicker({
         type="button"
         onClick={() => void save()}
         disabled={pending}
-        className="border border-iron/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron"
+        className="border border-ink/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink"
       >
         Save
       </button>
-      {note ? <span className="font-plex-sans text-[12px] text-ink/65">{note}</span> : null}
+      {note ? <span className="font-plex-sans text-[12px] text-quill/65">{note}</span> : null}
     </div>
   );
 }

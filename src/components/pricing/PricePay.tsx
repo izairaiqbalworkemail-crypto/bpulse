@@ -13,16 +13,16 @@ export function PricePay() {
         {pricingPay.steps.map((step, index) => (
           <Item key={step}>
             <ObjectRow className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-baseline gap-4">
-              <span className="font-plex-mono text-[13px] tabular-nums text-ink/70">
+              <span className="font-plex-mono text-[13px] tabular-nums text-quill/70">
                 {index + 1}
               </span>
-              <p className="font-newsreader text-[22px] leading-[1.35] text-iron">{step}</p>
+              <p className="font-newsreader text-[22px] leading-[1.35] text-ink">{step}</p>
             </ObjectRow>
           </Item>
         ))}
       </Stagger>
       <Reveal delay={0.12}>
-        <p className="mt-10 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-ink">
+        <p className="mt-10 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-quill">
           {pricingPay.note}
         </p>
       </Reveal>

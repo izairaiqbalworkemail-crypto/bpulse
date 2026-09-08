@@ -36,19 +36,19 @@ export function AdminAccessForm() {
 
   return (
     <>
-      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
         Sign in
       </p>
-      <h1 className="mt-3 font-newsreader text-[38px] leading-[1.08] text-iron">
+      <h1 className="mt-3 font-newsreader text-[38px] leading-[1.08] text-ink">
         Studio
       </h1>
-      <p className="mt-4 max-w-[52ch] font-plex-sans text-[16px] leading-[1.6] text-ink">
+      <p className="mt-4 max-w-[52ch] font-plex-sans text-[16px] leading-[1.6] text-quill">
         Enter your work email. If it is on the list, a one-time link arrives.
       </p>
 
       <form className="mt-8 max-w-[28rem]" onSubmit={requestLink}>
         <label
-          className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70"
+          className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70"
           htmlFor="email"
         >
           Work email
@@ -60,19 +60,19 @@ export function AdminAccessForm() {
           autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="mt-2 w-full rounded-[10px] border border-iron/20 bg-rag px-3 py-2 font-plex-sans text-[15px] text-iron"
+          className="mt-2 w-full rounded-[10px] border border-ink/20 bg-paper px-3 py-2 font-plex-sans text-[15px] text-ink"
         />
         <button
           type="submit"
           disabled={busy}
-          className="mt-4 rounded-full bg-iron px-5 py-2 font-plex-sans text-[14px] text-rag disabled:opacity-70"
+          className="mt-4 rounded-full bg-ink px-5 py-2 font-plex-sans text-[14px] text-paper disabled:opacity-70"
         >
           {busy ? "Sending" : "Send sign in link"}
         </button>
       </form>
 
       {message ? (
-        <p className="mt-4 font-plex-sans text-[14px] text-ink">{message}</p>
+        <p className="mt-4 font-plex-sans text-[14px] text-quill">{message}</p>
       ) : null}
     </>
   );

@@ -5,9 +5,117 @@ Contrast ratios are computed, not asserted.
 
 ---
 
+## Palette (restored)
+
+bpulse's own colours. Not a new invention.
+
+- Cream `#F4EEE6`
+- Cocoa `#161614`
+- Gold `#F2C230`
+- Secondary `#3F3E39`
+
+## Night desk (Sep 2026)
+
+The last twenty percent happens after the office goes home.
+
+- Void `#0C100E` is the night desk. Olive-black, not navy, not violet.
+- Page `#E6EBE3` is the file. Fluorescent, not cream.
+- Ember `#FF3A14` is fire. Findings only. Never a CTA.
+- Tape `#D6FF2A` is the unfinished fifth. The only buy colour. Once per viewport.
+- Comment `#2F62FF` is a note left on the file. Never a button.
+- After `#6FAE78` is shipped. Tired phosphor, not toy green.
+
+The stall bar is ember cooling into tape, hard-stopped at 80%. That is the only gradient on the home hero.
+
+## State spectrum (Sep 2026)
+
+Superseded by Night desk. Kept as history.
+
+### Contrast, verified
+
+- Text `#F2F3F7` on ground `#0F1117`: **17.02:1**
+- Sub `#8B90A0` on ground `#0F1117`: **5.93:1**
+- Ink `#0F1117` on paper `#F4F4F2`: **17.14:1**
+- Psub `#5C6070` on paper `#F4F4F2`: **5.67:1**
+- Stuck `#FF5C3D` on ground `#0F1117`: **6.16:1**
+- Diag `#FFC53D` on ground `#0F1117`: **11.96:1**
+- Build `#3DD6F5` on ground `#0F1117`: **10.90:1**
+- Ship `#4ADE80` on ground `#0F1117`: **10.83:1**
+- Stuck-p `#C2341A` on paper `#F4F4F2`: **5.02:1**
+- Diag-p `#8A6200` on paper `#F4F4F2`: **4.98:1**
+- Build-p `#0E6E86` on paper `#F4F4F2`: **5.31:1**
+- Ship-p `#1B7F45` on paper `#F4F4F2`: **4.57:1**
+- Ink on diag: **11.96:1**
+- Paper on ink: **17.14:1**
+
+## Homepage load-bearing set (Sep 2026)
+
+The load-bearing set is: described, routed, shown a login, shown every price, asked once. Everything else is confidence. Confidence matters and it is not the leak.
+
+Do not add a tenth section that answers an objection already dead. Do not colour the 02 signpost. A signpost that colours itself starts competing with the sections it points at.
+
+| Section | Large object |
+|---|---|
+| 01 Recognition | The 80% bar |
+| 02 Where are you | The routing list |
+| 03 Visibility | The working sample |
+| 04 Proof | The open case |
+| 05 What happens | The stage rail |
+| 06 Terms | The ladder |
+| 07 Who | The three |
+| 08 After | The named engineer |
+| 09 Doubt, then the ask | The ask |
+
+### 01 Recognition, this pass (Sep 2026)
+
+Paper. The named large object is the 80% bar. The portal is not on this screen; it lives in Visibility. Lahore is in the kicker, stated. The last-twenty sentence is the one proof line, not a footer line and not a second object. `stuck-p` on the stall word (bright `stuck` fails on paper). Fill is the stall gradient, stuck into diag, hard-stopped at 80%. One gold: Get my free read, to `/read`.
+
+### Rooms, this pass (Sep 2026)
+
+The white full-bleed hero failed. 01 is cream margin and one graphite plate that fills the first window. Display type drops WONK. State colour on the home page is a word, not a status dot. Terms is not a yellow page: gold sits on the recommended price. 05 and 08 are inset plates so they do not read as more cream lines. 03 is one sample window. 07 is three portrait boxes.
+
+### 02–09, this pass (Sep 2026)
+
+- 02 is a paper band. Six situations, no cards, no state colour. The Read is recommended in type. Destination for the shipped, fragile buyer is Second Chair, the page, not Standing, the offer name. Standing stays on the price ladder.
+- 03 heading is the one sentence. The sample is the object. Empty revocation says why. `build` on the current stage, `ship` only on a closed row. No gold.
+- 04 opens one case, only when two selected stalls match it. Caveat sits on the number. Outcome is marked crew-reported. No second case.
+- 05 is a left-ruled rail. `build` on the current stage only.
+- 06 is the gold/diag panel. The Check catch is the same size as the price.
+- 07 is three people. Initials on ink when a photograph is pending. No pass rate.
+- 08 names Hassan, the monthly band, and cancel any month.
+- 09 is two columns, bad-at first, one gold ask.
+- Footer Start includes Pricing. The listed destinations beat the old count of sixteen.
+
+Gen Z slang was refused. Humour stays in the naming of the stall. The theme was not reinvented.
+
+### One large object per page
+
+| Page | Large object |
+|---|---|
+| `/` | The 80% bar |
+| `/design` | The state spectrum |
+| `/read` | The form, last. First window is the free sentence. |
+| `/session` | The session price |
+| `/check` | The Check price |
+| `/first-slice` | The slice price |
+| `/how-it-works` | The process sequence |
+| `/pricing` | The published ladder |
+| `/second-chair` | The standing price |
+| `/work` | The case list |
+| `/work/[slug]` | The trace |
+| `/team` | The crew grid |
+| `/team/[slug]` | The portrait and the quote |
+| `/match` | The match readout |
+| `/standard` | The five gates |
+| `/careers` | The open roles |
+| `/demo` | The live portal |
+| `/report/[slug]` | The findings ledger |
+
+---
+
 ## Contrast Table
 
-Computed from the settled tokens.
+Computed from the settled tokens. Historical pairs below the editorial table.
 
 ### Checkpoint 1 hero pairs (Sep 2026)
 
@@ -320,7 +428,7 @@ Found by capture inspection, not asserted: with the panel spring's `settled` sta
 
 ## The two converting pages (Sep 2026)
 
-- The read CTA is **Write Aneeb**, not “Book 20 minutes”. Same rule as The Match.
+- The read hero CTA is **Get my free read**, to `#intake`. The docket still addresses Aneeb. Not “Book 20 minutes”.
 - Education is named **Second Chair**. `/edpulse` redirects. The old Explorer/Accelerator/Mastery tracks were a different product (crew path) and are no longer sold on that URL.
 - The assigned engineer on the page is **Hassan Saulat** because the brief named him and he has a real photo and real lots (Sully, DeepIDV). The DeepIDV *lot* owner remains Mehak.
 - Pattern claims in the read only fire from `src/content/read-patterns.ts`, each slug justified by that lot’s `condition`. If nothing matches, the block is omitted. No invented “three of nine”.

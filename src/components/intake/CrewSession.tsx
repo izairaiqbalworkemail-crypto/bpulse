@@ -6,6 +6,7 @@ import { useReducedMotion } from "motion/react";
 import { sessionFields } from "@/lib/intake/fields";
 import { buildWorkSession } from "@/lib/intake/work-session";
 import { brand } from "@/config/brand";
+import { palette } from "@/lib/brand/palette";
 import { studioOpening } from "@/content/beliefs";
 import { checkRunner } from "@/content/check";
 import { offer } from "@/content/offer";
@@ -1181,8 +1182,8 @@ export function CrewSession({
                     width: 30,
                     height: 30,
                     borderRadius: 8,
-                    background: "#f2c230",
-                    color: "#10161c",
+                    background: palette.gold,
+                    color: palette.ink,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1229,7 +1230,7 @@ export function CrewSession({
               >
                 <div>
                   REF:{" "}
-                  <b style={{ color: "#f2c230" }}>{shortId(sessionId || "PENDING")}</b>
+                  <b style={{ color: palette.gold }}>{shortId(sessionId || "PENDING")}</b>
                 </div>
                 <div>
                   ISSUED:{" "}
@@ -1277,7 +1278,7 @@ export function CrewSession({
                     height: 2,
                     flex: 1,
                     margin: "0 18px 32px",
-                    background: "linear-gradient(90deg,#f2c230,transparent)",
+                    background: palette.gold,
                   }}
                 />
               </div>
@@ -1317,7 +1318,7 @@ export function CrewSession({
                         style={{
                           width: 130,
                           flexShrink: 0,
-                          color: "#f2c230",
+                          color: palette.gold,
                           textTransform: "capitalize",
                           fontFamily: "var(--font-plex-mono), monospace",
                           fontSize: 11,
@@ -1349,7 +1350,7 @@ export function CrewSession({
                     style={{
                       fontSize: 11,
                       letterSpacing: 2,
-                      color: "#f2c230",
+                      color: palette.gold,
                       fontFamily: "var(--font-plex-mono), monospace",
                     }}
                   >
@@ -1440,7 +1441,7 @@ export function CrewSession({
       </div>
 
       <div
-        className="relative mx-auto flex h-[32rem] w-full max-w-[26.5rem] flex-col overflow-hidden rounded-[28px] bg-iron text-rag shadow-[0_24px_60px_-24px_rgba(16,16,14,0.55)] ring-1 ring-rag/10"
+        className="relative mx-auto flex h-[32rem] w-full max-w-[26.5rem] flex-col overflow-hidden rounded-[12px] bg-ink text-paper shadow-[0_24px_60px_-24px_rgba(16,16,14,0.55)] ring-1 ring-line-ink"
         role="region"
         aria-label={`${sentenceCase(session.label)} desk`}
       >
@@ -1454,9 +1455,9 @@ export function CrewSession({
           aria-hidden="true"
           className="absolute left-[-9999px] h-0 w-0 opacity-0"
         />
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-rag/10 px-4 py-4 sm:px-5">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-paper/10 px-4 py-4 sm:px-5">
           <div className="flex min-w-0 flex-1 items-center gap-3">
-            <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-iron-2 ring-2 ring-signal/70">
+            <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-ink-2 ring-2 ring-gold/70">
               {lead.photo && lead.photoStatus !== "Photo pending" ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -1467,16 +1468,16 @@ export function CrewSession({
                   className="h-11 w-11 object-cover object-top"
                 />
               ) : (
-                <span className="grid h-full place-items-center font-newsreader text-[18px] text-rag">
+                <span className="grid h-full place-items-center font-newsreader text-[18px] text-paper">
                   {lead.name[0]}
                 </span>
               )}
             </div>
             <div className="min-w-0">
-              <p className="truncate font-plex-sans text-[15px] font-medium text-rag">
+              <p className="truncate font-plex-sans text-[15px] font-medium text-paper">
                 {lead.name.split(" ")[0]}&apos;s desk
               </p>
-              <p className="truncate font-plex-mono text-[11px] text-rag/60">
+              <p className="truncate font-plex-mono text-[11px] text-paper/60">
                 No card on this screen · a person reads it tomorrow
               </p>
             </div>
@@ -1485,8 +1486,8 @@ export function CrewSession({
             <button
               type="button"
               onClick={() => window.print()}
-              aria-label="Download the record of this brief"
-              className="rounded-full border border-rag/15 px-3 py-1.5 font-plex-sans text-[12px] text-rag/75 hover:text-rag"
+              aria-label="Download this brief"
+              className="rounded-full border border-paper/15 px-3 py-1.5 font-plex-sans text-[12px] text-paper/75 hover:text-paper"
             >
               Record
             </button>
@@ -1497,8 +1498,8 @@ export function CrewSession({
               aria-label="Open the brief"
               className={`rounded-full px-3 py-1.5 font-plex-sans text-[12px] ${
                 briefOpen
-                  ? "bg-signal text-iron"
-                  : "border border-rag/15 text-rag/75 hover:text-rag"
+                  ? "bg-paper text-ink"
+                  : "border border-paper/15 text-paper/75 hover:text-paper"
               }`}
             >
               Card · {answered}
@@ -1507,9 +1508,9 @@ export function CrewSession({
         </div>
 
         {/* Progress */}
-        <div className="h-1 shrink-0 bg-iron-2">
+        <div className="h-1 shrink-0 bg-ink-2">
           <div
-            className="h-full bg-signal transition-[width] duration-500 ease-out"
+            className="h-full bg-gold transition-[width] duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -1520,14 +1521,14 @@ export function CrewSession({
           role="log"
           aria-label="Intake conversation"
           aria-live="polite"
-          className="min-h-0 flex-1 overflow-y-auto px-5 py-5 text-rag"
+          className="min-h-0 flex-1 overflow-y-auto px-5 py-5 text-paper"
         >
           <div className="mb-5 flex items-center gap-3">
-            <span className="h-px flex-1 bg-rag/10" aria-hidden />
-            <span className="whitespace-nowrap font-plex-mono text-[0.66rem] tracking-wide text-rag/45">
+            <span className="h-px flex-1 bg-paper/10" aria-hidden />
+            <span className="whitespace-nowrap font-plex-mono text-[0.66rem] tracking-wide text-paper/45">
               {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" })} · desk
             </span>
-            <span className="h-px flex-1 bg-rag/10" aria-hidden />
+            <span className="h-px flex-1 bg-paper/10" aria-hidden />
           </div>
 
           {msgs.map((msg) => {
@@ -1542,14 +1543,14 @@ export function CrewSession({
                   >
                     {yours ? (
                       <span
-                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-rag/15 font-plex-sans text-[10px] font-medium uppercase tracking-wide text-rag/70"
+                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-paper/15 font-plex-sans text-[10px] font-medium uppercase tracking-wide text-paper/70"
                         aria-label="You"
                       >
                         You
                       </span>
                     ) : (
                       <span
-                        className="grid h-7 w-7 shrink-0 place-items-center overflow-hidden rounded-full bg-iron-2 text-[10px] font-medium text-signal"
+                        className="grid h-7 w-7 shrink-0 place-items-center overflow-hidden rounded-full bg-ink-2 text-[10px] font-medium text-paper"
                         aria-hidden
                       >
                         {lead.name[0]}
@@ -1558,8 +1559,8 @@ export function CrewSession({
                     <div
                       className={`px-4 py-2.5 font-newsreader text-[0.95rem] leading-reading ${
                         yours
-                          ? "rounded-[22px] rounded-br-[6px] bg-signal text-iron"
-                          : "rounded-[22px] rounded-bl-[6px] bg-rag/[0.08] text-rag ring-1 ring-rag/10"
+                          ? "rounded-[8px] rounded-br-[6px] bg-paper text-ink"
+                          : "rounded-[22px] rounded-bl-[6px] bg-paper/[0.08] text-paper ring-1 ring-paper/10"
                       }`}
                     >
                       {msg.text}
@@ -1572,7 +1573,7 @@ export function CrewSession({
             if (msg.kind === "note") {
               return (
                 <div key={msg.id} className="msg-in my-2 flex justify-center">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-rag/15 bg-rag/[0.06] px-3 py-1 font-plex-mono text-[0.64rem] tracking-wide text-rag/60">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-paper/15 bg-paper/[0.06] px-3 py-1 font-plex-mono text-[0.64rem] tracking-wide text-paper/60">
                     {msg.text}
                   </span>
                 </div>
@@ -1599,10 +1600,10 @@ export function CrewSession({
                         onClick={() => submitChip(msg.name, option)}
                         className={`rounded-full border px-4 py-2 font-plex-sans text-[0.82rem] font-medium transition-colors ${
                           picked
-                            ? "border-signal bg-signal text-iron"
+                            ? "border-paper bg-paper text-ink"
                             : enabled
-                              ? "border-rag/20 text-rag hover:border-signal hover:text-signal"
-                              : "cursor-default border-rag/10 text-rag/30"
+                              ? "border-paper/20 text-paper hover:border-paper hover:text-paper"
+                              : "cursor-default border-paper/10 text-paper/30"
                         }`}
                       >
                         {option}
@@ -1615,20 +1616,20 @@ export function CrewSession({
 
             return (
               <div key={msg.id} className="msg-in mb-4 flex justify-center pt-2">
-                <div className="flex max-w-[94%] flex-col items-center gap-2.5 rounded-[28px] border border-signal/40 bg-signal/[0.12] px-7 py-6 text-center">
+                <div className="flex max-w-[94%] flex-col items-center gap-2.5 rounded-[12px] border border-line-ink bg-ink-card px-7 py-6 text-center">
                   <svg viewBox="0 0 52 52" className="h-11 w-11" aria-hidden>
                     <circle
                       cx="26"
                       cy="26"
                       r="24"
                       fill="none"
-                      stroke="#f2c230"
+                      stroke={palette.gold}
                       strokeWidth="2.5"
                       className="check-ring"
                     />
                     <path
                       fill="none"
-                      stroke="#f2c230"
+                      stroke={palette.gold}
                       strokeWidth="3"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -1636,14 +1637,14 @@ export function CrewSession({
                       className="check-stroke"
                     />
                   </svg>
-                  <p className="font-plex-sans text-[0.82rem] font-medium tracking-tight text-rag">
+                  <p className="font-plex-sans text-[0.82rem] font-medium tracking-tight text-paper">
                     {msg.title}
                   </p>
-                  <p className="max-w-[42ch] font-newsreader text-sm leading-reading text-rag/80">
+                  <p className="max-w-[42ch] font-newsreader text-sm leading-reading text-paper/80">
                     {msg.text}
                   </p>
                   {deliveryNote ? (
-                    <p className="font-plex-mono text-[0.64rem] tracking-wide text-rag/50">
+                    <p className="font-plex-mono text-[0.64rem] tracking-wide text-paper/50">
                       {deliveryNote}
                     </p>
                   ) : null}
@@ -1653,16 +1654,16 @@ export function CrewSession({
           })}
 
           {phase === "done" ? (
-            <div className="dc-divider mt-2 font-plex-mono text-[0.7rem] tracking-wide text-rag/50">
+            <div className="dc-divider mt-2 font-plex-mono text-[0.7rem] tracking-wide text-paper/50">
               Brief filed · a person replies within one business day
             </div>
           ) : null}
         </div>
 
         {/* Brief fields strip */}
-        <div className="shrink-0 border-t border-rag/10 px-5 py-2">
+        <div className="shrink-0 border-t border-paper/10 px-5 py-2">
           <div className="flex items-center gap-2 overflow-x-auto pb-0.5" aria-hidden>
-            <span className="shrink-0 font-plex-mono text-[0.64rem] tracking-wide text-rag/55">
+            <span className="shrink-0 font-plex-mono text-[0.64rem] tracking-wide text-paper/55">
               On the card
             </span>
             {fields.map((field) => {
@@ -1671,11 +1672,11 @@ export function CrewSession({
                 <span
                   key={field.name}
                   className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-plex-sans text-[0.64rem] font-medium ${
-                    got ? "border-signal/70 text-signal" : "border-rag/15 text-rag/45"
+                    got ? "border-paper/50 text-paper" : "border-paper/15 text-paper/45"
                   }`}
                 >
                   <span
-                    className={`h-1.5 w-1.5 rounded-full ${got ? "bg-signal" : "bg-rag/30"}`}
+                    className={`h-1.5 w-1.5 rounded-full ${got ? "bg-paper" : "bg-paper/30"}`}
                     aria-hidden
                   />
                   {field.label}
@@ -1686,13 +1687,13 @@ export function CrewSession({
         </div>
 
         {/* Composer */}
-        <div className="shrink-0 border-t border-rag/10 px-5 py-3">
+        <div className="shrink-0 border-t border-paper/10 px-5 py-3">
           {currentField && !isChoice(currentField) ? (
             <>
               <div
                 key={shake}
-                className={`flex items-center gap-2 rounded-full border bg-iron-2 px-4 py-2 transition-colors ${
-                  inputError ? "animate-shake border-blocked/60" : "border-rag/15 focus-within:border-signal/50"
+                className={`flex items-center gap-2 rounded-full border bg-ink-2 px-4 py-2 transition-colors ${
+                  inputError ? "animate-shake border-blocked/60" : "border-paper/15 focus-within:border-paper/50"
                 }`}
               >
                 <textarea
@@ -1712,14 +1713,14 @@ export function CrewSession({
                       send();
                     }
                   }}
-                  className="max-h-[132px] flex-1 resize-none bg-transparent py-1.5 font-plex-sans text-sm leading-relaxed text-rag outline-none placeholder:text-rag/35"
+                  className="max-h-[132px] flex-1 resize-none bg-transparent py-1.5 font-plex-sans text-sm leading-relaxed text-paper outline-none placeholder:text-paper/35"
                 />
                 <button
                   type="button"
                   aria-label="Send answer"
                   disabled={!readyForInput}
                   onClick={send}
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-signal text-signal-ink transition-transform hover:scale-105 disabled:opacity-35"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold text-ink transition-transform hover:scale-105 disabled:opacity-35"
                 >
                   <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" aria-hidden>
                     <path
@@ -1735,17 +1736,17 @@ export function CrewSession({
               <div className="flex min-h-[1.25rem] items-center justify-between gap-3 pt-1.5">
                 <p
                   aria-live="polite"
-                  className={`font-plex-sans text-xs ${inputError ? "text-blocked" : "text-rag/55"}`}
+                  className={`font-plex-sans text-xs ${inputError ? "text-blocked" : "text-paper/55"}`}
                 >
                   {inputError || "Hit return. It lands on the card."}
                 </p>
-                <p className="font-plex-mono text-[0.64rem] text-rag/45">
+                <p className="font-plex-mono text-[0.64rem] text-paper/45">
                   No charge on this desk
                 </p>
               </div>
             </>
           ) : (
-            <div className="flex min-h-[38px] items-center justify-between gap-3 font-plex-sans text-sm text-rag/60">
+            <div className="flex min-h-[38px] items-center justify-between gap-3 font-plex-sans text-sm text-paper/60">
               <p>
                 {botBusy
                   ? "Filing that line…"
@@ -1753,7 +1754,7 @@ export function CrewSession({
                     ? "On the desk. A person replies tomorrow."
                     : "Tap a chip above"}
               </p>
-              <p className="shrink-0 font-plex-mono text-xs text-rag/45">No card taken</p>
+              <p className="shrink-0 font-plex-mono text-xs text-paper/45">No card taken</p>
             </div>
           )}
         </div>
@@ -1765,19 +1766,19 @@ export function CrewSession({
               type="button"
               aria-label="Close the brief"
               onClick={() => setBriefOpen(false)}
-              className="absolute inset-0 z-20 bg-iron/30 backdrop-blur-[2px]"
+              className="absolute inset-0 z-20 bg-ink/30 backdrop-blur-[2px]"
             />
             <aside
-              className="absolute inset-y-0 right-0 z-30 flex w-80 max-w-[88%] flex-col border-l border-iron/10 bg-rag-card shadow-[var(--shadow-raised)]"
+              className="absolute inset-y-0 right-0 z-30 flex w-80 max-w-[88%] flex-col border-l border-ink/10 bg-paper-card shadow-[var(--shadow-raised)]"
               aria-label="Your brief"
             >
-              <div className="flex shrink-0 items-center justify-between border-b border-iron/10 px-5 py-4">
+              <div className="flex shrink-0 items-center justify-between border-b border-ink/10 px-5 py-4">
                 <div>
-                  <p className="font-plex-sans text-sm font-medium tracking-tight text-iron">
+                  <p className="font-plex-sans text-sm font-medium tracking-tight text-ink">
                     Your brief
                   </p>
                   {sessionId ? (
-                    <p className="mt-0.5 font-plex-mono text-[0.62rem] text-ink/60">
+                    <p className="mt-0.5 font-plex-mono text-[0.62rem] text-quill/60">
                       Ref {shortId(sessionId)} · brief
                     </p>
                   ) : null}
@@ -1785,7 +1786,7 @@ export function CrewSession({
                 <button
                   type="button"
                   onClick={() => setBriefOpen(false)}
-                  className="grid h-8 w-8 place-items-center rounded-input text-ink/60 transition-colors hover:text-iron"
+                  className="grid h-8 w-8 place-items-center rounded-input text-quill/60 transition-colors hover:text-ink"
                   aria-label="Close the brief"
                 >
                   ✕
@@ -1794,7 +1795,7 @@ export function CrewSession({
 
               <div className="min-h-0 flex-1 space-y-2.5 overflow-y-auto px-5 py-4">
                 {answered === 0 ? (
-                  <p className="font-plex-sans text-sm leading-relaxed text-ink/60">
+                  <p className="font-plex-sans text-sm leading-relaxed text-quill/60">
                     Nothing here yet. Every answer you send lands on this sheet.
                     It becomes the brief the person reads.
                   </p>
@@ -1804,15 +1805,15 @@ export function CrewSession({
                     .map((field) => (
                       <div
                         key={field.name}
-                        className="brief-in rounded-surface border border-iron/10 bg-rag px-3.5 py-3"
+                        className="brief-in rounded-surface border border-ink/10 bg-paper px-3.5 py-3"
                       >
                         <div className="flex items-center justify-between gap-3">
-                          <p className="font-plex-sans text-xs font-medium text-iron/80">
+                          <p className="font-plex-sans text-xs font-medium text-ink/80">
                             {field.label}
                           </p>
                           <svg
                             viewBox="0 0 16 16"
-                            className="h-3.5 w-3.5 shrink-0 text-ink/50"
+                            className="h-3.5 w-3.5 shrink-0 text-quill/50"
                             fill="none"
                             aria-hidden
                           >
@@ -1825,15 +1826,15 @@ export function CrewSession({
                             />
                           </svg>
                         </div>
-                        <p className="mt-1 font-newsreader text-sm whitespace-pre-wrap break-words leading-relaxed text-iron/85">
+                        <p className="mt-1 font-newsreader text-sm whitespace-pre-wrap break-words leading-relaxed text-ink/85">
                           {answers[field.name]}
                         </p>
                       </div>
                     ))
                 )}
 
-                <div className="border-t border-iron/10 pt-4">
-                  <p className="font-plex-sans text-xs font-medium text-ink/60">
+                <div className="border-t border-ink/10 pt-4">
+                  <p className="font-plex-sans text-xs font-medium text-quill/60">
                     Capture sheet
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
@@ -1843,11 +1844,11 @@ export function CrewSession({
                         <span
                           key={field.name}
                           className={`flex items-center gap-1.5 rounded-full border px-2 py-1 font-plex-sans text-[0.64rem] font-medium ${
-                            got ? "border-signal/50 text-iron" : "border-iron/10 text-ink/50"
+                            got ? "border-ink text-ink" : "border-ink/10 text-quill/50"
                           }`}
                         >
                           <span
-                            className={`h-1 w-1 rounded-full ${got ? "bg-signal" : "bg-ink/30"}`}
+                            className={`h-1 w-1 rounded-full ${got ? "bg-ink" : "bg-quill/30"}`}
                             aria-hidden
                           />
                           {field.label}
@@ -1858,9 +1859,9 @@ export function CrewSession({
                 </div>
               </div>
 
-              <div className="shrink-0 border-t border-iron/10 px-5 py-3">
-                <p className="font-plex-sans text-xs font-medium text-ink/60">Status</p>
-                <p className="mt-1 font-plex-sans text-sm leading-relaxed text-iron/70">
+              <div className="shrink-0 border-t border-ink/10 px-5 py-3">
+                <p className="font-plex-sans text-xs font-medium text-quill/60">Status</p>
+                <p className="mt-1 font-plex-sans text-sm leading-relaxed text-ink/70">
                   {phase === "done"
                     ? "Captured, saved, and emailed. A person replies within one business day."
                     : phase === "sending"

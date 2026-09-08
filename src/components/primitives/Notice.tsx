@@ -17,11 +17,11 @@ type NoticeProps = {
  */
 export function Notice({ question, answer }: NoticeProps) {
   return (
-    <div className="card px-8 py-8">
-      <h3 className="font-newsreader text-lot-title leading-title text-iron">
+    <div className="border-t border-ink/10 pt-8">
+      <h3 className="font-newsreader text-lot-title leading-title text-ink">
         {question}
       </h3>
-      <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-ink">
+      <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-quill">
         {answer}
       </p>
     </div>

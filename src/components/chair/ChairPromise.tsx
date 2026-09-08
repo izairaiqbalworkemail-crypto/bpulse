@@ -9,15 +9,15 @@ export function ChairPromise() {
   return (
     <>
       <Reveal>
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-ink/70">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70">
           02 · THE PROMISE
         </p>
       </Reveal>
-      <div className="episode-rule text-iron" aria-hidden="true" />
+      <div className="episode-rule text-ink" aria-hidden="true" />
       <Rise delay={0.06}>
         <h2
           id="promise-heading"
-          className="mt-6 max-w-[16ch] font-newsreader type-display text-[36px] leading-[1.08] text-iron md:text-[48px]"
+          className="mt-6 max-w-[16ch] font-newsreader type-display text-[36px] leading-[1.08] text-ink md:text-[48px]"
         >
           {secondChair.promise[0]} {secondChair.promise[1]}
         </h2>
@@ -26,10 +26,10 @@ export function ChairPromise() {
         {secondChair.promiseWhat.map((item, index) => (
           <Item key={item}>
             <ObjectRow className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-baseline gap-4">
-              <span className="font-plex-mono text-[12px] tabular-nums text-ink/55">
+              <span className="font-plex-mono text-[12px] tabular-nums text-quill/55">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <span className="font-newsreader text-[19px] leading-[1.4] text-iron">
+              <span className="font-newsreader text-[19px] leading-[1.4] text-ink">
                 {item}
               </span>
             </ObjectRow>
@@ -40,10 +40,10 @@ export function ChairPromise() {
         {secondChairSkills.map((skill) => (
           <Item key={skill.name}>
             <ObjectPlate>
-              <p className="font-newsreader text-[20px] leading-[1.25] text-iron">
+              <p className="font-newsreader text-[20px] leading-[1.25] text-ink">
                 {skill.name}
               </p>
-              <p className="mt-3 max-w-[40ch] font-plex-sans text-[15px] leading-[1.55] text-ink">
+              <p className="mt-3 max-w-[40ch] font-plex-sans text-[15px] leading-[1.55] text-quill">
                 {skill.body}
               </p>
             </ObjectPlate>

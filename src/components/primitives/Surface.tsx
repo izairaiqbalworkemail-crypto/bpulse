@@ -2,15 +2,14 @@ import type { ElementType, ReactNode } from "react";
 
 type SurfaceProps = {
   as?: "div" | "article" | "aside" | "section" | "li";
-  tone?: "paper" | "iron";
+  tone?: "paper" | "ink";
   hover?: boolean;
   className?: string;
   children: ReactNode;
 };
 
 /**
- * The shared card. 24px radius, rag or iron, soft lift.
- * Use this instead of one-off rounded boxes.
+ * The shared card. Paper-card, 20px radius, objects only.
  */
 export function Surface({
   as,
@@ -20,7 +19,7 @@ export function Surface({
   children,
 }: Readonly<SurfaceProps>) {
   const Tag = (as ?? "div") as ElementType;
-  const toneClass = tone === "iron" ? "card-iron" : "card";
+  const toneClass = tone === "ink" ? "card-ink" : "card";
   const hoverClass = hover && tone === "paper" ? "card-hover" : "";
   return (
     <Tag className={`${toneClass} ${hoverClass} ${className ?? ""}`.trim()}>

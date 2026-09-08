@@ -27,7 +27,7 @@ export function FilterBar({
   const reduce = useReducedMotion();
 
   return (
-    <div className="flex flex-col gap-4 border-t border-iron/20 pt-5 md:flex-row md:items-end md:justify-between">
+    <div className="flex flex-col gap-4 border-t border-ink/20 pt-5 md:flex-row md:items-end md:justify-between">
       <div
         role="radiogroup"
         aria-label={label}
@@ -44,8 +44,8 @@ export function FilterBar({
               onClick={() => onChange(option.id)}
               className={`border-b pb-2 font-plex-sans text-[14px] ${
                 selected
-                  ? "border-iron text-iron"
-                  : "border-transparent text-ink/70 hover:text-iron"
+                  ? "border-ink text-ink"
+                  : "border-transparent text-quill/70 hover:text-ink"
               }`}
             >
               {option.label}
@@ -55,7 +55,7 @@ export function FilterBar({
       </div>
       <p
         aria-live="polite"
-        className={`font-plex-mono text-[13px] text-ink/70 ${
+        className={`font-plex-mono text-[13px] text-quill/70 ${
           reduce ? "" : "transition-opacity duration-200"
         }`}
       >

@@ -280,7 +280,7 @@ export const specialists: Specialist[] = [
     record: [
       {
         org: "Sully.ai",
-        line: "Built the pipelines and AWS infrastructure that keep hospital AI deployments green.",
+        line: "Built the pipelines and AWS infrastructure that keep hospital AI projects green.",
         url: "https://sully.ai",
       },
       {
@@ -445,7 +445,7 @@ export const specialists: Specialist[] = [
     record: [
       {
         org: "Breakthrough Pulse",
-        line: "Built and maintained backend services across multiple production deployments.",
+        line: "Built and maintained backend services across multiple production projects.",
       },
     ],
     photo: "/team/hamza.jpg",
@@ -541,8 +541,12 @@ export const specialists: Specialist[] = [
 
 const specialistMap = new Map(specialists.map((s) => [s.id, s]));
 
+export function findSpecialist(id: string): Specialist | undefined {
+  return specialistMap.get(id);
+}
+
 export function getSpecialist(id: string): Specialist {
-  const s = specialistMap.get(id);
+  const s = findSpecialist(id);
   if (!s) throw new Error(`Unknown specialist: ${id}`);
   return s;
 }

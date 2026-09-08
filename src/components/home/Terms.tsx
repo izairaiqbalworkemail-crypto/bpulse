@@ -1,95 +1,74 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { Slide } from "@/components/landing/Reveal";
-import { PricingLadder } from "@/components/offer/PricingLadder";
-import { PulseCheckIntake } from "@/components/intake/PulseCheckIntake";
-import { SealedStill } from "@/components/SealedStill";
-import { VettedPay } from "@/components/VettedPay";
-import { checkRunner } from "@/content/check";
-import { termsCredit } from "@/content/home";
-import { getSpecialist } from "@/content/specialists";
+import { Reveal } from "@/components/landing/Reveal";
+import { SectionIntro } from "@/components/home/SectionIntro";
+import { termsCopy, termsCredit } from "@/content/home";
+import { ladder } from "@/content/ladder";
 
 /**
- * 07 · THE TERMS — gold field, the published ladder, one still.
+ * Terms. Cream room. The ladder is the object.
+ * Gold sits on the recommended price, not on the page.
  */
 export function Terms() {
-  const runner = getSpecialist(checkRunner.id);
-
   return (
     <section
       id="terms"
       aria-labelledby="terms-heading"
-      className="ribbon relative scroll-mt-[5.75rem] bg-signal text-iron md:scroll-mt-28"
+      className="overflow-x-clip bg-paper text-ink"
     >
-      <div className="stage-container py-24 md:py-32">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-iron/70">
-          07 · THE TERMS
-        </p>
-        <h2
+      <div className="stage-container py-20 md:py-28">
+        <SectionIntro
           id="terms-heading"
-          className="mt-5 max-w-[16ch] font-newsreader type-display text-[40px] leading-[1.08] md:text-[52px]"
-        >
-          Published. Before a call.
-        </h2>
+          n={termsCopy.n}
+          kicker={termsCopy.kicker}
+          heading={termsCopy.heading}
+          dek={termsCopy.route}
+          headingMax="max-w-[14ch]"
+        />
 
-        <div className="mt-16 grid items-start gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-          <PricingLadder onGold />
-
-          <Slide from="right" delay={0.08}>
-            <SealedStill caption="Written. Sealed. You leave with the keys." />
-            {runner.photo ? (
-              <Link
-                href={`/team/${runner.id}`}
-                className="mt-8 flex items-center gap-4 border-t border-iron/15 pt-6"
-              >
-                <Image
-                  src={runner.photo}
-                  alt={runner.name}
-                  width={48}
-                  height={48}
-                  className="h-12 w-12 rounded-full object-cover object-top"
-                />
-                <span>
-                  <span className="block font-newsreader text-[18px] text-iron">
-                    {runner.name}
-                  </span>
-                  <span className="block font-newsreader text-[14px] text-iron/70">
-                    {checkRunner.line}
-                  </span>
-                </span>
-              </Link>
-            ) : null}
-          </Slide>
-        </div>
-
-        <p className="mt-16 max-w-[42ch] font-newsreader text-[22px] leading-[1.35] text-iron">
-          {termsCredit}
-        </p>
-
-        <p className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
-          <Link href="/read" className="btn btn-iron min-h-12 px-6 text-[15px]">
-            Start with the Read
-          </Link>
-          <Link
-            href="/check"
-            className="font-plex-sans text-[15px] underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
-          >
-            How the five days work
-          </Link>
-        </p>
-
-        <div className="mt-14">
-          <VettedPay surface="signal" />
-        </div>
-
-        <div
-          id="intake"
-          className="mt-12 scroll-mt-[5.75rem] md:scroll-mt-28"
-        >
-          <PulseCheckIntake source="home" />
-        </div>
+        <Reveal delay={0.12}>
+          <ol className="mt-12 overflow-hidden rounded-[24px] border border-line bg-paper-card px-6 shadow-[var(--shadow-card)] md:px-8">
+            {ladder.map((row) => {
+              const recommended = row.id === "read";
+              return (
+                <li
+                  key={row.id}
+                  className="grid gap-2 border-t border-ink/8 py-7 first:border-t-0 md:grid-cols-[10rem_12rem_minmax(0,1fr)] md:items-baseline md:gap-8"
+                >
+                  <p className="font-plex-sans text-[16px] text-ink">
+                    <Link
+                      href={row.href}
+                      className="underline decoration-ink/20 underline-offset-4 hover:decoration-ink"
+                    >
+                      {row.name}
+                    </Link>
+                    {recommended ? (
+                      <span className="ml-2 text-[14px] text-quill">
+                        · {termsCopy.recommended}
+                      </span>
+                    ) : null}
+                  </p>
+                  <div>
+                    <p
+                      className={`font-plex-mono text-[16px] tabular-nums ${
+                        recommended ? "text-diag-p" : "text-ink"
+                      }`}
+                    >
+                      {row.price}
+                    </p>
+                    {row.id === "check" ? (
+                      <p className="mt-2 font-plex-mono text-[16px] leading-[1.4] text-ink">
+                        {termsCredit}
+                      </p>
+                    ) : null}
+                  </div>
+                  <p className="max-w-[46ch] font-plex-sans text-[15px] leading-[1.5] text-quill">
+                    {row.body}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
+        </Reveal>
       </div>
     </section>
   );

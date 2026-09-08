@@ -141,7 +141,7 @@ const diagnostics: Diagnostic[] = [
   {
     id: "diag-001",
     applicationId: "app-001",
-    token: "Q7m2Lc9rT4vN8xPw",
+    token: "hK3wN8qR5tY2mP7c",
     variant: "atlas",
     openedAt: null,
     dueAt: null,

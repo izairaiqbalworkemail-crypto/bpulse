@@ -32,7 +32,7 @@ export const crewAttach: Record<string, string[]> = {
     "Chairs the requirement walk-through so your team signs off once, not five times.",
   ],
   hassan: [
-    "Gives you a private sandbox and a deployment timeline you can verify yourself.",
+    "Gives you a private sandbox and a project timeline you can verify yourself.",
     "Shows you production health directly, with no middleman explaining it away.",
   ],
   suhaib: [

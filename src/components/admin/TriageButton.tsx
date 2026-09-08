@@ -38,11 +38,11 @@ export function TriageButton({ id }: Readonly<Props>) {
         type="button"
         onClick={() => void markTriaged()}
         disabled={pending}
-        className="border border-iron/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron hover:border-iron disabled:opacity-60"
+        className="border border-ink/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink hover:border-ink disabled:opacity-60"
       >
         {pending ? "Saving" : "Mark triaged"}
       </button>
-      {message ? <p className="mt-1 font-plex-sans text-[12px] text-ink/70">{message}</p> : null}
+      {message ? <p className="mt-1 font-plex-sans text-[12px] text-quill/70">{message}</p> : null}
     </div>
   );
 }

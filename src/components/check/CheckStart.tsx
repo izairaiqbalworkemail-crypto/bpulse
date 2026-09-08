@@ -17,25 +17,25 @@ export function CheckStart() {
 
       <div className="mt-14 grid items-start gap-16 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
         <Slide from="left">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
             {checkNext.heading}
           </p>
           <Stagger className="mt-6" gap={0.06}>
             {checkNext.steps.map((step, index) => (
               <Item
                 key={step}
-                className="grid grid-cols-[2rem_minmax(0,1fr)] gap-4 border-l border-iron/15 py-4 pl-6 first:pt-0 last:pb-0"
+                className="grid grid-cols-[2rem_minmax(0,1fr)] gap-4 border-l border-ink/15 py-4 pl-6 first:pt-0 last:pb-0"
               >
-                <span className="font-plex-mono text-[12px] text-ink/70">
+                <span className="font-plex-mono text-[12px] text-quill/70">
                   {index + 1}
                 </span>
-                <span className="font-newsreader text-[18px] leading-[1.4] text-iron">
+                <span className="font-newsreader text-[18px] leading-[1.4] text-ink">
                   {step}
                 </span>
               </Item>
             ))}
           </Stagger>
-          <p className="mt-8 max-w-[46ch] font-newsreader text-[17px] leading-[1.5] text-ink">
+          <p className="mt-8 max-w-[46ch] font-newsreader text-[17px] leading-[1.5] text-quill">
             {checkNext.pay}
           </p>
         </Slide>

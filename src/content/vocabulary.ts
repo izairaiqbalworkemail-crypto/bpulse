@@ -1,37 +1,37 @@
 /**
- * Platform vocabulary. Used identically on every public page.
- * A page that uses a term differently is a defect.
+ * Public words. Internal names stay in code, /studio, and /admin.
+ * A page that uses an old term on the glass is a defect.
  */
 export const vocabulary = {
-  admitted: {
-    term: "admitted",
+  engineers: {
+    term: "our engineers",
     means: "cleared the standard",
-    not: ["hired", "our team"],
+    not: ["admitted", "hired", "our team"],
   },
   assigned: {
     term: "assigned",
-    means: "the platform put them on it",
+    means: "this person is on the work",
     not: ["we picked"],
   },
-  record: {
-    term: "the record",
-    means: "delivery history",
-    not: ["portfolio", "case studies"],
+  work: {
+    term: "our work",
+    means: "finished cases",
+    not: ["the record", "portfolio"],
   },
-  engagement: {
-    term: "engagement",
+  project: {
+    term: "project",
     means: "a piece of work",
-    not: ["project"],
+    not: ["deployment", "engagement"],
   },
-  standing: {
-    term: "standing",
-    means: "current admission status",
-    not: ["active"],
+  available: {
+    term: "available now",
+    means: "can take new work",
+    not: ["standing"],
   },
-  signals: {
-    term: "signals",
-    means: "failure patterns",
-    not: ["skills", "tags"],
+  found: {
+    term: "what we found",
+    means: "repeatable conditions we have already seen",
+    not: ["signals", "tags"],
   },
 } as const;
 

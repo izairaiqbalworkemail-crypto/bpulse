@@ -16,7 +16,7 @@ import {
 } from "@/lib/assignment";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Admitted to the standard",
+  title: "Our engineers",
   description: pageFrame.team,
   path: "/team",
 });
@@ -27,8 +27,8 @@ export default function TeamPage() {
   return (
     <>
       <PageHero
-        kicker="Admitted"
-        title="Admitted to the standard."
+        kicker="Our engineers"
+        title="These twelve ship."
         dek={pageFrame.team}
         hideAction
       />
@@ -46,11 +46,11 @@ export default function TeamPage() {
             if (people.length === 0) return null;
             return (
               <Reveal key={group} delay={index * 0.06}>
-                <div className="mb-12 border-t border-iron/12 pt-8">
-                  <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+                <div className="mb-12 border-t border-ink/12 pt-8">
+                  <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
                     {group}
                   </p>
-                  <p className="mt-2 font-newsreader text-[16px] text-ink">
+                  <p className="mt-2 font-newsreader text-[16px] text-quill">
                     {crewCapabilityLine[group]}
                   </p>
                   <ul className="mt-6 flex flex-col">
@@ -61,17 +61,17 @@ export default function TeamPage() {
                         <li key={person.id}>
                           <Link
                             href={`/team/${person.id}`}
-                            className="grid gap-1 border-b border-iron/10 py-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline"
+                            className="grid gap-1 border-b border-ink/10 py-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline"
                           >
                             <span>
-                              <span className="block font-plex-sans text-[16px] text-iron underline decoration-iron/30 underline-offset-4">
+                              <span className="block font-plex-sans text-[16px] text-ink underline decoration-ink/30 underline-offset-4">
                                 {person.name}
                               </span>
-                              <span className="mt-1 block font-newsreader text-[15px] text-ink">
+                              <span className="mt-1 block font-newsreader text-[15px] text-quill">
                                 {line.standing}
                               </span>
                             </span>
-                            <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+                            <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
                               {assignmentStatusLabel(status)}
                             </span>
                           </Link>
@@ -83,11 +83,11 @@ export default function TeamPage() {
               </Reveal>
             );
           })}
-          <p className="mt-4 font-newsreader text-[18px] text-iron">
+          <p className="mt-4 font-newsreader text-[18px] text-ink">
             The platform assigns from this bench.{" "}
             <Link
               href="/match"
-              className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+              className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
             >
               Describe what’s stuck
             </Link>

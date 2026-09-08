@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { palette } from "@/lib/brand/palette";
 import { getRead } from "@/lib/read/store";
 
 export const size = { width: 1200, height: 630 };
@@ -22,18 +23,18 @@ export default async function ReadOg({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#161614",
+          backgroundColor: palette.ink,
           padding: 64,
         }}
       >
-        <div style={{ fontSize: 22, color: "#f4eee6", opacity: 0.7 }}>
+        <div style={{ fontSize: 22, color: palette.paper, opacity: 0.7 }}>
           Preliminary read · bpulse
         </div>
         <div
           style={{
             marginTop: 16,
             fontSize: 52,
-            color: "#f4eee6",
+            color: palette.paper,
             lineHeight: 1.1,
             letterSpacing: "-0.03em",
             maxWidth: 980,
@@ -41,7 +42,7 @@ export default async function ReadOg({
         >
           {title}
         </div>
-        <div style={{ marginTop: 20, fontSize: 28, color: "#f2c230" }}>
+        <div style={{ marginTop: 20, fontSize: 28, color: palette.gold }}>
           From your description. Not a diagnosis of unseen code.
         </div>
       </div>

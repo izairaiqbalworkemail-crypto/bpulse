@@ -2,18 +2,17 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Lift } from "@/components/landing/Reveal";
 
-type Tone = "paper" | "iron" | "signal";
+type Tone = "paper" | "ink" | "gold";
 
 const toneClass: Record<Tone, string> = {
-  paper: "lift-card room-card overflow-hidden",
-  iron: "lift-card room-card-iron overflow-hidden",
-  signal: "lift-card overflow-hidden rounded-[24px] border border-iron/10 bg-signal text-iron",
+  paper: "card overflow-hidden",
+  ink: "card-ink overflow-hidden",
+  gold: "overflow-hidden rounded-[8px] border border-line bg-paper-card text-ink",
 };
 
 /**
- * A real object on the page. Lift on hover. Gold only when tone is signal.
+ * A portable object. No lift, no scale, no glow.
  */
 export function ObjectPlate({
   children,
@@ -32,7 +31,7 @@ export function ObjectPlate({
 }>) {
   const plate = (
     <div
-      className={`${toneClass[tone]} ${flush ? "" : "p-6 md:p-8"} ${className ?? ""}`.trim()}
+      className={`${toneClass[tone]} ${flush ? "" : "p-9"} ${className ?? ""}`.trim()}
     >
       {children}
     </div>
@@ -40,13 +39,11 @@ export function ObjectPlate({
 
   if (href) {
     return (
-      <Lift>
-        <Link href={href} className="block" onClick={onClick}>
-          {plate}
-        </Link>
-      </Lift>
+      <Link href={href} className="block" onClick={onClick}>
+        {plate}
+      </Link>
     );
   }
 
-  return <Lift>{plate}</Lift>;
+  return plate;
 }

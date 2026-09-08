@@ -9,13 +9,13 @@ export default function PortalOverviewPage() {
 
   return (
     <section className="grid-container py-16 md:py-20">
-      <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
+      <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
         {overview.client}
       </p>
-      <h2 className="mt-3 font-newsreader text-[clamp(1.75rem,3vw,2.5rem)] leading-title text-iron">
+      <h2 className="mt-3 font-newsreader text-[clamp(1.75rem,3vw,2.5rem)] leading-title text-ink">
         {overview.engagement}
       </h2>
-      <p className="mt-2 font-plex-mono text-data text-ink/70">
+      <p className="mt-2 font-plex-mono text-data text-quill/70">
         Scope {overview.scopeVersion} locked · {overview.band} · day {overview.daysElapsed} of {overview.lockedDays}
       </p>
 
@@ -31,20 +31,20 @@ export default function PortalOverviewPage() {
 
       <dl className="mt-12 grid gap-6 md:grid-cols-4">
         <div>
-          <dt className="font-plex-mono text-[13px] text-ink/60">Days elapsed</dt>
-          <dd className="mt-1 font-plex-mono text-lot-title text-iron">{overview.daysElapsed}</dd>
+          <dt className="font-plex-mono text-[13px] text-quill/60">Days elapsed</dt>
+          <dd className="mt-1 font-plex-mono text-lot-title text-ink">{overview.daysElapsed}</dd>
         </div>
         <div>
-          <dt className="font-plex-mono text-[13px] text-ink/60">Days remaining</dt>
-          <dd className="mt-1 font-plex-mono text-lot-title text-iron">{overview.daysRemaining}</dd>
+          <dt className="font-plex-mono text-[13px] text-quill/60">Days remaining</dt>
+          <dd className="mt-1 font-plex-mono text-lot-title text-ink">{overview.daysRemaining}</dd>
         </div>
         <div>
-          <dt className="font-plex-mono text-[13px] text-ink/60">Open findings</dt>
-          <dd className="mt-1 font-plex-mono text-lot-title text-iron">{overview.findings.open}</dd>
+          <dt className="font-plex-mono text-[13px] text-quill/60">Open findings</dt>
+          <dd className="mt-1 font-plex-mono text-lot-title text-ink">{overview.findings.open}</dd>
         </div>
         <div>
-          <dt className="font-plex-mono text-[13px] text-ink/60">Next milestone</dt>
-          <dd className="mt-1 font-newsreader text-reading text-iron">{overview.nextMilestone}</dd>
+          <dt className="font-plex-mono text-[13px] text-quill/60">Next milestone</dt>
+          <dd className="mt-1 font-newsreader text-reading text-ink">{overview.nextMilestone}</dd>
         </div>
       </dl>
     </section>

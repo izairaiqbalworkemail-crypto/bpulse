@@ -33,7 +33,7 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
   ];
 
   return (
-    <section className="ribbon w-full bg-rag text-iron">
+    <section className="ribbon w-full bg-paper text-ink">
       <div className="legal-chrome">
         <PageHero
           kicker={`${LEGAL_FAMILY_LABEL[doc.family]} · ${doc.reference}`}
@@ -45,30 +45,30 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
 
       <div className="legal-chrome stage-container pt-10 md:pt-12">
         {isDraft ? (
-          <div className="rounded-[10px] border border-ink/30 bg-rag px-5 py-4">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink">{DRAFT_NOTICE}</p>
+          <div className="rounded-[10px] border border-quill/30 bg-paper px-5 py-4">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill">{DRAFT_NOTICE}</p>
           </div>
         ) : null}
         <Reveal>
-          <dl className="grid gap-6 border-t border-iron/12 pt-7 font-plex-mono text-[12px] uppercase tracking-[0.08em] sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="grid gap-6 border-t border-ink/12 pt-7 font-plex-mono text-[12px] uppercase tracking-[0.08em] sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <dt className="text-ink/70">Version</dt>
-              <dd className="mt-1.5 text-iron">{doc.version}</dd>
+              <dt className="text-quill/70">Version</dt>
+              <dd className="mt-1.5 text-ink">{doc.version}</dd>
             </div>
             <div>
-              <dt className="text-ink/70">Updated</dt>
-              <dd className="mt-1.5 text-iron">{doc.updatedAt}</dd>
+              <dt className="text-quill/70">Updated</dt>
+              <dd className="mt-1.5 text-ink">{doc.updatedAt}</dd>
             </div>
             <div>
-              <dt className="text-ink/70">Status</dt>
+              <dt className="text-quill/70">Status</dt>
               <dd className={`mt-1.5 ${status.class}`}>{status.label}</dd>
             </div>
             <div>
-              <dt className="text-ink/70">Owner</dt>
-              <dd className="mt-1.5 text-iron">
+              <dt className="text-quill/70">Owner</dt>
+              <dd className="mt-1.5 text-ink">
                 <Link
                   href="/team/hamza"
-                  className="underline decoration-iron/20 underline-offset-4 hover:decoration-iron"
+                  className="underline decoration-ink/20 underline-offset-4 hover:decoration-ink"
                 >
                   {legalOwner.name}
                 </Link>
@@ -79,32 +79,32 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
         <p className="mt-7 flex flex-wrap gap-x-8 gap-y-3 print:hidden">
           <a
             href={`/legal/${doc.slug}/pdf`}
-            className="font-plex-sans text-[15px] underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+            className="font-plex-sans text-[15px] underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
           >
             PDF
           </a>
           <a
             href={`/legal/${doc.slug}/text`}
-            className="font-plex-sans text-[15px] underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+            className="font-plex-sans text-[15px] underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
           >
             Plain text
           </a>
           <Link
             href="/legal"
-            className="font-plex-sans text-[15px] text-ink underline decoration-iron/20 underline-offset-4 hover:decoration-iron"
+            className="font-plex-sans text-[15px] text-quill underline decoration-ink/20 underline-offset-4 hover:decoration-ink"
           >
             The register
           </Link>
         </p>
 
         {doc.reviewNote || sectionReviewNotes.length > 0 ? (
-          <div className="mt-8 border border-ink/20 bg-rag px-5 py-4">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/80">Open legal review items</p>
+          <div className="mt-8 border border-quill/20 bg-paper px-5 py-4">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/80">Open legal review items</p>
             {doc.reviewNote ? (
-              <p className="mt-3 font-plex-sans text-[15px] leading-[1.6] text-iron">{doc.reviewNote}</p>
+              <p className="mt-3 font-plex-sans text-[15px] leading-[1.6] text-ink">{doc.reviewNote}</p>
             ) : null}
             {sectionReviewNotes.map((item) => (
-              <p key={`${item.section}-${item.note}`} className="mt-2 font-plex-sans text-[15px] leading-[1.6] text-iron">
+              <p key={`${item.section}-${item.note}`} className="mt-2 font-plex-sans text-[15px] leading-[1.6] text-ink">
                 Section {item.section}: {item.note}
               </p>
             ))}
@@ -122,9 +122,9 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
             <section
               key={section.number}
               id={`section-${section.number}`}
-              className="scroll-mt-28 border-t border-iron/10 py-12 first:border-t-0 first:pt-0"
+              className="scroll-mt-28 border-t border-ink/10 py-12 first:border-t-0 first:pt-0"
             >
-              <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-iron md:text-[28px]">
+              <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-ink md:text-[28px]">
                 {section.number}. {section.heading}
               </h2>
               <LegalPlain>{section.plainTerms}</LegalPlain>
@@ -144,24 +144,24 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
           {doc.signatureBlocks.length > 0 ? (
             <section
               id="signatures"
-              className="scroll-mt-28 border-t border-iron/10 py-12"
+              className="scroll-mt-28 border-t border-ink/10 py-12"
             >
-              <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+              <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
                 Signatures
               </h2>
               <div className="mt-8 grid gap-12 sm:grid-cols-2">
                 {doc.signatureBlocks.map((block) => (
                   <div key={block.party}>
-                    <p className="font-plex-sans text-[16px] text-iron">
+                    <p className="font-plex-sans text-[16px] text-ink">
                       For {block.party} — {block.name}
                     </p>
-                    <p className="mt-1 font-plex-sans text-[15px] text-ink">
+                    <p className="mt-1 font-plex-sans text-[15px] text-quill">
                       {block.title}
                     </p>
-                    <p className="mt-20 border-b border-iron/30 pb-1 font-plex-mono text-[12px] text-ink/60">
+                    <p className="mt-20 border-b border-ink/30 pb-1 font-plex-mono text-[12px] text-quill/60">
                       Signature
                     </p>
-                    <p className="mt-10 border-b border-iron/30 pb-1 font-plex-mono text-[12px] text-ink/60">
+                    <p className="mt-10 border-b border-ink/30 pb-1 font-plex-mono text-[12px] text-quill/60">
                       Date
                     </p>
                   </div>
@@ -172,24 +172,24 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
 
           <section
             id="changelog"
-            className="scroll-mt-28 border-t border-iron/10 py-12"
+            className="scroll-mt-28 border-t border-ink/10 py-12"
           >
-            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
               What changed
             </h2>
             <Stagger className="mt-6" gap={0.05}>
               {doc.changelog.map((entry) => (
                 <Item
                   key={`${entry.version}-${entry.date}`}
-                  className="border-t border-iron/8 py-4 first:border-t-0 first:pt-0"
+                  className="border-t border-ink/8 py-4 first:border-t-0 first:pt-0"
                 >
-                  <p className="font-plex-mono text-[12px] text-ink/70">
+                  <p className="font-plex-mono text-[12px] text-quill/70">
                     {entry.version} · {entry.date}
                   </p>
-                  <p className="mt-1 font-plex-sans text-[16px] leading-[1.5] text-iron">
+                  <p className="mt-1 font-plex-sans text-[16px] leading-[1.5] text-ink">
                     {entry.change}
                   </p>
-                  <p className="mt-1 font-plex-sans text-[15px] text-ink">
+                  <p className="mt-1 font-plex-sans text-[15px] text-quill">
                     {entry.reason}
                   </p>
                 </Item>

@@ -79,13 +79,13 @@ export type LegalDoc = {
 };
 
 export const LEGAL_STATUS_META = {
-  draft: { label: "Draft", dot: "○", class: "text-ink/70" },
-  current: { label: "In force", dot: "●", class: "text-iron" },
+  draft: { label: "Draft", dot: "○", class: "text-quill/70" },
+  current: { label: "In force", dot: "●", class: "text-ink" },
   active: { label: "Active", dot: "✓", class: "text-partial" },
-  "awaiting-signature": { label: "Awaiting signature", dot: "●", class: "text-ink" },
+  "awaiting-signature": { label: "Awaiting signature", dot: "●", class: "text-quill" },
   signed: { label: "Signed", dot: "✓", class: "text-partial" },
-  superseded: { label: "Superseded", dot: "◇", class: "text-ink/50" },
-  "not-reached": { label: "Not reached", dot: "○", class: "text-ink/50" },
+  superseded: { label: "Superseded", dot: "◇", class: "text-quill/50" },
+  "not-reached": { label: "Not reached", dot: "○", class: "text-quill/50" },
 } as const;
 
 export const LEGAL_FAMILY_LABEL: Record<LegalFamily, string> = {

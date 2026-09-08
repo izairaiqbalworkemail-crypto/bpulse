@@ -4,15 +4,15 @@
  */
 export const pageFrame = {
   howItWorks:
-    "This page is the platform end to end: the Read, the Session, the Check, scope lock, build, handover, standing. You engage a process. People execute it.",
-  work: "This is the delivery record the platform maintains. Every engagement shows who was assigned, and how the work arrived.",
+    "This page is how we work together: the Read, the Session, the Check, scope lock, build, handover, and after launch. You engage a process. People execute it.",
+  work: "Work we finished. Every case shows who was on it, and what was stuck when we started.",
   workSlug:
-    "This is the platform’s file on one engagement. Assignment first. Outcome and limits at equal weight.",
-  team: "These twelve people have cleared the standard. The platform assigns from this bench. A missing photograph is initials, not a hole.",
+    "One case. Who did the work, what was stuck, what shipped, and what we still cannot claim.",
+  team: "These twelve people have cleared the standard. Pick a name, or describe what is stuck. A missing photograph is initials, not a hole.",
   teamSlug:
-    "This is the platform’s assignment record for a named person: admission, engagements on file, signals closed, and a direct line.",
+    "One of our engineers: how they got here, work they have finished, what they fixed, and a direct line.",
   match:
-    "Describe what is stuck. The platform assigns from the record: who has closed those signals, and why.",
+    "Describe what is stuck. We name who has fixed that kind of thing before, and why.",
   check:
     "The Check sits between the Session and the First Slice. $1,500. Five business days. A written verdict: keep, repair or rebuild, and a real report on this page, readable in full.",
   read: "Tell us what is stuck. We write back in one business day: what we think is happening, what we would look at first, and what we cannot tell from a description. No call. No pitch inside it.",
@@ -21,10 +21,10 @@ export const pageFrame = {
   slice:
     "The First Slice is $7,500. Two weeks. One thing that works, in production, that you can show someone. It is a beginning, not a finish.",
   standard:
-    "Admission. How the platform decides who is client-facing. Five gates, then quarterly standing review.",
+    "How we decide who is client-facing. Five gates, then a quarterly review.",
   demo: "This is the platform, live, with sample data. Eight views of a locked Close. Nothing here is a live engagement.",
   secondChair:
-    "Capability transfer after a deployment. A named engineer on your repository. On Call starts at $900 a month. Cancel any month.",
+    "Capability transfer after a project. A named engineer on your repository. On Call starts at $900 a month. Cancel any month.",
   careers:
     "Applying to the standard. Five gates, what each costs us, and no candidate fee, said here, in public.",
   notices:
@@ -32,15 +32,15 @@ export const pageFrame = {
   contact:
     "An intake the platform routes. Aneeb Iqbal reads it within one business day.",
   security:
-    "Operational claims on this page trace to the same facts in /legal.",
+    "Operational claims on this page point to the same facts in /legal.",
   legal:
-    "The forms the platform actually signs. Every claim here traces to a named document.",
+    "The forms the platform actually signs. Every claim here points to a named document.",
   legalData:
     "Where data lives, what leaves Pakistan, and why EU and UK clients need Standard Contractual Clauses. Pakistan has no enacted data protection law. We say that here.",
   about:
-    "A forward deployed engineering studio in Lahore. Twelve engineers, admitted through a published standard, deployed into products that are built and will not ship.",
+    "A studio in Lahore. Twelve engineers, through a published standard, put on products that are built and will not ship.",
   pricing:
-    "The published ladder. Free to $95,000. The same prices for everyone. No form to see them.",
+    "How we work together. Free to $95,000. The same prices for everyone. No form to see them.",
 } as const;
 
 export const guarantees = [
@@ -50,8 +50,8 @@ export const guarantees = [
     href: "/demo/scope",
   },
   {
-    claim: "Assignment is on the record",
-    proof: "who, why, and their standing",
+    claim: "Assignment is public",
+    proof: "who, why, and whether they are available now",
     href: "/work",
   },
   {
@@ -65,7 +65,7 @@ export const guarantees = [
     href: "/demo/handover",
   },
   {
-    claim: "The crew is admitted, not sourced",
+    claim: "The crew is our engineers, not a pool",
     proof: "the standard is published",
     href: "/standard",
   },

@@ -71,23 +71,23 @@ function LedgerRow({ row }: Readonly<{ row: CatalogueRow }>) {
         <Trace spec={spec} size="inline" surface="paper" />
       </span>
       <span className="min-w-0">
-        <span className="font-plex-sans text-[16px] font-medium text-iron underline decoration-iron/35 underline-offset-4 transition-colors group-hover:decoration-iron">
+        <span className="font-plex-sans text-[16px] font-medium text-ink underline decoration-ink/35 underline-offset-4 transition-colors group-hover:decoration-ink">
           {row.client}
         </span>
-        <span className="mt-1 block font-newsreader text-[16px] leading-[1.45] text-ink">
+        <span className="mt-1 block font-newsreader text-[16px] leading-[1.45] text-quill">
           {row.line}
         </span>
       </span>
       <span className="flex shrink-0 flex-col items-end gap-1 md:flex-row md:items-center md:gap-5">
         {proof ? (
           <span
-            className="font-plex-mono text-[15px] tabular-nums text-iron"
+            className="font-plex-mono text-[15px] tabular-nums text-ink"
             title={proof.label}
           >
             {proof.value}
           </span>
         ) : null}
-        <span className="max-w-[24ch] font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/60 md:text-right">
+        <span className="max-w-[24ch] font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/60 md:text-right">
           {meta}
         </span>
       </span>
@@ -141,11 +141,11 @@ export function WorkIndex() {
       {featured.length > 0 ? (
         <>
           <Reveal delay={0.08}>
-            <div className="mt-16 flex flex-wrap items-baseline justify-between gap-2 border-b border-iron/20 pb-3">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+            <div className="mt-16 flex flex-wrap items-baseline justify-between gap-2 border-b border-ink/20 pb-3">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
                 01 · In depth
               </p>
-              <p className="font-plex-mono text-[12px] text-ink/50">
+              <p className="font-plex-mono text-[12px] text-quill/50">
                 {lots.length} {lots.length === 1 ? "engagement" : "engagements"}
               </p>
             </div>
@@ -160,7 +160,7 @@ export function WorkIndex() {
           {compactLots.length > 0 ? (
             <ul className="mt-10">
               {compactLots.map((row, index) => (
-                <li key={row.id} className="border-b border-iron/15">
+                <li key={row.id} className="border-b border-ink/15">
                   <Reveal delay={index * 0.04}>
                     <LedgerRow row={row} />
                   </Reveal>
@@ -174,11 +174,11 @@ export function WorkIndex() {
       {indexGroups.length > 0 ? (
         <section className="mt-14">
           <Reveal delay={0.08}>
-            <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-iron/20 pb-3">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+            <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-ink/20 pb-3">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
                 02 · The index
               </p>
-              <p className="font-plex-mono text-[12px] text-ink/50">
+              <p className="font-plex-mono text-[12px] text-quill/50">
                 {indexRows.length}{" "}
                 {indexRows.length === 1 ? "record" : "records"}
               </p>
@@ -187,12 +187,12 @@ export function WorkIndex() {
           <div className="mt-6 flex flex-col gap-8">
             {indexGroups.map((group, groupIndex) => (
               <Reveal key={group.state} delay={groupIndex * 0.05}>
-                <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/60">
+                <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/60">
                   {group.state}
                 </p>
                 <ul className="mt-2">
                   {group.items.map((row, index) => (
-                    <li key={row.id} className="border-b border-iron/15">
+                    <li key={row.id} className="border-b border-ink/15">
                       <Reveal delay={index * 0.03}>
                         <LedgerRow row={row} />
                       </Reveal>

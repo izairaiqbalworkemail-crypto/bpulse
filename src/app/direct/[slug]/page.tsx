@@ -52,7 +52,7 @@ export default async function DirectConversationPage({ params }: PageProps) {
         dek={`A written intake, not a chatbot. Nobody is typing. ${first} reads every one and replies within one business day.`}
         hideAction
       />
-      <section className="relative w-full overflow-hidden bg-rag">
+      <section className="relative w-full overflow-hidden bg-paper">
         <Atmosphere kind="paper" opacity={0.12} />
         <div className="relative mx-auto max-w-[960px] px-5 py-8 pb-24 md:px-8 md:py-12 md:pb-32">
           <DirectDesk

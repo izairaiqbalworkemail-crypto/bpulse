@@ -64,7 +64,7 @@ describe("about page copy", () => {
   it("counts the published bench", () => {
     expect(admittedCount).toBe(specialists.length);
     expect(admittedCount).toBe(12);
-    expect(aboutCrewLine).toMatch(/Twelve admitted/);
+    expect(aboutCrewLine).toMatch(/Twelve of our engineers/);
     expect(aboutCrewLine).toMatch(/\/standard|standard is published/);
   });
 

@@ -1,39 +1,56 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useRef } from "react";
-import { landSpring } from "@/components/landing/Reveal";
+import { animate, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
 
 /**
- * The 80% / last-20% bar. Shared across every page hero so the site
- * always opens on the same diagram.
+ * The stall. Fills once in 1100ms and stops at 80%.
+ * Gradient one: stuck into diagnosis. Reduced motion sits at 80.
  */
-export function EightyBar() {
+export function EightyBar({
+  tone = "paper",
+}: Readonly<{ tone?: "dark" | "paper" }>) {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
-  const filled = inView || reduce;
+  const [pct, setPct] = useState(reduce === false ? 0 : 80);
+  const onDark = tone === "dark";
+
+  useEffect(() => {
+    if (reduce !== false) {
+      return;
+    }
+    const rise = animate(0, 80, {
+      duration: 1.1,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (value) => setPct(value),
+    });
+    return () => {
+      rise.stop();
+    };
+  }, [reduce]);
 
   return (
-    <div ref={ref}>
-      <div className="mb-3 flex items-baseline justify-between font-plex-mono text-[14px] tabular-nums">
-        <span className="text-rag/75">80%</span>
-        <span className="text-rag/70">the last 20%</span>
+    <div
+      className="w-full"
+      role="img"
+      aria-label="Build stalled at 80 percent"
+    >
+      <div
+        className={`relative h-5 font-plex-mono text-[12px] uppercase tracking-[0.16em] ${
+          onDark ? "text-mist/70" : "text-quill"
+        }`}
+      >
+        <span className="absolute left-0">stall</span>
+        <span
+          className={`absolute tabular-nums ${onDark ? "text-mist" : "text-ink"}`}
+          style={{ left: `${pct}%`, transform: "translateX(-50%)" }}
+        >
+          {Math.round(pct)}%
+        </span>
       </div>
-      <div className="relative h-3.5 overflow-hidden rounded-full border border-rag/18 bg-iron/75">
-        <motion.div
-          className="absolute inset-y-0 left-0 bg-signal"
-          initial={reduce ? false : { width: "0%" }}
-          animate={{ width: filled ? "80%" : "0%" }}
-          transition={reduce ? { duration: 0 } : { ...landSpring, delay: 0.12 }}
-        />
-        <div
-          className="absolute inset-y-0 right-0 w-[20%] border-l border-rag/30"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(135deg, rgba(239,234,224,0.18) 0, rgba(239,234,224,0.18) 2px, transparent 2px, transparent 7px)",
-          }}
-        />
+
+      <div className="eighty-track mt-3" data-on-dark={onDark}>
+        <div className="eighty-fill" style={{ width: `${pct}%` }} />
+        <span className="stall-pip" aria-hidden="true" />
       </div>
     </div>
   );

@@ -46,7 +46,7 @@ export function PricingLadder({
           return (
             <Item key={rung.id}>
               {here ? (
-                <div className={onGold ? "offer-here bg-rag text-iron" : "offer-here"}>
+                <div className={onGold ? "offer-here bg-paper text-ink" : "offer-here"}>
                   {row}
                 </div>
               ) : (

@@ -11,7 +11,7 @@ export const notices: Notice[] = [
     id: "what-is-a-lot",
     question: "Why does every engagement read like an auction lot?",
     answer:
-      "Because this is a condition report, not a marketing deck. Each lot records what arrived, what was wrong, and what it took to hold. The reference is a catalogue page: a real object, an honest condition note, a grade anchored to a date.",
+      "Because this is a condition report, not a marketing deck. Each case records what was stuck when we started, what was wrong, and what it took to hold. The reference is a page: a real object, an honest condition note, a grade anchored to a date.",
   },
   {
     id: "what-happens-to-source",
@@ -23,7 +23,7 @@ export const notices: Notice[] = [
     id: "who-does-the-work",
     question: "Who actually does the work?",
     answer:
-      "The named specialists the standard has admitted. The platform assigns. No subcontracting to strangers mid-build. If a specialist without a portrait is named, it is because we do not have a usable photograph of them yet — not because they are not real.",
+      "The named engineers who cleared the standard. The studio assigns. No subcontracting to strangers mid-build. If a person without a portrait is named, it is because we do not have a usable photograph of them yet, not because they are not real.",
   },
   {
     id: "what-we-wont-take",

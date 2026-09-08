@@ -24,7 +24,7 @@ describe("assignment", () => {
   it("refuses a clearance date", () => {
     const line = admission(getSpecialist("hassan"));
     expect(line.standing).toBe("Client-facing · Gate 4");
-    expect(line.dateNote).toMatch(/not on the public record/i);
+    expect(line.dateNote).toMatch(/not published yet/i);
   });
 
   it("closes signals from lots on the record only", () => {

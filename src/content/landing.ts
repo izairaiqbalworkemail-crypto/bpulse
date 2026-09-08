@@ -36,16 +36,16 @@ export const homeLocks = [
   { title: "You watch every day", href: "/demo" },
   { title: "Same hands throughout", href: "/team" },
   { title: "You leave with the keys", href: "/how-it-works" },
-  { title: "Matched against the record", href: "/match" },
+  { title: "Matched against our work", href: "/match" },
 ] as const;
 
 /** Five Check days, names only — the essays live on /check. */
-export const homeDays = ["Read", "Trace", "Map", "Grade", "Report"] as const;
+export const homeDays = ["Read", "Path", "Map", "Grade", "Report"] as const;
 
 export const homeLots = ["deepidv", "sully", "wearmeout"] as const;
 
 /**
- * The six wounds behind the Trace. Verdict and prefill copy are
+ * The six wounds behind the path visual. Verdict and prefill copy are
  * on-record wording from /check (incomplete, stalled,
  * integration-blocked, unstable, unsound). Situation ids keep the
  * intake seed mapping to the ConditionDesk situations.
@@ -101,7 +101,7 @@ export const homePath = [
     meter: "Free · one business day",
     body: offer.read.description,
     href: "/read",
-    label: "Start the Read",
+    label: "Get my free read",
     image: "/team/aneeb.jpg",
   },
   {
@@ -135,7 +135,7 @@ export const holdCards = [
   {
     title: "Done means deployed",
     body: "Not a staging URL that looks finished. Real users, a real URL, and a product you can show without a screenshot.",
-    proof: "WearMeOut arrived looking done in demo mode. The last pass was production. It is live.",
+    proof: "WearMeOut came in looking done in demo mode. The last pass was production. It is live.",
     href: "/work/wearmeout",
     lot: "WearMeOut.ai",
   },
@@ -156,7 +156,7 @@ export const holdCards = [
   {
     title: "It has to hold after we leave",
     body: "We are paid to reach production, not to send an invoice and disappear.",
-    proof: "myUsta arrived unlaunched. It shipped on iOS and Android, Albania-wide.",
+    proof: "myUsta came in unlaunched. It shipped on iOS and Android, Albania-wide.",
     href: "/work/myusta",
     lot: "myUsta",
   },

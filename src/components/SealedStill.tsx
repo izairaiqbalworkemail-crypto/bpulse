@@ -14,7 +14,7 @@ type SealedStillProps = {
  */
 export function SealedStill({ caption }: Readonly<SealedStillProps>) {
   return (
-    <figure className="overflow-hidden bg-iron-2">
+    <figure className="overflow-hidden bg-ink-2">
       <div className="relative aspect-[3/2]">
         <Image
           src={sealedVerdict.src}
@@ -25,7 +25,7 @@ export function SealedStill({ caption }: Readonly<SealedStillProps>) {
         />
       </div>
       {caption ? (
-        <figcaption className="border-t border-rag/10 bg-iron-2 px-5 py-3.5 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
+        <figcaption className="border-t border-paper/10 bg-ink-2 px-5 py-3.5 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-paper/70">
           {caption}
         </figcaption>
       ) : null}

@@ -7,35 +7,35 @@ import { specialists } from "./specialists";
 
 export const aboutWhat = {
   heading: "A studio in Lahore.",
-  dek: "Twelve engineers, admitted through a published standard, deployed into products that are built and will not ship.",
+  dek: "Twelve engineers, through a published standard, put on products that are built and will not ship.",
 } as const;
 
 export const aboutBeliefs = [
   {
     statement: "Done means deployed.",
     proof:
-      "LOT 031, DeepIDV. Arrived with the compliance path demo-tight. Live now. Client-reported reach of 211 countries.",
+      "DeepIDV. Came in with the compliance path demo-tight. Live now. Client-reported reach of 211 countries.",
     href: "/work/deepidv",
-    mark: "the record",
+    mark: "our work",
   },
   {
     statement: "The people who scope it ship it.",
     proof:
       "No handoff exists between the Check and the build. The engineer who reads your repository leads the work. On Sully, the person who scoped it stayed through HIPAA production.",
     href: "/work/sully",
-    mark: "the record",
+    mark: "our work",
   },
   {
     statement: "No hostage codebases.",
     proof:
-      "Every deployment ends with a credentials transfer and a dated revocation log. You can open a working sample of that log before you pay anything.",
+      "Every project ends with a credentials transfer and a dated revocation log. You can open a working sample of that log before you pay anything.",
     href: "/demo/handover",
     mark: "the sample",
   },
   {
     statement: "Stays until it is live.",
     proof:
-      "Handover training is included in every deployment, not sold as an upsell. The runbook and the training are part of the Close.",
+      "Handover training is included in every project, not sold as an upsell. The runbook and the training are part of the Close.",
     href: "/how-it-works",
     mark: "the process",
   },
@@ -50,7 +50,7 @@ export const aboutOrigin = {
 } as const;
 
 export const aboutCrewLine =
-  "Twelve admitted. The standard is published and applies to all of them, every quarter.";
+  "Twelve of our engineers. The standard is published and applies to all of them, every quarter.";
 
 export const aboutWhere = [
   {

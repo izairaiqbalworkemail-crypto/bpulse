@@ -41,7 +41,7 @@ export function PortraitStrip({
               href={`/team/${person.id}`}
               className="group block underline-offset-4"
             >
-              <div className={`card-iron ${frame}`}>
+              <div className={`card-ink ${frame}`}>
               {absent ? (
                 <div
                   className="grid h-full w-full place-items-center"
@@ -61,10 +61,10 @@ export function PortraitStrip({
                 />
               )}
               </div>
-              <p className="mt-3 font-plex-sans text-[15px] font-medium text-iron underline decoration-iron/30 group-hover:decoration-iron">
+              <p className="mt-3 font-plex-sans text-[15px] font-medium text-ink underline decoration-ink/30 group-hover:decoration-ink">
                 {person.name}
               </p>
-              <p className="mt-1 min-h-[2.6em] font-newsreader text-[14px] leading-[1.3] text-ink/80">
+              <p className="mt-1 min-h-[2.6em] font-newsreader text-[14px] leading-[1.3] text-quill/80">
                 <span className={reduce ? "" : "group-hover:hidden"}>
                   {person.role}
                 </span>

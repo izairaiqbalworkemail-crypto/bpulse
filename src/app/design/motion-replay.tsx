@@ -36,10 +36,10 @@ export function MotionReplay() {
       <div className="flex items-center gap-6">
         <Mark key={`mark-${playKey}`} size={48} struck />
         <div>
-          <p className="font-plex-sans text-sm font-medium text-iron">
+          <p className="font-plex-sans text-sm font-medium text-ink">
             {behaviours[0].name}
           </p>
-          <p className="font-plex-mono text-caption text-ink/60">
+          <p className="font-plex-mono text-caption text-quill/60">
             {behaviours[0].detail}
           </p>
         </div>
@@ -47,10 +47,10 @@ export function MotionReplay() {
 
       {/* Rule draw-on */}
       <div>
-        <p className="font-plex-sans text-sm font-medium text-iron">
+        <p className="font-plex-sans text-sm font-medium text-ink">
           {behaviours[1].name}
         </p>
-        <p className="font-plex-mono text-caption text-ink/60">
+        <p className="font-plex-mono text-caption text-quill/60">
           {behaviours[1].detail}
         </p>
         <div className="mt-4">
@@ -65,7 +65,7 @@ export function MotionReplay() {
                 transformOrigin: "left",
                 animation: `rule-draw-on 400ms cubic-bezier(.69, 0, 0, 1) ${playKey + 1} forwards`,
                 background:
-                  "color-mix(in srgb, var(--color-iron) 15%, transparent)",
+                  "color-mix(in srgb, var(--color-ink) 15%, transparent)",
               }}
             />
           </div>
@@ -74,46 +74,46 @@ export function MotionReplay() {
 
       {/* Hover lot + button — interactive */}
       <div>
-        <p className="font-plex-sans text-sm font-medium text-iron">
+        <p className="font-plex-sans text-sm font-medium text-ink">
           {behaviours[2].name}
         </p>
-        <p className="font-plex-mono text-caption text-ink/60">
+        <p className="font-plex-mono text-caption text-quill/60">
           {behaviours[2].detail}
         </p>
-        <div className="mt-4 flex items-center justify-between border border-iron/15 p-4 transition-colors duration-200 hover:border-iron/50">
-          <span className="font-plex-sans text-sm text-iron">
+        <div className="mt-4 flex items-center justify-between border border-ink/15 p-4 transition-colors duration-200 hover:border-ink/50">
+          <span className="font-plex-sans text-sm text-ink">
             Hover this lot
           </span>
-          <span className="font-plex-mono text-caption text-ink/70">
-            LOT 001
+          <span className="font-plex-mono text-caption text-quill/70">
+            001
           </span>
         </div>
       </div>
 
       <div>
-        <p className="font-plex-sans text-sm font-medium text-iron">
+        <p className="font-plex-sans text-sm font-medium text-ink">
           {behaviours[3].name}
         </p>
-        <p className="font-plex-mono text-caption text-ink/60">
+        <p className="font-plex-mono text-caption text-quill/60">
           {behaviours[3].detail}
         </p>
         <button
           type="button"
-          className="mt-4 rounded-button bg-signal px-6 py-3 font-plex-sans text-sm font-medium text-iron transition-colors duration-200 hover:brightness-95"
+          className="mt-4 rounded-button bg-gold px-6 py-3 font-plex-sans text-sm font-medium text-ink transition-colors duration-200 hover:brightness-95"
         >
           Hover this button
         </button>
       </div>
 
-      <div className="border-t border-iron/10 pt-6">
+      <div className="border-t border-ink/10 pt-6">
         <button
           type="button"
           onClick={() => setPlayKey((k) => k + 1)}
-          className="font-plex-mono text-caption text-ink/70 underline-offset-4 hover:underline"
+          className="font-plex-mono text-caption text-quill/70 underline-offset-4 hover:underline"
         >
           Replay mark + rule
         </button>
-        <p className="mt-2 font-plex-mono text-caption text-ink/70">
+        <p className="mt-2 font-plex-mono text-caption text-quill/70">
           prefers-reduced-motion: reduce disables mark strike, rule draw-on, and
           transforms.
         </p>

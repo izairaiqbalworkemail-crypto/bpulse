@@ -44,7 +44,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": [
       "./src/lib/legal/fonts/**/*",
-      "./public/bpulse-brand/mark/bpulse-mark-dark-1024.png",
+      "./public/bpulse-brand/mark/bpulse-mark-light-1024.png",
     ],
   },
   async headers() {

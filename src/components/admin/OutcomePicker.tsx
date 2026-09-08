@@ -54,7 +54,7 @@ export function OutcomePicker({ id, current, valueUsd }: Readonly<Props>) {
           value={outcome}
           onChange={(event) => setOutcome(event.target.value as SubmissionOutcome)}
           disabled={pending}
-          className="min-w-0 flex-1 border border-iron/25 bg-rag px-2 py-1 font-plex-mono text-[12px]"
+          className="min-w-0 flex-1 border border-ink/25 bg-paper px-2 py-1 font-plex-mono text-[12px]"
         >
           {submissionOutcomes.map((item) => (
             <option key={item} value={item}>
@@ -66,7 +66,7 @@ export function OutcomePicker({ id, current, valueUsd }: Readonly<Props>) {
           type="button"
           onClick={() => void save()}
           disabled={pending}
-          className="border border-iron/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron"
+          className="border border-ink/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink"
         >
           Save
         </button>
@@ -76,9 +76,9 @@ export function OutcomePicker({ id, current, valueUsd }: Readonly<Props>) {
         onChange={(event) => setValue(event.target.value)}
         placeholder="value usd"
         disabled={pending}
-        className="mt-1 w-full border border-iron/25 bg-rag px-2 py-1 font-plex-mono text-[11px]"
+        className="mt-1 w-full border border-ink/25 bg-paper px-2 py-1 font-plex-mono text-[11px]"
       />
-      {status ? <p className="mt-1 font-plex-sans text-[12px] text-ink/70">{status}</p> : null}
+      {status ? <p className="mt-1 font-plex-sans text-[12px] text-quill/70">{status}</p> : null}
     </div>
   );
 }

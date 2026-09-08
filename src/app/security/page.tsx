@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function SecurityPage() {
   return (
-    <section className="w-full bg-rag">
+    <section className="w-full bg-paper">
       <PageHero
         kicker="Security"
         title="Data handling and disclosure routes."
@@ -25,28 +25,28 @@ export default function SecurityPage() {
       <div className="relative overflow-hidden pb-24 md:pb-32">
         <Atmosphere kind="paper" opacity={0.14} />
         <div className="relative grid-container pt-10 md:pt-14">
-          <section className="border-t border-iron/12 pt-8">
-            <h2 className="font-newsreader text-[27px] text-iron">
+          <section className="border-t border-ink/12 pt-8">
+            <h2 className="font-newsreader text-[27px] text-ink">
               Data handling
             </h2>
             <ul className="mt-4">
               {subProcessors.map((row) => (
                 <li
                   key={row.name}
-                  className="border-t border-iron/8 py-3 font-newsreader text-[17px] leading-[1.5] text-ink first:border-t-0 first:pt-0"
+                  className="border-t border-ink/8 py-3 font-newsreader text-[17px] leading-[1.5] text-quill first:border-t-0 first:pt-0"
                 >
                   {row.name} — {row.role}
                 </li>
               ))}
             </ul>
-            <p className="mt-4 max-w-[52ch] font-newsreader text-[17px] leading-[1.5] text-ink">
+            <p className="mt-4 max-w-[52ch] font-newsreader text-[17px] leading-[1.5] text-quill">
               Public analytics is self-hosted. No visitor analytics request
               reaches a third-party domain. Public pages set no cookies.
             </p>
           </section>
 
-          <section className="mt-10 border-t border-iron/12 pt-8">
-            <p className="max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-iron">
+          <section className="mt-10 border-t border-ink/12 pt-8">
+            <p className="max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-ink">
               The same vendors, with regions and the Pakistan transfer position:{" "}
               <Link href="/legal/data" className="underline underline-offset-4">
                 /legal/data
@@ -76,8 +76,8 @@ export default function SecurityPage() {
             </p>
           </section>
 
-          <section className="mt-10 border-t border-iron/12 pt-8">
-            <p className="font-newsreader text-[17px] leading-[1.5] text-ink">
+          <section className="mt-10 border-t border-ink/12 pt-8">
+            <p className="font-newsreader text-[17px] leading-[1.5] text-quill">
               Vulnerability disclosure: security@bpulse.dev · Legal owner:
               hamza@bpulse.dev.
             </p>

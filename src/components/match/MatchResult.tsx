@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getSpecialist } from "@/content/specialists";
 import { indexProjects } from "@/content/catalogue";
-import { getLot } from "@/content/lots";
+import { caseNumber, getLot } from "@/content/lots";
 import { offer } from "@/content/offer";
 import { firstName } from "@/lib/lot-trace";
 import { dominantComparison, sameWayCount } from "@/lib/match/engine";
@@ -23,11 +23,11 @@ const STEP_MS = 350;
 const STEPS = 4;
 
 const SECTION_COLORS = {
-  ink: "bg-ink",
-  signal: "bg-signal",
+  ink: "bg-quill",
+  signal: "bg-diag",
   partial: "bg-partial",
   blocked: "bg-blocked",
-  iron: "bg-iron",
+  iron: "bg-ink",
 } as const;
 
 function SectionHead({
@@ -49,7 +49,7 @@ function SectionHead({
         {label}
       </p>
       {note ? (
-        <p className="mt-2 max-w-[48ch] font-newsreader text-[16px] leading-[1.45] text-ink">
+        <p className="mt-2 max-w-[48ch] font-newsreader text-[16px] leading-[1.45] text-quill">
           {note}
         </p>
       ) : null}
@@ -78,8 +78,8 @@ function logOutcome(
 function comparablePlate(comparison: LotComparison | null, readOnly: boolean) {
   if (!comparison) {
     return (
-      <p className="font-newsreader text-[17px] leading-[1.45] text-ink">
-        Nothing in the record came close enough to show a comparable engagement.
+      <p className="font-newsreader text-[17px] leading-[1.45] text-quill">
+        Nothing we have published came close enough to show a comparable case.
       </p>
     );
   }
@@ -102,18 +102,18 @@ function comparablePlate(comparison: LotComparison | null, readOnly: boolean) {
     <>
       <p className="kicker">
         {lot
-          ? `${lot.lotNumber} · ${comparison.client}`
+          ? `${caseNumber(lot)} · ${comparison.client}`
           : `${comparison.client} · index`}
       </p>
-      <p className="mt-2 font-newsreader text-[22px] leading-[1.2] text-iron">
+      <p className="mt-2 font-newsreader text-[22px] leading-[1.2] text-ink">
         {comparison.title}
       </p>
       {lot ? (
-        <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-ink">
+        <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-quill">
           {lot.condition.split(".")[0]!}
         </p>
       ) : (
-        <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-ink">
+        <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-quill">
           {comparison.title.split(".")[0]!}
         </p>
       )}
@@ -137,9 +137,9 @@ function comparablePlate(comparison: LotComparison | null, readOnly: boolean) {
         <p className="mt-5">
           <Link
             href={href}
-            className="font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+            className="font-plex-sans text-[14px] text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
           >
-            {comparison.kind === "lot" ? "See the lot" : "See the record"}
+            {comparison.kind === "lot" ? "See the case" : "See the work"}
           </Link>
         </p>
       ) : null}
@@ -179,7 +179,7 @@ function EmailThisRead({ token, eventId }: { token: string | null; eventId: stri
   }
 
   if (status === "sent") {
-    return <p className="font-newsreader text-[15px] text-iron">{message}</p>;
+    return <p className="font-newsreader text-[15px] text-ink">{message}</p>;
   }
 
   return (
@@ -208,12 +208,12 @@ function EmailThisRead({ token, eventId }: { token: string | null; eventId: stri
       <button
         type="submit"
         disabled={!token || status === "sending"}
-        className="btn btn-iron"
+        className="btn btn-ink"
       >
         {status === "sending" ? "Sending…" : "Email me this read"}
       </button>
       {status === "error" ? (
-        <p role="alert" className="font-newsreader text-[14px] text-iron">
+        <p role="alert" className="font-newsreader text-[14px] text-ink">
           {message}
         </p>
       ) : null}
@@ -270,14 +270,14 @@ export function MatchResult({
   const steps = [
     {
       label: "Read your words",
-      count: `${outcome.extraction.count} of 21 signals`,
+      count: `${outcome.extraction.count} of 21 conditions`,
       note: "Repeatable conditions we have seen in real engagements.",
       href: "#match-signals",
       tone: "ink" as const,
     },
     {
-      label: "Checked the record",
-      count: `${sameWay} of 24 engagements arrived the same way`,
+      label: "Checked our work",
+      count: `${sameWay} of 24 engagements came to us the same way`,
       note: "Lots and indexed work, tagged from their own condition text.",
       href: "#match-record",
       tone: "partial" as const,
@@ -304,23 +304,22 @@ export function MatchResult({
   return (
     <div className="flex flex-col gap-14">
       <Reveal>
-        <p className="kicker flex items-center gap-2">
-          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal pulse-dot" />
+        <p className="kicker">
           The platform would assign
         </p>
-        <h2 className="mt-3 max-w-[34ch] font-newsreader type-display-m text-[32px] leading-[1.1] text-iron md:text-[40px]">
+        <h2 className="mt-3 max-w-[34ch] font-newsreader type-display-m text-[32px] leading-[1.1] text-ink md:text-[40px]">
           {outcome.confidence === "exploratory"
             ? "The platform would assign Aneeb — nothing on record comes close."
             : `The platform would assign ${leadPerson?.name ?? leadName}.`}
         </h2>
-        <p className="mt-3 font-plex-mono text-[12px] text-ink/70">
+        <p className="mt-3 font-plex-mono text-[12px] text-quill/70">
           {confidenceLine(outcome.confidence)} No score. Not a model.
         </p>
       </Reveal>
 
       <Reveal as="section" label="The words we read" delay={60}>
         <SectionHead label="What you wrote" tone="ink" />
-        <blockquote className="panel-sub mt-3 px-4 py-3 font-newsreader text-[15px] italic leading-[1.5] text-ink">
+        <blockquote className="panel-sub mt-3 px-4 py-3 font-newsreader text-[15px] italic leading-[1.5] text-quill">
           “{description}”
         </blockquote>
       </Reveal>
@@ -338,39 +337,39 @@ export function MatchResult({
                 aria-hidden="true"
                 className={`mt-1 h-2 w-2 shrink-0 rounded-full ${SECTION_COLORS[step.tone]}`}
               />
-              <span className="font-plex-mono text-[12px] tabular-nums text-ink/50">
+              <span className="font-plex-mono text-[12px] tabular-nums text-quill/50">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="min-w-0">
-                <p className="font-plex-sans text-[14px] text-iron">{step.label}</p>
+                <p className="font-plex-sans text-[14px] text-ink">{step.label}</p>
                 <div className="mt-1">
                   {shown > index || readOnly ? (
                     step.href ? (
                       <a
                         href={step.href}
-                        className="font-newsreader text-[16px] leading-[1.4] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
+                        className="font-newsreader text-[16px] leading-[1.4] text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
                       >
                         {step.count}
                       </a>
                     ) : (
-                      <p className="font-newsreader text-[16px] leading-[1.4] text-iron">
+                      <p className="font-newsreader text-[16px] leading-[1.4] text-ink">
                         {step.count}
                       </p>
                     )
                   ) : (
-                    <p className="font-newsreader text-[15px] italic text-ink/50">
-                      Checking the record…
+                    <p className="font-newsreader text-[15px] italic text-quill/50">
+                      Checking our work…
                     </p>
                   )}
                 </div>
                 {shown > index || readOnly ? (
-                  <p className="mt-0.5 font-newsreader text-[13px] text-ink/60">
+                  <p className="mt-0.5 font-newsreader text-[13px] text-quill/60">
                     {step.note}
                   </p>
                 ) : null}
               </div>
               {shown > index || readOnly ? (
-                <span className="ml-auto shrink-0 font-plex-mono text-[10px] uppercase tracking-[0.06em] text-ink/40">
+                <span className="ml-auto shrink-0 font-plex-mono text-[10px] uppercase tracking-[0.06em] text-quill/40">
                   live
                 </span>
               ) : null}
@@ -403,14 +402,14 @@ export function MatchResult({
               onToggleSignal={readOnly ? undefined : onToggleSignal}
             />
             {!readOnly ? (
-              <p className="mt-4 font-plex-mono text-[12px] text-ink/65">
+              <p className="mt-4 font-plex-mono text-[12px] text-quill/65">
                 Set one aside and the rest of this page re-runs against what is
                 left.
               </p>
             ) : null}
           </div>
         ) : (
-          <p className="mt-5 font-newsreader text-[16px] text-ink/70">
+          <p className="mt-5 font-newsreader text-[16px] text-quill/70">
             Fewer than two recognised conditions in the words — that is why the
             read stays thin and a person takes it.
           </p>
@@ -427,7 +426,7 @@ export function MatchResult({
         <SectionHead
           label="Comparable engagement"
           tone="partial"
-          note="The closest thing in the record to the condition you described."
+          note="The closest published case to the condition you described."
         />
         <div className="mt-5 anim-fade-up">{comparablePlate(dominant, readOnly)}</div>
       </Reveal>
@@ -451,8 +450,8 @@ export function MatchResult({
             tone="signal"
             note={
               outcome.confidence === "exploratory"
-                ? `${leadPerson?.name ?? "Aneeb"} is the fallback the record leaves us: no fabrication, a named person.`
-                : "Assigned from signals closed on the record, not a score."
+                ? `${leadPerson?.name ?? "Aneeb"} is the fallback our work leaves us: no fabrication, a named person.`
+                : "Assigned from what we have already fixed, not a score."
             }
           />
           <div className="mt-5">
@@ -466,7 +465,7 @@ export function MatchResult({
           </div>
           {rest.length > 0 ? (
             <details className="mt-6">
-              <summary className="cursor-pointer font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron">
+              <summary className="cursor-pointer font-plex-sans text-[14px] text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
                 Two others who could take this
               </summary>
               <ul className="mt-4 flex flex-col gap-4">
@@ -496,10 +495,10 @@ export function MatchResult({
         >
           <SectionHead label="The shape" tone="ink" />
           <div className="panel mt-5 p-6">
-            <p className="font-newsreader text-[26px] leading-[1.2] text-iron">
+            <p className="font-newsreader text-[26px] leading-[1.2] text-ink">
               {disc.estimate}
             </p>
-            <p className="mt-3 max-w-[46ch] font-newsreader text-[16px] leading-[1.45] text-ink">
+            <p className="mt-3 max-w-[46ch] font-newsreader text-[16px] leading-[1.45] text-quill">
               {disc.consequence}
             </p>
             <p className="mt-4 kicker">
@@ -512,12 +511,12 @@ export function MatchResult({
 
       <Reveal as="section" label="Close" delay={60}>
         <div className="panel overflow-hidden">
-          <div className="bg-iron px-6 py-8 md:px-8">
-            <p className="font-newsreader text-[22px] leading-[1.3] text-rag">
+          <div className="bg-ink px-6 py-8 md:px-8">
+            <p className="font-newsreader text-[22px] leading-[1.3] text-paper">
               Twenty minutes on the phone, or the brief on a named person&apos;s
               desk.
             </p>
-            <p className="mt-2 max-w-[46ch] font-newsreader text-[15px] leading-[1.45] text-rag/85">
+            <p className="mt-2 max-w-[46ch] font-newsreader text-[15px] leading-[1.45] text-paper/85">
               No score decides this. The Check is a fixed{" "}
               {"$" + offer.check.price.toLocaleString("en-US")} and takes five
               days; a person reads it within one business day.
@@ -526,7 +525,7 @@ export function MatchResult({
           <div className="p-6 md:p-8">
             <div className="flex flex-col gap-4">
               {token ? (
-                <p className="font-plex-mono text-[12px] text-ink/70">
+                <p className="font-plex-mono text-[12px] text-quill/70">
                   Private link: {`/match/${token.slice(0, 8)}…`} — keep it, it
                   reopens this read. It is not indexed.
                 </p>
@@ -535,9 +534,9 @@ export function MatchResult({
             </div>
           </div>
         </div>
-        <p className="mt-6 font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/45">
+        <p className="mt-6 font-plex-mono text-[10px] uppercase tracking-[0.08em] text-quill/45">
           Deterministic by construction · every signal, row, and name in this
-          read traces to the record or is marked as read by hand · no model, no
+          every name points at published work or is marked as read by hand · no model, no
           score
         </p>
       </Reveal>

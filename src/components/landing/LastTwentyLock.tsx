@@ -153,32 +153,32 @@ export function LastTwentyLock({
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
       onKeyDown={onKeyDown}
-      className={`relative cursor-ew-resize overflow-hidden bg-iron-2 select-none touch-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron ${
+      className={`relative cursor-ew-resize overflow-hidden bg-ink-2 select-none touch-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink ${
         flush
           ? "aspect-[16/10] rounded-none shadow-none"
-          : "aspect-[5/4] rounded-[28px] shadow-[var(--shadow-raised)] md:aspect-[16/10]"
+          : "aspect-[5/4] rounded-[12px] shadow-[var(--shadow-raised)] md:aspect-[16/10]"
       }`}
     >
       <div className="pointer-events-none absolute inset-0 flex items-end justify-end px-6 pb-6 md:px-8 md:pb-8">
-        <p className="max-w-[10ch] text-right font-plex-mono text-[11px] uppercase tracking-[0.14em] text-signal">
+        <p className="max-w-[10ch] text-right font-plex-mono text-[11px] uppercase tracking-[0.06em] text-label">
           The rest
         </p>
       </div>
 
       <motion.div
-        className="absolute inset-0 bg-rag"
+        className="absolute inset-0 bg-paper"
         style={{ clipPath }}
       >
         <div className="flex h-full flex-col justify-between px-6 py-6 md:px-8 md:py-8">
-          <p className="font-plex-mono text-[11px] uppercase tracking-[0.14em] text-ink/70">
+          <p className="font-plex-mono text-[11px] uppercase tracking-[0.14em] text-quill/70">
             Looks finished
           </p>
           <div>
-            <p className="font-newsreader text-[64px] leading-none tracking-[-0.04em] text-iron md:text-[80px]">
+            <p className="font-newsreader text-[64px] leading-none tracking-[-0.04em] text-ink md:text-[80px]">
               {live}
-              <span className="text-[0.38em] text-ink/50">%</span>
+              <span className="text-[0.38em] text-quill/50">%</span>
             </p>
-            <p className="mt-3 max-w-[18ch] font-newsreader text-[16px] leading-[1.35] text-ink">
+            <p className="mt-3 max-w-[18ch] font-newsreader text-[16px] leading-[1.35] text-quill">
               {caption}
             </p>
           </div>
@@ -189,13 +189,13 @@ export function LastTwentyLock({
         className="pointer-events-none absolute inset-y-0 z-10"
         style={{ left: handleLeft }}
       >
-        <span className="absolute inset-y-0 -left-px w-px bg-signal" />
+        <span className="absolute inset-y-0 -left-px w-px bg-gold" />
         <motion.span
-          className="absolute top-1/2 left-0 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-iron-2 shadow-[0_0_0_6px_rgba(242,194,48,0.16)] ring-1 ring-signal"
+          className="absolute top-1/2 left-0 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-ink-2 shadow-[0_0_0_6px_rgba(242,194,48,0.16)] ring-1 ring-gold"
           animate={{ scale: holding ? 1.1 : 1 }}
           transition={snap}
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+          <span className="h-1.5 w-1.5 rounded-full bg-gold" />
         </motion.span>
       </motion.div>
     </div>

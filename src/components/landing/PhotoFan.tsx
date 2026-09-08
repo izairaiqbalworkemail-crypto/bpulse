@@ -28,7 +28,7 @@ export function PhotoFan({ shots }: Readonly<{ shots: FanShot[] }>) {
         return (
           <motion.div
             key={shot.src}
-            className="absolute inset-[12%] overflow-hidden rounded-[20px] bg-iron shadow-[var(--shadow-artifact)]"
+            className="absolute inset-[12%] overflow-hidden rounded-[12px] bg-ink shadow-[var(--shadow-artifact)]"
             style={{ zIndex: pose.z, y: pose.y }}
             initial={
               reduce ? false : { opacity: 0, x: 0, rotate: pose.r - 8, scale: 0.92 }

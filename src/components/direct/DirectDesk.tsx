@@ -244,7 +244,7 @@ export function DirectDesk({
           </button>
           <Link
             href="/direct"
-            className="min-h-11 font-plex-sans text-[14px] text-ink/50 underline decoration-iron/15 underline-offset-4 hover:text-iron"
+            className="min-h-11 font-plex-sans text-[14px] text-quill/50 underline decoration-ink/15 underline-offset-4 hover:text-ink"
           >
             Write someone else
           </Link>

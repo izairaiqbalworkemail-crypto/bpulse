@@ -20,7 +20,7 @@ export default async function CareersPage() {
   const roles = await listRolesData();
 
   return (
-    <section className="w-full bg-rag pb-24 md:pb-32">
+    <section className="w-full bg-paper pb-24 md:pb-32">
       <TrackOnMount event="careers.started" props={{ surface: "careers" }} />
       <PageHero
         kicker="Applying to the standard"
@@ -56,12 +56,12 @@ export default async function CareersPage() {
           },
         ]}
         href="#intake"
-        action="Apply in five steps"
+        action="Start my application"
       />
 
       <div className="grid-container pt-12">
         <section>
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">Admission plan</p>
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">Admission plan</p>
           <JobsBoard roles={roles} />
         </section>
 
@@ -71,21 +71,18 @@ export default async function CareersPage() {
           ))}
         </section>
 
-        <section className="card mt-12 p-8">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">Three commitments</p>
+        <section className="mt-12 border-t border-ink/10 pt-8">
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">Three commitments</p>
           <ul className="mt-3 space-y-2">
             {crewCommitments.map((item) => (
-              <li key={item} className="font-newsreader text-[17px] leading-[1.45] text-ink">{item}</li>
+              <li key={item} className="font-newsreader text-[17px] leading-[1.45] text-quill">{item}</li>
             ))}
           </ul>
         </section>
 
         <section className="mt-14 scroll-mt-28">
-          <p className="font-newsreader text-[17px] text-ink">
+          <p className="font-newsreader text-[17px] text-quill">
             On submit: you get a private status link and your Gate 0 brief within one business day.
-          </p>
-          <p className="mt-2 font-plex-sans text-[14px] text-ink/80">
-            Sample diagnostic token page: <Link href="/careers/diagnostic/Q7m2Lc9rT4vN8xPw" className="underline">/careers/diagnostic/[token]</Link>
           </p>
         </section>
       </div>

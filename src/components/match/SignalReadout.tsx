@@ -15,10 +15,10 @@ import type {
 } from "@/lib/match/types";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Delivery: "bg-signal",
+  Delivery: "bg-diag",
   Integration: "bg-partial",
-  Intelligence: "bg-ink",
-  Ownership: "bg-iron",
+  Intelligence: "bg-quill",
+  Ownership: "bg-ink",
 };
 
 function seenAtHref(row: LotComparison): string | null {
@@ -49,8 +49,8 @@ function coveragePill({
 }
 
 function pillClass(tone: "signal" | "filled" | "open"): string {
-  if (tone === "signal") return "chip bg-signal text-iron";
-  if (tone === "filled") return "chip bg-partial text-rag";
+  if (tone === "signal") return "chip bg-ink text-paper";
+  if (tone === "filled") return "chip bg-partial text-paper";
   return "chip chip-line";
 }
 
@@ -85,10 +85,10 @@ export function SignalReadout({
           <p className="kicker flex items-center gap-2">
             <span
               aria-hidden="true"
-              className={`h-2 w-2 rounded-full ${CATEGORY_COLORS[category] ?? "bg-ink"}`}
+              className={`h-2 w-2 rounded-full ${CATEGORY_COLORS[category] ?? "bg-quill"}`}
             />
             {signalCategoryLabel[category as keyof typeof signalCategoryLabel]}
-            <span className="ml-2 text-ink/40">
+            <span className="ml-2 text-quill/40">
               {String(list.length).padStart(2, "0")}
             </span>
           </p>
@@ -116,11 +116,11 @@ export function SignalReadout({
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/50">
+                      <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-quill/50">
                         {String(index + 1).padStart(2, "0")} · the phrase we
                         heard
                       </p>
-                      <p className="mt-1 font-newsreader text-[18px] leading-[1.4] text-iron">
+                      <p className="mt-1 font-newsreader text-[18px] leading-[1.4] text-ink">
                         {hit.phrases.join(" · ")}
                       </p>
                     </div>
@@ -130,7 +130,7 @@ export function SignalReadout({
                         <button
                           type="button"
                           onClick={() => onToggleSignal(hit.signalId, true)}
-                          className="font-plex-sans text-[13px] text-ink underline decoration-iron/30 underline-offset-4 hover:text-blocked"
+                          className="font-plex-sans text-[13px] text-quill underline decoration-ink/30 underline-offset-4 hover:text-blocked"
                         >
                           Not what I meant
                         </button>
@@ -139,26 +139,26 @@ export function SignalReadout({
                   </div>
 
                   {hit.quote ? (
-                    <p className="mt-2 font-newsreader italic text-[14px] leading-[1.4] text-ink/80">
+                    <p className="mt-2 font-newsreader italic text-[14px] leading-[1.4] text-quill/80">
                       “{hit.quote}”
                     </p>
                   ) : null}
 
                   <details className="mt-3">
-                    <summary className="cursor-pointer font-plex-sans text-[13px] text-iron/80 underline decoration-iron/25 underline-offset-4 hover:text-iron">
+                    <summary className="cursor-pointer font-plex-sans text-[13px] text-ink/80 underline decoration-ink/25 underline-offset-4 hover:text-ink">
                       Open the signal file
                     </summary>
                     <div className="mt-3 flex flex-col gap-3">
                       <div>
-                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/50">
+                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-quill/50">
                           How we read it
                         </p>
-                        <p className="mt-1 font-newsreader text-[15px] leading-[1.45] text-ink">
+                        <p className="mt-1 font-newsreader text-[15px] leading-[1.45] text-quill">
                           {signal.says}
                         </p>
                       </div>
                       <div>
-                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/50">
+                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-quill/50">
                           Matched on
                         </p>
                         <ul className="mt-2 flex flex-wrap gap-2">
@@ -173,7 +173,7 @@ export function SignalReadout({
                         </ul>
                       </div>
                       <div>
-                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/50">
+                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-quill/50">
                           Where we&apos;ve seen it on file
                         </p>
                         {seenAt.length > 0 ? (
@@ -183,7 +183,7 @@ export function SignalReadout({
                                 {row.href ? (
                                   <Link
                                     href={row.href}
-                                    className="chip chip-line underline decoration-iron/25 underline-offset-2 hover:text-iron"
+                                    className="chip chip-line underline decoration-ink/25 underline-offset-2 hover:text-ink"
                                   >
                                     {row.label}
                                   </Link>
@@ -194,16 +194,16 @@ export function SignalReadout({
                             ))}
                           </ul>
                         ) : (
-                          <p className="mt-1 font-newsreader text-[14px] text-ink/70">
+                          <p className="mt-1 font-newsreader text-[14px] text-quill/70">
                             No engagement on file is tagged with this condition.
                           </p>
                         )}
                       </div>
                       <div>
-                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-ink/50">
+                        <p className="font-plex-mono text-[10px] uppercase tracking-[0.08em] text-quill/50">
                           Coverage
                         </p>
-                        <p className="mt-1 font-newsreader text-[14px] text-ink/80">
+                        <p className="mt-1 font-newsreader text-[14px] text-quill/80">
                           {confidence === "exploratory"
                             ? "With fewer than two conditions, a person reads this by hand — nothing on the bench is weight-bearing here."
                             : leadSignals.has(hit.signalId)
@@ -222,7 +222,7 @@ export function SignalReadout({
 
       {removed.length > 0 && onToggleSignal ? (
         <div>
-          <p className="kicker text-ink/50">Set aside — add back</p>
+          <p className="kicker text-quill/50">Set aside — add back</p>
           <ul className="mt-3 flex flex-wrap gap-2">
             {removed.map((id) => (
               <li key={id}>

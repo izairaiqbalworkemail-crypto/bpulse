@@ -47,11 +47,22 @@ describe("pricing page copy", () => {
 
   it("routes every row to a published rung", () => {
     expect(pricingRoute).toHaveLength(6);
+    expect(pricingRoute[0]).toEqual({
+      if: "Not sure yet. Start here.",
+      start: "The Read",
+      href: "/read",
+    });
     for (const row of pricingRoute) {
       expect(pricingLadder.some((rung) => rung.href === row.href && rung.name === row.start)).toBe(
         true,
       );
     }
+  });
+
+  it("does not claim the Read is only an email", () => {
+    expect(pricingLadder.find((rung) => rung.id === "read")?.body).toBe(
+      "Five short questions. A written reply in one business day.",
+    );
   });
 
   it("lists what is not included, specifically", () => {

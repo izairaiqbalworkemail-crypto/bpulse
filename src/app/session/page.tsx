@@ -31,7 +31,8 @@ export default function SessionPage() {
         kicker={`The Session · ${money(offer.session.price)}`}
         title={sessionPage.title}
         dek={pageFrame.session}
-        hideAction
+        actionHref="#intake"
+        actionLabel="Reserve my Session"
       />
 
       <Episode tone="paper">
@@ -39,13 +40,13 @@ export default function SessionPage() {
           {sessionPage.dek}
         </EpisodeHead>
         <div className="price-object mt-12 max-w-[36rem]">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
             Ninety minutes
           </p>
-          <p className="mt-3 font-newsreader type-display text-[48px] leading-none tabular-nums text-iron">
+          <p className="mt-3 font-newsreader type-display text-[48px] leading-none tabular-nums text-ink">
             {money(offer.session.price)}
           </p>
-          <p className="mt-4 max-w-[40ch] font-newsreader text-[18px] leading-[1.45] text-iron">
+          <p className="mt-4 max-w-[40ch] font-newsreader text-[18px] leading-[1.45] text-ink">
             Credited against anything you buy in 30 days.
           </p>
         </div>
@@ -55,11 +56,11 @@ export default function SessionPage() {
           outLabel="What is not"
           outLines={sessionPage.out}
         />
-        <p className="mt-12 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-ink">
+        <p className="mt-12 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-quill">
           If you only need the written read, start with{" "}
           <Link
             href="/read"
-            className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+            className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
           >
             the Read
           </Link>

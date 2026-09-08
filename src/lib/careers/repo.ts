@@ -72,14 +72,28 @@ async function canUseDbCareers(): Promise<boolean> {
   }
 }
 
+const REVOKED_DIAGNOSTIC_TOKEN = "Q7m2Lc9rT4vN8xPw";
+
+async function revokePublishedDiagnosticToken() {
+  if (!env.DATABASE_URL) return;
+  await getDb()
+    .delete(diagnostics)
+    .where(eq(diagnostics.token, REVOKED_DIAGNOSTIC_TOKEN));
+}
+
 async function ensureSeeded() {
   if (seeded || !env.DATABASE_URL) return;
   const db = getDb();
+  await revokePublishedDiagnosticToken();
   const count = await db
     .select({ c: sql<number>`count(*)` })
     .from(roles)
     .limit(1);
   if ((count[0]?.c ?? 0) > 0) {
+    await db
+      .update(diagnostics)
+      .set({ token: "hK3wN8qR5tY2mP7c" })
+      .where(eq(diagnostics.id, "diag-001"));
     seeded = true;
     return;
   }
@@ -134,7 +148,7 @@ async function ensureSeeded() {
     {
       id: "diag-001",
       applicationId: "app-001",
-      token: "Q7m2Lc9rT4vN8xPw",
+      token: "hK3wN8qR5tY2mP7c",
       variant: "atlas",
       payload: null,
       draft: {

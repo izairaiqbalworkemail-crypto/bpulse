@@ -15,8 +15,8 @@ registerLegalFonts();
 
 const LOGO = legalLogoDataUri();
 
-const IRON = "#161614";
-const INK = "#3f3e39";
+const INK = "#0F1117";
+const QUILL = "#5C6070";
 const PARTIAL = "#4a8f6f";
 const BLOCKED = "#b03a28";
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     marginTop: 48,
     paddingBottom: 10,
     borderBottomWidth: 2,
-    borderBottomColor: IRON,
+    borderBottomColor: INK,
   },
   logoCluster: {
     flexDirection: "row",
@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 22,
-    height: 28,
+    height: 22,
   },
   wordmark: {
     fontFamily: "Plex Sans",
     fontWeight: 600,
     fontSize: 15,
     letterSpacing: 1.5,
-    color: IRON,
+    color: INK,
     textTransform: "uppercase",
   },
   wordmarkSub: {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     fontFamily: "Newsreader",
     fontWeight: 600,
     fontSize: 24,
-    color: IRON,
+    color: INK,
     marginTop: 22,
     letterSpacing: -0.4,
   },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     fontFamily: "Newsreader",
     fontWeight: 600,
     fontSize: 13,
-    color: IRON,
+    color: INK,
   },
   sectionBadge: {
     fontFamily: "Plex Mono",
@@ -138,12 +138,12 @@ const styles = StyleSheet.create({
     fontFamily: "Newsreader",
     fontSize: 9.5,
     lineHeight: 1.45,
-    color: IRON,
+    color: INK,
   },
   marker: {
     fontFamily: "Plex Mono",
     fontSize: 9,
-    color: IRON,
+    color: INK,
     marginRight: 6,
   },
   footer: {

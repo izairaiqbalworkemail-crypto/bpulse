@@ -15,7 +15,7 @@ function Initials({ name }: Readonly<{ name: string }>) {
     .map((part) => part[0]?.toUpperCase() ?? "")
     .join("");
   return (
-    <span className="grid h-full w-full place-items-center font-newsreader text-[22px] text-rag">
+    <span className="grid h-full w-full place-items-center font-newsreader text-[22px] text-paper">
       {initials}
     </span>
   );
@@ -35,7 +35,7 @@ export function CrewPortrait({
   if (compact) {
     return (
       <Link href={`/team/${person.id}`} className="group flex items-center gap-3">
-        <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-iron-card ring-1 ring-rag/15">
+        <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-ink-card ring-1 ring-paper/15">
           {absent ? (
             <Initials name={person.name} />
           ) : (
@@ -50,10 +50,10 @@ export function CrewPortrait({
           )}
         </span>
         <span className="min-w-0">
-          <span className="block font-newsreader text-[16px] leading-[1.15] text-rag">
+          <span className="block font-newsreader text-[16px] leading-[1.15] text-paper">
             {person.name}
           </span>
-          <span className="block truncate font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/70">
+          <span className="block truncate font-plex-mono text-[11px] uppercase tracking-[0.08em] text-paper/70">
             {caption}
           </span>
         </span>
@@ -63,7 +63,7 @@ export function CrewPortrait({
 
   return (
     <Link href={`/team/${person.id}`} className="block min-w-0">
-      <div className="relative aspect-[3/4] overflow-hidden bg-iron-card">
+      <div className="relative aspect-[3/4] overflow-hidden bg-ink-card">
         {absent ? (
           <div className="grid h-full place-items-center">
             <Initials name={person.name} />
@@ -79,10 +79,10 @@ export function CrewPortrait({
           />
         )}
       </div>
-      <p className="mt-4 font-newsreader text-[20px] leading-[1.15] text-rag">
+      <p className="mt-4 font-newsreader text-[20px] leading-[1.15] text-paper">
         {person.name}
       </p>
-      <p className="mt-1 font-newsreader text-[15px] text-rag/70">{caption}</p>
+      <p className="mt-1 font-newsreader text-[15px] text-paper/70">{caption}</p>
     </Link>
   );
 }

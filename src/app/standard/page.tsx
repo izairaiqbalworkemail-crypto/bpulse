@@ -30,11 +30,11 @@ export const metadata: Metadata = buildMetadata({
 
 export default function StandardPage() {
   return (
-    <section className="w-full bg-rag">
+    <section className="w-full bg-paper">
       <TrackOnMount event="standard.opened" props={{ surface: "standard" }} />
       <PageHero
         kicker="Admission"
-        title="Five gates. Then standing review."
+        title="Five gates. Then a quarterly review."
         dek={pageFrame.standard}
         hideAction
       />
@@ -44,7 +44,7 @@ export default function StandardPage() {
         <div className="relative grid-container pb-24 pt-6 md:pb-32">
         <PeopleRail
           people={specialists}
-          line="Admitted. Client-facing only after Gate 4."
+          line="Our engineers. Client-facing only after Gate 4."
         />
         <div className="mt-3 mb-10">
           <AtmosphereNote />
@@ -53,17 +53,17 @@ export default function StandardPage() {
           <GateCard key={gate.n} {...gate} />
         ))}
 
-        <div className="card mt-12 p-8">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+        <div className="mt-12 border-t border-ink/10 pt-8">
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
             Gate 0 rubric (0-3 each)
           </p>
           <ul className="mt-4 grid gap-3 md:grid-cols-2">
             {diagnosticRubric.map((item, index) => (
-              <li key={item.key} className="border-l-2 border-iron/20 pl-3">
-                <p className="font-newsreader text-[17px] text-iron">
+              <li key={item.key} className="border-l-2 border-ink/20 pl-3">
+                <p className="font-newsreader text-[17px] text-ink">
                   {index + 1}. {item.label}
                 </p>
-                <p className="font-newsreader text-[15px] leading-[1.45] text-ink">
+                <p className="font-newsreader text-[15px] leading-[1.45] text-quill">
                   A 3 looks like: {item.looksLike}
                 </p>
               </li>
@@ -71,15 +71,15 @@ export default function StandardPage() {
           </ul>
         </div>
 
-        <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+        <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-quill">
           {standingReview} {standingConsequence}
         </p>
 
-        <ul className="mt-10 max-w-[60ch] border-t border-iron/12 pt-8">
+        <ul className="mt-10 max-w-[60ch] border-t border-ink/12 pt-8">
           {crewCommitments.map((line) => (
             <li
               key={line}
-              className="border-b border-iron/10 py-3 font-newsreader text-[17px] leading-[1.45] text-iron"
+              className="border-b border-ink/10 py-3 font-newsreader text-[17px] leading-[1.45] text-ink"
             >
               {line}
             </li>
@@ -92,7 +92,7 @@ export default function StandardPage() {
           ))}
         </div>
 
-        <p className="mt-16 font-newsreader text-[16px] text-ink/80">
+        <p className="mt-16 font-newsreader text-[16px] text-quill/80">
           {passRateNote}
         </p>
         <PageClose line="The people who pass these gates are the ones on your Close." />

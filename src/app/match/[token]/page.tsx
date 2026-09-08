@@ -38,12 +38,12 @@ export default async function MatchTokenPage({ params }: PageProps) {
   const description = match.description;
 
   return (
-    <article className="w-full bg-rag">
+    <article className="w-full bg-paper">
       <div className="grid-container pb-24 pt-12 md:pt-16">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
           The Match · a saved read
         </p>
-        <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-ink/70">
+        <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-quill/70">
           Matched while you were on the site. This link is not indexed and is
           only reachable from the address you kept.
         </p>

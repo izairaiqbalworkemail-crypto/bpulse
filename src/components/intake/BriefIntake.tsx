@@ -297,9 +297,9 @@ export function BriefIntake({
               }}
             >
               {busy
-                ? "Filing…"
+                ? "Sending…"
                 : type === "check"
-                  ? "File the Check"
+                  ? "Reserve my Check"
                   : `File it for ${first}`}
             </DocketFile>
           ) : current && (current.type === "radio" || current.type === "select") ? null : current ? (

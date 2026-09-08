@@ -11,14 +11,14 @@ export function StartPlate({
   line,
   href,
   label,
-  tone = "signal",
+  tone = "ink",
 }: Readonly<{
   kicker?: string;
   heading: string;
   line?: string;
   href: string;
   label: string;
-  tone?: "paper" | "iron" | "signal";
+  tone?: "paper" | "ink" | "gold";
 }>) {
   return (
     <ObjectPlate href={href} tone={tone} className="mt-10 max-w-[36rem]">

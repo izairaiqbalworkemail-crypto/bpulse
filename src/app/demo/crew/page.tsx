@@ -14,10 +14,10 @@ export const metadata: Metadata = buildMetadata({
 export default function DemoCrewPage() {
   return (
     <section className="grid-container py-16 md:py-20">
-      <h2 className="font-newsreader text-[clamp(1.75rem,3vw,2.5rem)] leading-title text-iron">
+      <h2 className="font-newsreader text-[clamp(1.75rem,3vw,2.5rem)] leading-title text-ink">
         Crew
       </h2>
-      <p className="mt-3 max-w-measure font-newsreader text-reading leading-reading text-ink">
+      <p className="mt-3 max-w-measure font-newsreader text-reading leading-reading text-quill">
         Real specialists. The engagement is sample.
       </p>
       <ul className="mt-10 grid gap-10 md:grid-cols-2">
@@ -34,7 +34,7 @@ export default function DemoCrewPage() {
                   className="h-40 w-32 object-cover"
                 />
               ) : null}
-              <p className="mt-4 font-newsreader text-lot-title text-iron">
+              <p className="mt-4 font-newsreader text-lot-title text-ink">
                 <Link
                   href={`/team/${person.id}`}
                   className="underline-offset-4 hover:underline"
@@ -42,7 +42,7 @@ export default function DemoCrewPage() {
                   {person.name}
                 </Link>
               </p>
-              <p className="mt-1 font-plex-sans text-sm text-ink/70">
+              <p className="mt-1 font-plex-sans text-sm text-quill/70">
                 {member.role}
               </p>
             </li>

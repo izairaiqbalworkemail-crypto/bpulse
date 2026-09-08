@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { dominantPain, type HeroPainKey } from "@/lib/trace";
 import { fitSymptoms } from "@/content/landing";
 import type { PulseCheckSituation } from "@/components/intake/PulseCheckIntake";
-import { landEase, landSpring } from "@/components/landing/Reveal";
+import { landEase } from "@/components/landing/Reveal";
 
 export type FitSelection = {
   situation: PulseCheckSituation;
@@ -40,19 +40,16 @@ function WoundCard({
         type="button"
         aria-pressed={on}
         onClick={() => onToggle(entry.key)}
-        animate={reduce ? undefined : { y: on ? -4 : 0 }}
-        whileHover={reduce ? undefined : { y: on ? -5 : -2 }}
-        whileTap={reduce ? undefined : { scale: 0.99 }}
-        transition={reduce ? { duration: 0 } : landSpring}
-        className={`lift-card flex min-h-[7.75rem] w-full flex-col justify-between rounded-[24px] px-5 py-5 text-left ${
+        transition={reduce ? { duration: 0 } : { duration: 0.15 }}
+        className={`flex min-h-[7.75rem] w-full flex-col justify-between border-l-2 px-5 py-5 text-left ${
           on
-            ? "border-signal bg-signal text-iron shadow-[var(--shadow-raised)]"
-            : "room-card-rag text-iron"
+            ? "border-ink bg-ink text-paper"
+            : "border-ink/15 bg-transparent text-ink"
         }`}
       >
         <p
           className={`font-plex-mono text-[11px] uppercase tracking-[0.08em] ${
-            on ? "text-iron/70" : "text-ink/70"
+            on ? "text-ink/70" : "text-quill/70"
           }`}
         >
           {entry.verdict}
@@ -98,10 +95,10 @@ export function FitBand({
             exit={reduce ? undefined : { opacity: 0, y: -8 }}
             transition={reduce ? { duration: 0 } : { duration: 0.4, ease: landEase }}
           >
-            <p className="font-newsreader text-[32px] leading-[1.1] tracking-[-0.02em] text-iron md:text-[40px]">
+            <p className="font-newsreader text-[32px] leading-[1.1] tracking-[-0.02em] text-ink md:text-[40px]">
               {leading?.verdict ?? "Name the wound."}
             </p>
-            <p className="mt-3 max-w-[40ch] font-newsreader text-[18px] leading-[1.45] text-ink">
+            <p className="mt-3 max-w-[40ch] font-newsreader text-[18px] leading-[1.45] text-quill">
               {leading
                 ? leading.note
                 : "Tap what is already true. The Check opens with that situation written down."}
@@ -132,11 +129,9 @@ export function FitBand({
               ? onStart({ situation: leading.situation, note: leading.note })
               : undefined
           }
-          whileHover={reduce || !leading ? undefined : { y: -2 }}
-          whileTap={reduce || !leading ? undefined : { scale: 0.98 }}
-          className="btn btn-signal min-h-12 px-6 text-[15px] disabled:cursor-not-allowed disabled:opacity-40"
+          className="btn btn-gold min-h-12 px-6 text-[15px] disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Start the Check{" "}
+          Reserve my Check{" "}
           <span aria-hidden="true">→</span>
         </motion.button>
       </div>

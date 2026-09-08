@@ -42,7 +42,7 @@ export function Credit({
   return (
     <div className="card flex items-center gap-4 p-5">
       {portraitSrc && (
-        <div className="card-iron h-[72px] w-[72px]">
+        <div className="card-ink h-[72px] w-[72px]">
           <Image
             src={portraitSrc}
             alt={portraitAlt}
@@ -53,10 +53,10 @@ export function Credit({
         </div>
       )}
       <div>
-        <p className="font-plex-sans text-sm font-medium text-iron">{name}</p>
-        <p className="font-plex-mono text-caption text-ink/60">{capability}</p>
+        <p className="font-plex-sans text-sm font-medium text-ink">{name}</p>
+        <p className="font-plex-mono text-caption text-quill/60">{capability}</p>
         {line && (
-          <p className="mt-1 max-w-[60ch] font-newsreader text-caption leading-reading text-ink/80">
+          <p className="mt-1 max-w-[60ch] font-newsreader text-caption leading-reading text-quill/80">
             {line}
           </p>
         )}

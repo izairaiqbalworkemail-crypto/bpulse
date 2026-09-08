@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LotPlate } from "@/components/catalog/LotPlate";
 import { Episode, EpisodeHead } from "@/components/episode/Episode";
 import { Slide } from "@/components/landing/Reveal";
-import { lots, figureDisclaimer } from "@/content/lots";
+import { lots, figureDisclaimer, caseNumber } from "@/content/lots";
 
 const featured = ["deepidv", "sully"] as const;
 
@@ -17,10 +17,10 @@ export function Record() {
     <Episode labelledBy="record" tone="cocoa">
       <EpisodeHead
         n="04"
-        kicker="THE RECORD"
+        kicker="OUR WORK"
         id="record"
         tone="cocoa"
-        heading="What arrived unfinished."
+        heading="What was stuck when we started."
         aside={
           <Link href="/work" className="aside-chip">
             The whole log
@@ -41,7 +41,7 @@ export function Record() {
         )}
       </div>
 
-      <ul className="mt-10 divide-y divide-rag/12 border-y border-rag/12">
+      <ul className="mt-10 divide-y divide-paper/12 border-y border-paper/12">
         {rest.map((lot) => {
           const tag = figureDisclaimer(lot);
           return (
@@ -50,7 +50,7 @@ export function Record() {
                 href={`/work/${lot.slug}`}
                 className="flex items-center gap-4 py-4"
               >
-                <span className="relative h-14 w-20 shrink-0 overflow-hidden rounded-[10px] bg-iron">
+                <span className="relative h-14 w-20 shrink-0 overflow-hidden rounded-[10px] bg-ink">
                   {lot.imageUrl ? (
                     <Image
                       src={lot.imageUrl}
@@ -62,15 +62,15 @@ export function Record() {
                   ) : null}
                 </span>
                 <span className="min-w-0 grow">
-                  <span className="block font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/60">
-                    {lot.lotNumber}
+                  <span className="block font-plex-mono text-[11px] uppercase tracking-[0.08em] text-paper/60">
+                    {caseNumber(lot)}
                     {tag ? ` · ${tag}` : null}
                   </span>
-                  <span className="mt-0.5 block font-newsreader text-[20px] text-rag">
+                  <span className="mt-0.5 block font-newsreader text-[20px] text-paper">
                     {lot.client}
                   </span>
                 </span>
-                <span className="hidden shrink-0 font-newsreader text-[15px] text-rag/70 sm:block">
+                <span className="hidden shrink-0 font-newsreader text-[15px] text-paper/70 sm:block">
                   {lot.grade.label.replace(/ on arrival$/i, "")}
                 </span>
               </Link>

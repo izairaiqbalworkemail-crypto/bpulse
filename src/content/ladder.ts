@@ -66,7 +66,7 @@ export const ladder = [
     name: "The Close",
     price: closeRange,
     meter: "Fixed scope",
-    body: "The full deployment. Fixed scope, agreed in writing before any code.",
+    body: "The full project. Fixed scope, agreed in writing before any code.",
     credit: "The band is published. The number for your matter is written before we start.",
     href: "/how-it-works",
   },

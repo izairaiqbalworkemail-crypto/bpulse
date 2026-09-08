@@ -2,19 +2,15 @@ import { brand } from "@/config/brand";
 
 export const siteNav = [
   { label: "Work", href: "/work" },
-  { label: "Check", href: "/check" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "How it works", href: "/how-it-works" },
   { label: "Team", href: "/team" },
-  { label: "Careers", href: "/careers" },
-  { label: "About", href: "/about" },
-  { label: "Notices", href: "/notices" },
-  { label: "Contact", href: "/contact" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Process", href: "/how-it-works" },
+  { label: "Match", href: "/match" },
 ] as const;
 
 export const cta = {
-  label: "Start with a check",
-  href: "/check",
+  label: "Get my free read",
+  href: "/read",
 };
 
 export const edition = {
@@ -28,7 +24,7 @@ export const edition = {
   date: "September 2026",
   /** The catalogue's one-sentence remit. */
   description:
-    "bpulse finishes the last twenty percent. What follows is the condition report on our own work — what arrived, what was wrong, what it took.",
+    "bpulse finishes the last twenty percent. What follows is the condition report on our own work: what was stuck, what was wrong, what it took.",
 };
 
 export const addressLine = `${brand.address.street}, ${brand.address.region}, ${brand.address.countryName}`;

@@ -37,9 +37,9 @@ export function StickyContact() {
     >
       <Link
         href="/contact"
-        className="group inline-flex items-center gap-2.5 rounded-full border border-iron/20 bg-rag/90 py-2.5 pr-4 pl-3 shadow-[0_8px_30px_-8px_rgba(16,16,14,0.14)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-iron/40 hover:shadow-[0_16px_40px_-12px_rgba(16,16,14,0.22)]"
+        className="group inline-flex items-center gap-2.5 rounded-full border border-ink/20 bg-paper/90 py-2.5 pr-4 pl-3 shadow-[0_8px_30px_-8px_rgba(16,16,14,0.14)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-ink/40 hover:shadow-[0_16px_40px_-12px_rgba(16,16,14,0.22)]"
       >
-        <span className="relative grid h-7 w-7 place-items-center rounded-full bg-iron text-rag">
+        <span className="relative grid h-7 w-7 place-items-center rounded-full bg-ink text-paper">
           <svg
             width="14"
             height="14"
@@ -54,10 +54,10 @@ export function StickyContact() {
           </svg>
         </span>
         <span className="flex flex-col items-start leading-none">
-          <span className="font-plex-sans text-[0.82rem] font-medium tracking-tight text-iron">
+          <span className="font-plex-sans text-[0.82rem] font-medium tracking-tight text-ink">
             Message the crew
           </span>
-          <span className="mt-0.5 font-plex-mono text-[0.62rem] text-ink/70">
+          <span className="mt-0.5 font-plex-mono text-[0.62rem] text-quill/70">
             replies within one business day
           </span>
         </span>

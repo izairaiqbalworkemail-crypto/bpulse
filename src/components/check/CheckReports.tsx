@@ -9,8 +9,8 @@ import { checkReports, type CheckReport } from "@/content/check-reports";
 function ReportDocument({ report }: Readonly<{ report: CheckReport }>) {
   return (
     <article className="max-w-[66ch]">
-      <header className="border-b border-iron/12 pb-6">
-        <p className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+      <header className="border-b border-ink/12 pb-6">
+        <p className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
           <span>Condition report</span>
           {report.prepared ? (
             <span>prepared {report.prepared}</span>
@@ -18,32 +18,32 @@ function ReportDocument({ report }: Readonly<{ report: CheckReport }>) {
             <span>no date on file</span>
           )}
         </p>
-        <p className="mt-4 font-newsreader text-[28px] leading-[1.15] text-iron md:text-[32px]">
+        <p className="mt-4 font-newsreader text-[28px] leading-[1.15] text-ink md:text-[32px]">
           Verdict: {report.verdict}
         </p>
-        <p className="mt-3 font-newsreader text-[17px] text-ink">{report.clientLine}</p>
+        <p className="mt-3 font-newsreader text-[17px] text-quill">{report.clientLine}</p>
         {report.preparedNote ? (
-          <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-ink/80">
+          <p className="mt-2 font-newsreader text-[15px] leading-[1.45] text-quill/80">
             {report.preparedNote}
           </p>
         ) : null}
       </header>
 
-      <section className="border-b border-iron/12 py-8">
-        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+      <section className="border-b border-ink/12 py-8">
+        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-quill/70">
           The read
         </h3>
-        <p className="mt-3 font-newsreader text-[19px] leading-[1.55] text-iron md:text-[20px]">
+        <p className="mt-3 font-newsreader text-[19px] leading-[1.55] text-ink md:text-[20px]">
           {report.read}
         </p>
       </section>
 
-      <section className="border-b border-iron/12 py-8">
-        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+      <section className="border-b border-ink/12 py-8">
+        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-quill/70">
           Findings
         </h3>
         {report.findings.length === 0 ? (
-          <p className="mt-3 font-newsreader text-[19px] leading-[1.55] text-iron md:text-[20px]">
+          <p className="mt-3 font-newsreader text-[19px] leading-[1.55] text-ink md:text-[20px]">
             None that require a Close. We do not invent a named keep file to
             prove this.
           </p>
@@ -52,10 +52,10 @@ function ReportDocument({ report }: Readonly<{ report: CheckReport }>) {
             {report.findings.map((row) => (
               <li
                 key={row.id}
-                className="border-t border-iron/8 py-4 first:border-t-0 first:pt-0"
+                className="border-t border-ink/8 py-4 first:border-t-0 first:pt-0"
               >
-                <p className="font-plex-mono text-[12px] text-ink/70">{row.n}</p>
-                <p className="mt-1 font-newsreader text-[19px] leading-[1.45] text-iron md:text-[20px]">
+                <p className="font-plex-mono text-[12px] text-quill/70">{row.n}</p>
+                <p className="mt-1 font-newsreader text-[19px] leading-[1.45] text-ink md:text-[20px]">
                   {row.line}
                 </p>
               </li>
@@ -64,30 +64,30 @@ function ReportDocument({ report }: Readonly<{ report: CheckReport }>) {
         )}
       </section>
 
-      <section className="border-b border-iron/12 py-8">
-        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+      <section className="border-b border-ink/12 py-8">
+        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-quill/70">
           What it takes
         </h3>
-        <p className="mt-3 font-newsreader text-[19px] leading-[1.55] text-iron md:text-[20px]">
+        <p className="mt-3 font-newsreader text-[19px] leading-[1.55] text-ink md:text-[20px]">
           {report.takes}
         </p>
       </section>
 
       <section className="pt-8">
-        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+        <h3 className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-quill/70">
           Limits
         </h3>
         <ul className="mt-3">
           {report.limits.map((line) => (
             <li
               key={line}
-              className="border-t border-iron/8 py-3 font-newsreader text-[17px] leading-[1.5] text-ink first:border-t-0 first:pt-0"
+              className="border-t border-ink/8 py-3 font-newsreader text-[17px] leading-[1.5] text-quill first:border-t-0 first:pt-0"
             >
               {line}
             </li>
           ))}
         </ul>
-        <p className="mt-6 font-newsreader text-[16px] leading-[1.5] text-ink">
+        <p className="mt-6 font-newsreader text-[16px] leading-[1.5] text-quill">
           {report.sourceNote}
         </p>
       </section>
@@ -118,7 +118,7 @@ export function CheckReports() {
         <div
           role="tablist"
           aria-label="Sample reports"
-          className="flex flex-wrap gap-x-8 gap-y-3 border-b border-iron/10"
+          className="flex flex-wrap gap-x-8 gap-y-3 border-b border-ink/10"
         >
           {checkReports.map((item, index) => {
             const on = item.id === active;
@@ -148,8 +148,8 @@ export function CheckReports() {
                 }}
                 className={`-mb-px border-b pb-3 font-plex-sans text-[15px] transition-colors duration-200 ${
                   on
-                    ? "border-iron text-iron"
-                    : "border-transparent text-ink/70 hover:text-iron"
+                    ? "border-ink text-ink"
+                    : "border-transparent text-quill/70 hover:text-ink"
                 }`}
               >
                 {item.tab}

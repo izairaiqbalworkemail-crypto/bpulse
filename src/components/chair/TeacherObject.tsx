@@ -60,14 +60,14 @@ export function TeacherObject({
           />
         ) : (
           <div className="grid aspect-square place-items-center">
-            <span className="font-newsreader text-[72px] leading-none text-rag">
+            <span className="font-newsreader text-[72px] leading-none text-paper">
               {first[0]}
             </span>
           </div>
         )}
-        <figcaption className="border-t border-rag/12 px-5 py-4">
-          <p className="font-newsreader text-[20px] text-rag">{person.name}</p>
-          <p className="mt-1 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
+        <figcaption className="border-t border-paper/12 px-5 py-4">
+          <p className="font-newsreader text-[20px] text-paper">{person.name}</p>
+          <p className="mt-1 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-paper/70">
             {person.role}
           </p>
         </figcaption>
@@ -75,25 +75,25 @@ export function TeacherObject({
       </motion.div>
 
       <Slide from="right" delay={0.1}>
-        <p className="max-w-[38ch] font-newsreader text-[24px] leading-[1.3] text-rag md:text-[26px]">
+        <p className="max-w-[38ch] font-newsreader text-[24px] leading-[1.3] text-paper md:text-[26px]">
           {secondChair.teachLine}
         </p>
-        <blockquote className="mt-8 max-w-[40ch] border-l border-rag/20 pl-5 font-newsreader text-[20px] leading-[1.4] text-rag">
+        <blockquote className="mt-8 max-w-[40ch] border-l border-paper/20 pl-5 font-newsreader text-[20px] leading-[1.4] text-paper">
           {person.philosophy}
         </blockquote>
-        <p className="mt-6 max-w-[46ch] font-plex-sans text-[16px] leading-[1.55] text-rag/75">
+        <p className="mt-6 max-w-[46ch] font-plex-sans text-[16px] leading-[1.55] text-paper/75">
           {standing}. {dateNote}
         </p>
         <p className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
           <Link
             href="/standard"
-            className="font-plex-sans text-[14px] underline decoration-rag/30 underline-offset-4"
+            className="font-plex-sans text-[14px] underline decoration-paper/30 underline-offset-4"
           >
             The standard
           </Link>
           <Link
             href={`/team/${person.id}`}
-            className="font-plex-sans text-[14px] underline decoration-rag/30 underline-offset-4"
+            className="font-plex-sans text-[14px] underline decoration-paper/30 underline-offset-4"
           >
             Assignment record
           </Link>
@@ -102,11 +102,11 @@ export function TeacherObject({
           <Stagger className="mt-10 flex flex-col gap-2" gap={0.05}>
             {history.map((row) => (
               <Item key={row.lot.slug}>
-                <ObjectRow href={`/work/${row.lot.slug}`} tone="iron">
-                  <p className="font-plex-sans text-[16px] text-rag">
+                <ObjectRow href={`/work/${row.lot.slug}`} tone="ink">
+                  <p className="font-plex-sans text-[16px] text-paper">
                     {row.lot.client}
                   </p>
-                  <p className="mt-1 font-plex-sans text-[14px] text-rag/70">
+                  <p className="mt-1 font-plex-sans text-[14px] text-paper/70">
                     {row.capability}
                     {row.lead ? ". Lead." : "."}
                   </p>
@@ -116,7 +116,7 @@ export function TeacherObject({
           </Stagger>
         ) : null}
         {closed > 0 ? (
-          <p className="mt-6 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+          <p className="mt-6 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
             Signals closed · {closed}
           </p>
         ) : null}

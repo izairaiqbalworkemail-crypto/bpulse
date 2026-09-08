@@ -24,8 +24,8 @@ export function admission(person: Specialist) {
     standing: gate.clientFacing
       ? "Client-facing · Gate 4"
       : "Operations · not client-facing",
-    review: "Standing review is quarterly, against delivered work.",
-    dateNote: "Clearance dates are not on the public record.",
+    review: "Review is quarterly, against delivered work.",
+    dateNote: "Clearance dates are not published yet.",
     href: "/standard" as const,
   };
 }

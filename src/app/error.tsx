@@ -27,13 +27,13 @@ export default function Error({
         <button
           type="button"
           onClick={reset}
-          className="inline-flex items-center gap-2 rounded-full bg-signal px-6 py-3 font-plex-sans text-[15px] font-medium text-iron"
+          className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-plex-sans text-[15px] font-medium text-ink"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-full border border-iron/15 px-6 py-3 font-plex-sans text-[15px] font-medium text-iron"
+          className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-6 py-3 font-plex-sans text-[15px] font-medium text-ink"
         >
           Back to the catalogue
         </Link>

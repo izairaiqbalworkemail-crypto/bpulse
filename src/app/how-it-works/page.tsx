@@ -34,9 +34,9 @@ export default function HowItWorksPage() {
       />
 
       <SignalPlate
-        kicker="The ladder · published"
+        kicker="How we work together"
         price={offer.close.priceRange}
-        line="The Close is the full deployment. The rungs before it are how you get there without negotiating."
+        line="The Close is the full project. The offers before it are how you get there without negotiating."
         facts={[
           {
             kicker: "The Read",
@@ -52,14 +52,14 @@ export default function HowItWorksPage() {
           },
         ]}
         href="/read"
-        action="Start with the Read"
+        action="Get my free read"
       />
 
       <Episode tone="paper">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-ink/70">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70">
           The stages
         </p>
-        <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.3] text-iron">
+        <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.3] text-ink">
           The Read and the Session come first. Portal screenshots are not on
           file yet. Later stages open the live sample.
         </p>
@@ -67,14 +67,14 @@ export default function HowItWorksPage() {
           <StageRail stages={rail} />
         </div>
         <AnimatedStages stages={closeStages} />
-        <p className="mt-12 max-w-[52ch] font-plex-sans text-[15px] leading-[1.55] text-ink">
+        <p className="mt-12 max-w-[52ch] font-plex-sans text-[15px] leading-[1.55] text-quill">
           {noDiscount}
         </p>
-        <p className="mt-6 font-plex-sans text-[15px] text-ink">
-          {ladder.length} rungs, all published.{" "}
+        <p className="mt-6 font-plex-sans text-[15px] text-quill">
+          {ladder.length} offers, all published.{" "}
           <Link
             href="/first-slice"
-            className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+            className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
           >
             The First Slice
           </Link>{" "}
@@ -84,33 +84,33 @@ export default function HowItWorksPage() {
       </Episode>
 
       <Episode tone="cocoa">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-rag/70">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.06em] text-label">
           What the platform guarantees
         </p>
-        <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.3] text-rag">
+        <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.18] text-paper">
           A promise is a sentence. A system is a link.
         </p>
         <ul className="mt-12">
           {guarantees.map((row) => (
-            <li key={row.claim} className="border-t border-rag/12 py-6">
+            <li key={row.claim} className="border-t border-paper/12 py-6">
               <Link href={row.href} className="block">
-                <span className="block font-newsreader text-[22px] text-rag">
+                <span className="block font-newsreader text-[22px] text-paper">
                   {row.claim}
                 </span>
-                <span className="mt-1 block font-newsreader text-[16px] text-rag/70">
+                <span className="mt-1 block font-newsreader text-[16px] text-paper/70">
                   {row.proof}
                 </span>
-                <span className="mt-3 block font-plex-sans text-[14px] text-rag/80 underline decoration-rag/25 underline-offset-4 hover:decoration-rag">
+                <span className="mt-3 block font-plex-sans text-[14px] text-paper/80 underline decoration-paper/25 underline-offset-4 hover:decoration-paper">
                   Where this is provable
                 </span>
               </Link>
             </li>
           ))}
         </ul>
-        <p className="mt-16 font-newsreader text-[20px] text-rag">
+        <p className="mt-16 font-newsreader text-[20px] text-paper">
           <Link
             href="/read"
-            className="underline decoration-rag/30 underline-offset-4 hover:decoration-rag"
+            className="underline decoration-paper/30 underline-offset-4 hover:decoration-paper"
           >
             Start with the Read. Free. One business day.
           </Link>

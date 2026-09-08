@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { lots } from "./lots";
 import { LOT_PATTERNS } from "./read-patterns";
-import { readAfter, readOffer, readSpecimen, readWhy } from "./read";
+import { readAfter, readOffer, readSpecimen, readStart, readWhy } from "./read";
 
 const EM = /\u2014/;
 const NAMED = /toptal|turing|deloitte|mckinsey|accenture|pwc|ey\b/i;
@@ -12,8 +12,11 @@ function blob(value: unknown) {
 
 describe("read page copy", () => {
   it("promises no pitch and no second follow-up", () => {
+    expect(readOffer.heading).toMatch(/Free/);
+    expect(readOffer.heading).toMatch(/one business day/i);
     expect(readOffer.pledge).toMatch(/No pitch inside it/);
     expect(readAfter.pledge).toMatch(/We will not follow up twice/);
+    expect(readStart.href).toBe("#intake");
   });
 
   it("shows a complete specimen, not a description of one", () => {

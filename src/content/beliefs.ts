@@ -5,7 +5,7 @@ export const studioBeliefs = [
   {
     statement: "Done means deployed",
     body: "Not a staging URL that looks finished. Real users, a real URL, and a product you can show someone without a screenshot.",
-    example: "WearMeOut arrived looking done in demo mode. The last pass was production. It is live.",
+    example: "WearMeOut came in looking done in demo mode. The last pass was production. It is live.",
     href: "/work/wearmeout",
     lot: "WearMeOut.ai",
   },
@@ -26,7 +26,7 @@ export const studioBeliefs = [
   {
     statement: "Stays until it's live",
     body: "We're paid to reach production, not to send an invoice and disappear.",
-    example: "myUsta arrived unlaunched. It shipped on iOS and Android, Albania-wide.",
+    example: "myUsta came in unlaunched. It shipped on iOS and Android, Albania-wide.",
     href: "/work/myusta",
     lot: "myUsta",
   },

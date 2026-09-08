@@ -10,7 +10,7 @@ import { pageFrame } from "@/content/platform";
 const count = getCatalogue().length;
 
 export const metadata: Metadata = buildMetadata({
-  title: "The record",
+  title: "Our work",
   description: pageFrame.work,
   path: "/work",
 });
@@ -19,15 +19,15 @@ export default function WorkPage() {
   return (
     <>
       <PageHero
-        kicker="The record"
-        title="Delivery history. Maintained."
+        kicker="Our work"
+        title="What we shipped. What was stuck."
         dek={`${pageFrame.work} ${count} rows. Nine in depth.`}
         hideAction
       />
 
       <Episode tone="paper">
         <WorkIndex />
-        <PageClose line="Your engagement is not on the record yet. A Check is how it gets there." />
+        <PageClose line="Your case is not here yet. A Check is how it gets there." />
       </Episode>
     </>
   );

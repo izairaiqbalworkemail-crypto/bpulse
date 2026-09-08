@@ -18,11 +18,11 @@ export function CheckQuestions() {
       <Stagger className="mt-16 grid gap-x-16 gap-y-12 md:grid-cols-2" gap={0.07}>
         {checkQuestions.map((item) => (
           <Item key={item.q}>
-            <article className="border-t border-rag/12 pt-6">
-              <h3 className="max-w-[28ch] font-newsreader text-[24px] leading-[1.2] text-rag">
+            <article className="border-t border-paper/12 pt-6">
+              <h3 className="max-w-[28ch] font-newsreader text-[24px] leading-[1.2] text-paper">
                 {item.q}
               </h3>
-              <p className="mt-3 max-w-[42ch] font-newsreader text-[17px] leading-[1.5] text-rag/75">
+              <p className="mt-3 max-w-[42ch] font-newsreader text-[17px] leading-[1.5] text-paper/75">
                 {item.a}
               </p>
             </article>

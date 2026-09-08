@@ -46,7 +46,7 @@ const steps = [
     key: "whatsBlocking" as const,
     prompt: "What is blocking it from shipping?",
     type: "textarea" as const,
-    placeholder: "e.g. Integration testing, compliance paths, deployment hardening",
+    placeholder: "e.g. Integration testing, compliance paths, release hardening",
   },
   {
     key: "budget" as const,
@@ -208,9 +208,9 @@ export function IntakeForm({
 
         <dl className="mt-6 flex flex-col gap-3">
           {steps.map((s) => (
-            <div key={s.key} className="border-t border-iron/10 pt-3">
-              <dt className="font-plex-sans text-[0.8rem] text-ink/70">{s.prompt}</dt>
-              <dd className="mt-1 font-newsreader text-reading text-iron">
+            <div key={s.key} className="border-t border-ink/10 pt-3">
+              <dt className="font-plex-sans text-[0.8rem] text-quill/70">{s.prompt}</dt>
+              <dd className="mt-1 font-newsreader text-reading text-ink">
                 {(answers as FormData)[s.key] || "—"}
               </dd>
             </div>
@@ -233,28 +233,28 @@ export function IntakeForm({
         className="absolute left-[-9999px] h-0 w-0 opacity-0"
       />
       <div className="flex items-center justify-between">
-        <p className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-ink/70">
+        <p className="font-plex-mono text-[0.66rem] font-medium uppercase tracking-[0.14em] text-quill/70">
           {variantLabel}
         </p>
-        <p className="font-plex-mono text-[0.6rem] text-ink/70">
+        <p className="font-plex-mono text-[0.6rem] text-quill/70">
           {currentStep + 1} of {steps.length}
         </p>
       </div>
 
       {/* Progress bar */}
-      <div className="mt-3 h-px w-full bg-iron/10">
+      <div className="mt-3 h-px w-full bg-ink/10">
         <div
-          className="h-px bg-iron/40 transition-all duration-500 ease-out"
+          className="h-px bg-ink/40 transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
 
-      <p className="mt-2 font-plex-mono text-[0.6rem] text-ink/70">
+      <p className="mt-2 font-plex-mono text-[0.6rem] text-quill/70">
         This is an intake form. A real person replies within one business day.
       </p>
 
       {prefill?.sourceHint ? (
-        <p className="mt-2 font-newsreader text-[0.95rem] leading-reading text-ink/70">
+        <p className="mt-2 font-newsreader text-[0.95rem] leading-reading text-quill/70">
           Prefilled from: {prefill.sourceHint}.
         </p>
       ) : null}
@@ -264,10 +264,10 @@ export function IntakeForm({
         {/* Previous answers */}
         {steps.slice(0, currentStep).map((s) => (
           <div key={s.key} className="flex flex-col gap-1.5">
-            <p className="font-newsreader text-[0.85rem] leading-reading text-ink/70">
+            <p className="font-newsreader text-[0.85rem] leading-reading text-quill/70">
               {s.prompt}
             </p>
-            <p className="font-newsreader text-reading leading-reading text-iron pl-3 border-l-2 border-iron/10">
+            <p className="font-newsreader text-reading leading-reading text-ink pl-3 border-l-2 border-ink/10">
               {(answers as FormData)[s.key] || "—"}
             </p>
           </div>
@@ -275,7 +275,7 @@ export function IntakeForm({
 
         {/* Current prompt */}
         <div className="flex flex-col gap-3">
-          <p className="font-newsreader text-reading leading-reading text-iron">
+          <p className="font-newsreader text-reading leading-reading text-ink">
             {step.prompt}
           </p>
 
@@ -293,11 +293,11 @@ export function IntakeForm({
                   value={customInput}
                   onChange={(e) => setCustomInput(e.target.value)}
                   placeholder={step.placeholder}
-                  className="grow rounded-[8px] border border-iron/15 bg-transparent px-4 py-3 font-newsreader text-reading text-iron placeholder:text-ink/70 focus:border-iron/40 focus:outline-none transition-colors duration-200"
+                  className="grow rounded-[8px] border border-ink/15 bg-transparent px-4 py-3 font-newsreader text-reading text-ink placeholder:text-quill/70 focus:border-ink/40 focus:outline-none transition-colors duration-200"
                 />
                 <button
                   type="submit"
-                  className="shrink-0 rounded-full bg-iron px-5 py-3 font-plex-sans text-sm font-medium text-rag transition-colors duration-200 hover:bg-ink"
+                  className="shrink-0 rounded-full bg-ink px-5 py-3 font-plex-sans text-sm font-medium text-paper transition-colors duration-200 hover:bg-quill"
                 >
                   →
                 </button>
@@ -310,12 +310,12 @@ export function IntakeForm({
                   onChange={(e) => setCustomInput(e.target.value)}
                   placeholder={step.placeholder}
                   rows={3}
-                  className="rounded-[8px] border border-iron/15 bg-transparent px-4 py-3 font-newsreader text-reading text-iron placeholder:text-ink/70 focus:border-iron/40 focus:outline-none transition-colors duration-200 resize-none"
+                  className="rounded-[8px] border border-ink/15 bg-transparent px-4 py-3 font-newsreader text-reading text-ink placeholder:text-quill/70 focus:border-ink/40 focus:outline-none transition-colors duration-200 resize-none"
                 />
                 <button
                   type="button"
                   onClick={() => handleTextAnswer(customInput)}
-                  className="self-start rounded-full bg-iron px-5 py-3 font-plex-sans text-sm font-medium text-rag transition-colors duration-200 hover:bg-ink"
+                  className="self-start rounded-full bg-ink px-5 py-3 font-plex-sans text-sm font-medium text-paper transition-colors duration-200 hover:bg-quill"
                 >
                   →
                 </button>
@@ -327,9 +327,9 @@ export function IntakeForm({
                     key={opt}
                     type="button"
                     onClick={() => handleOptionAnswer(opt)}
-                    className={`rounded-surface border border-iron/15 px-4 py-3 text-left font-newsreader text-reading text-iron transition-all duration-200 hover:border-iron/30 hover:bg-iron/[0.03] ${
+                    className={`rounded-surface border border-ink/15 px-4 py-3 text-left font-newsreader text-reading text-ink transition-all duration-200 hover:border-ink/30 hover:bg-ink/[0.03] ${
                       answers[step.key] === opt
-                        ? "border-iron/40 bg-iron/5"
+                        ? "border-ink/40 bg-ink/5"
                         : ""
                     }`}
                   >
@@ -345,23 +345,23 @@ export function IntakeForm({
 
       {/* Summary and submit — show after last step */}
       {isLast && answers[step.key] && (
-        <div className="mt-8 border-t border-iron/10 pt-6">
-          <h3 className="font-newsreader text-lot-title leading-title text-iron">
+        <div className="mt-8 border-t border-ink/10 pt-6">
+          <h3 className="font-newsreader text-lot-title leading-title text-ink">
             Before you submit
           </h3>
-          <p className="mt-2 font-newsreader text-reading leading-reading text-ink/70">
+          <p className="mt-2 font-newsreader text-reading leading-reading text-quill/70">
             Review your answers. A real person will read this and reply within
             one business day.
           </p>
 
           <dl className="mt-5 flex flex-col gap-2.5">
             {steps.map((s) => (
-              <div key={s.key} className="flex items-baseline justify-between gap-4 border-b border-iron/8 pb-2">
-                <dt className="shrink-0 font-plex-sans text-[0.8rem] text-ink/70">
+              <div key={s.key} className="flex items-baseline justify-between gap-4 border-b border-ink/8 pb-2">
+                <dt className="shrink-0 font-plex-sans text-[0.8rem] text-quill/70">
                   {s.prompt}
                 </dt>
-                <dd className="grow border-b border-dotted border-iron/10" />
-                <dd className="shrink-0 max-w-[280px] text-right font-newsreader text-sm text-iron truncate">
+                <dd className="grow border-b border-dotted border-ink/10" />
+                <dd className="shrink-0 max-w-[280px] text-right font-newsreader text-sm text-ink truncate">
                   {(answers as FormData)[s.key] || "—"}
                 </dd>
               </div>
@@ -378,7 +378,7 @@ export function IntakeForm({
             type="button"
             onClick={handleSubmit}
             disabled={submitting}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-signal px-8 py-4 font-plex-sans text-sm font-medium text-iron transition-all duration-200 hover:brightness-95 hover:gap-3 disabled:opacity-50"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 font-plex-sans text-sm font-medium text-ink transition-all duration-200 hover:brightness-95 hover:gap-3 disabled:opacity-50"
           >
             {submitting ? "Sending…" : "Submit intake"}
             {!submitting && <span>→</span>}

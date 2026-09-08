@@ -3,11 +3,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type Tone = "paper" | "iron" | "gold";
+type Tone = "paper" | "ink" | "gold";
 
 const toneClass: Record<Tone, string> = {
   paper: "object-row",
-  iron: "object-row object-row-iron",
+  ink: "object-row object-row-ink",
   gold: "object-row object-row-gold",
 };
 

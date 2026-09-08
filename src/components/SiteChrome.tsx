@@ -14,6 +14,15 @@ export function SiteChrome({ children }: { children: ReactNode }) {
     pathname.startsWith("/report/") ||
     pathname.startsWith("/read/") ||
     pathname.startsWith("/match/");
+  const home = pathname === "/";
+  let mainClass = "min-h-screen bg-paper text-quill";
+  if (report) mainClass = "min-h-screen";
+  else if (home) mainClass = "letter-night min-h-screen";
+
+  useLayoutEffect(() => {
+    document.documentElement.classList.toggle("letter-night", home);
+    return () => document.documentElement.classList.remove("letter-night");
+  }, [home]);
 
   useLayoutEffect(() => {
     if ("scrollRestoration" in history) {
@@ -41,7 +50,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   return (
     <>
       {report ? null : <Masthead />}
-      <main className={report ? "min-h-screen" : "min-h-screen bg-rag text-ink"}>{children}</main>
+      <main className={mainClass}>{children}</main>
       {report ? null : (
         <>
           <DirectStrip />

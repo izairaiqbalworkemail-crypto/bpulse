@@ -18,10 +18,10 @@ export function PriceIncluded() {
         {pricingIncluded.items.map((item, index) => (
           <Item key={item}>
             <ObjectRow className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-baseline gap-4">
-              <span className="font-plex-mono text-[12px] text-ink/70">
+              <span className="font-plex-mono text-[12px] text-quill/70">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <p className="max-w-[48ch] font-newsreader text-[20px] leading-[1.4] text-iron">
+              <p className="max-w-[48ch] font-newsreader text-[20px] leading-[1.4] text-ink">
                 {item}
               </p>
             </ObjectRow>

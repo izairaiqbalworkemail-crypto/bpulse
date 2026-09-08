@@ -57,7 +57,7 @@ export const homeRooms = {
   match: {
     n: "06",
     kicker: "The Match",
-    heading: "Not a pool. The record.",
+    heading: "Not a pool. Our work.",
     they: "A match from a network.",
     we: "A named person, from work we already did.",
   },

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
 import { PersonJsonLd, BreadcrumbJsonLd } from "@/lib/JsonLd";
-import { specialists, getSpecialist } from "@/content/specialists";
+import { specialists, findSpecialist } from "@/content/specialists";
 import { crewAttach, crewJourney } from "@/content/crew-lines";
 import { pageFrame } from "@/content/platform";
 import { Trace } from "@/components/trace/Trace";
@@ -23,6 +24,8 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return specialists.map((s) => ({ slug: s.id }));
 }
@@ -31,7 +34,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const specialist = getSpecialist(slug);
+  const specialist = findSpecialist(slug);
+  if (!specialist) notFound();
   return buildMetadata({
     title: specialist.name,
     description: pageFrame.teamSlug,
@@ -50,7 +54,8 @@ function initials(name: string) {
 
 export default async function SpecialistPage({ params }: Readonly<PageProps>) {
   const { slug } = await params;
-  const specialist = getSpecialist(slug);
+  const specialist = findSpecialist(slug);
+  if (!specialist) notFound();
   const history = assignmentHistory(specialist);
   const closed = signalsClosed(specialist);
   const line = admission(specialist);
@@ -65,7 +70,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
       <PersonJsonLd name={specialist.name} jobTitle={specialist.role} />
       <BreadcrumbJsonLd
         items={[
-          { name: "Admitted", url: `${brand.url}/team` },
+          { name: "Our engineers", url: `${brand.url}/team` },
           { name: specialist.name, url: `${brand.url}/team/${specialist.id}` },
         ]}
       />
@@ -78,15 +83,15 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
         actionLabel={`Write ${firstName}`}
       />
 
-      <section className="relative w-full overflow-hidden bg-rag">
+      <section className="relative w-full overflow-hidden bg-paper">
         <TrackOnMount event="crew.opened" props={{ slug: specialist.id }} />
         <Atmosphere kind="paper" opacity={0.16} />
         <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-16">
           <div className="grid items-start gap-12 md:grid-cols-[14rem_minmax(0,1fr)]">
-            <div className="overflow-hidden bg-iron">
+            <div className="overflow-hidden bg-ink">
               {absent ? (
                 <div className="grid aspect-[3/4] place-items-center">
-                  <span className="font-newsreader type-display-xl text-[64px] leading-none text-rag">
+                  <span className="font-newsreader type-display-xl text-[64px] leading-none text-paper">
                     {initials(specialist.name)}
                   </span>
                 </div>
@@ -103,61 +108,61 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
             </div>
 
             <div>
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
-                Admission
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
+                How they hire
               </p>
-              <p className="mt-3 font-newsreader text-[28px] leading-[1.15] text-iron">
+              <p className="mt-3 font-newsreader text-[28px] leading-[1.15] text-ink">
                 {line.standing}
               </p>
-              <p className="mt-2 max-w-[42ch] font-newsreader text-[17px] leading-[1.45] text-ink">
+              <p className="mt-2 max-w-[42ch] font-newsreader text-[17px] leading-[1.45] text-quill">
                 {line.review} {line.dateNote}
               </p>
               <p className="mt-4">
                 <Link
                   href={line.href}
-                  className="font-plex-sans text-[14px] text-iron underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+                  className="font-plex-sans text-[14px] text-ink underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
                 >
                   The standard →
                 </Link>
               </p>
-              <p className="mt-8 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+              <p className="mt-8 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
                 Currently
               </p>
-              <p className="mt-2 font-newsreader text-[18px] text-iron">
+              <p className="mt-2 font-newsreader text-[18px] text-ink">
                 {assignmentStatusLabel(status)}
                 {status === "assigned"
-                  ? " · on an engagement. Available-from dates are not on the public record."
-                  : " · the platform can assign."}
+                  ? " · on a project. Next available date is not published."
+                  : " · available now."}
               </p>
             </div>
           </div>
 
           {history.length > 0 ? (
             <div className="mt-16">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
                 Assignment history
               </p>
-              <ul className="mt-6 border-t border-iron/12">
+              <ul className="mt-6 border-t border-ink/12">
                 {history.map((row) => (
-                  <li key={row.lot.slug} className="border-b border-iron/10">
+                  <li key={row.lot.slug} className="border-b border-ink/10">
                     <Link
                       href={`/work/${row.lot.slug}`}
                       className="grid gap-1 py-4 md:grid-cols-[6rem_minmax(0,1fr)_auto] md:items-baseline"
                     >
-                      <span className="font-plex-mono text-[12px] text-ink/70">
+                      <span className="font-plex-mono text-[12px] text-quill/70">
                         {row.lot.lotNumber.replace(/^LOT\s/, "")}
                       </span>
                       <span>
-                        <span className="block font-newsreader text-[20px] text-iron">
+                        <span className="block font-newsreader text-[20px] text-ink">
                           {row.lot.client}
                         </span>
-                        <span className="mt-1 block font-newsreader text-[15px] text-ink">
+                        <span className="mt-1 block font-newsreader text-[15px] text-quill">
                           {row.capability}
                           {row.lead ? " · lead" : null}
                           {row.arrived ? ` · ${row.arrived.replace(/ on arrival$/i, "")}` : null}
                         </span>
                       </span>
-                      <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+                      <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
                         {row.status ?? "status not on file"}
                       </span>
                     </Link>
@@ -166,34 +171,34 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
               </ul>
             </div>
           ) : (
-            <p className="mt-16 max-w-[42ch] font-newsreader text-[17px] text-ink">
-              No engagement on the public record yet.
+            <p className="mt-16 max-w-[42ch] font-newsreader text-[17px] text-quill">
+              No published case yet.
             </p>
           )}
 
           {closed.length > 0 ? (
             <div className="mt-16">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
-                Signals closed
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
+                What they fixed
               </p>
-              <p className="mt-2 max-w-[46ch] font-newsreader text-[16px] text-ink">
-                Drawn from engagements on the record. This is what the
-                assignment engine reads.
+              <p className="mt-2 max-w-[46ch] font-newsreader text-[16px] text-quill">
+                Drawn from work we have published. This is what they have
+                already fixed.
               </p>
-              <p className="mt-4 font-newsreader text-[18px] leading-[1.5] text-iron">
+              <p className="mt-4 font-newsreader text-[18px] leading-[1.5] text-ink">
                 {closed.map((id) => id.replaceAll("-", " ")).join(" · ")}
               </p>
             </div>
           ) : null}
 
-          <div className="mt-16 border-t border-iron/12 pt-10">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+          <div className="mt-16 border-t border-ink/12 pt-10">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
               How they work
             </p>
-            <p className="mt-4 max-w-[20ch] font-newsreader type-display-m text-[32px] leading-[1.15] text-iron md:text-[40px]">
+            <p className="mt-4 max-w-[20ch] font-newsreader type-display-m text-[32px] leading-[1.15] text-ink md:text-[40px]">
               {specialist.philosophy}
             </p>
-            <p className="mt-6 max-w-[48ch] font-newsreader text-[18px] leading-[1.55] text-ink">
+            <p className="mt-6 max-w-[48ch] font-newsreader text-[18px] leading-[1.55] text-quill">
               {journey}
             </p>
             {attach.length > 0 ? (
@@ -201,7 +206,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
                 {attach.map((item) => (
                   <li
                     key={item}
-                    className="max-w-[48ch] font-newsreader text-[17px] leading-[1.5] text-ink"
+                    className="max-w-[48ch] font-newsreader text-[17px] leading-[1.5] text-quill"
                   >
                     {item}
                   </li>
@@ -211,16 +216,16 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
           </div>
 
           {specialist.id === "hamza" ? (
-            <section className="mt-14 border-t border-iron/12 pt-8">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+            <section className="mt-14 border-t border-ink/12 pt-8">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
                 Legal scope
               </p>
-              <p className="mt-2 max-w-[58ch] font-newsreader text-[18px] leading-[1.5] text-iron">
+              <p className="mt-2 max-w-[58ch] font-newsreader text-[18px] leading-[1.5] text-ink">
                 Hamza owns the legal register. He handles NDAs and IP
                 assignment, answers client legal questions, and instructs
                 external counsel.
               </p>
-              <p className="mt-3 font-plex-sans text-[14px] text-ink">
+              <p className="mt-3 font-plex-sans text-[14px] text-quill">
                 See{" "}
                 <Link href="/legal" className="underline underline-offset-4">
                   /legal
@@ -232,10 +237,10 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
 
           {history.length > 0 ? (
             <div className="mt-16">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
-                The engagements, as a trace
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
+                The work they have finished
               </p>
-              <div className="mt-4 bg-iron px-6 py-8">
+              <div className="mt-4 bg-ink px-6 py-8">
                 <Trace
                   spec={specFromLots(
                     specialist.id,
@@ -243,7 +248,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
                     `Engagements ${firstName} was assigned to`,
                   )}
                   size="full"
-                  surface="iron"
+                  surface="ink"
                   labelled
                 />
               </div>
@@ -252,18 +257,18 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
 
           {specialist.reviews && specialist.reviews.length > 0 ? (
             <div className="mt-16">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
                 Client quotes
               </p>
               <ul className="mt-4 flex flex-col gap-8">
                 {specialist.reviews.map((review) => {
                   const slack = review.source?.toLowerCase().startsWith("slack:");
                   return (
-                    <li key={review.quote} className="max-w-[60ch] border-t border-iron/10 pt-6">
-                      <blockquote className="font-newsreader text-[18px] leading-[1.5] text-ink">
+                    <li key={review.quote} className="max-w-[60ch] border-t border-ink/10 pt-6">
+                      <blockquote className="font-newsreader text-[18px] leading-[1.5] text-quill">
                         “{review.quote}”
                       </blockquote>
-                      <p className="mt-2 font-plex-mono text-[13px] text-ink/70">
+                      <p className="mt-2 font-plex-mono text-[13px] text-quill/70">
                         {slack ? review.source : `${review.name}, ${review.role}`}
                         {review.source && !slack ? ` · ${review.source}` : null}
                       </p>
@@ -274,16 +279,16 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
             </div>
           ) : null}
 
-          <div className="mt-20 border-t border-iron/12 pt-10">
-            <p className="mb-3 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+          <div className="mt-20 border-t border-ink/12 pt-10">
+            <p className="mb-3 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
               Direct line · {firstName}
             </p>
-            <p className="max-w-[42ch] font-newsreader text-[17px] text-ink">
+            <p className="max-w-[42ch] font-newsreader text-[17px] text-quill">
               The platform vouches. {firstName} is still reachable by name.
             </p>
             <Link
               href={`/direct/${specialist.id}`}
-              className="mt-5 inline-flex min-h-11 items-center rounded-full bg-signal px-5 py-2.5 font-plex-sans text-[14px] font-medium text-iron"
+              className="mt-5 inline-flex min-h-11 items-center rounded-full bg-gold px-5 py-2.5 font-plex-sans text-[14px] font-medium text-ink"
             >
               Write {firstName}
             </Link>

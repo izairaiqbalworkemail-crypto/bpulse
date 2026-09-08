@@ -17,7 +17,7 @@ export const pricingLadder = [
     name: "The Read",
     price: "Free",
     href: "/read",
-    body: "Describe what is stuck. We write back a real read in one business day. No call, no form beyond your email.",
+    body: "Five short questions. A written reply in one business day.",
   },
   {
     id: "session",
@@ -45,7 +45,7 @@ export const pricingLadder = [
     name: "The Close",
     price: closeRange,
     href: "/how-it-works",
-    body: "The full deployment. Fixed scope agreed in writing before any code.",
+    body: "The full project. Fixed scope agreed in writing before any code.",
   },
   {
     id: "standing",
@@ -65,6 +65,7 @@ export const pricingRule = {
 } as const;
 
 export const pricingRoute = [
+  { if: "Not sure yet. Start here.", start: "The Read", href: "/read" },
   { if: "An idea and no code", start: "The Session", href: "/session" },
   { if: "A build that will not deploy", start: "The Check", href: "/check" },
   {
@@ -78,7 +79,6 @@ export const pricingRoute = [
     start: "Standing",
     href: "/second-chair",
   },
-  { if: "No idea where you are", start: "The Read", href: "/read" },
 ] as const;
 
 export const pricingIncluded = {
@@ -90,7 +90,7 @@ export const pricingIncluded = {
     "Live progress in the portal, read from the repository",
     "IP assigned in writing",
     "Access revoked at handover, with a dated log",
-    "Handover training in every deployment",
+    "Handover training in every project"
   ],
 } as const;
 
@@ -144,7 +144,7 @@ export const pricingQuestions = [
 
 export const pricingStart = {
   heading: "The Read.",
-  line: "If you do not know which rung, start free.",
+  line: "If you do not know which, start free.",
   href: "/read",
   label: "Start",
 } as const;

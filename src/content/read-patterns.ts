@@ -11,7 +11,7 @@ export const LOT_PATTERNS = {
    */
   beforeProduction: ["deepidv", "wearmeout", "myusta"],
   /**
-   * Clearance — "AI pipeline functional but the compliance and deployment layers still open"
+   * Clearance — "AI pipeline functional but the compliance and production layers still open"
    * Sully — "unable to ship cleanly"
    * WearMeOut — "the actual last twenty percent, still open"
    */

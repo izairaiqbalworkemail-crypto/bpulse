@@ -10,8 +10,8 @@ export function PriceLadder() {
   return (
     <>
       <EpisodeHead
-        n="01"
-        kicker="THE LADDER"
+        n="02"
+        kicker="HOW WE WORK"
         id="ladder"
         tone="signal"
         heading="Published."
@@ -22,16 +22,16 @@ export function PriceLadder() {
             <ObjectPlate
               href={rung.href}
               tone="paper"
-              className="h-full bg-rag"
+              className="h-full bg-paper"
               onClick={() => track("pricing.rung.clicked", { rung: rung.id })}
             >
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/60">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/60">
                 {rung.name}
               </p>
               <p className="mt-3 font-newsreader type-display text-[36px] leading-none tabular-nums md:text-[44px]">
                 {rung.price}
               </p>
-              <p className="mt-4 max-w-[46ch] font-plex-sans text-[16px] leading-[1.5] text-iron/80">
+              <p className="mt-4 max-w-[46ch] font-plex-sans text-[16px] leading-[1.5] text-ink/80">
                 {rung.body}
               </p>
             </ObjectPlate>

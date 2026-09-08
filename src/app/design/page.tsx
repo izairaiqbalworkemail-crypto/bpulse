@@ -10,6 +10,9 @@ import { Lot } from "@/components/primitives/Lot";
 import { brand } from "@/config/brand";
 import { brandPosition, studio } from "@/content/studio";
 import { MotionReplay } from "./motion-replay";
+import { EightyBar } from "@/components/EightyBar";
+import { State } from "@/components/primitives/State";
+import { BUILD_STATES, STATE_WORDS } from "@/lib/brand/states";
 
 export const metadata: Metadata = buildMetadata({
   title: "Brand",
@@ -55,7 +58,7 @@ const typeSpecimen = [
     role: "Reading",
     desktop: "18",
     mobile: "16",
-    sample: "What arrived, what was wrong, what it took.",
+    sample: "What was stuck, what was wrong, what it took.",
   },
   { role: "Data / mono", desktop: "14", mobile: "13", sample: "0123456789" },
   {
@@ -68,7 +71,7 @@ const typeSpecimen = [
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mb-8 font-plex-sans text-data tracking-[0.08em] text-ink/70 uppercase">
+    <h2 className="mb-8 font-plex-sans text-data tracking-[0.08em] text-quill/70 uppercase">
       {children}
     </h2>
   );
@@ -85,39 +88,79 @@ export default function DesignPage() {
       />
     <div className="grid-container py-16 md:py-24">
 
-      <section>
+      <section className="border-b border-ink/10 pb-16">
+        <SectionLabel>Night desk</SectionLabel>
+        <p className="max-w-[52ch] font-newsreader text-[24px] leading-[1.3] text-ink">
+          The last twenty percent happens after the office goes home.
+        </p>
+        <p className="mt-4 max-w-[60ch] font-plex-sans text-[18px] leading-[1.75] text-quill">
+          Ember is the fire. Tape is the unfinished fifth. Comment is a note someone left on the file. After is shipped. Nothing else gets a colour.
+        </p>
+
+        <div className="mt-12 on-ink bg-void px-6 py-10 text-mist md:px-10">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-sub">
+            Dark ground
+          </p>
+          <div className="mt-6 flex flex-wrap gap-6">
+            {BUILD_STATES.map((state) => (
+              <State key={state} state={state} ground="dark" />
+            ))}
+          </div>
+          <div className="mt-10">
+            <EightyBar tone="dark" />
+          </div>
+        </div>
+
+        <div className="mt-6 border border-ink/10 bg-paper-card px-6 py-10 md:px-10">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill">
+            Paper ground
+          </p>
+          <div className="mt-6 flex flex-wrap gap-6 text-ink">
+            {BUILD_STATES.map((state) => (
+              <State
+                key={state}
+                state={state}
+                ground="paper"
+                word={STATE_WORDS[state]}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-16">
         <SectionLabel>Position</SectionLabel>
-        <p className="max-w-[62ch] font-newsreader text-[20px] leading-[1.45] text-ink">
+        <p className="max-w-[62ch] font-newsreader text-[20px] leading-[1.45] text-quill">
           {brandPosition.dek}
         </p>
-        <p className="mt-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
+        <p className="mt-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
           {studio.place} · {brand.legalName} · {brand.tagline}
         </p>
         <div className="mt-10 overflow-x-auto">
           <table className="w-full min-w-[36rem] border-collapse text-left">
             <thead>
-              <tr className="border-b border-iron/15">
-                <th className="py-3 pr-4 font-plex-mono text-caption text-ink/60">
+              <tr className="border-b border-ink/15">
+                <th className="py-3 pr-4 font-plex-mono text-caption text-quill/60">
                   Talent network
                 </th>
-                <th className="py-3 pr-4 font-plex-mono text-caption text-ink/60">
+                <th className="py-3 pr-4 font-plex-mono text-caption text-quill/60">
                   This studio
                 </th>
-                <th className="py-3 font-plex-mono text-caption text-ink/60">
+                <th className="py-3 font-plex-mono text-caption text-quill/60">
                   Why it matters
                 </th>
               </tr>
             </thead>
             <tbody>
               {brandPosition.rows.map((row) => (
-                <tr key={row.we} className="border-b border-iron/10">
-                  <td className="py-4 pr-4 font-newsreader text-[17px] text-ink/80">
+                <tr key={row.we} className="border-b border-ink/10">
+                  <td className="py-4 pr-4 font-newsreader text-[17px] text-quill/80">
                     {row.they}
                   </td>
-                  <td className="py-4 pr-4 font-newsreader text-[17px] text-iron">
+                  <td className="py-4 pr-4 font-newsreader text-[17px] text-ink">
                     {row.we}
                   </td>
-                  <td className="py-4 font-newsreader text-[16px] text-ink">
+                  <td className="py-4 font-newsreader text-[16px] text-quill">
                     {row.note}
                   </td>
                 </tr>
@@ -133,26 +176,44 @@ export default function DesignPage() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[
             {
-              name: "rag",
-              hex: "#F4EEE6",
-              note: "The ground — ~95% of surface area",
+              name: "void",
+              hex: "#0C100E",
+              note: "Night desk. After hours. Not navy. Not violet.",
             },
             {
-              name: "iron",
-              hex: "#161614",
-              note: "Graphite primary — type, fills, plates",
-            },
-            { name: "ink", hex: "#3F3E39", note: "Secondary text on paper" },
-            { name: "signal", hex: "#F2C230", note: "One fill per viewport" },
-            {
-              name: "sound",
-              hex: "#4A8F6F",
-              note: "Grade: holding — word required",
+              name: "page",
+              hex: "#E6EBE3",
+              note: "The file. Fluorescent shop light. Not cream.",
             },
             {
-              name: "unsound",
-              hex: "#B03A28",
-              note: "Grade: not holding — word required",
+              name: "ember",
+              hex: "#FF3A14",
+              note: "The fire. Findings. The filled stall. Never a CTA.",
+            },
+            {
+              name: "tape",
+              hex: "#D6FF2A",
+              note: "The last 20%. The only buy colour. Once per viewport.",
+            },
+            {
+              name: "comment",
+              hex: "#2F62FF",
+              note: "A note left on the file. Never a button fill.",
+            },
+            {
+              name: "after",
+              hex: "#6FAE78",
+              note: "Shipped. Tired phosphor. Never unproven.",
+            },
+            {
+              name: "carbon",
+              hex: "#121612",
+              note: "Type on the page.",
+            },
+            {
+              name: "mist",
+              hex: "#C9D0C8",
+              note: "Type on the night desk.",
             },
           ].map((c) => (
             <div
@@ -164,16 +225,16 @@ export default function DesignPage() {
                 style={{
                   backgroundColor: c.hex,
                   outline:
-                    c.name === "rag"
-                      ? "1px solid var(--color-iron)/20"
+                    c.name === "page"
+                      ? "1px solid var(--color-ink)/20"
                       : "none",
                 }}
               />
-              <p className="mt-4 font-plex-mono text-data text-iron">
+              <p className="mt-4 font-plex-mono text-data text-ink">
                 {c.name}
               </p>
-              <p className="font-plex-mono text-caption text-ink/60">{c.hex}</p>
-              <p className="mt-2 font-plex-sans text-sm text-ink/80">
+              <p className="font-plex-mono text-caption text-quill/60">{c.hex}</p>
+              <p className="mt-2 font-plex-sans text-sm text-quill/80">
                 {c.note}
               </p>
             </div>
@@ -187,34 +248,34 @@ export default function DesignPage() {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="border-b border-iron/15">
-                <th className="py-3 pr-4 font-plex-mono text-caption text-ink/60">
+              <tr className="border-b border-ink/15">
+                <th className="py-3 pr-4 font-plex-mono text-caption text-quill/60">
                   Role
                 </th>
-                <th className="py-3 pr-4 font-plex-mono text-caption text-ink/60">
+                <th className="py-3 pr-4 font-plex-mono text-caption text-quill/60">
                   Desktop
                 </th>
-                <th className="py-3 pr-4 font-plex-mono text-caption text-ink/60">
+                <th className="py-3 pr-4 font-plex-mono text-caption text-quill/60">
                   Mobile
                 </th>
-                <th className="py-3 font-plex-mono text-caption text-ink/60">
+                <th className="py-3 font-plex-mono text-caption text-quill/60">
                   Specimen
                 </th>
               </tr>
             </thead>
             <tbody>
               {typeSpecimen.map((t) => (
-                <tr key={t.role} className="border-b border-iron/10">
-                  <td className="py-4 pr-4 font-plex-sans text-sm text-ink/70">
+                <tr key={t.role} className="border-b border-ink/10">
+                  <td className="py-4 pr-4 font-plex-sans text-sm text-quill/70">
                     {t.role}
                   </td>
-                  <td className="py-4 pr-4 font-plex-mono text-data text-iron">
+                  <td className="py-4 pr-4 font-plex-mono text-data text-ink">
                     {t.desktop}
                   </td>
-                  <td className="py-4 pr-4 font-plex-mono text-data text-iron">
+                  <td className="py-4 pr-4 font-plex-mono text-data text-ink">
                     {t.mobile}
                   </td>
-                  <td className="py-4 font-newsreader text-reading text-iron">
+                  <td className="py-4 font-newsreader text-reading text-ink">
                     {t.sample}
                   </td>
                 </tr>
@@ -230,14 +291,14 @@ export default function DesignPage() {
         <div className="flex flex-col gap-2">
           {spacingScale.map((s) => (
             <div key={s.px} className="flex items-center gap-4">
-              <span className="w-12 shrink-0 font-plex-mono text-data text-ink/70">
+              <span className="w-12 shrink-0 font-plex-mono text-data text-quill/70">
                 {s.px}px
               </span>
               <div
-                className="h-4 bg-signal/60"
+                className="h-4 bg-gold/60"
                 style={{ width: `${s.px}px` }}
               />
-              <span className="font-plex-sans text-sm text-ink/60">
+              <span className="font-plex-sans text-sm text-quill/60">
                 {s.name}
               </span>
             </div>
@@ -249,19 +310,19 @@ export default function DesignPage() {
       <section className="mt-24">
         <SectionLabel>Mark</SectionLabel>
         <div className="flex flex-wrap items-end gap-8">
-          <div className="flex items-end gap-6 rounded-surface bg-iron p-8">
-            <Mark size={200} ground="iron" />
-            <Mark size={64} ground="iron" />
-            <Mark size={32} ground="iron" />
+          <div className="flex items-end gap-6 rounded-surface bg-ink p-8">
+            <Mark size={200} ground="ink" />
+            <Mark size={64} ground="ink" />
+            <Mark size={32} ground="ink" />
           </div>
-          <div className="flex items-end gap-6 card bg-rag p-8">
-            <Mark size={64} ground="rag" />
-            <Mark size={32} ground="rag" />
+          <div className="flex items-end gap-6 card bg-paper p-8">
+            <Mark size={64} ground="paper" />
+            <Mark size={32} ground="paper" />
             <Mark size={32} mono />
           </div>
         </div>
-        <p className="mt-6 font-plex-mono text-caption text-ink/70">
-          Cream face, gold extrusion. Iron face on rag. Mono is currentColor only.
+        <p className="mt-6 font-plex-mono text-caption text-quill/70">
+          Paper ring on ink. Ink ring on paper. Flat gold wedge. Mono is currentColor only.
         </p>
       </section>
 
@@ -277,7 +338,7 @@ export default function DesignPage() {
               height={630}
               className="h-auto w-full rounded-[16px]"
             />
-            <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+            <figcaption className="mt-3 font-plex-mono text-caption text-quill/70">
               social/bpulse-og · 1200 × 630
             </figcaption>
           </figure>
@@ -290,7 +351,7 @@ export default function DesignPage() {
               height={460}
               className="h-auto w-full rounded-[16px]"
             />
-            <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+            <figcaption className="mt-3 font-plex-mono text-caption text-quill/70">
               lockup-dark · 1600 × 460
             </figcaption>
           </figure>
@@ -304,7 +365,7 @@ export default function DesignPage() {
                 height={128}
                 className="h-[128px] w-[128px]"
               />
-              <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+              <figcaption className="mt-3 font-plex-mono text-caption text-quill/70">
                 icon
               </figcaption>
             </figure>
@@ -317,7 +378,7 @@ export default function DesignPage() {
                 height={64}
                 className="h-[64px] w-[64px]"
               />
-              <figcaption className="mt-3 font-plex-mono text-caption text-ink/70">
+              <figcaption className="mt-3 font-plex-mono text-caption text-quill/70">
                 favicon · flat
               </figcaption>
             </figure>
@@ -328,7 +389,7 @@ export default function DesignPage() {
       {/* Primitives — DataLine */}
       <section className="mt-24">
         <SectionLabel>DataLine</SectionLabel>
-        <div className="max-w-[640px] card p-8">
+        <div className="max-w-[640px] border-t border-ink/10 pt-8">
           <dl className="flex flex-col gap-4">
             <DataLine label="Client" value="Sully.ai" />
             <DataLine label="Scope" value="$42,000" />
@@ -341,11 +402,11 @@ export default function DesignPage() {
       {/* Primitives — Grade */}
       <section className="mt-24">
         <SectionLabel>Grade</SectionLabel>
-        <div className="flex flex-col gap-6 card p-8 md:flex-row">
+        <div className="flex flex-col gap-6 border-t border-ink/10 pt-8 md:flex-row">
           <Grade grade="sound" label="Holding" date="12 Mar 2026" />
           <Grade grade="unsound" label="Not holding" date="12 Mar 2026" />
         </div>
-        <p className="mt-6 font-plex-mono text-caption text-ink/60">
+        <p className="mt-6 font-plex-mono text-caption text-quill/60">
           Colour never carries meaning alone — always paired with the word and
           the date
         </p>
@@ -354,7 +415,7 @@ export default function DesignPage() {
       {/* Primitives — Credit */}
       <section className="mt-24">
         <SectionLabel>Credit</SectionLabel>
-        <div className="flex flex-col gap-8 card p-8 md:flex-row">
+        <div className="flex flex-col gap-8 border-t border-ink/10 pt-8 md:flex-row">
           <Credit
             name="Aneeb Iqbal"
             capability="Delivery"
@@ -368,7 +429,7 @@ export default function DesignPage() {
             line="Senior developer, forward-deployed."
           />
         </div>
-        <p className="mt-6 font-plex-mono text-caption text-ink/60">
+        <p className="mt-6 font-plex-mono text-caption text-quill/60">
           A missing portrait renders as name and role — never a grey box
         </p>
       </section>
@@ -376,10 +437,10 @@ export default function DesignPage() {
       {/* Primitives — Notice */}
       <section className="mt-24">
         <SectionLabel>Notice</SectionLabel>
-        <div className="max-w-[720px] card p-8">
+        <div className="max-w-[720px] space-y-10">
           <Notice
             question="Will the check see everything?"
-            answer="No. A five-day assessment finds the blocking defects and the ones it can see clearly. It does not promise to surface every latent issue before any work begins — that would be a false claim."
+            answer="No. A five-day assessment finds the blocking defects and the ones it can see clearly. It does not promise to surface every latent issue before any work begins. That would be a false claim."
           />
           <Notice
             question="What happens if I change scope?"
@@ -393,9 +454,9 @@ export default function DesignPage() {
         <SectionLabel>Lot</SectionLabel>
         <div className="card p-8">
           <Lot
-            lotNumber="LOT 034"
+            lotNumber="034"
             title="A hospital platform that stopped at 80%"
-            condition="What arrived: role-based access under HIPAA, real-time clinical dashboards, and automated document processing. What was wrong: the audit trail was not wired to the deployment, and the model fine-tune was not reproducible."
+            condition="What was stuck: role-based access under HIPAA, real-time clinical dashboards, and automated document processing. What was wrong: the audit trail was not wired to production, and the model fine-tune was not reproducible."
             dataLines={[
               { label: "Client", value: "Sully.ai" },
               { label: "Scope", value: "$42,000" },
@@ -404,7 +465,7 @@ export default function DesignPage() {
             conditionGrade={{
               state: "stalled",
               grade: "sound",
-              label: "Stalled on arrival",
+              label: "Stalled",
               date: "12 Mar 2026",
             }}
             limit="Limit of liability: assessment within agreed scope only."
@@ -423,7 +484,7 @@ export default function DesignPage() {
       {/* Motion — server-rendered label, client replay */}
       <section className="mt-24">
         <SectionLabel>Motion</SectionLabel>
-        <div className="max-w-[720px] card p-8">
+        <div className="max-w-[720px] border-t border-ink/10 pt-8">
           <MotionReplay />
         </div>
       </section>

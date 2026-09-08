@@ -23,7 +23,7 @@ export function AboutNot() {
       </Stagger>
       {last ? (
         <div className="mt-5">
-          <ObjectPlate tone="iron">
+          <ObjectPlate tone="ink">
             <p className="max-w-[28ch] font-newsreader text-[26px] leading-[1.25] md:text-[32px]">
               {last}
             </p>

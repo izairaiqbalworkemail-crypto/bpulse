@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/PageHero";
 import { Episode, EpisodeHead } from "@/components/episode/Episode";
 import { StartPlate } from "@/components/objects/StartPlate";
 import { PriceLadder } from "@/components/pricing/PriceLadder";
@@ -10,6 +11,7 @@ import { PriceExcluded } from "@/components/pricing/PriceExcluded";
 import { PricePay } from "@/components/pricing/PricePay";
 import { PriceQuestions } from "@/components/pricing/PriceQuestions";
 import { TrackOnMount } from "@/components/analytics/TrackOnMount";
+import { termsCopy } from "@/content/home";
 import { pricingStart } from "@/content/pricing";
 import { pageFrame } from "@/content/platform";
 
@@ -23,16 +25,22 @@ export default function PricingPage() {
   return (
     <>
       <TrackOnMount event="pricing.viewed" props={{ surface: "pricing" }} />
+      <PageHero
+        kicker="Pricing"
+        title={termsCopy.heading}
+        dek={pageFrame.pricing}
+      />
+
+      <Episode labelledBy="which" tone="cocoa">
+        <PriceRoute />
+      </Episode>
+
       <Episode labelledBy="ladder" tone="signal" size="tall">
         <PriceLadder />
       </Episode>
 
       <Episode labelledBy="rule" tone="paper" size="short">
         <PriceRule />
-      </Episode>
-
-      <Episode labelledBy="which" tone="cocoa">
-        <PriceRoute />
       </Episode>
 
       <Episode labelledBy="included" tone="paper">
