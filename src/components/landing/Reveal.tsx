@@ -58,10 +58,10 @@ export function Reveal({ children, delay = 0, className }: Readonly<MotionBox>) 
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0 }}
-      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
+      initial={reduce ? false : { opacity: 0, y: 16 }}
+      animate={inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
       transition={
-        reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
+        reduce ? { duration: 0 } : { duration: 0.55, ease: landEase, delay }
       }
     >
       {children}
@@ -117,10 +117,11 @@ export function Item({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0 },
+        hidden: { opacity: 0, y: 18 },
         show: {
           opacity: 1,
-          transition: { duration: 0.3, ease: landEase },
+          y: 0,
+          transition: { duration: 0.55, ease: landEase },
         },
       }}
     >
@@ -139,10 +140,10 @@ export function Rise({ children, delay = 0, className }: Readonly<MotionBox>) {
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0 }}
-      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
+      initial={reduce ? false : { opacity: 0, y: 14 }}
+      animate={inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
       transition={
-        reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
+        reduce ? { duration: 0 } : { duration: 0.55, ease: landEase, delay }
       }
     >
       {children}

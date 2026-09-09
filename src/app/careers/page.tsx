@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { GateCard } from "@/components/GateCard";
 import { PageHero } from "@/components/PageHero";
 import { JobsBoard } from "@/components/careers/JobsBoard";
+import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { pageFrame } from "@/content/platform";
 import { crewCommitments, crewGates } from "@/content/process";
 import { listRolesData } from "@/lib/careers/repo";
@@ -19,7 +20,7 @@ export default async function CareersPage() {
   const roles = await listRolesData();
 
   return (
-    <section className="w-full bg-paper pb-24 md:pb-32">
+    <>
       <TrackOnMount event="careers.started" props={{ surface: "careers" }} />
       <PageHero
         kicker="Applying to the standard"
@@ -28,89 +29,85 @@ export default async function CareersPage() {
         hideAction
       />
 
-      <div className="grid-container pt-12">
-        <section className="border-b border-ink/12 pb-12">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70">
-            What you get
-          </p>
-          <p className="mt-6 max-w-[16ch] font-newsreader text-[clamp(2rem,5vw,3.25rem)] leading-[1.1] tracking-[-0.015em] text-ink">
-            Published bands. A paid sample.
-          </p>
-          <p className="mt-6 max-w-[42ch] font-plex-sans text-[17px] leading-[1.5] text-quill">
-            No multiple-choice pass/fail gate. Gate 2 is paid whether or not you
-            join.
-          </p>
-          <ul className="mt-10 border-t border-ink/12">
-            <li className="border-b border-ink/10 py-6">
-              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
-                Pay
-              </p>
-              <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
-                Published pay bands on the role cards below. No candidate fee.
-              </p>
-            </li>
-            <li className="border-b border-ink/10 py-6">
-              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
-                Gate 2
-              </p>
-              <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
-                A paid work sample. You keep the money either way.
-              </p>
-            </li>
-            <li className="border-b border-ink/10 py-6">
-              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
-                After Gate 4
-              </p>
-              <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
-                A public assignment record. Example:{" "}
-                <Link
-                  href="/team/hamza"
-                  className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
-                >
-                  /team/hamza
-                </Link>
-                .
-              </p>
-            </li>
-          </ul>
-          <p className="mt-10">
-            <a
-              href="#intake"
-              className="btn btn-gold letter-ask min-h-12 px-8 text-[15px]"
-            >
-              Start my application
-            </a>
-          </p>
-        </section>
+      <Episode tone="paper">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70">
+          What you get
+        </p>
+        <p className="mt-6 max-w-[16ch] font-newsreader text-[clamp(2rem,5vw,3.25rem)] leading-[1.1] tracking-[-0.015em] text-ink">
+          Published bands. A paid sample.
+        </p>
+        <p className="mt-6 max-w-[42ch] font-plex-sans text-[17px] leading-[1.5] text-quill">
+          No multiple-choice pass/fail gate. Gate 2 is paid whether or not you
+          join.
+        </p>
+        <div className="mt-10">
+          <LetterLedger
+            lines={[
+              {
+                id: "pay",
+                kicker: "Pay",
+                title: "Published pay bands.",
+                body: "On the role cards below. No candidate fee.",
+              },
+              {
+                id: "gate-2",
+                kicker: "Gate 2",
+                title: "A paid work sample.",
+                body: "You keep the money either way.",
+              },
+              {
+                id: "after-gate-4",
+                kicker: "After Gate 4",
+                title: "A public assignment record.",
+                body: "The name on the page is the name on the work.",
+                href: "/team/hamza",
+                ask: "Open an example",
+              },
+            ]}
+          />
+        </div>
+        <p className="mt-10">
+          <a
+            href="#intake"
+            className="btn btn-gold letter-ask min-h-12 px-8 text-[15px]"
+          >
+            Start my application
+          </a>
+        </p>
+      </Episode>
 
-        <section id="start" className="mt-12 scroll-mt-28">
-          <div id="intake">
-            <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">Admission plan</p>
-            <JobsBoard roles={roles} />
-          </div>
-        </section>
-
-        <section className="mt-14">
-          {crewGates.map((gate) => (
-            <GateCard key={gate.n} {...gate} />
-          ))}
-        </section>
-
-        <section className="mt-12 border-t border-ink/10 pt-8">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">Three commitments</p>
-          <ul className="mt-3 space-y-2">
-            {crewCommitments.map((item) => (
-              <li key={item} className="font-newsreader text-[17px] leading-[1.45] text-quill">{item}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="mt-14">
-          <p className="font-newsreader text-[17px] text-quill">
-            On submit: you get a private status link and your Gate 0 brief within one business day.
+      <Episode labelledBy="start" tone="paper" size="short">
+        <div id="start" className="scroll-mt-28">
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
+            Admission plan
           </p>
-        </section>
-      </div>
-    </section>
+          <JobsBoard roles={roles} />
+        </div>
+      </Episode>
+
+      <Episode tone="paper">
+        {crewGates.map((gate) => (
+          <GateCard key={gate.n} {...gate} />
+        ))}
+
+        <p className="mt-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
+          Three commitments
+        </p>
+        <div className="mt-6">
+          <LetterLedger
+            lines={crewCommitments.map((item, index) => ({
+              id: `commitment-${index}`,
+              kicker: String(index + 1).padStart(2, "0"),
+              title: item,
+            }))}
+          />
+        </div>
+
+        <p className="mt-12 font-newsreader text-[17px] text-quill">
+          On submit: you get a private status link and your Gate 0 brief within
+          one business day.
+        </p>
+      </Episode>
+    </>
   );
 }

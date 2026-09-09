@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { StageRail } from "@/components/StageRail";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { getDemoOverview } from "@/content/demo";
 import { pageFrame } from "@/content/platform";
 import type { RailStage } from "@/content/types";
@@ -41,20 +42,20 @@ export default function DemoOverviewPage() {
         />
       </div>
 
-      <ol className="mt-10 grid gap-3 md:grid-cols-3">
-        {overview.stages.map((stage) => {
-          const current = "current" in stage && Boolean(stage.current);
-          const status = current ? "Current" : stage.done ? "Done" : "Ahead";
-          return (
-            <li key={stage.id} className="border-l-2 border-ink/15 pl-5">
-              <p className="font-plex-mono text-[13px] text-quill/60">{status}</p>
-              <p className="mt-1 font-newsreader text-lot-title text-ink">
-                {stage.label}
-              </p>
-            </li>
-          );
-        })}
-      </ol>
+      <div className="mt-10">
+        <LetterLedger
+          lines={overview.stages.map((stage) => {
+            const current = "current" in stage && Boolean(stage.current);
+            const status = current ? "Current" : stage.done ? "Done" : "Ahead";
+            return {
+              id: stage.id,
+              kicker: status,
+              title: stage.label,
+              here: current,
+            };
+          })}
+        />
+      </div>
 
       <dl className="mt-12 grid gap-6 md:grid-cols-3">
         <div>

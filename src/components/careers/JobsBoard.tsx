@@ -80,7 +80,7 @@ export function JobsBoard({ roles }: Readonly<Props>) {
             const active = role.id === roleId;
             const isOpen = role.status === "open";
             return (
-              <li key={role.id} className="card p-6">
+              <li key={role.id} className={`letter-object${active ? " is-here" : ""}`}>
                 <p className="font-newsreader text-[21px] text-ink">{role.title}</p>
                 <p className="mt-1 font-newsreader text-[16px] text-quill">
                   {role.band} · {role.location} · {role.summary}

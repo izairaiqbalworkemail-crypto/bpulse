@@ -14,7 +14,7 @@ export const stages = [
   { id: "scope", label: "Scope locked", done: true },
   { id: "build", label: "Build", done: false, current: true },
   { id: "handover", label: "Handover", done: false },
-  { id: "standing", label: "Standing", done: false },
+  { id: "standing", label: "Second Chair", done: false },
 ] as const;
 
 export const demoClock = {

@@ -17,6 +17,8 @@ import { PageClose } from "@/components/PageClose";
 import { Atmosphere } from "@/components/landing/Atmosphere";
 import { Reveal } from "@/components/landing/Reveal";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { verifiedFigures } from "@/lib/lot-trace";
 import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 
@@ -71,10 +73,10 @@ export default async function LotPage({ params }: Readonly<PageProps>) {
         dek={pageFrame.workSlug}
       />
 
-      <section className="relative w-full overflow-hidden bg-paper">
+      <Episode tone="paper">
         <TrackOnMount event="lot.opened" props={{ slug: lot.slug }} />
         <Atmosphere kind="desk" opacity={0.12} />
-        <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-14">
+        <div className="relative">
           <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
             {caseNumber(lot)}
             {disclaimer ? ` · ${disclaimer}` : null}
@@ -141,18 +143,15 @@ export default async function LotPage({ params }: Readonly<PageProps>) {
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
               Findings
             </p>
-            <ul className="mt-4 flex flex-col gap-3">
-              {findings.map((finding) => (
-                <li
-                  key={finding}
-                  className="border-t border-ink/10 py-5 first:border-t-0 first:pt-0"
-                >
-                  <p className="max-w-[66ch] font-newsreader text-[18px] leading-[1.45] text-ink">
-                    {finding}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-4">
+              <LetterLedger
+                lines={findings.map((finding, index) => ({
+                  id: `${lot.slug}-finding-${index}`,
+                  kicker: String(index + 1).padStart(2, "0"),
+                  title: finding,
+                }))}
+              />
+            </div>
           </div>
 
           <div className="mt-14">
@@ -200,16 +199,14 @@ export default async function LotPage({ params }: Readonly<PageProps>) {
               <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
                 Limits
               </p>
-              <ul className="mt-4 flex flex-col gap-3">
-                {lot.limits.map((limit) => (
-                  <li
-                    key={limit}
-                    className="font-newsreader text-[18px] leading-[1.55] text-quill"
-                  >
-                    {limit}
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-4">
+                <LetterLedger
+                  lines={lot.limits.map((limit, index) => ({
+                    id: `${lot.slug}-limit-${index}`,
+                    title: limit,
+                  }))}
+                />
+              </div>
             </div>
           ) : null}
 
@@ -235,7 +232,7 @@ export default async function LotPage({ params }: Readonly<PageProps>) {
 
           <PageClose line="This engagement entered unfinished. Yours can too." />
         </div>
-      </section>
+      </Episode>
     </>
   );
 }

@@ -821,6 +821,118 @@ p {
   border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
 }
 
+.letter-ledger {
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+}
+
+.letter-ledger.is-ink {
+  border-top-color: color-mix(in srgb, var(--color-paper) 14%, transparent);
+}
+
+.letter-ledger-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+}
+
+.letter-ledger.is-ink .letter-ledger-row {
+  border-bottom-color: color-mix(in srgb, var(--color-paper) 12%, transparent);
+}
+
+.letter-ledger-row.is-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.letter-ledger-row.is-link:hover .letter-ledger-title {
+  text-decoration: underline;
+  text-underline-offset: 0.28em;
+}
+
+.letter-ledger-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+}
+
+.letter-ledger-kicker,
+.letter-ledger-meta,
+.letter-ledger-ask {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-quill);
+}
+
+.letter-ledger.is-ink .letter-ledger-kicker,
+.letter-ledger.is-ink .letter-ledger-meta,
+.letter-ledger.is-ink .letter-ledger-ask {
+  color: color-mix(in srgb, var(--color-paper) 62%, transparent);
+}
+
+.letter-ledger-row.is-here {
+  padding-inline: 0.15rem;
+}
+
+.letter-ledger-row.is-here .letter-ledger-title {
+  font-weight: 560;
+}
+
+.letter-ledger-title {
+  max-width: 42ch;
+  font-family: var(--font-newsreader), "Source Serif 4", Georgia, serif;
+  font-size: 1.375rem;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.letter-ledger.is-ink .letter-ledger-title {
+  color: var(--color-paper);
+}
+
+.letter-ledger-body {
+  max-width: 52ch;
+  font-family: var(--font-newsreader), "Source Serif 4", Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-quill);
+}
+
+.letter-ledger.is-ink .letter-ledger-body {
+  color: color-mix(in srgb, var(--color-paper) 72%, transparent);
+}
+
+.letter-object-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.letter-object {
+  height: 100%;
+  padding: 1.6rem 1.45rem;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+  background: var(--color-paper);
+  transition: border-color 180ms ease;
+}
+
+.letter-object-link:hover .letter-object,
+.letter-object.is-here {
+  border-color: color-mix(in srgb, var(--color-ink) 28%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-object {
+    transition: none;
+  }
+}
+
 /* Shared room language — every episode card. */
 .room-card {
   border-radius: var(--radius-card);

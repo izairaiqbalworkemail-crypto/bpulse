@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { StageRail } from "@/components/StageRail";
 import { AnimatedStages } from "@/components/AnimatedStages";
 import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { closeStages } from "@/content/process";
 import { ladder, money, noDiscount } from "@/content/ladder";
 import { offer } from "@/content/offer";
@@ -43,35 +44,37 @@ export default function HowItWorksPage() {
           The Close is the full project. The offers before it are how you get
           there without negotiating.
         </p>
-        <ul className="mt-12 border-t border-ink/12">
-          <li className="border-b border-ink/10 py-6">
-            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
-              The Read
-            </p>
-            <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
-              Free. Written. One business day. Nothing on it asks for a meeting.
-            </p>
-          </li>
-          <li className="border-b border-ink/10 py-6">
-            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
-              The Session
-            </p>
-            <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
-              {money(offer.session.price)}. Ninety minutes. Credited against
-              anything you buy in 30 days.
-            </p>
-          </li>
-          <li className="border-b border-ink/10 py-6">
-            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
-              The Check
-            </p>
-            <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
-              {money(offer.check.price)}. {offer.check.duration}. Credited in
-              full against a build in 30 days.
-            </p>
-          </li>
-        </ul>
-        <p className="mt-10">
+        <div className="mt-12">
+          <LetterLedger
+            lines={[
+              {
+                id: "read",
+                kicker: "The Read",
+                title: "Free. Written. One business day.",
+                body: "Nothing on it asks for a meeting.",
+                href: "/read",
+                ask: "Open",
+              },
+              {
+                id: "session",
+                kicker: "The Session",
+                title: `${money(offer.session.price)}. Ninety minutes.`,
+                body: "Credited against anything you buy in 30 days.",
+                href: "/session",
+                ask: "Open",
+              },
+              {
+                id: "check",
+                kicker: "The Check",
+                title: `${money(offer.check.price)}. ${offer.check.duration}.`,
+                body: "Credited in full against a build in 30 days.",
+                href: "/check",
+                ask: "Open",
+              },
+            ]}
+          />
+        </div>
+        <p className="mt-12">
           <Link
             href="/read"
             className="btn btn-ink letter-ask min-h-12 px-8 text-[15px]"
@@ -114,23 +117,18 @@ export default function HowItWorksPage() {
         <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.18] text-paper">
           A promise is a sentence. A system is a link.
         </p>
-        <ul className="mt-12">
-          {guarantees.map((row) => (
-            <li key={row.claim} className="border-t border-paper/12 py-6">
-              <Link href={row.href} className="block">
-                <span className="block font-newsreader text-[22px] text-paper">
-                  {row.claim}
-                </span>
-                <span className="mt-1 block font-newsreader text-[16px] text-paper/70">
-                  {row.proof}
-                </span>
-                <span className="mt-3 block font-plex-sans text-[14px] text-paper/80 underline decoration-paper/25 underline-offset-4 hover:decoration-paper">
-                  Where this is provable
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-12">
+          <LetterLedger
+            tone="ink"
+            lines={guarantees.map((row) => ({
+              id: row.href,
+              title: row.claim,
+              body: row.proof,
+              href: row.href,
+              ask: "Where this is provable",
+            }))}
+          />
+        </div>
         <p className="mt-16 font-newsreader text-[20px] text-paper">
           <Link
             href="/read"

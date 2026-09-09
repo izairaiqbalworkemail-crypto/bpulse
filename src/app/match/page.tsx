@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { MatchDesk } from "@/components/match/MatchDesk";
 import { getCatalogue } from "@/content/catalogue";
 import { pageFrame } from "@/content/platform";
@@ -61,8 +63,7 @@ export default function MatchPage() {
         dek={pageFrame.match}
       />
 
-      <section className="bg-paper text-ink">
-        <div className="stage-container py-16 md:py-24">
+      <Episode tone="paper">
           <p className="max-w-[52ch] font-newsreader text-[20px] leading-[1.4] text-ink">
             Other firms match on skills people typed about themselves. We assign
             from work already shipped.
@@ -76,21 +77,16 @@ export default function MatchPage() {
             <MatchDesk />
           </div>
 
-          <ol className="mt-20 border-t border-ink/12 pt-10">
-            {PASSES.map((step) => (
-              <li key={step.number} className="border-b border-ink/10 py-6">
-                <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
-                  {step.number} · {step.label}
-                </p>
-                <p className="mt-2 font-newsreader text-[22px] leading-[1.25] text-ink">
-                  {step.title}
-                </p>
-                <p className="mt-2 max-w-[52ch] font-plex-sans text-[16px] leading-[1.5] text-quill">
-                  {step.body}
-                </p>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-20">
+            <LetterLedger
+              lines={PASSES.map((step) => ({
+                id: step.number,
+                kicker: `${step.number} · ${step.label}`,
+                title: step.title,
+                body: step.body,
+              }))}
+            />
+          </div>
 
           <div className="mt-16 border-t border-ink/12 pt-10">
             <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
@@ -150,8 +146,7 @@ export default function MatchPage() {
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+      </Episode>
     </>
   );
 }

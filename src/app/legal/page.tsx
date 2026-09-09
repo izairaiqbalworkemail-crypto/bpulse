@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
 import { Reveal } from "@/components/landing/Reveal";
 import { legalTitle } from "@/components/legal/legal-ui";
 import {
@@ -30,7 +31,7 @@ export default function LegalIndexPage() {
   const byFamily = documentsByFamily();
 
   return (
-    <section className="w-full bg-paper text-ink">
+    <>
       <PageHero
         kicker="Legal & compliance"
         title="The register."
@@ -48,7 +49,7 @@ export default function LegalIndexPage() {
         }
       />
 
-      <div className="stage-container py-16 md:py-24">
+      <Episode tone="paper">
         {LEGAL_PUBLISH_STATUS === "draft" ? (
           <section className="border border-quill/20 bg-paper px-6 py-5">
             <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill">{DRAFT_NOTICE}</p>
@@ -126,7 +127,7 @@ export default function LegalIndexPage() {
                 href="/demo/documents"
                 className="font-plex-sans text-[15px] underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
               >
-                See them in the sample →
+                See them in the sample
               </Link>
             </p>
           </Reveal>
@@ -152,7 +153,7 @@ export default function LegalIndexPage() {
             </p>
           </Reveal>
         </section>
-      </div>
-    </section>
+      </Episode>
+    </>
   );
 }

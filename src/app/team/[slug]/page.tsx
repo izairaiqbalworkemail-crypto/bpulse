@@ -10,6 +10,8 @@ import { pageFrame } from "@/content/platform";
 import { Trace } from "@/components/trace/Trace";
 import { Atmosphere } from "@/components/landing/Atmosphere";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { brand } from "@/config/brand";
 import {
   admission,
@@ -19,6 +21,7 @@ import {
   signalsClosed,
 } from "@/lib/assignment";
 import { specFromLots } from "@/lib/lot-trace";
+import { caseNumber } from "@/content/lots";
 import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 
 type PageProps = {
@@ -84,10 +87,10 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
         actionLabel="Get my free read"
       />
 
-      <section className="relative w-full overflow-hidden bg-paper">
+      <Episode tone="paper">
         <TrackOnMount event="crew.opened" props={{ slug: specialist.id }} />
         <Atmosphere kind="paper" opacity={0.16} />
-        <div className="relative grid-container pb-24 pt-10 md:pb-32 md:pt-16">
+        <div className="relative">
           <div className="grid items-start gap-12 md:grid-cols-[14rem_minmax(0,1fr)]">
             <div className="overflow-hidden bg-ink">
               {absent ? (
@@ -123,7 +126,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
                   href={line.href}
                   className="font-plex-sans text-[14px] text-ink underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
                 >
-                  The standard →
+                  The standard
                 </Link>
               </p>
               <p className="mt-8 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
@@ -143,33 +146,23 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
               <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
                 Assignment history
               </p>
-              <ul className="mt-6 border-t border-ink/12">
-                {history.map((row) => (
-                  <li key={row.lot.slug} className="border-b border-ink/10">
-                    <Link
-                      href={`/work/${row.lot.slug}`}
-                      className="grid gap-1 py-4 md:grid-cols-[6rem_minmax(0,1fr)_auto] md:items-baseline"
-                    >
-                      <span className="font-plex-mono text-[12px] text-quill/70">
-                        {row.lot.lotNumber.replace(/^LOT\s/, "")}
-                      </span>
-                      <span>
-                        <span className="block font-newsreader text-[20px] text-ink">
-                          {row.lot.client}
-                        </span>
-                        <span className="mt-1 block font-newsreader text-[15px] text-quill">
-                          {row.capability}
-                          {row.lead ? " · lead" : null}
-                          {row.arrived ? ` · ${row.arrived.replace(/ on arrival$/i, "")}` : null}
-                        </span>
-                      </span>
-                      <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
-                        {row.status ?? "status not on file"}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-6">
+                <LetterLedger
+                  lines={history.map((row) => ({
+                    id: row.lot.slug,
+                    kicker: caseNumber(row.lot),
+                    title: row.lot.client,
+                    body: `${row.capability}${row.lead ? " · lead" : ""}${
+                      row.arrived
+                        ? ` · ${row.arrived.replace(/ on arrival$/i, "")}`
+                        : ""
+                    }`,
+                    meta: row.status ?? "status not on file",
+                    href: `/work/${row.lot.slug}`,
+                    ask: "Open",
+                  }))}
+                />
+              </div>
             </div>
           ) : (
             <p className="mt-16 max-w-[42ch] font-newsreader text-[17px] text-quill">
@@ -186,16 +179,14 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
                 Drawn from work we have published. This is what they have
                 already fixed.
               </p>
-              <ul className="mt-4 flex flex-col gap-3">
-                {closed.map((id) => (
-                  <li
-                    key={id}
-                    className="max-w-[48ch] font-newsreader text-[18px] leading-[1.5] text-ink"
-                  >
-                    {getSignal(id).says}
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-4">
+                <LetterLedger
+                  lines={closed.map((id) => ({
+                    id,
+                    title: getSignal(id).says,
+                  }))}
+                />
+              </div>
             </div>
           ) : null}
 
@@ -302,7 +293,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
             </Link>
           </div>
         </div>
-      </section>
+      </Episode>
     </>
   );
 }

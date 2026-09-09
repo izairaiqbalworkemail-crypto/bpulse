@@ -24,7 +24,8 @@ export default function Error({
         actionHref="/read"
         actionLabel="Get my free read"
       />
-      <div className="grid-container flex flex-wrap gap-4 py-16">
+      <div className="ribbon relative bg-paper text-ink">
+        <div className="stage-container flex flex-wrap gap-4 py-20 md:py-24">
         <button
           type="button"
           onClick={reset}
@@ -38,6 +39,7 @@ export default function Error({
         >
           Back home
         </Link>
+        </div>
       </div>
     </>
   );

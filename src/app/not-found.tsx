@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
 
 export default function NotFound() {
   return (
@@ -11,14 +12,14 @@ export default function NotFound() {
         actionHref="/read"
         actionLabel="Get my free read"
       />
-      <div className="grid-container py-16">
+      <Episode tone="paper" size="short">
         <Link
           href="/"
           className="font-plex-sans text-sm text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
         >
           Back home
         </Link>
-      </div>
+      </Episode>
     </>
   );
 }

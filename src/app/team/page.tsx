@@ -8,6 +8,7 @@ import { specialists } from "@/content/specialists";
 import { crewCapability, crewCapabilityLine } from "@/content/crew-lines";
 import { pageFrame } from "@/content/platform";
 import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { Reveal } from "@/components/landing/Reveal";
 import {
   admission,
@@ -50,32 +51,22 @@ export default function TeamPage() {
                   <p className="mt-2 font-newsreader text-[16px] text-quill">
                     {crewCapabilityLine[group]}
                   </p>
-                  <ul className="mt-6 flex flex-col">
-                    {people.map((person) => {
-                      const line = admission(person);
-                      const status = assignmentStatus(person);
-                      return (
-                        <li key={person.id}>
-                          <Link
-                            href={`/team/${person.id}`}
-                            className="grid gap-1 border-b border-ink/10 py-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline"
-                          >
-                            <span>
-                              <span className="block font-plex-sans text-[16px] text-ink underline decoration-ink/30 underline-offset-4">
-                                {person.name}
-                              </span>
-                              <span className="mt-1 block font-newsreader text-[15px] text-quill">
-                                {line.standing}
-                              </span>
-                            </span>
-                            <span className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
-                              {assignmentStatusLabel(status)}
-                            </span>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <div className="mt-6">
+                    <LetterLedger
+                      lines={people.map((person) => {
+                        const line = admission(person);
+                        const status = assignmentStatus(person);
+                        return {
+                          id: person.id,
+                          title: person.name,
+                          body: line.standing,
+                          meta: assignmentStatusLabel(status),
+                          href: `/team/${person.id}`,
+                          ask: "Open",
+                        };
+                      })}
+                    />
+                  </div>
                 </div>
               </Reveal>
             );

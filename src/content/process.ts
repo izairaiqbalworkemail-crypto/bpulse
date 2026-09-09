@@ -77,13 +77,13 @@ export const closeStages = [
   },
   {
     id: "standing",
-    label: "Standing",
+    label: "Second Chair",
     demoHref: "/demo",
     happens:
-      `Optional post-launch support, priced from ${money(ladderPrices.standingMin)} a month. You can run it without us. Standing is if you want us, not because you have to.`,
+      `Optional post-launch support, priced from ${money(ladderPrices.standingMin)} a month. You can run it without us. Second Chair is if you want us, not because you have to.`,
     receive: "A written after-launch agreement, or nothing. Both are fine.",
-    sign: "Only if you take Standing.",
-    see: "The stage tracker moves to Standing. The revocation log stays.",
+    sign: "Only if you take Second Chair.",
+    see: "The stage tracker moves to Second Chair. The revocation log stays.",
   },
 ] as const;
 

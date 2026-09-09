@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { LetterObject, LetterObjects } from "@/components/letter/LetterObject";
 import { demoCrew } from "@/content/demo";
 import { getSpecialist } from "@/content/specialists";
 
@@ -20,11 +20,15 @@ export default function DemoCrewPage() {
       <p className="mt-3 max-w-measure font-newsreader text-reading leading-reading text-quill">
         Real specialists. The engagement is sample.
       </p>
-      <ul className="mt-10 grid gap-10 md:grid-cols-2">
+      <LetterObjects className="mt-10 grid gap-10 md:grid-cols-2">
         {demoCrew.map((member) => {
           const person = getSpecialist(member.id);
           return (
-            <li key={member.id} className="card p-6">
+            <LetterObject
+              key={member.id}
+              href={`/team/${person.id}`}
+              label={person.name}
+            >
               {person.photo ? (
                 <Image
                   src={person.photo}
@@ -35,20 +39,15 @@ export default function DemoCrewPage() {
                 />
               ) : null}
               <p className="mt-4 font-newsreader text-lot-title text-ink">
-                <Link
-                  href={`/team/${person.id}`}
-                  className="underline-offset-4 hover:underline"
-                >
-                  {person.name}
-                </Link>
+                {person.name}
               </p>
               <p className="mt-1 font-plex-sans text-sm text-quill/70">
                 {member.role}
               </p>
-            </li>
+            </LetterObject>
           );
         })}
-      </ul>
+      </LetterObjects>
     </section>
   );
 }

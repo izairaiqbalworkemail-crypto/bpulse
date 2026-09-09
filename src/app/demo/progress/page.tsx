@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { progress } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
@@ -22,31 +23,30 @@ export default function DemoProgressPage() {
       <h3 className="mt-12 font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
         Commits · sample
       </h3>
-      <ul className="mt-4 flex flex-col gap-4">
-        {progress.commits.map((commit) => (
-          <li key={commit.hash} className="border-l-2 border-ink/15 pl-5">
-            <p className="font-plex-mono text-data text-ink">{commit.hash}</p>
-            <p className="mt-1 font-newsreader text-reading text-quill">
-              {commit.message}
-            </p>
-            <p className="mt-1 font-plex-sans text-sm text-quill/60">{commit.date}</p>
-          </li>
-        ))}
-      </ul>
+      <div className="mt-4">
+        <LetterLedger
+          lines={progress.commits.map((commit) => ({
+            id: commit.hash,
+            kicker: commit.hash,
+            title: commit.message,
+            meta: commit.date,
+          }))}
+        />
+      </div>
 
       <h3 className="mt-12 font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
         Environments
       </h3>
-      <ul className="mt-4 flex flex-col gap-4">
-        {progress.deploys.map((deploy) => (
-          <li key={deploy.env} className="border-l-2 border-ink/15 pl-5">
-            <p className="font-plex-mono text-data text-ink">
-              {deploy.env} · {deploy.status}
-            </p>
-            <p className="mt-1 font-plex-sans text-sm text-quill/60">{deploy.at}</p>
-          </li>
-        ))}
-      </ul>
+      <div className="mt-4">
+        <LetterLedger
+          lines={progress.deploys.map((deploy) => ({
+            id: deploy.env,
+            kicker: deploy.env,
+            title: deploy.status,
+            meta: deploy.at,
+          }))}
+        />
+      </div>
 
       <p className="mt-12 font-newsreader text-reading text-ink">
         {progress.burndown}

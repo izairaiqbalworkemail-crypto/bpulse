@@ -5,6 +5,7 @@ import { engagementDocs } from "@/content/documents/engagements";
 import { LEGAL_STATUS_META } from "@/content/documents/types";
 import { diffSections } from "@/lib/legal/diff";
 import { documents, changeOrders, scopeVersions } from "@/content/demo";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 
 export const metadata: Metadata = buildMetadata({
   title: "The platform. Documents",
@@ -150,7 +151,7 @@ export default function DemoDocumentsPage() {
           </p>
         )}
         {changedSections.map((section) => (
-          <div key={section.number} className="card p-6">
+          <div key={section.number} className="letter-object">
             <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/60">
               Section {section.number} · {section.heading}
               {section.plainTermsChanged && (
@@ -210,24 +211,24 @@ export default function DemoDocumentsPage() {
       <h3 className="mt-16 font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
         Versions
       </h3>
-      <ol className="mt-4 flex flex-col gap-6">
-        {scopeVersions.map((version) => (
-          <li key={version.version} className="card p-6">
-            <p className="font-plex-mono text-data text-ink">
-              v{version.version} · {version.dated}
-            </p>
-            <p className="mt-2 font-newsreader text-reading text-quill">{version.summary}</p>
-          </li>
-        ))}
-        {changeOrders.map((order) => (
-          <li key={order.id} className="card p-6">
-            <p className="font-plex-mono text-data text-ink">
-              {order.id} · {order.price} · signed {order.signed}
-            </p>
-            <p className="mt-2 font-newsreader text-reading text-quill">{order.request}</p>
-          </li>
-        ))}
-      </ol>
+      <div className="mt-4">
+        <LetterLedger
+          lines={[
+            ...scopeVersions.map((version) => ({
+              id: `v-${version.version}`,
+              kicker: `v${version.version}`,
+              title: version.dated,
+              body: version.summary,
+            })),
+            ...changeOrders.map((order) => ({
+              id: order.id,
+              kicker: order.id,
+              title: `${order.price} · signed ${order.signed}`,
+              body: order.request,
+            })),
+          ]}
+        />
+      </div>
     </section>
   );
 }
