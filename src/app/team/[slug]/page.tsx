@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
 import { PersonJsonLd, BreadcrumbJsonLd } from "@/lib/JsonLd";
 import { specialists, findSpecialist } from "@/content/specialists";
+import { getSignal } from "@/content/signals";
 import { crewAttach, crewJourney } from "@/content/crew-lines";
 import { pageFrame } from "@/content/platform";
 import { Trace } from "@/components/trace/Trace";
@@ -79,8 +80,8 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
         kicker={`${specialist.role} · ${assignmentStatusLabel(status)}`}
         title={specialist.name}
         dek={pageFrame.teamSlug}
-        actionHref={`/direct/${specialist.id}`}
-        actionLabel={`Write ${firstName}`}
+        actionHref="/read"
+        actionLabel="Get my free read"
       />
 
       <section className="relative w-full overflow-hidden bg-paper">
@@ -185,9 +186,16 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
                 Drawn from work we have published. This is what they have
                 already fixed.
               </p>
-              <p className="mt-4 font-newsreader text-[18px] leading-[1.5] text-ink">
-                {closed.map((id) => id.replaceAll("-", " ")).join(" · ")}
-              </p>
+              <ul className="mt-4 flex flex-col gap-3">
+                {closed.map((id) => (
+                  <li
+                    key={id}
+                    className="max-w-[48ch] font-newsreader text-[18px] leading-[1.5] text-ink"
+                  >
+                    {getSignal(id).says}
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : null}
 
@@ -240,7 +248,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
               <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
                 The work they have finished
               </p>
-              <div className="mt-4 bg-ink px-6 py-8">
+              <div className="mt-4">
                 <Trace
                   spec={specFromLots(
                     specialist.id,
@@ -248,7 +256,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
                     `Engagements ${firstName} was assigned to`,
                   )}
                   size="full"
-                  surface="ink"
+                  surface="paper"
                   labelled
                 />
               </div>
@@ -288,7 +296,7 @@ export default async function SpecialistPage({ params }: Readonly<PageProps>) {
             </p>
             <Link
               href={`/direct/${specialist.id}`}
-              className="mt-5 inline-flex min-h-11 items-center rounded-full bg-gold px-5 py-2.5 font-plex-sans text-[14px] font-medium text-ink"
+              className="mt-5 inline-block font-plex-sans text-[15px] text-ink underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
             >
               Write {firstName}
             </Link>

@@ -15,9 +15,9 @@ import type {
 } from "@/lib/match/types";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Delivery: "bg-diag",
-  Integration: "bg-partial",
-  Intelligence: "bg-quill",
+  Delivery: "bg-ink",
+  Integration: "bg-ink",
+  Intelligence: "bg-ink",
   Ownership: "bg-ink",
 };
 
@@ -50,7 +50,7 @@ function coveragePill({
 
 function pillClass(tone: "signal" | "filled" | "open"): string {
   if (tone === "signal") return "chip bg-ink text-paper";
-  if (tone === "filled") return "chip bg-partial text-paper";
+  if (tone === "filled") return "chip bg-ink text-paper";
   return "chip chip-line";
 }
 
@@ -99,7 +99,7 @@ export function SignalReadout({
                 .filter((row) => row.engagement.includes(hit.signalId))
                 .map((row) => ({
                   id: row.id,
-                  label: `${row.client} · ${row.kind}`,
+                  label: `${row.client} · ${row.kind === "lot" ? "case" : "index"}`,
                   href: seenAtHref(row),
                 }));
               const pill = coveragePill({
@@ -146,7 +146,7 @@ export function SignalReadout({
 
                   <details className="mt-3">
                     <summary className="cursor-pointer font-plex-sans text-[13px] text-ink/80 underline decoration-ink/25 underline-offset-4 hover:text-ink">
-                      Open the signal file
+                      Open the condition
                     </summary>
                     <div className="mt-3 flex flex-col gap-3">
                       <div>
@@ -205,7 +205,7 @@ export function SignalReadout({
                         </p>
                         <p className="mt-1 font-newsreader text-[14px] text-quill/80">
                           {confidence === "exploratory"
-                            ? "With fewer than two conditions, a person reads this by hand — nothing on the bench is weight-bearing here."
+                            ? "With fewer than two conditions, a person reads this by hand. Nothing on the bench is weight-bearing here."
                             : leadSignals.has(hit.signalId)
                               ? "Your match already ships past this condition; it is part of why they were put first."
                               : "Nothing on the bench covers this one. If it matters, say it at the intake and it lands on the handoff."}
@@ -222,7 +222,7 @@ export function SignalReadout({
 
       {removed.length > 0 && onToggleSignal ? (
         <div>
-          <p className="kicker text-quill/50">Set aside — add back</p>
+          <p className="kicker text-quill/50">Set aside. Add back</p>
           <ul className="mt-3 flex flex-wrap gap-2">
             {removed.map((id) => (
               <li key={id}>
@@ -230,7 +230,7 @@ export function SignalReadout({
                   onPress={() => onToggleSignal(id, false)}
                   className="chip chip-line min-h-9 touch-manipulation font-plex-sans text-[13px] hover:text-blocked"
                 >
-                  {id.replaceAll("-", " ")}
+                  {getSignal(id).says}
                 </PressButton>
               </li>
             ))}

@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
 import { readSessionFromCookieHeader } from "@/lib/security/studio-auth";
 import { AdminLogoutButton } from "@/components/admin/AdminLogoutButton";
@@ -17,7 +16,9 @@ const adminViews = [
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const cookieHeader = (await headers()).get("cookie");
   const session = readSessionFromCookieHeader(cookieHeader);
-  if (!session) notFound();
+  if (!session) {
+    return children;
+  }
 
   return (
     <>

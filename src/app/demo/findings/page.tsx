@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { FindingsFilter } from "@/components/FindingsFilter";
 
 export const metadata: Metadata = buildMetadata({
-  title: "The platform — findings",
+  title: "The platform. Findings",
   description: "Open, closed, and deferred findings. Sample.",
   path: "/demo/findings",
 });

@@ -18,12 +18,6 @@ export async function proxy(request: NextRequest) {
   const ip = extractClientIp(request.headers);
   const session = readSessionFromNextRequest(request);
 
-  if (session && pathname === "/" && !isReportHost(host)) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/admin";
-    return NextResponse.redirect(url);
-  }
-
   if (pathname.startsWith("/api/")) {
     const { limited, retryAfterSeconds } = await checkRateLimit(pathname, ip);
     if (limited) {

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { GateCard } from "@/components/GateCard";
 import { PageHero } from "@/components/PageHero";
-import { SignalPlate } from "@/components/SignalPlate";
 import { JobsBoard } from "@/components/careers/JobsBoard";
 import { pageFrame } from "@/content/platform";
 import { crewCommitments, crewGates } from "@/content/process";
@@ -29,40 +28,66 @@ export default async function CareersPage() {
         hideAction
       />
 
-      <SignalPlate
-        kicker="What you get"
-        title="Published bands. A paid sample."
-        line="No multiple-choice pass/fail gate. Gate 2 is paid whether or not you join."
-        facts={[
-          {
-            kicker: "Pay",
-            body: "Published pay bands on the role cards below. No candidate fee.",
-          },
-          {
-            kicker: "Gate 2",
-            body: "A paid work sample. You keep the money either way.",
-          },
-          {
-            kicker: "After Gate 4",
-            body: (
-              <>
+      <div className="grid-container pt-12">
+        <section className="border-b border-ink/12 pb-12">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70">
+            What you get
+          </p>
+          <p className="mt-6 max-w-[16ch] font-newsreader text-[clamp(2rem,5vw,3.25rem)] leading-[1.1] tracking-[-0.015em] text-ink">
+            Published bands. A paid sample.
+          </p>
+          <p className="mt-6 max-w-[42ch] font-plex-sans text-[17px] leading-[1.5] text-quill">
+            No multiple-choice pass/fail gate. Gate 2 is paid whether or not you
+            join.
+          </p>
+          <ul className="mt-10 border-t border-ink/12">
+            <li className="border-b border-ink/10 py-6">
+              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
+                Pay
+              </p>
+              <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
+                Published pay bands on the role cards below. No candidate fee.
+              </p>
+            </li>
+            <li className="border-b border-ink/10 py-6">
+              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
+                Gate 2
+              </p>
+              <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
+                A paid work sample. You keep the money either way.
+              </p>
+            </li>
+            <li className="border-b border-ink/10 py-6">
+              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
+                After Gate 4
+              </p>
+              <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
                 A public assignment record. Example:{" "}
-                <Link href="/team/hamza" className="underline underline-offset-4">
+                <Link
+                  href="/team/hamza"
+                  className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
+                >
                   /team/hamza
                 </Link>
                 .
-              </>
-            ),
-          },
-        ]}
-        href="#intake"
-        action="Start my application"
-      />
+              </p>
+            </li>
+          </ul>
+          <p className="mt-10">
+            <a
+              href="#intake"
+              className="btn btn-gold letter-ask min-h-12 px-8 text-[15px]"
+            >
+              Start my application
+            </a>
+          </p>
+        </section>
 
-      <div className="grid-container pt-12">
-        <section>
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">Admission plan</p>
-          <JobsBoard roles={roles} />
+        <section id="start" className="mt-12 scroll-mt-28">
+          <div id="intake">
+            <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">Admission plan</p>
+            <JobsBoard roles={roles} />
+          </div>
         </section>
 
         <section className="mt-14">
@@ -80,7 +105,7 @@ export default async function CareersPage() {
           </ul>
         </section>
 
-        <section className="mt-14 scroll-mt-28">
+        <section className="mt-14">
           <p className="font-newsreader text-[17px] text-quill">
             On submit: you get a private status link and your Gate 0 brief within one business day.
           </p>

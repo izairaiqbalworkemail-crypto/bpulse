@@ -21,8 +21,8 @@ export function FilterBar({
   value,
   onChange,
   count,
-  noun = "in the catalogue",
-  label = "Filter the catalogue",
+  noun = "in the work",
+  label = "Filter the work",
 }: Readonly<FilterBarProps>) {
   const reduce = useReducedMotion();
 

@@ -17,9 +17,6 @@ import { DRAFT_NOTICE, isDraftDocument } from "@/lib/legal/status";
 export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
   const status = LEGAL_STATUS_META[doc.status];
   const isDraft = isDraftDocument(doc);
-  const sectionReviewNotes = doc.sections
-    .filter((section) => section.reviewNote)
-    .map((section) => ({ section: section.number, note: section.reviewNote as string }));
   const index = [
     ...doc.sections.map((section) => ({
       id: `section-${section.number}`,
@@ -97,19 +94,6 @@ export function LegalDocumentView({ doc }: Readonly<{ doc: LegalDoc }>) {
           </Link>
         </p>
 
-        {doc.reviewNote || sectionReviewNotes.length > 0 ? (
-          <div className="mt-8 border border-quill/20 bg-paper px-5 py-4">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/80">Open legal review items</p>
-            {doc.reviewNote ? (
-              <p className="mt-3 font-plex-sans text-[15px] leading-[1.6] text-ink">{doc.reviewNote}</p>
-            ) : null}
-            {sectionReviewNotes.map((item) => (
-              <p key={`${item.section}-${item.note}`} className="mt-2 font-plex-sans text-[15px] leading-[1.6] text-ink">
-                Section {item.section}: {item.note}
-              </p>
-            ))}
-          </div>
-        ) : null}
       </div>
 
       <div className="stage-container grid items-start gap-16 py-16 md:grid-cols-[13.5rem_minmax(0,1fr)] md:py-24">

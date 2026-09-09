@@ -41,7 +41,6 @@ export function Masthead() {
       ]
     : nav;
 
-  const night = pathname === "/";
   const open = menuOpenAt === pathname;
   const closeMenu = () => setMenuOpenAt(null);
   const openMenu = () => setMenuOpenAt(pathname);
@@ -129,7 +128,7 @@ export function Masthead() {
 
   return (
     <>
-      <header className={`letter-pill-wrap${night ? " is-night" : ""}`}>
+      <header className="letter-pill-wrap is-night">
         <div className="letter-pill">
           <Link
             href="/"
@@ -227,7 +226,7 @@ export function Masthead() {
                   goAsk(event);
                   closeMenu();
                 }}
-                className="btn btn-paper letter-ask min-h-12 px-6 text-[15px]"
+                className="btn btn-gold letter-ask min-h-12 px-6 text-[15px]"
               >
                 {cta.label}
               </Link>

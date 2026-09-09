@@ -80,7 +80,6 @@ export default function LegalDataPage() {
             .
           </>
         }
-        hideAction
       />
 
       <div className="stage-container grid items-start gap-16 py-16 md:grid-cols-[13.5rem_minmax(0,1fr)] md:py-24">

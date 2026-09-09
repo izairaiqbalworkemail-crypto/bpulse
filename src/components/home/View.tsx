@@ -134,6 +134,7 @@ export function View() {
         <h2 id="view-heading" className="letter-view-title">
           {visibilityCopy.heading}
         </h2>
+        <p className="letter-view-dek">{visibilityCopy.dek}</p>
       </div>
 
       <div className="letter-portal" aria-label="Sample portal">

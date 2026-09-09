@@ -39,8 +39,8 @@ export function FieldLog({ density = "full", figures }: FieldLogProps) {
             The field log
           </h2>
           <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-quill">
-            Sourced figures from the lots. Every number below is traceable to a
-            client site or engagement record. Where we do not have a number, we
+            Sourced figures from the work. Every number below points at a
+            client site or engagement. Where we do not have a number, we
             say so.
           </p>
         </div>

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { SignalPlate } from "@/components/SignalPlate";
 import { StageRail } from "@/components/StageRail";
 import { AnimatedStages } from "@/components/AnimatedStages";
 import { Episode } from "@/components/episode/Episode";
@@ -18,10 +17,10 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function HowItWorksPage() {
-  const rail = closeStages.map((stage, index) => ({
+  const rail = closeStages.map((stage) => ({
     id: stage.id,
     label: stage.label,
-    status: index === 0 ? ("current" as const) : ("upcoming" as const),
+    status: "upcoming" as const,
   }));
 
   return (
@@ -30,38 +29,63 @@ export default function HowItWorksPage() {
         kicker="The platform"
         title="A process you can open."
         dek={pageFrame.howItWorks}
-        hideAction
-      />
-
-      <SignalPlate
-        kicker="How we work together"
-        price={offer.close.priceRange}
-        line="The Close is the full project. The offers before it are how you get there without negotiating."
-        facts={[
-          {
-            kicker: "The Read",
-            body: "Free. Written. One business day. Nothing on it asks for a meeting.",
-          },
-          {
-            kicker: "The Session",
-            body: `${money(offer.session.price)}. Ninety minutes. Credited against anything you buy in 30 days.`,
-          },
-          {
-            kicker: "The Check",
-            body: `${money(offer.check.price)}. ${offer.check.duration}. Credited in full against a build in 30 days.`,
-          },
-        ]}
-        href="/read"
-        action="Get my free read"
+        cut="Process"
       />
 
       <Episode tone="paper">
         <p className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70">
+          How we work together
+        </p>
+        <p className="mt-6 font-newsreader text-[clamp(2.5rem,7vw,4.5rem)] leading-none tracking-[-0.03em] text-ink">
+          {offer.close.priceRange}
+        </p>
+        <p className="mt-6 max-w-[42ch] font-plex-sans text-[17px] leading-[1.5] text-quill">
+          The Close is the full project. The offers before it are how you get
+          there without negotiating.
+        </p>
+        <ul className="mt-12 border-t border-ink/12">
+          <li className="border-b border-ink/10 py-6">
+            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
+              The Read
+            </p>
+            <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
+              Free. Written. One business day. Nothing on it asks for a meeting.
+            </p>
+          </li>
+          <li className="border-b border-ink/10 py-6">
+            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
+              The Session
+            </p>
+            <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
+              {money(offer.session.price)}. Ninety minutes. Credited against
+              anything you buy in 30 days.
+            </p>
+          </li>
+          <li className="border-b border-ink/10 py-6">
+            <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
+              The Check
+            </p>
+            <p className="mt-2 font-plex-sans text-[17px] leading-[1.4] text-ink">
+              {money(offer.check.price)}. {offer.check.duration}. Credited in
+              full against a build in 30 days.
+            </p>
+          </li>
+        </ul>
+        <p className="mt-10">
+          <Link
+            href="/read"
+            className="btn btn-ink letter-ask min-h-12 px-8 text-[15px]"
+          >
+            Get my free read
+          </Link>
+        </p>
+
+        <p className="mt-20 font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70">
           The stages
         </p>
         <p className="mt-4 max-w-[40ch] font-newsreader text-[22px] leading-[1.3] text-ink">
-          The Read and the Session come first. Portal screenshots are not on
-          file yet. Later stages open the live sample.
+          The Read and the Session come first. Later stages open the live
+          sample.
         </p>
         <div className="mt-10">
           <StageRail stages={rail} />

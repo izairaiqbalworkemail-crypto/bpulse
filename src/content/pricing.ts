@@ -49,7 +49,7 @@ export const pricingLadder = [
   },
   {
     id: "standing",
-    name: "Standing",
+    name: "Second Chair",
     price: standingRange,
     href: "/second-chair",
     body: "After launch, until you do not need us.",
@@ -67,7 +67,7 @@ export const pricingRule = {
 export const pricingRoute = [
   { if: "Not sure yet. Start here.", start: "The Read", href: "/read" },
   { if: "An idea and no code", start: "The Session", href: "/session" },
-  { if: "A build that will not deploy", start: "The Check", href: "/check" },
+  { if: "A build that will not ship", start: "The Check", href: "/check" },
   {
     if: "A prototype that needs to become real",
     start: "The First Slice",
@@ -76,7 +76,7 @@ export const pricingRoute = [
   { if: "A finished scope and a deadline", start: "The Close", href: "/how-it-works" },
   {
     if: "Something we shipped, and questions",
-    start: "Standing",
+    start: "Second Chair",
     href: "/second-chair",
   },
 ] as const;
@@ -122,7 +122,7 @@ export const pricingPay = {
 export const pricingQuestions = [
   {
     q: "Why credited and not refunded?",
-    a: "The Session and the Check credit against anything you buy in 30 days because the work is used if you continue. If the Check says keep and you do not build, the fee is returned. Credit is the default. A refund is the honest exit.",
+    a: "The Session credits against anything you buy in 30 days. The Check credits in full against a build in 30 days. If the Check says keep and you do not build, the fee is returned. Credit is the default. A refund is the honest exit.",
   },
   {
     q: "What happens if the scope changes?",
@@ -146,7 +146,7 @@ export const pricingStart = {
   heading: "The Read.",
   line: "If you do not know which, start free.",
   href: "/read",
-  label: "Start",
+  label: "Get my free read",
 } as const;
 
 export const pricingRungIds = pricingLadder.map((rung) => rung.id);

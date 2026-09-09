@@ -117,7 +117,7 @@ export function TeacherObject({
         ) : null}
         {closed > 0 ? (
           <p className="mt-6 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
-            Signals closed · {closed}
+            Conditions already fixed · {closed}
           </p>
         ) : null}
       </Slide>

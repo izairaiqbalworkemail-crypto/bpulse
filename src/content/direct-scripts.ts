@@ -93,7 +93,7 @@ export const directScripts: Record<string, Script> = {
     },
     {
       name: "docsLeft",
-      ask: "Is any of it written down — the auth, the deploy, the decisions?",
+      ask: "Is any of it written down? The auth, the deploy, the decisions.",
       kind: "textarea",
       required: true,
       placeholder: "A README, a Notion page, nothing, a person who left with it.",

@@ -9,7 +9,7 @@ export const brand = {
   legalName: "Breakthrough Pulse",
   tagline: "We finish what starts.",
   description:
-    "Lahore software studio. Named people take products stuck at 80% and ship them to production.",
+    "Lahore software studio. It looks finished. It will not ship. Named people take the last twenty percent to production.",
   url: "https://bpulse.dev",
   logo: "/bpulse-brand/icon/bpulse-icon-512.png",
   ogImage: "/bpulse-brand/social/bpulse-og.png",

@@ -27,7 +27,7 @@ export const transferPage = {
     clauses: [
       "A Check can be run against a repository and environments you control. We do not need a copy of your production personal data to write a condition report.",
       "When you keep production personal data in your systems and grant time-limited access, bpulse is reading, not exporting a dataset to Lahore.",
-      "When a Close does require a copy — test fixtures with real names, a production dump, a customer export — that is when the DPA, the SCCs, and the TIA apply. We say so before that copy is made.",
+      "When a Close does require a copy, test fixtures with real names, a production dump, a customer export, that is when the DPA, the SCCs, and the TIA apply. We say so before that copy is made.",
     ],
   },
   scc: {

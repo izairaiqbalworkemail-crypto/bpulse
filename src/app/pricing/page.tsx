@@ -31,7 +31,7 @@ export default function PricingPage() {
         dek={pageFrame.pricing}
       />
 
-      <Episode labelledBy="which" tone="cocoa">
+      <Episode labelledBy="which" tone="paper">
         <PriceRoute />
       </Episode>
 

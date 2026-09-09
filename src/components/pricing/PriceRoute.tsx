@@ -12,7 +12,7 @@ export function PriceRoute() {
         n="01"
         kicker="START HERE"
         id="which"
-        tone="cocoa"
+        tone="paper"
         heading="Which one are you."
       />
       <Stagger className="mt-12 flex flex-col gap-3" gap={0.07}>

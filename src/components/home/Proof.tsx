@@ -101,7 +101,8 @@ export function Proof() {
             </article>
           ) : (
             <p className="letter-proof-note">
-              {selected.length < 2 ? proofCopy.empty : proofCopy.none}
+              {selected.length < 2 ? proofCopy.empty : proofCopy.none}{" "}
+              <Link href={proofCopy.skipHref}>{proofCopy.skip}</Link>
             </p>
           )}
         </div>

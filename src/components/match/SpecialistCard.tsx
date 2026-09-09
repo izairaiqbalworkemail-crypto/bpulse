@@ -42,7 +42,7 @@ export function SpecialistCard({
     person.availability === "available"
       ? "Free to take this on"
       : person.availability === "on an engagement"
-        ? "Already on an engagement — the fit is as a handoff"
+        ? "Already on an engagement. The fit is as a handoff"
         : "Not taking new work right now";
   const isFounder = row.specialistId === "aneeb";
 

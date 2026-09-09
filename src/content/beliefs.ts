@@ -1,5 +1,5 @@
 export const studioOpening =
-  "Breakthrough Pulse is a senior studio in Lahore. We take products that already exist — built, demoed, stuck — and we finish them. Twelve named people. The ones who scope the work ship it.";
+  "Breakthrough Pulse is a senior studio in Lahore. We take products that already exist, built, demoed, stuck, and we finish them. Twelve named people. The ones who scope the work ship it.";
 
 export const studioBeliefs = [
   {

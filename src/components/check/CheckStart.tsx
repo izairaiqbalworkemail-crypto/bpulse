@@ -41,7 +41,9 @@ export function CheckStart() {
         </Slide>
 
         <Reveal delay={0.08}>
-          <PulseCheckIntake source="check" />
+          <div id="intake" className="scroll-mt-[5.75rem] md:scroll-mt-28">
+            <PulseCheckIntake source="check" />
+          </div>
         </Reveal>
       </div>
     </Episode>

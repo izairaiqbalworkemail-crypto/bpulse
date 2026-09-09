@@ -30,15 +30,12 @@ export default function TeamPage() {
         kicker="Our engineers"
         title="These twelve ship."
         dek={pageFrame.team}
-        hideAction
+        cut="Team"
       />
 
-      <Episode tone="cocoa">
-        <PortraitStrip people={specialists} size="large" />
-      </Episode>
-
       <Episode tone="paper">
-        <div>
+        <PortraitStrip people={specialists} size="large" />
+        <div className="mt-16">
           {groups.map((group, index) => {
             const people = specialists.filter(
               (person) => crewCapability[person.id] === group,
@@ -86,10 +83,10 @@ export default function TeamPage() {
           <p className="mt-4 font-newsreader text-[18px] text-ink">
             The platform assigns from this bench.{" "}
             <Link
-              href="/match"
+              href="/read"
               className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
             >
-              Describe what’s stuck
+              Get my free read
             </Link>
             .
           </p>

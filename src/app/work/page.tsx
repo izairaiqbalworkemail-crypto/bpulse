@@ -5,9 +5,11 @@ import { WorkIndex } from "@/components/WorkIndex";
 import { PageClose } from "@/components/PageClose";
 import { Episode } from "@/components/episode/Episode";
 import { getCatalogue } from "@/content/catalogue";
+import { lots } from "@/content/lots";
 import { pageFrame } from "@/content/platform";
 
 const count = getCatalogue().length;
+const depth = lots.length;
 
 export const metadata: Metadata = buildMetadata({
   title: "Our work",
@@ -21,8 +23,8 @@ export default function WorkPage() {
       <PageHero
         kicker="Our work"
         title="What we shipped. What was stuck."
-        dek={`${pageFrame.work} ${count} rows. Nine in depth.`}
-        hideAction
+        dek={`${pageFrame.work} ${count} rows. ${depth} in depth.`}
+        cut="Work"
       />
 
       <Episode tone="paper">

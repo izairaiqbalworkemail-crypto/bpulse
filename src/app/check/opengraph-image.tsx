@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { palette } from "@/lib/brand/palette";
 import { offer } from "@/content/offer";
 
-export const alt = "The Check — a written read, then five days.";
+export const alt = "The Check. A written read, then five days.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

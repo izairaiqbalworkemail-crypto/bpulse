@@ -15,8 +15,6 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function NoticesPage() {
-  const last = notices[notices.length - 1];
-
   return (
     <>
       <FAQPageJsonLd
@@ -31,7 +29,6 @@ export default function NoticesPage() {
           kicker="Notices"
           title="Questions we get asked, answered plainly."
           dek={pageFrame.notices}
-          hideAction
         />
         <div className="relative overflow-hidden">
           <Atmosphere kind="light" opacity={0.22} />
@@ -53,19 +50,17 @@ export default function NoticesPage() {
             </ol>
           </nav>
 
-          <div className="mt-12 columns-1 gap-x-16 md:columns-2">
+          <div className="mt-12">
             {notices.map((notice, index) => (
               <Reveal key={notice.id} delay={index * 0.05}>
               <article
                 id={notice.id}
-                className={`card mb-4 break-inside-avoid p-8 ${
-                  notice.id === last?.id ? "ring-1 ring-ink/25" : ""
-                }`}
+                className="scroll-mt-28 border-t border-ink/12 py-10"
               >
-                <h2 className="font-newsreader text-[22px] leading-[1.25] text-ink">
+                <h2 className="max-w-[42ch] font-newsreader text-[22px] leading-[1.25] text-ink">
                   {notice.question}
                 </h2>
-                <p className="mt-3 font-newsreader text-[16px] leading-[1.55] text-quill">
+                <p className="mt-3 max-w-[52ch] font-newsreader text-[17px] leading-[1.55] text-quill">
                   {notice.answer}
                 </p>
               </article>

@@ -7,7 +7,7 @@ import { diffSections } from "@/lib/legal/diff";
 import { documents, changeOrders, scopeVersions } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "The platform — documents",
+  title: "The platform. Documents",
   description:
     "Dated documents with signature status. Sample stubs only; living templates stay on /legal.",
   path: "/demo/documents",
@@ -32,7 +32,7 @@ export default function DemoDocumentsPage() {
         Documents
       </h2>
       <p className="mt-3 max-w-measure font-newsreader text-reading leading-reading text-quill">
-        Dated, with signature status. Files are labelled stubs — not live
+        Dated, with signature status. Files are labelled stubs, not live
         contracts.
       </p>
       <p className="mt-3 max-w-measure font-newsreader text-[17px] leading-[1.5] text-quill">
@@ -163,9 +163,9 @@ export default function DemoDocumentsPage() {
                   key={clause.key}
                   className={
                     clause.state === "added"
-                      ? "border-l-[3px] border-partial bg-partial/10 px-3 py-2"
+                      ? "border-l-[3px] border-ink px-3 py-2"
                       : clause.state === "removed"
-                        ? "border-l-[3px] border-blocked bg-blocked/10 px-3 py-2 text-quill/60"
+                        ? "border-l-[3px] border-ink/25 px-3 py-2 text-quill/60"
                         : "px-3 py-1"
                   }
                 >
@@ -190,7 +190,7 @@ export default function DemoDocumentsPage() {
           <div>
             <p className="font-plex-mono text-[13px] text-quill/60">{changeOrder.reference}</p>
             <p className="mt-1 font-newsreader text-[20px] leading-[1.3] text-ink">
-              {changeOrder.name.charAt(0) + changeOrder.name.slice(1).toLowerCase()} —{" "}
+              {changeOrder.name.charAt(0) + changeOrder.name.slice(1).toLowerCase()}.{" "}
               {changeOrder.sections[1]?.clauses[0]?.text.replace("Price: ", "")}
             </p>
             <p className="mt-1 font-newsreader text-[16px] text-quill">

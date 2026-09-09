@@ -43,7 +43,7 @@ export function AdminAccessForm() {
         Studio
       </h1>
       <p className="mt-4 max-w-[52ch] font-plex-sans text-[16px] leading-[1.6] text-quill">
-        Enter your work email. If it is on the list, a one-time link arrives.
+        Enter your work email. If it is on the list, a one-time link is sent.
       </p>
 
       <form className="mt-8 max-w-[28rem]" onSubmit={requestLink}>

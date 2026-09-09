@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { updates } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "The platform — updates",
+  title: "The platform. Updates",
   description: "Three weekly written updates. Sample.",
   path: "/demo/updates",
 });

@@ -115,7 +115,7 @@ export const lots: Lot[] = [
     summary:
       "A marketplace matching people with trusted tradespeople across Albania.",
     condition:
-      "Came in as a two-sided marketplace that had to launch cold on both sides at once — matching customers with tradespeople they could trust before either side showed up. Built but not yet live.",
+      "Came in as a two-sided marketplace that had to launch cold on both sides at once. Matching customers with tradespeople they could trust before either side showed up. Built but not yet live.",
     dataLines: [
       { label: "Client", value: "myUsta" },
       { label: "Status", value: "Shipped" },
@@ -156,7 +156,7 @@ export const lots: Lot[] = [
     summary:
       "Frontend delivery and production readiness for a Firebase + React product.",
     condition:
-      "Came in looking done in demo mode but not production-ready: the remaining pass was final interaction polish, release hardening, and release checks — the actual last twenty percent, still open.",
+      "Came in looking done in demo mode but not production-ready: the remaining pass was final interaction polish, release hardening, and release checks. The actual last twenty percent, still open.",
     dataLines: [
       { label: "Client", value: "WearMeOut.ai" },
       { label: "Status", value: "LIVE" },

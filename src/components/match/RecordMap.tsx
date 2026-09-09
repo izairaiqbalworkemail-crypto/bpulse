@@ -28,34 +28,34 @@ export function RecordMap({
       delay={60}
     >
       <p className="kicker flex items-center gap-2">
-        <span aria-hidden="true" className="h-2 w-2 rounded-full bg-partial pulse-dot" />
+        <span aria-hidden="true" className="h-2 w-2 rounded-full bg-ink pulse-dot" />
         Our work, row by row
       </p>
       <p className="mt-2 max-w-[48ch] font-newsreader text-[16px] leading-[1.45] text-quill">
         {sameWay} of {comparisons.length} engagements came to us the same way.
-        Every row below is tagged from its own condition text — nothing here is
+        Every row below is tagged from its own condition text. Nothing here is
         inferred.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="chip chip-soft">
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ink" />
-          lot · a full engagement with a posted lot
+          case. A full engagement we published
         </span>
         <span className="chip chip-soft">
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-quill" />
-          index · a one-line record from the old catalogue
+          index. A one-line case from earlier work
         </span>
         {closestId ? (
           <span className="chip chip-soft">
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-partial" />
-            closest · the row your words sit nearest
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ink" />
+            closest. The row your words sit nearest
           </span>
         ) : null}
       </div>
 
       <details open className="mt-5">
         <summary className="cursor-pointer font-plex-sans text-[14px] text-ink underline decoration-ink/30 underline-offset-4 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
-          Full record map — {comparisons.length} rows
+          All {comparisons.length} rows
         </summary>
         <ul className="stagger mt-5 flex flex-col gap-2">
           {comparisons.map((row, index) => {
@@ -65,20 +65,20 @@ export function RecordMap({
               <li
                 key={row.id}
                 className={`panel-sub flex items-center gap-3 px-4 py-3 ${
-                  closest ? "bg-partial/5 ring-1 ring-partial/25" : ""
+                  closest ? "bg-ink/5 ring-1 ring-ink/20" : ""
                 }`}
                 style={{ transitionDelay: `${index * 55}ms` }}
               >
                 <span
                   aria-hidden="true"
                   className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                    closest ? "bg-partial" : row.kind === "lot" ? "bg-ink" : "bg-quill"
+                    closest ? "bg-ink" : row.kind === "lot" ? "bg-ink" : "bg-quill"
                   }`}
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline gap-3">
                     <span className="font-plex-mono text-[10px] uppercase tracking-[0.06em] text-quill/50">
-                      {row.kind}
+                      {row.kind === "lot" ? "case" : "index"}
                     </span>
                     {href ? (
                       <Link

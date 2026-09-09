@@ -36,7 +36,6 @@ export default function StandardPage() {
         kicker="Admission"
         title="Five gates. Then a quarterly review."
         dek={pageFrame.standard}
-        hideAction
       />
 
       <div className="relative overflow-hidden">

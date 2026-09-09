@@ -28,6 +28,7 @@ export default function AboutPage() {
         kicker="About · Lahore"
         title={aboutWhat.heading}
         dek={aboutWhat.dek}
+        cut="Studio"
       />
 
       <Episode labelledBy="believe" tone="paper">

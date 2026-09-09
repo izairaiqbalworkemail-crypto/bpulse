@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { checkOffer } from "@/content/check";
 import { ladder, noDiscount } from "@/content/ladder";
 
 const neighbors = ladder.filter((rung) =>
@@ -13,6 +14,11 @@ export function CheckSits() {
       className="ribbon relative bg-paper text-ink"
     >
       <div className="stage-container py-16 md:py-20">
+        <ul className="letter-folio-facts">
+          {checkOffer.facts.map((fact) => (
+            <li key={fact}>{fact}</li>
+          ))}
+        </ul>
         <h2
           id="sits-heading"
           className="font-plex-mono text-[12px] uppercase tracking-[0.14em] text-quill/70"

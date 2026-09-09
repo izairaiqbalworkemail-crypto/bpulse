@@ -10,10 +10,12 @@ type PageHeroProps = {
   actionHref?: string;
   actionLabel?: string;
   hideAction?: boolean;
+  /** Kept so existing pages do not break. Unused. */
+  cut?: string;
 };
 
 /**
- * Interior opening. Same first window as home and /read.
+ * Interior chapter. Index on a spine. Claim on the page. Then paper.
  */
 export function PageHero({
   kicker,
@@ -27,29 +29,24 @@ export function PageHero({
 
   return (
     <HeroFrame labelledBy="page-hero-heading">
-      <div className="stage-container relative flex flex-1 flex-col justify-center py-24 md:py-28">
-        <p className="kicker text-label">{kicker}</p>
-        <h1
-          id="page-hero-heading"
-          className="type-display-xl mt-8 max-w-[16ch] font-newsreader text-[clamp(2.75rem,7vw,5rem)] text-paper md:mt-10"
-        >
-          {title}
-        </h1>
-        {dek ? (
-          <div className="type-lead mt-8 max-w-[40ch] text-pretty break-words text-read md:mt-10">
-            {dek}
-          </div>
-        ) : null}
-        {!hideAction ? (
-          <div className="mt-8 md:mt-10">
-            <Link
-              href={actionHref}
-              className="btn btn-gold min-h-12 px-8 text-[15px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper"
-            >
-              {label}
-            </Link>
-          </div>
-        ) : null}
+      <div className="letter-folio-open">
+        <p className="letter-folio-index">{kicker}</p>
+        <div className="letter-folio-body">
+          <h1 id="page-hero-heading" className="letter-window-claim">
+            {title}
+          </h1>
+          {dek ? <div className="letter-window-dek">{dek}</div> : null}
+          {hideAction ? null : (
+            <div className="letter-cta">
+              <Link
+                href={actionHref}
+                className="btn btn-gold letter-ask min-h-12 px-8 text-[15px]"
+              >
+                {label}
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </HeroFrame>
   );

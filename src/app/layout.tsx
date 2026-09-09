@@ -14,7 +14,7 @@ export const viewport: Viewport = {
 
 const display = Source_Serif_4({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-newsreader",
   display: "swap",

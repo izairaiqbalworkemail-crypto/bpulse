@@ -8,7 +8,7 @@ export const pageFrame = {
   work: "Work we finished. Every case shows who was on it, and what was stuck when we started.",
   workSlug:
     "One case. Who did the work, what was stuck, what shipped, and what we still cannot claim.",
-  team: "These twelve people have cleared the standard. Pick a name, or describe what is stuck. A missing photograph is initials, not a hole.",
+  team: "These twelve people have cleared the standard. Pick a name, or start with the Read. A missing photograph is initials, not a hole.",
   teamSlug:
     "One of our engineers: how they got here, work they have finished, what they fixed, and a direct line.",
   match:
@@ -24,7 +24,7 @@ export const pageFrame = {
     "How we decide who is client-facing. Five gates, then a quarterly review.",
   demo: "This is the platform, live, with sample data. Eight views of a locked Close. Nothing here is a live engagement.",
   secondChair:
-    "Capability transfer after a project. A named engineer on your repository. On Call starts at $900 a month. Cancel any month.",
+    "Capability transfer after a project. A named engineer on your repository. Second Chair starts at $900 a month. Cancel any month.",
   careers:
     "Applying to the standard. Five gates, what each costs us, and no candidate fee, said here, in public.",
   notices:

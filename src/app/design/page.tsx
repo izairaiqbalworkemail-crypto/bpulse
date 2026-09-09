@@ -17,7 +17,7 @@ import { BUILD_STATES, STATE_WORDS } from "@/lib/brand/states";
 export const metadata: Metadata = buildMetadata({
   title: "Brand",
   description:
-    "How bpulse sits next to talent networks — a Lahore studio, not a marketplace. Tokens, primitives, and motion.",
+    "How bpulse sits next to talent networks. A Lahore studio, not a marketplace. Tokens, primitives, and motion.",
   path: "/design",
   robots: "noindex, nofollow",
 });
@@ -407,7 +407,7 @@ export default function DesignPage() {
           <Grade grade="unsound" label="Not holding" date="12 Mar 2026" />
         </div>
         <p className="mt-6 font-plex-mono text-caption text-quill/60">
-          Colour never carries meaning alone — always paired with the word and
+          Colour never carries meaning alone. Always paired with the word and
           the date
         </p>
       </section>
@@ -430,7 +430,7 @@ export default function DesignPage() {
           />
         </div>
         <p className="mt-6 font-plex-mono text-caption text-quill/60">
-          A missing portrait renders as name and role — never a grey box
+          A missing portrait renders as name and role, never a grey box
         </p>
       </section>
 

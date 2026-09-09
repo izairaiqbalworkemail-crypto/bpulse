@@ -14,7 +14,8 @@ describe("read page copy", () => {
   it("promises no pitch and no second follow-up", () => {
     expect(readOffer.heading).toMatch(/Free/);
     expect(readOffer.heading).toMatch(/one business day/i);
-    expect(readOffer.pledge).toMatch(/No pitch inside it/);
+    expect(readOffer.not).toMatch(/No call, no pitch, no second follow-up/);
+    expect(readOffer.idea).toMatch(/I have an idea/);
     expect(readAfter.pledge).toMatch(/We will not follow up twice/);
     expect(readStart.href).toBe("#intake");
   });

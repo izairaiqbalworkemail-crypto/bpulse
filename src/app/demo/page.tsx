@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { StageRail } from "@/components/StageRail";
 import { getDemoOverview } from "@/content/demo";
+import { pageFrame } from "@/content/platform";
 import type { RailStage } from "@/content/types";
 
 export const metadata: Metadata = buildMetadata({
   title: "The platform",
-  description:
-    "The platform, live, with sample data. Stage tracker, locked scope, and handover.",
+  description: pageFrame.demo,
   path: "/demo",
 });
 

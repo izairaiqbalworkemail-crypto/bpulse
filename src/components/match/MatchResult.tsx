@@ -23,10 +23,10 @@ const STEP_MS = 350;
 const STEPS = 4;
 
 const SECTION_COLORS = {
-  ink: "bg-quill",
-  signal: "bg-diag",
-  partial: "bg-partial",
-  blocked: "bg-blocked",
+  ink: "bg-ink",
+  signal: "bg-ink",
+  partial: "bg-ink",
+  blocked: "bg-ink",
   iron: "bg-ink",
 } as const;
 
@@ -59,8 +59,8 @@ function SectionHead({
 
 function confidenceLine(value: MatchConfidence): string {
   if (value === "strong") return "Close to work we have already done.";
-  if (value === "partial") return "A partial read — check the reasons.";
-  return "Nothing in our record closely matches this.";
+  if (value === "partial") return "A partial read. Check the reasons.";
+  return "Nothing we have published closely matches this.";
 }
 
 function logOutcome(
@@ -117,13 +117,6 @@ function comparablePlate(comparison: LotComparison | null, readOnly: boolean) {
           {comparison.title.split(".")[0]!}
         </p>
       )}
-      <div className="mt-4 flex flex-wrap gap-2">
-        {comparison.overlap.map((id) => (
-          <span key={id} className="chip chip-soft">
-            {id.replaceAll("-", " ")}
-          </span>
-        ))}
-      </div>
     </>
   );
 
@@ -170,7 +163,7 @@ function EmailThisRead({ token, eventId }: { token: string | null; eventId: stri
         throw new Error(data.error ?? "It did not send.");
       }
       setStatus("sent");
-      setMessage("On its way — and a copy is on Aneeb's desk.");
+      setMessage("On its way. A copy is on Aneeb's desk.");
     } catch (error_) {
       logOutcome(eventId, "abandoned");
       setStatus("error");
@@ -278,7 +271,7 @@ export function MatchResult({
     {
       label: "Checked our work",
       count: `${sameWay} of 24 engagements came to us the same way`,
-      note: "Lots and indexed work, tagged from their own condition text.",
+      note: "Cases and indexed work, tagged from their own condition text.",
       href: "#match-record",
       tone: "partial" as const,
     },
@@ -288,14 +281,14 @@ export function MatchResult({
         outcome.confidence === "exploratory"
           ? "No one on file is close"
           : `${outcome.results.length} on the bench fit`,
-      note: "Signal match first, then capability, domain, stack, and availability.",
+      note: "Condition match first, then capability, domain, stack, and availability.",
       href: "#match-bench",
       tone: "signal" as const,
     },
     {
       label: "Shaped it",
-      count: disc?.estimate ?? "No shape yet — nobody close",
-      note: "A range, not a quote. No figure on record for a comparable engagement.",
+      count: disc?.estimate ?? "No shape yet. Nobody close",
+      note: "A range, not a quote. No figure on file for a comparable engagement.",
       href: "#match-shape",
       tone: "iron" as const,
     },
@@ -309,7 +302,7 @@ export function MatchResult({
         </p>
         <h2 className="mt-3 max-w-[34ch] font-newsreader type-display-m text-[32px] leading-[1.1] text-ink md:text-[40px]">
           {outcome.confidence === "exploratory"
-            ? "The platform would assign Aneeb — nothing on record comes close."
+            ? "The platform would assign Aneeb. Nothing on file comes close."
             : `The platform would assign ${leadPerson?.name ?? leadName}.`}
         </h2>
         <p className="mt-3 font-plex-mono text-[12px] text-quill/70">
@@ -386,7 +379,7 @@ export function MatchResult({
         delay={60}
       >
         <SectionHead
-          label="What we heard — your words, our names for it"
+          label="What we heard. Your words, our names for it"
           tone="blocked"
           note="Heard from the words you wrote, not typed about yourself. Each one sits in an engagement we have already taken."
         />
@@ -410,7 +403,7 @@ export function MatchResult({
           </div>
         ) : (
           <p className="mt-5 font-newsreader text-[16px] text-quill/70">
-            Fewer than two recognised conditions in the words — that is why the
+            Fewer than two recognised conditions in the words. That is why the
             read stays thin and a person takes it.
           </p>
         )}
@@ -526,7 +519,7 @@ export function MatchResult({
             <div className="flex flex-col gap-4">
               {token ? (
                 <p className="font-plex-mono text-[12px] text-quill/70">
-                  Private link: {`/match/${token.slice(0, 8)}…`} — keep it, it
+                  Private link: {`/match/${token.slice(0, 8)}…`}. Keep it, it
                   reopens this read. It is not indexed.
                 </p>
               ) : null}
@@ -535,9 +528,8 @@ export function MatchResult({
           </div>
         </div>
         <p className="mt-6 font-plex-mono text-[10px] uppercase tracking-[0.08em] text-quill/45">
-          Deterministic by construction · every signal, row, and name in this
-          every name points at published work or is marked as read by hand · no model, no
-          score
+          Deterministic by construction. Every condition, row, and name points
+          at published work or is marked as read by hand. No model, no score
         </p>
       </Reveal>
     </div>

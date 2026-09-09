@@ -4,7 +4,7 @@ import { Hero } from "@/components/Hero";
 import { Landing } from "@/components/Landing";
 
 export const metadata: Metadata = buildMetadata({
-  title: "The catalogue",
+  title: "It looks finished. It will not ship.",
   description:
     "Senior studio in Lahore. Fixed scope, named people, a portal you can watch. A free Read, a $400 Session, a $1,500 Check. Credited if we take the Close.",
   path: "/",

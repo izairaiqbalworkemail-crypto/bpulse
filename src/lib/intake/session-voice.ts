@@ -24,7 +24,7 @@ export function askLine(field: FieldConfig, answers: Record<string, string>): st
     return "What are you sitting on that will not ship?";
   }
   if (field.name === "situation") {
-    return "Which is it — almost done, stalled, live but fragile, or still an idea?";
+    return "Which is it: almost done, stalled, live but fragile, or still an idea?";
   }
   if (field.name === "stack") return "What is the stack, roughly?";
   if (field.name === "access") return "Can we read the repo, or not yet?";
@@ -34,10 +34,10 @@ export function askLine(field: FieldConfig, answers: Record<string, string>): st
   if (field.name === "company") return "Company, or stealth?";
   if (field.name === "idea") return "What's the product, in one or two lines?";
   if (field.name === "spec") return "A written spec, or just the idea?";
-  if (field.name === "budget") return "A range, if you have one — or skip it.";
+  if (field.name === "budget") return "A range, if you have one. Or skip it.";
   if (field.name === "progress") return "How far did it get?";
   if (field.name === "stage") return "Where is it, honestly?";
-  if (field.name === "mode") return "Which door — join, or pitch?";
+  if (field.name === "mode") return "Which door: join, or pitch?";
   if (field.name === "link") return "A link we can open.";
   if (field.name === "detail") return "What would you bring, or what's the idea?";
   if (field.name === "timeline") return "When does this need to be moving?";
@@ -53,7 +53,7 @@ export function readBack(
 
   if (field.name === "situation") {
     if (/idea/i.test(answer)) {
-      return `“${q}.” Then the Check is the wrong door — we will still reply and say so. If something is already built, stay.`;
+      return `“${q}.” Then the Check is the wrong door. We will still reply and say so. If something is already built, stay.`;
     }
     if (/stalled/i.test(answer)) {
       return `“${q}.” Familiar. We read the repo cold and say what is salvageable.`;
@@ -71,7 +71,7 @@ export function readBack(
     if (AI_RE.test(answer)) {
       return `“${q}.” There is a model in there. We treat that as a product, not a prompt.`;
     }
-    return `“${q}.” That is the wound. Five days: read, trace, map, grade, report.`;
+    return `“${q}.” That is the wound. Five days: read, map, grade, write, report.`;
   }
 
   if (field.name === "stack") {
@@ -103,7 +103,7 @@ export function readBack(
 export function arrivalGrade(situation: string): string {
   if (/stalled/i.test(situation)) return "Stalled on arrival";
   if (/fragile|live/i.test(situation)) return "Unstable on arrival";
-  if (/idea/i.test(situation)) return "Wrong door — nothing built";
+  if (/idea/i.test(situation)) return "Wrong door. Nothing built";
   if (/almost/i.test(situation)) return "Incomplete on arrival";
   return "Condition unwritten";
 }

@@ -5,20 +5,16 @@ import { useMemo, useState } from "react";
 import { LotPlate } from "@/components/catalog/LotPlate";
 import { Reveal } from "@/components/landing/Reveal";
 import { FilterBar } from "@/components/FilterBar";
-import { Trace } from "@/components/trace/Trace";
 import {
   entryStates,
   getCatalogue,
   type CatalogueRow,
 } from "@/content/catalogue";
 import { brand } from "@/config/brand";
+import { caseNumber } from "@/content/lots";
 import { getSpecialist } from "@/content/specialists";
 import { lotStatus } from "@/lib/assignment";
-import {
-  specFromIndex,
-  specFromLot,
-  verifiedFigures,
-} from "@/lib/lot-trace";
+import { verifiedFigures } from "@/lib/lot-trace";
 
 const ALL = "all";
 
@@ -55,20 +51,19 @@ function rowMeta(row: CatalogueRow): string {
     .join(" · ");
 }
 
-/** A row in the ledger: trace, client + line, and a mono tail. No card box. */
+/** A row in the ledger: case number, client + line, and a mono tail. No card box. */
 function LedgerRow({ row }: Readonly<{ row: CatalogueRow }>) {
   const href = rowHref(row);
-  const spec =
-    row.kind === "lot" ? specFromLot(row.lot) : specFromIndex(row.project);
   const proof = row.kind === "lot" ? verifiedFigures(row.lot)[0] : undefined;
   const meta = rowMeta(row);
+  const mark = row.kind === "lot" ? caseNumber(row.lot) : row.project.year;
   const outer =
     "group grid grid-cols-1 gap-3 py-5 md:grid-cols-[7.5rem_minmax(0,1fr)_auto] md:items-center md:gap-6";
 
   const inner = (
     <>
-      <span className="w-[7.5rem] shrink-0">
-        <Trace spec={spec} size="inline" surface="paper" />
+      <span className="w-[7.5rem] shrink-0 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/60">
+        {mark}
       </span>
       <span className="min-w-0">
         <span className="font-plex-sans text-[16px] font-medium text-ink underline decoration-ink/35 underline-offset-4 transition-colors group-hover:decoration-ink">

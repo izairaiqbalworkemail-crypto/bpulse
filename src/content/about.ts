@@ -89,7 +89,7 @@ export const aboutStart = {
   heading: "The Read.",
   line: "A written read of what is stuck. Free.",
   href: "/read",
-  label: "Start",
+  label: "Get my free read",
 } as const;
 
 export const admittedCount = specialists.length;

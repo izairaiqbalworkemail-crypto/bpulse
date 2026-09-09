@@ -35,7 +35,7 @@ export default async function TeamOg({
             fontSize: 48,
           }}
         >
-          Not in the catalogue
+          Not published
         </div>
       ),
       { ...size },

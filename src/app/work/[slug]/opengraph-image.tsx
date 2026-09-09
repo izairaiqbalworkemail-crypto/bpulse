@@ -34,7 +34,7 @@ export default async function LotOg({
             fontSize: 48,
           }}
         >
-          Not in the catalogue
+          Not published
         </div>
       ),
       { ...size },

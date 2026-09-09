@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { cta, siteNav } from "../config/site";
+import { heroCopy } from "./hero";
 import { footerNav, homeQuestions, pulseCopy, visibilityCopy, whereCopy } from "./home";
 import { getDemoOverview } from "./demo";
 import { findLot } from "./lots";
@@ -23,11 +24,9 @@ describe("wave 1 funnel locks", () => {
   });
 
   it("lets a stranger repeat what the studio does from the first screen", () => {
-    const claim = pulseCopy.claim
-      .map((part) => (typeof part === "object" ? part.mark : part))
-      .join("");
-    expect(claim).toMatch(/stuck at 80%/);
-    expect(pulseCopy.dek).toMatch(/last twenty percent/);
+    expect(heroCopy.claim.join(" ")).toMatch(/It looks finished/);
+    expect(heroCopy.claim.join(" ")).toMatch(/It will not ship/);
+    expect(heroCopy.dek).toMatch(/last twenty percent/i);
     expect(pulseCopy.primary).toBe("Get my free read");
     expect(pulseCopy.primaryHref).toBe("/read");
     expect(pulseCopy.secondaryHref).toBe("/work");

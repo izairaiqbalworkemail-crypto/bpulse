@@ -19,23 +19,24 @@ export default function Error({
     <>
       <PageHero
         kicker="Error"
-        title="Something on this page stopped."
-        dek="The page hit an error before it could render. This was not your fault."
-        hideAction
+        title="This page stopped."
+        dek="Something failed before it could render. That was not your fault."
+        actionHref="/read"
+        actionLabel="Get my free read"
       />
-      <div className="grid-container flex gap-4 py-16">
+      <div className="grid-container flex flex-wrap gap-4 py-16">
         <button
           type="button"
           onClick={reset}
-          className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-plex-sans text-[15px] font-medium text-ink"
+          className="btn btn-ink min-h-12 px-8 text-[15px]"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-6 py-3 font-plex-sans text-[15px] font-medium text-ink"
+          className="font-plex-sans text-[15px] text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
         >
-          Back to the catalogue
+          Back home
         </Link>
       </div>
     </>

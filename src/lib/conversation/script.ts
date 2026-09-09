@@ -66,7 +66,7 @@ export const checkScript: Script = {
     },
     {
       name: "modelOnData",
-      ask: "How does the model behave on real data — not the demo set?",
+      ask: "How does the model behave on real data, not the demo set?",
       kind: "textarea",
       required: true,
       placeholder: "What it gets wrong, what you cannot yet measure.",
@@ -85,11 +85,11 @@ export const checkScript: Script = {
       kind: "chips-text",
       required: true,
       chips: BUILDERS,
-      extraPlaceholder: "A name, a shop, or a short note — optional.",
+      extraPlaceholder: "A name, a shop, or a short note. Optional.",
     },
     {
       name: "docsLeft",
-      ask: "Is any of it written down — the auth, the deploy, the decisions?",
+      ask: "Is any of it written down? The auth, the deploy, the decisions.",
       kind: "textarea",
       required: true,
       placeholder: "A README, a Notion page, nothing, a person who left with it.",
@@ -102,7 +102,7 @@ export const checkScript: Script = {
       ask: "What's the deadline that matters?",
       kind: "textarea",
       required: true,
-      placeholder: "A board date, a contract, a launch window — or none.",
+      placeholder: "A board date, a contract, a launch window, or none.",
     },
     {
       name: "identity",

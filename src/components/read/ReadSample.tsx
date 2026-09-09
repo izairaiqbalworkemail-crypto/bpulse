@@ -9,15 +9,15 @@ export function ReadSample() {
     <section
       id="sample"
       aria-labelledby="sample-heading"
-      className="on-ink overflow-x-clip bg-ink text-read"
+      className="overflow-x-clip bg-paper text-ink"
     >
       <div className="stage-container py-24 md:py-32">
-        <p className="font-plex-mono text-[11px] uppercase tracking-[0.06em] text-label">
+        <p className="font-plex-mono text-[11px] uppercase tracking-[0.06em] text-quill">
           {readSpecimen.n} · {readSpecimen.section}
         </p>
         <h2
           id="sample-heading"
-          className="type-display mt-8 max-w-[12ch] font-newsreader text-[clamp(2rem,4vw,3.5rem)] text-paper"
+          className="type-display mt-8 max-w-[12ch] font-newsreader text-[clamp(2rem,4vw,3.5rem)] text-ink"
         >
           {readSpecimen.heading}
         </h2>

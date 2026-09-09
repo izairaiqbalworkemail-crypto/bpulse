@@ -124,7 +124,7 @@ export default function DirectPage() {
                         </div>
                         {shipped.length > 0 ? (
                           <p className="mt-5 font-plex-mono text-[12px] uppercase tracking-[0.06em] text-quill/60">
-                            Lots · {shipped.map((lot) => lot.client).join(" · ")}
+                            Work · {shipped.map((lot) => lot.client).join(" · ")}
                           </p>
                         ) : null}
                         <p className="mt-3 font-newsreader text-[17px] leading-[1.4] text-quill">

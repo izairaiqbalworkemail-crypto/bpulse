@@ -64,7 +64,7 @@ export function buildKeepReport(): CheckReport {
   return {
     id: "keep",
     tab: "You don't need us",
-    verdict: "keep — you don't need us",
+    verdict: "Keep. You do not need us.",
     prepared: null,
     preparedNote: null,
     clientLine: "No public engagement file · keep",

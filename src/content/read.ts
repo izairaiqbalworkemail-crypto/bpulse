@@ -13,15 +13,19 @@ export const readOffer = {
   n: "01",
   kicker: "The Read · Lahore",
   heading: "Free. One business day.",
-  dek: "Tell us what is stuck. Aneeb writes what we think is happening, what we would look at first, and what we cannot tell yet.",
-  pledge: "He reads it himself. No call. No pitch inside it.",
+  what:
+    "The Read is a written first diagnosis from a senior engineer. We send what we think is happening, what we would check first, and what we cannot verify from your note alone.",
+  who: "This is for stuck builds, prototypes that must become real, and idea-stage founders who have no code yet.",
+  idea:
+    "You do not need a repo, a spec, or a budget. \"I have an idea and I do not know if it is buildable\" is enough for question one.",
+  not: "This is not a sales trap. No call, no pitch, no second follow-up. A real person writes one read and sends it. We continue only if you reply.",
 } as const;
 
 export const readWhy = {
   n: "03",
   kicker: "Why it is free",
   heading: "Why it is free.",
-  body: "Thirty minutes of a senior engineer, written and sent. It is free because it is the best demonstration of judgement we have, and because most people who read one do not need us.",
+  body: "A senior engineer writes it in one business day. It is free because it is the best demonstration of judgement we have, and because most people who read one do not need us.",
   next: "If you do, the Check is where it goes next.",
 } as const;
 

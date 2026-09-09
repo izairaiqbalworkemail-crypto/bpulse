@@ -19,7 +19,6 @@ export default function SecurityPage() {
         kicker="Security"
         title="Data handling and disclosure routes."
         dek={pageFrame.security}
-        hideAction
       />
 
       <div className="relative overflow-hidden pb-24 md:pb-32">
@@ -35,7 +34,7 @@ export default function SecurityPage() {
                   key={row.name}
                   className="border-t border-ink/8 py-3 font-newsreader text-[17px] leading-[1.5] text-quill first:border-t-0 first:pt-0"
                 >
-                  {row.name} — {row.role}
+                  {row.name}. {row.role}
                 </li>
               ))}
             </ul>

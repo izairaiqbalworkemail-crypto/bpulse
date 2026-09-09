@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { progress } from "@/content/demo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "The platform — progress",
+  title: "The platform. Progress",
   description: "Sample commits, deploys, and burndown. Not a live feed.",
   path: "/demo/progress",
 });
@@ -16,7 +16,7 @@ export default function DemoProgressPage() {
       </h2>
       <p className="mt-3 max-w-measure font-newsreader text-reading leading-reading text-quill">
         Sample data. When a real portal ships, unwired integrations show “not
-        connected” — as production does here.
+        connected”, as production does here.
       </p>
 
       <h3 className="mt-12 font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">

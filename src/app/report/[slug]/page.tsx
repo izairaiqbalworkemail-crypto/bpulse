@@ -21,7 +21,7 @@ export async function generateMetadata({
   const report = getReport(slug);
   if (!report) return { robots: { index: false, follow: false } };
   return {
-    title: `${report.company} — bpulse report`,
+    title: `${report.company}. bpulse report`,
     description: report.theRead,
     robots: { index: false, follow: false },
     alternates: { canonical: `https://report.bpulse.dev/${report.slug}` },

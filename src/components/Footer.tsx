@@ -23,7 +23,7 @@ const columns = [
  */
 export function Footer() {
   return (
-    <footer className="w-full bg-ink text-paper">
+    <footer className="letter-colophon w-full bg-ink text-paper">
       <div className="stage-container pt-14 pb-10 md:pt-16 md:pb-12">
         <div className="flex items-center gap-4">
           <Mark size={40} />
@@ -56,7 +56,7 @@ export function Footer() {
         </p>
 
         <p className="mt-6 font-plex-mono text-[12px] text-label">
-          set in Newsreader and IBM Plex · Lahore · this edition {edition.date} ·
+          Source Serif 4 and IBM Plex · Lahore · this edition {edition.date} ·
           build {pkg.version} · © {copyrightYear} {brand.legalName}
         </p>
       </div>

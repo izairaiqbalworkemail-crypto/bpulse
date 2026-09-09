@@ -11,28 +11,52 @@ import { scrollToSection, takeIntakeJump } from "@/lib/scroll-section";
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const report =
+    pathname === "/report" ||
     pathname.startsWith("/report/") ||
     pathname.startsWith("/read/") ||
-    pathname.startsWith("/match/");
+    pathname.startsWith("/match/") ||
+    pathname.startsWith("/careers/diagnostic/") ||
+    pathname.startsWith("/careers/status/");
   const home = pathname === "/";
-  let mainClass = "min-h-screen bg-paper text-quill";
-  if (report) mainClass = "min-h-screen";
-  else if (home) mainClass = "letter-night min-h-screen";
+  const bleed = !report && !home;
+  const strip =
+    pathname === "/about" ||
+    pathname.startsWith("/work") ||
+    pathname.startsWith("/team");
+  const mainClass = report
+    ? "min-h-screen"
+    : home
+      ? "letter-desk letter-night min-h-screen bg-transparent"
+      : "letter-bleed min-h-screen bg-paper";
 
   useLayoutEffect(() => {
+    document.documentElement.classList.toggle("letter-desk", home);
     document.documentElement.classList.toggle("letter-night", home);
-    return () => document.documentElement.classList.remove("letter-night");
-  }, [home]);
+    document.documentElement.classList.toggle("letter-bleed", bleed);
+    return () => {
+      document.documentElement.classList.remove(
+        "letter-desk",
+        "letter-night",
+        "letter-bleed",
+      );
+    };
+  }, [bleed, home]);
 
   useLayoutEffect(() => {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
 
+    const jumpToHash = () => {
+      const id = window.location.hash.replace(/^#/, "");
+      if (!id) return false;
+      if (!document.getElementById(id)) return false;
+      requestAnimationFrame(() => scrollToSection(id));
+      return true;
+    };
+
     const pinTop = () => {
-      if (window.location.hash) {
-        window.history.replaceState(null, "", pathname);
-      }
+      if (jumpToHash()) return;
       window.scrollTo(0, 0);
     };
 
@@ -42,7 +66,17 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       return;
     }
 
-    pinTop();
+    if (!jumpToHash()) {
+      const retry = window.setTimeout(() => {
+        if (!jumpToHash()) pinTop();
+      }, 80);
+      window.addEventListener("pageshow", pinTop);
+      return () => {
+        window.clearTimeout(retry);
+        window.removeEventListener("pageshow", pinTop);
+      };
+    }
+
     window.addEventListener("pageshow", pinTop);
     return () => window.removeEventListener("pageshow", pinTop);
   }, [pathname]);
@@ -53,7 +87,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <main className={mainClass}>{children}</main>
       {report ? null : (
         <>
-          <DirectStrip />
+          {home || !strip ? null : <DirectStrip />}
           <Footer />
         </>
       )}

@@ -46,7 +46,6 @@ export default function LegalIndexPage() {
             .
           </>
         }
-        hideAction
       />
 
       <div className="stage-container py-16 md:py-24">

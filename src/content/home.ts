@@ -13,7 +13,7 @@ export type ClaimSegment =
 
 export const pulseCopy = {
   n: "01",
-  kicker: "Lahore · a studio",
+  kicker: "Lahore studio",
   claim: ["Your build is ", { mark: "stuck", tone: "stuck" }, " at 80%"] as const,
   dek: "The last twenty percent eats calendars and confidence. That is where we work.",
   primary: "Get my free read",
@@ -40,7 +40,9 @@ export const pulseCopy = {
 
 export const whereCopy = {
   n: "02",
-  kicker: "Where are you",
+  kicker: "Start",
+  heading: "Start at the matching offer.",
+  dek: "If you are not sure, start at the Read.",
   recommended: "recommended",
   rows: [
     {
@@ -82,11 +84,26 @@ export const whereCopy = {
   ],
 } as const;
 
+export const suggestCopy = {
+  kicker: "Suggestion",
+  heading: "What is stuck.",
+  dek: "Tap what is true, or write it. We name a start, a price, and a person. The Read is free if this is wrong.",
+  picks: "What is true",
+  write: "Or write it",
+  placeholder: "It has been on staging for months. One person knows the release.",
+  action: "Suggest my start",
+  empty: "Tap a situation, or say what is stuck.",
+  because: "If this is true",
+  next: "Get my free read",
+  match: "See the full match",
+  matchHref: "/match",
+} as const;
+
 export const visibilityCopy = {
   n: "03",
-  kicker: "Visibility",
-  heading: "They sell a person. You get a login.",
-  dek: "They sell a person. You get a login.",
+  kicker: "Portal",
+  heading: "A login you can watch.",
+  dek: "Scope, progress, and the revocation log. Sample data. No account.",
   sample: "Sample",
   open: "Show me the sample",
   openHref: "/demo",
@@ -214,9 +231,11 @@ export const termsCredit =
 export const proofCopy = {
   n: "04",
   kicker: "Proof",
-  heading: "We have seen this stall.",
-  dek: "Tap what is true. Two that match a published case will open it.",
+  heading: "Tap what is true.",
+  dek: "Two that match a published case will open it.",
   empty: "Two or more that match a published case will open it.",
+  skip: "Or skip this. The Read is free.",
+  skipHref: "/read",
   none: "No published case shares two of these yet.",
   other: "A published case shares this. It is on Work.",
   open: "Read the case",
@@ -227,7 +246,7 @@ export const happensCopy = {
   n: "05",
   kicker: "What happens",
   heading: "Read, diagnose, build, handover.",
-  dek: "What we do, what you sign, what you receive. No vibes based project plan.",
+  dek: "What we do, what you sign, what you receive.",
   stages: [
     {
       id: "read",
@@ -246,7 +265,6 @@ export const happensCopy = {
     {
       id: "build",
       label: "Build",
-      current: true,
       do: "The people who scoped it ship it. Scope stays locked. A change is a change order, priced and re-signed.",
       sign: "The locked scope, and each change order after that.",
       receive: "Weekly written updates. A login. Commits when they are connected.",
@@ -287,8 +305,8 @@ export const whoCopy = {
 export const afterCopy = {
   n: "08",
   kicker: "After",
-  heading: "Every agency wants you dependent. This one is designed to make you not need us.",
-  lede: "The offer is not a retainer that follows you forever. It is a handover ledger: your repo, your keys, your team taught on your code, then access revoked and the door left open.",
+  heading: "Built so you do not need us.",
+  lede: "Your repo, your keys, your team taught on your code. Then we revoke what we held.",
   engineerId: "hassan",
   teach:
     "You would work with Hassan. He owned the compliance-grade infrastructure on DeepIDV. He would teach your team on your repository, not a sample one.",
@@ -308,9 +326,9 @@ export const afterCopy = {
 
 export const doubtCopy = {
   n: "09",
-  kicker: "Doubt",
-  heading: "The parts that hurt.",
-  dek: "Open the one you already feel. No script, no scare tactics. Straight answers.",
+  kicker: "Questions",
+  heading: "What we are bad at.",
+  dek: "Straight answers. The first question is the honest one.",
   band: "Not sure yet?",
   bandNote:
     "The Read is free, lands in one business day, and tells you in writing what is actually stuck.",

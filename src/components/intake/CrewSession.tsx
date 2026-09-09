@@ -77,7 +77,7 @@ const SESSIONS: Record<IntakeType, SessionCopy> = {
     intro: [
       {
         memberId: "aneeb",
-        text: "This is the scope session for a new build. Every answer you give lands on a live brief as you go — a person reads it, not a queue.",
+        text: "This is the scope session for a new build. Every answer you give lands on a live brief as you go. A person reads it, not a queue.",
       },
       {
         memberId: "hassan",
@@ -489,11 +489,11 @@ const SESSIONS: Record<IntakeType, SessionCopy> = {
     intro: [
       {
         memberId: checkRunner.id,
-        text: `The Check. Five days. $${offer.check.price.toLocaleString("en-US")}. Real questions — a person reads the brief tomorrow. No one is typing now.`,
+        text: `The Check. Five days. $${offer.check.price.toLocaleString("en-US")}. Real questions. A person reads the brief tomorrow. No one is typing now.`,
       },
     ],
     ask: {
-      situation: "Which is it — almost done, stalled, live but fragile, or still an idea?",
+      situation: "Which is it: almost done, stalled, live but fragile, or still an idea?",
       build: "What is stuck? The last thing that will not ship.",
       stack: "What is the stack, roughly?",
       access: "Can we read the repo, or not yet?",
@@ -534,7 +534,7 @@ const SESSIONS: Record<IntakeType, SessionCopy> = {
         member: () => checkRunner.id,
         say: (answer) =>
           /idea/i.test(answer)
-            ? "\u201cJust an idea\u201d. Then the Check is the wrong door — write us on /contact and we will say so. If something is already built, stay here."
+            ? "\u201cJust an idea\u201d. Then the Check is the wrong door. Write us on /contact and we will say so. If something is already built, stay here."
             : /stalled/i.test(answer)
               ? "\u201cStalled\u201d. Familiar. We read the repo cold and tell you what is salvageable."
               : /fragile/i.test(answer)
@@ -547,12 +547,12 @@ const SESSIONS: Record<IntakeType, SessionCopy> = {
         say: (answer, answers) => {
           const quote = `\u201c${quoteOf(answer)}\u201d`;
           if (/idea/i.test(answers.situation ?? "")) {
-            return `${quote}. Logged. If there is no repo yet, the Check is the wrong door — we will still reply and say so.`;
+            return `${quote}. Logged. If there is no repo yet, the Check is the wrong door. We will still reply and say so.`;
           }
           if (AI_RE.test(answer)) {
             return `${quote}. There is a model in there. We treat that as a product, not a prompt.`;
           }
-          return `${quote}. That is the wound. Five days: read, trace, map, grade, report.`;
+          return `${quote}. That is the wound. Five days: read, map, grade, write, report.`;
         },
       },
       stack: {
@@ -618,7 +618,7 @@ const SESSIONS: Record<IntakeType, SessionCopy> = {
       },
       {
         memberId: checkRunner.id,
-        text: "This is an intake form that reads like a conversation. No one is typing — a person reads every answer and replies within one business day.",
+        text: "This is an intake form that reads like a conversation. No one is typing. A person reads every answer and replies within one business day.",
       },
     ],
     ask: {
@@ -1040,7 +1040,7 @@ export function CrewSession({
         title: session.successTitle,
         text: data.emailed
           ? session.successText
-          : "Brief saved on this desk. A person will read it — email goes out once Resend is connected. No payment was taken.",
+          : "Brief saved on this desk. A person will read it. Email goes out once Resend is connected. No payment was taken.",
       });
       setPhase("done");
       setDeliveryNote(
@@ -1392,7 +1392,7 @@ export function CrewSession({
                     <br />
                     {session.directWith
                       ? `Direct line to ${session.directWith}.`
-                      : "A brief, not a chat log — the person who answers has the whole page."}
+                      : "A brief, not a chat log. The person who answers has the whole page."}
                   </div>
                 </div>
               </div>
