@@ -13,14 +13,14 @@ export function WeekSpine() {
       {secondChairMonth.map((week, index) => (
         <Item key={week.id} className="py-2 first:pt-0 last:pb-0">
           <ObjectRow className="grid grid-cols-[3.25rem_minmax(0,1fr)] items-baseline gap-6">
-            <span className="relative z-10 font-plex-mono text-[13px] tabular-nums text-ink/55">
+            <span className="relative z-10 font-plex-mono text-[13px] tabular-nums text-quill/55">
               {String(index + 1).padStart(2, "0")}
             </span>
             <div>
-              <p className="font-newsreader text-[24px] leading-[1.2] text-iron md:text-[26px]">
+              <p className="font-newsreader text-[24px] leading-[1.2] text-ink md:text-[26px]">
                 {week.label}
               </p>
-              <p className="mt-2 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-ink">
+              <p className="mt-2 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-quill">
                 {week.detail}
               </p>
             </div>

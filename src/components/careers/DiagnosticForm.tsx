@@ -139,7 +139,7 @@ export function DiagnosticForm({
         initial={reduceMotion ? false : { opacity: 0, y: 14 }}
         animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.42, ease: "easeOut" }}
-        className="card mt-10 border-iron/15 p-7"
+        className="mt-10 border-t border-ink/15 pt-7"
       >
         <SubmissionSuccess
           kicker="Diagnostic filed"
@@ -148,11 +148,11 @@ export function DiagnosticForm({
           referenceId={token}
         />
         {statusToken ? (
-          <p className="mt-4 font-newsreader text-[16px] text-ink">
+          <p className="mt-4 font-newsreader text-[16px] text-quill">
             Status page: {" "}
             <Link
               href={`/careers/status/${statusToken}`}
-              className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+              className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
             >
               {`/careers/status/${statusToken}`}
             </Link>
@@ -167,39 +167,39 @@ export function DiagnosticForm({
       initial={reduceMotion ? false : { opacity: 0, y: 14 }}
       animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="card mt-10 border-iron/15 p-6 md:p-8"
+      className="mt-10 border-t border-ink/15 pt-6 md:pt-8"
     >
-      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-iron/12 pb-5">
+      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-ink/12 pb-5">
         <div>
-          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">
+          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">
             Diagnostic workspace
           </p>
-          <p className="mt-2 font-newsreader text-[28px] leading-[1.1] text-iron">
+          <p className="mt-2 font-newsreader text-[28px] leading-[1.1] text-ink">
             Build the launch read
           </p>
-          <p className="mt-2 font-newsreader text-[16px] text-ink">
+          <p className="mt-2 font-newsreader text-[16px] text-quill">
             {candidateName ?? "Candidate"} · {roleTitle ?? "Gate 0"}
           </p>
         </div>
         <div className="min-w-[14rem]">
-          <p className={`font-plex-mono text-[12px] tabular-nums ${closed ? "text-signal-ink" : "text-ink/65"}`}>
+          <p className={`font-plex-mono text-[12px] tabular-nums ${closed ? "text-diag" : "text-label"}`}>
             {closed ? "Window closed" : remainingLabel}
           </p>
-          <div className="mt-2 h-[3px] w-full bg-iron/10">
+          <div className="mt-2 h-[3px] w-full bg-ink/10">
             <motion.div
               animate={{ width: `${progress}%` }}
               transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
-              className="h-[3px] bg-iron"
+              className="h-[3px] bg-ink"
             />
           </div>
-          <p className="mt-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/55">
+          <p className="mt-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/55">
             Completion {progress}%
           </p>
         </div>
       </div>
 
-      <label className="mt-8 block rounded-[12px] border border-iron/10 bg-rag p-4">
-        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+      <label className="mt-8 block rounded-[12px] border border-ink/10 bg-paper p-4">
+        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/45">
           The read
         </span>
         <textarea
@@ -211,16 +211,16 @@ export function DiagnosticForm({
         />
       </label>
 
-      <div className="mt-8 rounded-[12px] border border-iron/10 bg-rag p-4">
+      <div className="mt-8 rounded-[12px] border border-ink/10 bg-paper p-4">
         <div className="flex items-end justify-between gap-3">
-          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/45">
             Findings · {findingCount}/5
           </p>
           <button
             type="button"
             disabled={isSubmitted || closed || form.findings.length >= 5}
             onClick={() => setForm((prev) => ({ ...prev, findings: [...prev.findings, emptyFinding()] }))}
-            className="min-h-11 font-plex-sans text-[14px] text-ink/50 underline decoration-iron/15 underline-offset-4 hover:text-iron disabled:opacity-40"
+            className="min-h-11 font-plex-sans text-[14px] text-quill/50 underline decoration-ink/15 underline-offset-4 hover:text-ink disabled:opacity-40"
           >
             Add finding
           </button>
@@ -233,9 +233,9 @@ export function DiagnosticForm({
               initial={reduceMotion ? false : { opacity: 0, y: 8 }}
               animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.24, ease: "easeOut" }}
-              className="rounded-[10px] border border-iron/10 bg-rag-card p-4"
+              className="rounded-[10px] border border-ink/10 bg-paper-card p-4"
             >
-              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+              <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/45">
                 Finding {String(index + 1).padStart(2, "0")}
               </p>
               <textarea
@@ -274,8 +274,8 @@ export function DiagnosticForm({
         </div>
       </div>
 
-      <label className="mt-8 block rounded-[12px] border border-iron/10 bg-rag p-4">
-        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+      <label className="mt-8 block rounded-[12px] border border-ink/10 bg-paper p-4">
+        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/45">
           What it takes
         </span>
         <textarea
@@ -287,8 +287,8 @@ export function DiagnosticForm({
         />
       </label>
 
-      <label className="mt-8 block rounded-[12px] border border-iron/10 bg-rag p-4">
-        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/45">
+      <label className="mt-8 block rounded-[12px] border border-ink/10 bg-paper p-4">
+        <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/45">
           Limits · at least one
         </span>
         <textarea
@@ -300,7 +300,7 @@ export function DiagnosticForm({
         />
       </label>
 
-      <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-iron/10 pt-5">
+      <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-ink/10 pt-5">
         <button
           type="button"
           onClick={() => void saveDraft()}
@@ -317,7 +317,7 @@ export function DiagnosticForm({
         >
           {submitting ? "Filing…" : "File the diagnostic"}
         </button>
-        <p className="font-newsreader text-[15px] text-ink">
+        <p className="font-newsreader text-[15px] text-quill">
           {message}
           {lastSavedAt ? ` Last save ${lastSavedAt}.` : ""}
         </p>

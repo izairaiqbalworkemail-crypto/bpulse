@@ -1,10 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { getSpecialist, specialists } from "@/content/specialists";
+import { findSpecialist, specialists } from "@/content/specialists";
+import { palette } from "@/lib/brand/palette";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return specialists.map((person) => ({ slug: person.id }));
@@ -16,7 +19,28 @@ export default async function TeamOg({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const person = getSpecialist(slug);
+  const person = findSpecialist(slug);
+  if (!person) {
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "flex-end",
+            backgroundColor: palette.ink,
+            color: palette.paper,
+            padding: 64,
+            fontSize: 48,
+          }}
+        >
+          Not published
+        </div>
+      ),
+      { ...size },
+    );
+  }
   const icon = await readFile(
     join(process.cwd(), "public/bpulse-brand/icon/bpulse-icon-512.png")
   );
@@ -31,7 +55,7 @@ export default async function TeamOg({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#161614",
+          backgroundColor: palette.ink,
           padding: 64,
         }}
       >
@@ -42,14 +66,14 @@ export default async function TeamOg({
           alt=""
           style={{ position: "absolute", top: 64, left: 64 }}
         />
-        <div style={{ fontSize: 22, color: "#f4eee6", opacity: 0.7 }}>
+        <div style={{ fontSize: 22, color: palette.paper, opacity: 0.7 }}>
           {person.role}
         </div>
         <div
           style={{
             marginTop: 16,
             fontSize: 56,
-            color: "#f4eee6",
+            color: palette.paper,
             lineHeight: 1.1,
             letterSpacing: "-0.03em",
           }}
@@ -60,7 +84,7 @@ export default async function TeamOg({
           style={{
             marginTop: 20,
             fontSize: 32,
-            color: "#f2c230",
+            color: palette.gold,
             maxWidth: 900,
             lineHeight: 1.2,
           }}

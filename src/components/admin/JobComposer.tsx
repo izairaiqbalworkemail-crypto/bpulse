@@ -40,27 +40,27 @@ export function JobComposer() {
   }
 
   return (
-    <div className="border-y border-iron/20 py-4">
-      <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">Post job</p>
+    <div className="border-y border-ink/20 py-4">
+      <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">Post job</p>
       <div className="mt-3 grid gap-3 md:grid-cols-2">
         <input
           value={title}
           onChange={(event) => setTitle(event.target.value)}
           placeholder="Role title"
-          className="border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+          className="border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
           disabled={saving}
         />
         <input
           value={pod}
           onChange={(event) => setPod(event.target.value)}
           placeholder="Pod"
-          className="border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+          className="border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
           disabled={saving}
         />
         <select
           value={status}
           onChange={(event) => setStatus(event.target.value as (typeof statuses)[number])}
-          className="border border-iron/25 bg-rag px-3 py-2 font-plex-mono text-[12px]"
+          className="border border-ink/25 bg-paper px-3 py-2 font-plex-mono text-[12px]"
           disabled={saving}
         >
           {statuses.map((item) => (
@@ -71,14 +71,14 @@ export function JobComposer() {
           value={location}
           onChange={(event) => setLocation(event.target.value)}
           placeholder="Location"
-          className="border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+          className="border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
           disabled={saving}
         />
         <input
           value={band}
           onChange={(event) => setBand(event.target.value)}
           placeholder="$2,600-$3,600 / month"
-          className="border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px] md:col-span-2"
+          className="border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px] md:col-span-2"
           disabled={saving}
         />
         <textarea
@@ -86,7 +86,7 @@ export function JobComposer() {
           onChange={(event) => setSummary(event.target.value)}
           placeholder="What this role owns"
           rows={3}
-          className="border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px] md:col-span-2"
+          className="border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px] md:col-span-2"
           disabled={saving}
         />
       </div>
@@ -95,11 +95,11 @@ export function JobComposer() {
           type="button"
           onClick={() => void submit()}
           disabled={saving}
-          className="border border-iron/25 px-4 py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron"
+          className="border border-ink/25 px-4 py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink"
         >
           {saving ? "Posting..." : "Post job"}
         </button>
-        {message ? <p className="font-plex-sans text-[12px] text-ink/70">{message}</p> : null}
+        {message ? <p className="font-plex-sans text-[12px] text-quill/70">{message}</p> : null}
       </div>
     </div>
   );

@@ -239,7 +239,7 @@ export function ConditionDesk({
                 void submit();
               }}
             >
-              {busy ? "Filing…" : `File · ${price}`}
+              {busy ? "Reserving…" : `Reserve · ${price}`}
             </DocketFile>
           ) : current && (current.type === "radio" || current.type === "select") ? null : current ? (
             <div className="flex items-center gap-4">

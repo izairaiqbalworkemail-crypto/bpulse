@@ -14,7 +14,7 @@ export function AdminLogoutButton() {
     <button
       type="button"
       onClick={() => void logout()}
-      className="border border-rag/20 px-4 py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/80 hover:text-rag"
+      className="border border-paper/20 px-4 py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-paper/80 hover:text-paper"
     >
       Logout
     </button>

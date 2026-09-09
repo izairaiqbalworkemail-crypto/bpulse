@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
 import { Reveal } from "@/components/landing/Reveal";
 import { legalTitle } from "@/components/legal/legal-ui";
 import {
@@ -30,7 +31,7 @@ export default function LegalIndexPage() {
   const byFamily = documentsByFamily();
 
   return (
-    <section className="w-full bg-rag text-iron">
+    <>
       <PageHero
         kicker="Legal & compliance"
         title="The register."
@@ -39,21 +40,20 @@ export default function LegalIndexPage() {
             {pageFrame.legal} Owned by{" "}
             <Link
               href="/team/hamza"
-              className="underline decoration-rag/30 underline-offset-4 hover:decoration-rag"
+              className="underline decoration-paper/30 underline-offset-4 hover:decoration-paper"
             >
               {legalOwner.name}
             </Link>
             .
           </>
         }
-        hideAction
       />
 
-      <div className="stage-container py-16 md:py-24">
+      <Episode tone="paper">
         {LEGAL_PUBLISH_STATUS === "draft" ? (
-          <section className="border border-ink/20 bg-rag px-6 py-5">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink">{DRAFT_NOTICE}</p>
-            <p className="mt-3 max-w-[66ch] font-plex-sans text-[15px] leading-[1.6] text-ink">
+          <section className="border border-quill/20 bg-paper px-6 py-5">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill">{DRAFT_NOTICE}</p>
+            <p className="mt-3 max-w-[66ch] font-plex-sans text-[15px] leading-[1.6] text-quill">
               Draft means legal counsel has not signed off yet. Text may change, and no document on this register is in force until review is recorded in LEGAL-REVIEW.md.
             </p>
           </section>
@@ -65,7 +65,7 @@ export default function LegalIndexPage() {
           return (
             <section key={family} className="mt-16 first:mt-0">
               <Reveal>
-                <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.12em] text-ink/70">
+                <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.12em] text-quill/70">
                   {LEGAL_FAMILY_LABEL[family]}
                 </h2>
               </Reveal>
@@ -84,18 +84,18 @@ export default function LegalIndexPage() {
                       const status = LEGAL_STATUS_META[doc.status];
                       return (
                         <tr key={doc.slug}>
-                          <th className="font-plex-sans text-[16px] font-normal text-iron">
+                          <th className="font-plex-sans text-[16px] font-normal text-ink">
                             <Link
                               href={`/legal/${doc.slug}`}
-                              className="underline decoration-iron/20 underline-offset-4 hover:decoration-iron"
+                              className="underline decoration-ink/20 underline-offset-4 hover:decoration-ink"
                             >
                               {legalTitle(doc.name)}
                             </Link>
                           </th>
-                          <td className="font-plex-mono text-[13px] text-ink">
+                          <td className="font-plex-mono text-[13px] text-quill">
                             {doc.version}
                           </td>
-                          <td className="font-plex-mono text-[13px] text-ink">
+                          <td className="font-plex-mono text-[13px] text-quill">
                             {doc.updatedAt}
                           </td>
                           <td className={`font-plex-mono text-[13px] ${status.class}`}>
@@ -111,41 +111,41 @@ export default function LegalIndexPage() {
           );
         })}
 
-        <section className="mt-24 border-t border-iron/12 pt-12">
+        <section className="mt-24 border-t border-ink/12 pt-12">
           <Reveal>
-            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.12em] text-ink/70">
+            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.12em] text-quill/70">
               What we sign with every client
             </h2>
-            <p className="mt-5 max-w-[52ch] font-newsreader text-[22px] leading-[1.35] text-iron">
+            <p className="mt-5 max-w-[52ch] font-newsreader text-[22px] leading-[1.35] text-ink">
               {contractSet.map((item) => item.name).join(" · ")}
             </p>
-            <p className="mt-3 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-ink">
+            <p className="mt-3 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-quill">
               A DPA and the SCC cover where personal data is involved.
             </p>
             <p className="mt-5">
               <Link
                 href="/demo/documents"
-                className="font-plex-sans text-[15px] underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+                className="font-plex-sans text-[15px] underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
               >
-                See them in the sample →
+                See them in the sample
               </Link>
             </p>
           </Reveal>
         </section>
 
-        <section className="mt-20 border-t border-iron/12 pt-12">
+        <section className="mt-20 border-t border-ink/12 pt-12">
           <Reveal>
-            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.12em] text-ink/70">
+            <h2 className="font-plex-mono text-[12px] uppercase tracking-[0.12em] text-quill/70">
               Transfers
             </h2>
-            <p className="mt-5 max-w-[58ch] font-newsreader text-[22px] leading-[1.4] text-iron">
+            <p className="mt-5 max-w-[58ch] font-newsreader text-[22px] leading-[1.4] text-ink">
               Where data lives, what leaves Pakistan, and the SCC route for EU
               and UK clients.
             </p>
-            <p className="mt-6 font-plex-sans text-[15px] leading-[1.55] text-ink">
+            <p className="mt-6 font-plex-sans text-[15px] leading-[1.55] text-quill">
               <Link
                 href="/legal/data"
-                className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+                className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
               >
                 /legal/data
               </Link>
@@ -153,7 +153,7 @@ export default function LegalIndexPage() {
             </p>
           </Reveal>
         </section>
-      </div>
-    </section>
+      </Episode>
+    </>
   );
 }

@@ -12,14 +12,14 @@ export function CompareLedger() {
   return (
     <div>
       <Reveal className="mt-12 overflow-x-auto">
-        <table className="legal-table min-w-[44rem]">
+        <table className="legal-table">
           <thead>
             <tr>
               <th> </th>
               {secondChairCompare.columns.map((column, index) => (
                 <th
                   key={column}
-                  className={index === ours ? "text-iron" : undefined}
+                  className={index === ours ? "text-ink" : undefined}
                 >
                   {column}
                 </th>
@@ -29,7 +29,7 @@ export function CompareLedger() {
           <tbody>
             {secondChairCompare.rows.map((row) => (
               <tr key={row.label}>
-                <th className="font-plex-sans text-[15px] font-normal text-iron">
+                <th className="font-plex-sans text-[15px] font-normal text-ink">
                   {row.label}
                 </th>
                 {row.cells.map((cell, index) => (
@@ -38,7 +38,7 @@ export function CompareLedger() {
                     className={
                       index === ours
                         ? "compare-ours font-plex-sans text-[15px] leading-[1.45]"
-                        : "font-plex-sans text-[15px] leading-[1.45] text-ink"
+                        : "font-plex-sans text-[15px] leading-[1.45] text-quill"
                     }
                   >
                     {cell}
@@ -50,7 +50,7 @@ export function CompareLedger() {
         </table>
       </Reveal>
       <Rise delay={0.12} className="mt-12">
-        <p className="max-w-[28ch] border-t border-iron/12 pt-8 font-newsreader text-[26px] leading-[1.25] text-iron md:text-[28px]">
+        <p className="max-w-[28ch] border-t border-ink/12 pt-8 font-newsreader text-[26px] leading-[1.25] text-ink md:text-[28px]">
           {secondChair.concede}
         </p>
       </Rise>

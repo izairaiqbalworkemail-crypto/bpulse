@@ -10,18 +10,29 @@ const before = LOT_PATTERNS.beforeProduction.length;
 const catalogue = lots.length;
 
 export const readOffer = {
-  heading: "Write Aneeb.",
-  dek: "Tell us what is stuck. What we think is happening, what we would look at first, and what we cannot tell yet.",
-  pledge: "He reads it himself. One business day. No call. No pitch inside it.",
+  n: "01",
+  kicker: "The Read · Lahore",
+  heading: "Free. One business day.",
+  what:
+    "The Read is a written first diagnosis from a senior engineer. We send what we think is happening, what we would check first, and what we cannot verify from your note alone.",
+  who: "This is for stuck builds, prototypes that must become real, and idea-stage founders who have no code yet.",
+  idea:
+    "You do not need a repo, a spec, or a budget. \"I have an idea and I do not know if it is buildable\" is enough for question one.",
+  not: "This is not a sales trap. No call, no pitch, no second follow-up. A real person writes one read and sends it. We continue only if you reply.",
 } as const;
 
 export const readWhy = {
+  n: "03",
+  kicker: "Why it is free",
   heading: "Why it is free.",
-  body: "Thirty minutes of a senior engineer, written and sent. It is free because it is the best demonstration of judgement we have, and because most people who read one do not need us.",
+  body: "A senior engineer writes it in one business day. It is free because it is the best demonstration of judgement we have, and because most people who read one do not need us.",
   next: "If you do, the Check is where it goes next.",
 } as const;
 
 export const readAfter = {
+  n: "04",
+  kicker: "After you send it",
+  heading: "Then we stop.",
   steps: [
     "You send it. We read it, usually the same day.",
     "A named engineer writes the read and sends it to you.",
@@ -31,9 +42,11 @@ export const readAfter = {
 } as const;
 
 export const readStart = {
+  n: "05",
+  kicker: "The ask",
   heading: "Send it.",
-  href: "#offer",
-  label: "Write Aneeb",
+  href: "#intake",
+  label: "Get my free read",
 } as const;
 
 /**
@@ -41,6 +54,9 @@ export const readStart = {
  * Prepared date is a specimen date, not a live filing.
  */
 export const readSpecimen = {
+  n: "02",
+  section: "What you get",
+  heading: "A real read.",
   kicker: "A READ",
   prepared: "4 Sep 2026",
   title: "[Company redacted], from your description",
@@ -50,7 +66,7 @@ export const readSpecimen = {
   },
   means: {
     label: "WHAT THAT USUALLY MEANS",
-    body: `${before} of the ${catalogue} builds we have taken over arrived the same way. In each, the gap was smaller than it looked from inside: a deploy path that was never written down, not a rebuild.`,
+    body: `${before} of the ${catalogue} builds we have taken over came to us the same way. In each, the gap was smaller than it looked from inside: a deploy path that was never written down, not a rebuild.`,
     href: "/work/deepidv",
     see: "see 031, DeepIDV",
   },

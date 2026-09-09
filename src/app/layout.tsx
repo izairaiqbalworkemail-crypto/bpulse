@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter, Source_Code_Pro } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Serif_4 } from "next/font/google";
 import { rootMetadata } from "@/lib/seo";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/JsonLd";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -12,23 +12,24 @@ export const viewport: Viewport = {
   interactiveWidget: "resizes-content",
 };
 
-const display = Fraunces({
+const display = Source_Serif_4({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-newsreader",
   display: "swap",
 });
 
-const sans = Inter({
+const sans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   variable: "--font-plex-sans",
   display: "swap",
 });
 
-const mono = Source_Code_Pro({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500"],
   variable: "--font-plex-mono",
   display: "swap",
 });
@@ -45,7 +46,7 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
-      <body className="bg-iron-2 text-ink">
+      <body className="bg-paper text-quill">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         <PublicAnalytics />

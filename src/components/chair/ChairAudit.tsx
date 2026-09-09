@@ -17,13 +17,13 @@ export function ChairAudit() {
           heading={secondChairAudit.claim}
         />
         <Reveal delay={0.12}>
-          <p className="font-plex-mono text-[40px] leading-none tabular-nums text-rag md:text-[48px]">
+          <p className="font-plex-mono text-[40px] leading-none tabular-nums text-paper md:text-[48px]">
             <Count prefix="$" to={auditPrice} />
           </p>
         </Reveal>
       </div>
       <Reveal delay={0.18}>
-        <p className="mt-6 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-rag/70">
+        <p className="mt-6 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-paper/70">
           {secondChairAudit.buyable}
         </p>
       </Reveal>
@@ -31,13 +31,13 @@ export function ChairAudit() {
         {secondChairAudit.looks.map((row) => (
           <Item key={row.name}>
             <ObjectRow
-              tone="iron"
+              tone="ink"
               className="grid gap-2 md:grid-cols-[14rem_minmax(0,1fr)] md:items-baseline"
             >
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-paper/70">
                 {row.name}
               </p>
-              <p className="font-newsreader text-[18px] leading-[1.45] text-rag">
+              <p className="font-newsreader text-[18px] leading-[1.45] text-paper">
                 {row.body}
               </p>
             </ObjectRow>

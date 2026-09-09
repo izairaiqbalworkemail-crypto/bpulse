@@ -19,6 +19,19 @@ function blob(value: unknown) {
 }
 
 describe("pricing page copy", () => {
+  it("never renders a paid price as zero or missing", () => {
+    for (const rung of pricingLadder) {
+      expect(rung.price.length).toBeGreaterThan(0);
+      if (rung.id === "read") {
+        expect(rung.price).toBe("Free");
+        continue;
+      }
+      expect(rung.price).toBe(ladder.find((item) => item.id === rung.id)?.price);
+      expect(rung.price).toMatch(/\$[1-9]/);
+      expect(rung.price).not.toMatch(/\$0\b/);
+    }
+  });
+
   it("publishes all six rungs with no form to see them", () => {
     expect(pricingLadder.map((rung) => rung.id)).toEqual(ladder.map((rung) => rung.id));
     expect(pricingMatchesLadder).toBe(true);
@@ -34,11 +47,22 @@ describe("pricing page copy", () => {
 
   it("routes every row to a published rung", () => {
     expect(pricingRoute).toHaveLength(6);
+    expect(pricingRoute[0]).toEqual({
+      if: "Not sure yet. Start here.",
+      start: "The Read",
+      href: "/read",
+    });
     for (const row of pricingRoute) {
       expect(pricingLadder.some((rung) => rung.href === row.href && rung.name === row.start)).toBe(
         true,
       );
     }
+  });
+
+  it("does not claim the Read is only an email", () => {
+    expect(pricingLadder.find((rung) => rung.id === "read")?.body).toBe(
+      "Five short questions. A written reply in one business day.",
+    );
   });
 
   it("lists what is not included, specifically", () => {

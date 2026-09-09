@@ -15,12 +15,12 @@ export function AboutOrigin() {
         {aboutOrigin.body.map((para) => (
           <p
             key={para}
-            className="mt-6 font-newsreader text-[20px] leading-[1.45] text-rag first:mt-0 md:text-[22px]"
+            className="mt-6 font-newsreader text-[20px] leading-[1.45] text-paper first:mt-0 md:text-[22px]"
           >
             {para}
           </p>
         ))}
-        <p className="mt-12 font-newsreader text-[22px] italic leading-none text-rag md:text-[24px]">
+        <p className="mt-12 font-newsreader text-[22px] italic leading-none text-paper md:text-[24px]">
           {aboutOrigin.signed}
         </p>
       </div>

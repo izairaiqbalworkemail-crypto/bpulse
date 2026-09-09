@@ -55,7 +55,7 @@ export function StatusPicker({ id, current }: Readonly<Props>) {
           value={status}
           onChange={(event) => setStatus(event.target.value as SubmissionStatus)}
           disabled={pending}
-          className="min-w-0 flex-1 border border-iron/25 bg-rag px-2 py-1 font-plex-mono text-[12px]"
+          className="min-w-0 flex-1 border border-ink/25 bg-paper px-2 py-1 font-plex-mono text-[12px]"
         >
           {submissionStatuses.map((item) => (
             <option key={item} value={item}>
@@ -67,12 +67,12 @@ export function StatusPicker({ id, current }: Readonly<Props>) {
           type="button"
           onClick={() => void save()}
           disabled={pending}
-          className="border border-iron/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron"
+          className="border border-ink/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink"
         >
           Save
         </button>
       </div>
-      {notice ? <p className="mt-1 font-plex-sans text-[12px] text-ink/70">{notice}</p> : null}
+      {notice ? <p className="mt-1 font-plex-sans text-[12px] text-quill/70">{notice}</p> : null}
     </div>
   );
 }

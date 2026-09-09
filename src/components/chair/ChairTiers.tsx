@@ -15,8 +15,8 @@ export function ChairTiers() {
   return (
     <div>
       {featured ? (
-        <Reveal className="price-object mt-12 bg-rag text-iron">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+        <Reveal className="price-object mt-12 bg-paper text-ink">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
             {featured.meter}
           </p>
           <p className="mt-3 font-newsreader type-display text-[40px] leading-none tabular-nums md:text-[52px]">
@@ -25,8 +25,8 @@ export function ChairTiers() {
               per month
             </span>
           </p>
-          <p className="mt-3 font-plex-sans text-[18px] text-iron">{featured.name}</p>
-          <p className="mt-3 max-w-[46ch] font-plex-sans text-[16px] leading-[1.55] text-ink">
+          <p className="mt-3 font-plex-sans text-[18px] text-ink">{featured.name}</p>
+          <p className="mt-3 max-w-[46ch] font-plex-sans text-[16px] leading-[1.55] text-quill">
             {featured.body}
           </p>
         </Reveal>
@@ -41,7 +41,7 @@ export function ChairTiers() {
             >
               <p className="font-plex-sans text-[16px]">{tier.name}</p>
               <p className="font-plex-mono text-[15px] tabular-nums">{tier.price}</p>
-              <p className="max-w-[46ch] font-plex-sans text-[16px] leading-[1.5] text-ink">
+              <p className="max-w-[46ch] font-plex-sans text-[16px] leading-[1.5] text-quill">
                 {tier.body}
               </p>
             </ObjectRow>
@@ -49,7 +49,7 @@ export function ChairTiers() {
         ))}
       </Stagger>
       <Reveal delay={0.1}>
-        <p className="mt-10 max-w-[52ch] font-plex-sans text-[15px] leading-[1.55] text-iron/80">
+        <p className="mt-10 max-w-[52ch] font-plex-sans text-[15px] leading-[1.55] text-ink/80">
           {noDiscount}
         </p>
       </Reveal>

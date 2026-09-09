@@ -1,13 +1,10 @@
 "use client";
 
 import {
-  animate,
   motion,
   useInView,
-  useMotionValue,
   useReducedMotion,
   useSpring,
-  useTransform,
 } from "motion/react";
 import {
   useEffect,
@@ -61,10 +58,10 @@ export function Reveal({ children, delay = 0, className }: Readonly<MotionBox>) 
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0 }}
-      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
+      initial={reduce ? false : { opacity: 0, y: 16 }}
+      animate={inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
       transition={
-        reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
+        reduce ? { duration: 0 } : { duration: 0.55, ease: landEase, delay }
       }
     >
       {children}
@@ -120,10 +117,11 @@ export function Item({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0 },
+        hidden: { opacity: 0, y: 18 },
         show: {
           opacity: 1,
-          transition: { duration: 0.3, ease: landEase },
+          y: 0,
+          transition: { duration: 0.55, ease: landEase },
         },
       }}
     >
@@ -142,10 +140,10 @@ export function Rise({ children, delay = 0, className }: Readonly<MotionBox>) {
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0 }}
-      animate={inView || reduce ? { opacity: 1 } : { opacity: 0 }}
+      initial={reduce ? false : { opacity: 0, y: 14 }}
+      animate={inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
       transition={
-        reduce ? { duration: 0 } : { duration: 0.35, ease: landEase, delay }
+        reduce ? { duration: 0 } : { duration: 0.55, ease: landEase, delay }
       }
     >
       {children}
@@ -217,31 +215,10 @@ export function Count({
   prefix = "",
   className,
 }: Readonly<{ to: number; prefix?: string; className?: string }>) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-20% 0px" });
-  const value = useMotionValue(reduce ? to : 0);
-  const rounded = useTransform(value, (latest) => Math.round(latest));
-  const [shown, setShown] = useState(reduce ? to : 0);
-
-  useEffect(() => {
-    const unsub = rounded.on("change", (latest) => setShown(latest));
-    return unsub;
-  }, [rounded]);
-
-  useEffect(() => {
-    if (!inView || reduce) return;
-    const controls = animate(value, to, {
-      duration: 1.35,
-      ease: [0.16, 0.84, 0.32, 1],
-    });
-    return () => controls.stop();
-  }, [inView, reduce, to, value]);
-
   return (
-    <span ref={ref} className={className}>
+    <span className={className}>
       {prefix}
-      {shown.toLocaleString("en-US")}
+      {to.toLocaleString("en-US")}
     </span>
   );
 }

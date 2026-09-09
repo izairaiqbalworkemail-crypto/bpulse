@@ -45,9 +45,9 @@ function Block({
   return (
     <section
       id={id}
-      className="scroll-mt-28 border-t border-iron/10 py-12 first:border-t-0 first:pt-0"
+      className="scroll-mt-28 border-t border-ink/10 py-12 first:border-t-0 first:pt-0"
     >
-      <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-iron md:text-[28px]">
+      <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-ink md:text-[28px]">
         {heading}
       </h2>
       <LegalPlain>{plain}</LegalPlain>
@@ -64,7 +64,7 @@ function Block({
 
 export default function LegalDataPage() {
   return (
-    <section className="w-full bg-rag text-iron">
+    <>
       <PageHero
         kicker="Legal · transfers"
         title={transferPage.title}
@@ -73,16 +73,16 @@ export default function LegalDataPage() {
             {transferPage.dek} Owned by{" "}
             <Link
               href="/team/hamza"
-              className="underline decoration-rag/30 underline-offset-4 hover:decoration-rag"
+              className="underline decoration-paper/30 underline-offset-4 hover:decoration-paper"
             >
               {legalOwner.name}
             </Link>
             .
           </>
         }
-        hideAction
       />
 
+      <section className="w-full bg-paper text-ink">
       <div className="stage-container grid items-start gap-16 py-16 md:grid-cols-[13.5rem_minmax(0,1fr)] md:py-24">
         <LegalIndex items={index} />
 
@@ -122,9 +122,9 @@ export default function LegalDataPage() {
 
           <section
             id="measures"
-            className="scroll-mt-28 border-t border-iron/10 py-12"
+            className="scroll-mt-28 border-t border-ink/10 py-12"
           >
-            <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-iron md:text-[28px]">
+            <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-ink md:text-[28px]">
               {transferPage.measures.heading}
             </h2>
             <LegalPlain>{transferPage.measures.plain}</LegalPlain>
@@ -136,14 +136,14 @@ export default function LegalDataPage() {
               ] as const
             ).map(([label, lines]) => (
               <div key={label} className="mt-10">
-                <p className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+                <p className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-quill/70">
                   {label}
                 </p>
                 <ul className="mt-3">
                   {lines.map((line) => (
                     <li
                       key={line}
-                      className="border-t border-iron/8 py-3.5 font-plex-sans text-[17px] leading-[1.65] text-iron first:border-t-0 first:pt-0"
+                      className="border-t border-ink/8 py-3.5 font-plex-sans text-[17px] leading-[1.65] text-ink first:border-t-0 first:pt-0"
                     >
                       {line}
                     </li>
@@ -162,9 +162,9 @@ export default function LegalDataPage() {
 
           <section
             id="vendors"
-            className="scroll-mt-28 border-t border-iron/10 py-12"
+            className="scroll-mt-28 border-t border-ink/10 py-12"
           >
-            <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-iron md:text-[28px]">
+            <h2 className="font-newsreader text-[26px] leading-[1.2] tracking-[-0.015em] text-ink md:text-[28px]">
               Where data lives
             </h2>
             <Reveal>
@@ -180,13 +180,13 @@ export default function LegalDataPage() {
                   <tbody>
                     {transferPage.vendors.map((row) => (
                       <tr key={row.name}>
-                        <th className="font-plex-sans text-[16px] font-normal text-iron">
+                        <th className="font-plex-sans text-[16px] font-normal text-ink">
                           {row.name}
                         </th>
-                        <td className="font-plex-sans text-[15px] leading-[1.45] text-ink">
+                        <td className="font-plex-sans text-[15px] leading-[1.45] text-quill">
                           {row.role}
                         </td>
-                        <td className="font-plex-sans text-[15px] leading-[1.45] text-ink">
+                        <td className="font-plex-sans text-[15px] leading-[1.45] text-quill">
                           {row.region}
                         </td>
                       </tr>
@@ -195,18 +195,18 @@ export default function LegalDataPage() {
                 </table>
               </div>
             </Reveal>
-            <p className="mt-6 font-plex-sans text-[15px] leading-[1.55] text-ink">
+            <p className="mt-6 font-plex-sans text-[15px] leading-[1.55] text-quill">
               Full list:{" "}
               <Link
                 href="/legal/sub-processors"
-                className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+                className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
               >
                 /legal/sub-processors
               </Link>
               . SCC cover:{" "}
               <Link
                 href="/legal/standard-contractual-clauses"
-                className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+                className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
               >
                 /legal/standard-contractual-clauses
               </Link>
@@ -217,6 +217,7 @@ export default function LegalDataPage() {
           <LegalOwnerLine />
         </article>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

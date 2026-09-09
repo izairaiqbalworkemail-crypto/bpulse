@@ -1,9 +1,12 @@
 import { ImageResponse } from "next/og";
-import { lots, getLot } from "@/content/lots";
+import { lots, findLot, caseNumber } from "@/content/lots";
+import { palette } from "@/lib/brand/palette";
 import { TRACE_SIZES, buildLotTrace, specFromLot } from "@/lib/lot-trace";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return lots.map((lot) => ({ slug: lot.slug }));
@@ -15,7 +18,28 @@ export default async function LotOg({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const lot = getLot(slug);
+  const lot = findLot(slug);
+  if (!lot) {
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "flex-end",
+            backgroundColor: palette.ink,
+            color: palette.paper,
+            padding: 64,
+            fontSize: 48,
+          }}
+        >
+          Not published
+        </div>
+      ),
+      { ...size },
+    );
+  }
   const built = buildLotTrace(
     specFromLot(lot),
     TRACE_SIZES.full.width,
@@ -31,7 +55,7 @@ export default async function LotOg({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#161614",
+          backgroundColor: palette.ink,
           padding: 64,
         }}
       >
@@ -54,28 +78,28 @@ export default async function LotOg({
               y1={built.height / 2}
               x2={built.width}
               y2={built.height / 2}
-              stroke="#f4eee6"
+              stroke={palette.paper}
               strokeOpacity="0.12"
               strokeWidth="1"
             />
             <path
               d={built.path}
               fill="none"
-              stroke="#f2c230"
+              stroke={palette.gold}
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
         </div>
-        <div style={{ fontSize: 22, color: "#f4eee6", opacity: 0.65 }}>
-          {lot.lotNumber}
+        <div style={{ fontSize: 22, color: palette.paper, opacity: 0.65 }}>
+          {caseNumber(lot)}
         </div>
         <div
           style={{
             marginTop: 12,
             fontSize: 56,
-            color: "#f4eee6",
+            color: palette.paper,
             lineHeight: 1.1,
             letterSpacing: "-0.03em",
           }}
@@ -86,7 +110,7 @@ export default async function LotOg({
           style={{
             marginTop: 16,
             fontSize: 24,
-            color: "#f2c230",
+            color: palette.gold,
           }}
         >
           {lot.grade.label}

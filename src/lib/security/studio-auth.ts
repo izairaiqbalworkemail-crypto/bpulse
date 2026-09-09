@@ -173,9 +173,11 @@ function authSecret(): string | null {
 
 function safeRedirect(value?: string): string {
   if (!value) return "/studio/careers";
-  if (!value.startsWith("/")) return "/studio/careers";
-  if (!value.startsWith("/studio")) return "/studio/careers";
-  return value;
+  if (!value.startsWith("/") || value.startsWith("//")) return "/studio/careers";
+  if (value.includes("://")) return "/studio/careers";
+  if (value === "/studio" || value.startsWith("/studio/")) return value;
+  if (value === "/admin" || value.startsWith("/admin/")) return value;
+  return "/studio/careers";
 }
 
 function readCookieFromHeader(cookieHeader: string | null, name: string): string | null {

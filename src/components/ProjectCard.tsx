@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Grade } from "@/components/primitives/Grade";
 import type { Lot } from "@/content/types";
+import { caseNumber } from "@/content/lots";
 
 type ProjectCardProps = {
   lot: Lot;
@@ -25,9 +26,9 @@ type ProjectCardProps = {
 export function ProjectCard({ lot, index = 0 }: ProjectCardProps) {
   const statusMap: Record<string, string> = {
     incomplete: "Entered unfinished",
-    stalled: "Stalled on arrival",
+    stalled: "Stalled when we started",
     "integration-blocked": "Integration blocked",
-    unstable: "Arrived broken",
+    unstable: "Came in broken",
   };
 
   return (
@@ -46,13 +47,13 @@ export function ProjectCard({ lot, index = 0 }: ProjectCardProps) {
             className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="pointer-events-none absolute inset-0 bg-rag/0 transition-colors duration-150 group-hover:bg-rag/10" />
+          <div className="pointer-events-none absolute inset-0 bg-paper/0 transition-colors duration-150 group-hover:bg-paper/10" />
         </div>
       )}
 
       {/* Status badge */}
       <div className="absolute left-3 top-3 z-10">
-        <span className="inline-flex items-center rounded-surface border border-iron/20 bg-rag/80 px-2.5 py-1 font-plex-mono text-[0.68rem] text-iron backdrop-blur-sm">
+        <span className="inline-flex items-center rounded-surface border border-ink/20 bg-paper/80 px-2.5 py-1 font-plex-mono text-[0.68rem] text-ink backdrop-blur-sm">
           {statusMap[lot.grade.state] || lot.grade.label}
         </span>
       </div>
@@ -60,8 +61,8 @@ export function ProjectCard({ lot, index = 0 }: ProjectCardProps) {
       {/* Content */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <div className="flex items-baseline justify-between">
-          <span className="font-plex-mono text-[0.68rem] text-ink/70">
-            {lot.lotNumber}
+          <span className="font-plex-mono text-[0.68rem] text-quill/70">
+            {caseNumber(lot)}
           </span>
           {lot.logoUrl && (
             <div className="h-5 w-5 overflow-hidden opacity-40">
@@ -75,10 +76,10 @@ export function ProjectCard({ lot, index = 0 }: ProjectCardProps) {
           )}
         </div>
 
-        <h3 className="mt-2 font-newsreader text-lg font-medium leading-snug tracking-tight text-iron group-hover:text-ink transition-colors duration-200">
+        <h3 className="mt-2 font-newsreader text-lg font-medium leading-snug tracking-tight text-ink group-hover:text-quill transition-colors duration-200">
           {lot.client}
         </h3>
-        <p className="mt-0.5 font-plex-mono text-[0.62rem] text-ink/70 group-hover:text-ink/70 transition-colors duration-200">
+        <p className="mt-0.5 font-plex-mono text-[0.62rem] text-quill/70 group-hover:text-quill/70 transition-colors duration-200">
           {lot.title}
         </p>
 
@@ -88,7 +89,7 @@ export function ProjectCard({ lot, index = 0 }: ProjectCardProps) {
             label={lot.grade.label}
             date={lot.grade.date}
           />
-          <span className="inline-block h-4 w-4 text-iron/30 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-iron/60">
+          <span className="inline-block h-4 w-4 text-ink/30 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-ink/60">
             →
           </span>
         </div>

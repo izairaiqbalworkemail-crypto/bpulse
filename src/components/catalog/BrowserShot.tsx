@@ -12,18 +12,18 @@ export function BrowserShot({ src, url, client }: Readonly<BrowserShotProps>) {
 
   return (
     <figure className="max-h-[40%]">
-      <div className="overflow-hidden rounded-[10px] bg-iron ring-1 ring-iron/15">
-        <div className="flex items-center gap-2 border-b border-rag/10 px-3 py-1.5">
+      <div className="overflow-hidden rounded-[10px] bg-ink ring-1 ring-ink/15">
+        <div className="flex items-center gap-2 border-b border-paper/10 px-3 py-1.5">
           <span className="flex gap-1" aria-hidden="true">
-            <span className="h-1.5 w-1.5 rounded-full bg-rag/35" />
-            <span className="h-1.5 w-1.5 rounded-full bg-rag/35" />
-            <span className="h-1.5 w-1.5 rounded-full bg-rag/35" />
+            <span className="h-1.5 w-1.5 rounded-full bg-paper/35" />
+            <span className="h-1.5 w-1.5 rounded-full bg-paper/35" />
+            <span className="h-1.5 w-1.5 rounded-full bg-paper/35" />
           </span>
-          <p className="min-w-0 truncate font-plex-mono text-[11px] text-rag/70">
+          <p className="min-w-0 truncate font-plex-mono text-[11px] text-paper/70">
             {host}
           </p>
         </div>
-        <div className="relative h-28 overflow-hidden bg-iron-2 sm:h-32">
+        <div className="relative h-28 overflow-hidden bg-ink-2 sm:h-32">
           <Image
             src={src}
             alt={`${client} public site`}
@@ -33,7 +33,7 @@ export function BrowserShot({ src, url, client }: Readonly<BrowserShotProps>) {
           />
         </div>
       </div>
-      <figcaption className="mt-2 font-plex-mono text-[11px] uppercase tracking-[0.06em] text-ink/60">
+      <figcaption className="mt-2 font-plex-mono text-[11px] uppercase tracking-[0.06em] text-quill/60">
         the client&apos;s public site
       </figcaption>
     </figure>

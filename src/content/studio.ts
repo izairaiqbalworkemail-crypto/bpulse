@@ -35,15 +35,15 @@ export const homeRooms = {
     n: "03",
     kicker: "Work we actually did",
     heading: "Shipped work. Not rented profiles.",
-    dek: "DeepIDV, Sully, WearMeOut — the public sites, as they shipped.",
+    dek: "DeepIDV, Sully, WearMeOut. The public sites, as they shipped.",
     they: "Browse a network of cards.",
-    we: "Open the lots we put in production.",
+    we: "Open the cases we put in production.",
   },
   path: {
     n: "04",
     kicker: "The path",
     heading: "We sell a verdict. Then a lock.",
-    dek: "Not hours on a bench. Check, Close, Standing if you want it.",
+    dek: "Not hours on a bench. Check, Close, Second Chair if you want it.",
     they: "Scale up or down, no strings.",
     we: "Lowest risk first. Nothing starts until you sign.",
   },
@@ -57,7 +57,7 @@ export const homeRooms = {
   match: {
     n: "06",
     kicker: "The Match",
-    heading: "Not a pool. The record.",
+    heading: "Not a pool. Our work.",
     they: "A match from a network.",
     we: "A named person, from work we already did.",
   },
@@ -66,7 +66,7 @@ export const homeRooms = {
     kicker: "The Check",
     heading: "Five days. A verdict.",
     they: "Talk to an expert, then hire.",
-    we: "Keep, repair, or rebuild — written down.",
+    we: "Keep, repair, or rebuild. Written down.",
   },
 } as const;
 

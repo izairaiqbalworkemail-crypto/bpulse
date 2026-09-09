@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { palette } from "@/lib/brand/palette";
 
 export const alt = "Second Chair. We finish it. Then we make sure you can keep it.";
 export const size = { width: 1200, height: 630 };
@@ -14,18 +15,18 @@ export default function SecondChairOg() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#161614",
+          backgroundColor: palette.ink,
           padding: 64,
         }}
       >
-        <div style={{ fontSize: 22, color: "#f4eee6", opacity: 0.7 }}>
+        <div style={{ fontSize: 22, color: palette.paper, opacity: 0.7 }}>
           Second Chair
         </div>
         <div
           style={{
             marginTop: 16,
             fontSize: 56,
-            color: "#f4eee6",
+            color: palette.paper,
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             maxWidth: 980,
@@ -33,7 +34,7 @@ export default function SecondChairOg() {
         >
           We finish it. Then we make sure you can keep it.
         </div>
-        <div style={{ marginTop: 24, fontSize: 28, color: "#f4eee6", opacity: 0.8 }}>
+        <div style={{ marginTop: 24, fontSize: 28, color: palette.paper, opacity: 0.8 }}>
           A named senior, on your repo. Not a course.
         </div>
       </div>

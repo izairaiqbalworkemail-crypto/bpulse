@@ -20,16 +20,16 @@ export function CheckDays() {
         {checkDays.map((row) => (
           <Item
             key={row.day}
-            className="grid gap-2 border-l border-rag/15 py-6 pl-6 first:pt-0 last:pb-0 md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10"
+            className="grid gap-2 border-l border-paper/15 py-6 pl-6 first:pt-0 last:pb-0 md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10"
           >
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-paper/70">
               {row.day}
             </p>
             <div>
-              <p className="font-newsreader text-[24px] leading-[1.2] text-rag">
+              <p className="font-newsreader text-[24px] leading-[1.2] text-paper">
                 {row.title}
               </p>
-              <p className="mt-2 max-w-[52ch] font-newsreader text-[17px] leading-[1.5] text-rag/75">
+              <p className="mt-2 max-w-[52ch] font-newsreader text-[17px] leading-[1.5] text-paper/75">
                 {row.body}
               </p>
             </div>

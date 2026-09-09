@@ -34,23 +34,23 @@ export function SubmissionOutcomes({ rows }: Readonly<Props>) {
   }
 
   return (
-    <section className="card p-6">
-      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
+    <section className="border-t border-ink/10 pt-6">
+      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
         Outcomes
       </p>
-      <p className="mt-2 font-newsreader text-[16px] leading-[1.5] text-ink">
+      <p className="mt-2 font-newsreader text-[16px] leading-[1.5] text-quill">
         Update by hand from real follow-up outcomes.
       </p>
       <div className="mt-6 overflow-x-auto">
         <table className="min-w-full border-collapse">
           <thead>
-            <tr className="border-b border-iron/15 text-left">
-              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">When</th>
-              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">Type</th>
-              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">Email</th>
-              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">Outcome</th>
-              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">Value USD</th>
-              <th className="py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">Action</th>
+            <tr className="border-b border-ink/15 text-left">
+              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">When</th>
+              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">Type</th>
+              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">Email</th>
+              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">Outcome</th>
+              <th className="py-2 pr-4 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">Value USD</th>
+              <th className="py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -65,7 +65,7 @@ export function SubmissionOutcomes({ rows }: Readonly<Props>) {
           </tbody>
         </table>
       </div>
-      {message ? <p className="mt-4 font-plex-sans text-[14px] text-ink">{message}</p> : null}
+      {message ? <p className="mt-4 font-plex-sans text-[14px] text-quill">{message}</p> : null}
     </section>
   );
 }
@@ -83,16 +83,16 @@ function SubmissionRow({
   const [value, setValue] = useState(row.valueUsd ?? "");
 
   return (
-    <tr className="border-b border-iron/10 align-top">
-      <td className="py-3 pr-4 font-plex-mono text-[12px] text-ink/70">{row.createdAt.slice(0, 10)}</td>
-      <td className="py-3 pr-4 font-plex-mono text-[12px] text-ink/70">{row.type}</td>
-      <td className="py-3 pr-4 font-plex-sans text-[13px] text-ink/80">{row.email ?? "-"}</td>
+    <tr className="border-b border-ink/10 align-top">
+      <td className="py-3 pr-4 font-plex-mono text-[12px] text-quill/70">{row.createdAt.slice(0, 10)}</td>
+      <td className="py-3 pr-4 font-plex-mono text-[12px] text-quill/70">{row.type}</td>
+      <td className="py-3 pr-4 font-plex-sans text-[13px] text-quill/80">{row.email ?? "-"}</td>
       <td className="py-3 pr-4">
         <select
           value={outcome}
           onChange={(event) => setOutcome(event.target.value as SubmissionOutcome)}
           disabled={disabled}
-          className="rounded-[8px] border border-iron/20 bg-rag px-2 py-1 font-plex-sans text-[13px]"
+          className="rounded-[8px] border border-ink/20 bg-paper px-2 py-1 font-plex-sans text-[13px]"
         >
           {submissionOutcomes.map((item) => (
             <option key={item} value={item}>
@@ -107,7 +107,7 @@ function SubmissionRow({
           onChange={(event) => setValue(event.target.value)}
           placeholder="0"
           disabled={disabled}
-          className="w-24 rounded-[8px] border border-iron/20 bg-rag px-2 py-1 font-plex-mono text-[13px]"
+          className="w-24 rounded-[8px] border border-ink/20 bg-paper px-2 py-1 font-plex-mono text-[13px]"
         />
       </td>
       <td className="py-3">
@@ -115,7 +115,7 @@ function SubmissionRow({
           type="button"
           onClick={() => void onSave(row.id, outcome, value)}
           disabled={disabled}
-          className="rounded-full bg-iron px-3 py-1 font-plex-sans text-[12px] text-rag disabled:opacity-70"
+          className="rounded-full bg-ink px-3 py-1 font-plex-sans text-[12px] text-paper disabled:opacity-70"
         >
           Save
         </button>

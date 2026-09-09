@@ -10,7 +10,7 @@ export const subProcessors = [
     name: "Vercel",
     entity: "Vercel Inc.",
     role: "Hosting and edge for this site and serverless functions",
-    region: "US-incorporated. Deployment region is per project; not recorded as a single fixed region on this site.",
+    region: "US-incorporated. Region is per project; not recorded as a single fixed region on this site.",
     data: "Site traffic, serverless logs, and whatever an intake request contains while it is being handled.",
   },
   {

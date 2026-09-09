@@ -26,19 +26,19 @@ type DataLineProps = {
 export function DataLine({ label, value, mono = true }: DataLineProps) {
   return (
     <div className="flex items-baseline gap-3">
-      <dt className="shrink-0 font-plex-sans text-sm text-ink/70">{label}</dt>
+      <dt className="shrink-0 font-plex-sans text-sm text-quill/70">{label}</dt>
       <dd
-        className={`grow border-b border-dotted border-iron/20 ${
+        className={`grow border-b border-dotted border-ink/20 ${
           mono
-            ? "font-plex-mono text-data text-iron"
-            : "font-newsreader text-reading text-iron"
+            ? "font-plex-mono text-data text-ink"
+            : "font-newsreader text-reading text-ink"
         }`}
       />
       <dd
         className={`shrink-0 ${
           mono
-            ? "font-plex-mono text-data text-iron"
-            : "font-newsreader text-reading text-iron"
+            ? "font-plex-mono text-data text-ink"
+            : "font-newsreader text-reading text-ink"
         }`}
       >
         {value}

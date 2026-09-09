@@ -23,39 +23,39 @@ export function RecordMap({
     <Reveal
       as="section"
       id="match-record"
-      label="The record, row by row"
+      label="Our work, row by row"
       className="scroll-mt-24"
       delay={60}
     >
       <p className="kicker flex items-center gap-2">
-        <span aria-hidden="true" className="h-2 w-2 rounded-full bg-partial pulse-dot" />
-        The record, row by row
+        <span aria-hidden="true" className="h-2 w-2 rounded-full bg-ink pulse-dot" />
+        Our work, row by row
       </p>
-      <p className="mt-2 max-w-[48ch] font-newsreader text-[16px] leading-[1.45] text-ink">
-        {sameWay} of {comparisons.length} engagements arrived the same way.
-        Every row below is tagged from its own condition text — nothing here is
+      <p className="mt-2 max-w-[48ch] font-newsreader text-[16px] leading-[1.45] text-quill">
+        {sameWay} of {comparisons.length} engagements came to us the same way.
+        Every row below is tagged from its own condition text. Nothing here is
         inferred.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="chip chip-soft">
-          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-iron" />
-          lot · a full engagement with a posted lot
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ink" />
+          case. A full engagement we published
         </span>
         <span className="chip chip-soft">
-          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ink" />
-          index · a one-line record from the old catalogue
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-quill" />
+          index. A one-line case from earlier work
         </span>
         {closestId ? (
           <span className="chip chip-soft">
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-partial" />
-            closest · the row your words sit nearest
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ink" />
+            closest. The row your words sit nearest
           </span>
         ) : null}
       </div>
 
       <details open className="mt-5">
-        <summary className="cursor-pointer font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:text-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron">
-          Full record map — {comparisons.length} rows
+        <summary className="cursor-pointer font-plex-sans text-[14px] text-ink underline decoration-ink/30 underline-offset-4 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+          All {comparisons.length} rows
         </summary>
         <ul className="stagger mt-5 flex flex-col gap-2">
           {comparisons.map((row, index) => {
@@ -65,30 +65,30 @@ export function RecordMap({
               <li
                 key={row.id}
                 className={`panel-sub flex items-center gap-3 px-4 py-3 ${
-                  closest ? "bg-partial/5 ring-1 ring-partial/25" : ""
+                  closest ? "bg-ink/5 ring-1 ring-ink/20" : ""
                 }`}
                 style={{ transitionDelay: `${index * 55}ms` }}
               >
                 <span
                   aria-hidden="true"
                   className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                    closest ? "bg-partial" : row.kind === "lot" ? "bg-iron" : "bg-ink"
+                    closest ? "bg-ink" : row.kind === "lot" ? "bg-ink" : "bg-quill"
                   }`}
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline gap-3">
-                    <span className="font-plex-mono text-[10px] uppercase tracking-[0.06em] text-ink/50">
-                      {row.kind}
+                    <span className="font-plex-mono text-[10px] uppercase tracking-[0.06em] text-quill/50">
+                      {row.kind === "lot" ? "case" : "index"}
                     </span>
                     {href ? (
                       <Link
                         href={href}
-                        className="min-w-0 flex-1 truncate font-newsreader text-[15px] text-iron underline decoration-iron/30 underline-offset-2 hover:decoration-iron"
+                        className="min-w-0 flex-1 truncate font-newsreader text-[15px] text-ink underline decoration-ink/30 underline-offset-2 hover:decoration-ink"
                       >
                         {row.client}
                       </Link>
                     ) : (
-                      <span className="min-w-0 flex-1 truncate font-newsreader text-[15px] text-iron">
+                      <span className="min-w-0 flex-1 truncate font-newsreader text-[15px] text-ink">
                         {row.client}
                       </span>
                     )}
@@ -108,7 +108,7 @@ export function RecordMap({
                       ))}
                     </ul>
                   ) : (
-                    <p className="mt-2 font-newsreader text-[13px] italic text-ink/55">
+                    <p className="mt-2 font-newsreader text-[13px] italic text-quill/55">
                       No shared condition in the words you wrote.
                     </p>
                   )}

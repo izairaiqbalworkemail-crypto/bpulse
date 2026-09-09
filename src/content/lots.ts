@@ -22,7 +22,7 @@ export const lots: Lot[] = [
     summary:
       "A verification platform spanning KYC, liveness, deepfake, and fraud workflows.",
     condition:
-      "Arrived with the compliance path demo-tight, not proven against production data. Multiple workflow types and third-party integrations were pulling in every direction, and the verification flows were still being tightened toward production-ready compliance.",
+      "Came in with the compliance path demo-tight, not proven against production data. Multiple workflow types and third-party integrations were pulling in every direction, and the verification flows were still being tightened toward production-ready compliance.",
     dataLines: [
       { label: "Client", value: "DeepIDV" },
       { label: "Status", value: "Ongoing product ownership" },
@@ -33,7 +33,7 @@ export const lots: Lot[] = [
     grade: {
       state: "integration-blocked",
       grade: "unsound",
-      label: "Integration-blocked on arrival",
+      label: "Integration-blocked",
       date: "Aug 2026",
     },
     outcome:
@@ -69,7 +69,7 @@ export const lots: Lot[] = [
     summary:
       "An AI employee platform for hospitals spanning triage, scribe, coding, and EHR-integrated operations.",
     condition:
-      "Built for hospitals, where a software error is not an inconvenience but a compliance and patient-safety risk. Arrived unable to ship cleanly: the work needed integration notes and ownership clarity so new contributors could move it into production without guesswork.",
+      "Built for hospitals, where a software error is not an inconvenience but a compliance and patient-safety risk. Came in unable to ship cleanly: the work needed integration notes and ownership clarity so new contributors could move it into production without guesswork.",
     dataLines: [
       { label: "Client", value: "Sully.ai" },
       { label: "Status", value: "Ongoing product ownership" },
@@ -80,7 +80,7 @@ export const lots: Lot[] = [
     grade: {
       state: "stalled",
       grade: "sound",
-      label: "Stalled on arrival",
+      label: "Stalled",
       date: "Jul 2026",
     },
     outcome:
@@ -115,7 +115,7 @@ export const lots: Lot[] = [
     summary:
       "A marketplace matching people with trusted tradespeople across Albania.",
     condition:
-      "Arrived as a two-sided marketplace that had to launch cold on both sides at once — matching customers with tradespeople they could trust before either side showed up. Built but not yet live.",
+      "Came in as a two-sided marketplace that had to launch cold on both sides at once. Matching customers with tradespeople they could trust before either side showed up. Built but not yet live.",
     dataLines: [
       { label: "Client", value: "myUsta" },
       { label: "Status", value: "Shipped" },
@@ -125,7 +125,7 @@ export const lots: Lot[] = [
     grade: {
       state: "stalled",
       grade: "sound",
-      label: "Unlaunched on arrival",
+      label: "Unlaunched",
     },
     outcome:
       "A live tradesperson marketplace delivered web and mobile for the Albanian market.",
@@ -156,7 +156,7 @@ export const lots: Lot[] = [
     summary:
       "Frontend delivery and production readiness for a Firebase + React product.",
     condition:
-      "Arrived looking done in demo mode but not production-ready: the remaining pass was final interaction polish, deployment hardening, and release checks — the actual last twenty percent, still open.",
+      "Came in looking done in demo mode but not production-ready: the remaining pass was final interaction polish, release hardening, and release checks. The actual last twenty percent, still open.",
     dataLines: [
       { label: "Client", value: "WearMeOut.ai" },
       { label: "Status", value: "LIVE" },
@@ -166,7 +166,7 @@ export const lots: Lot[] = [
     grade: {
       state: "incomplete",
       grade: "sound",
-      label: "Incomplete on arrival",
+      label: "Incomplete",
       date: "Aug 2026",
     },
     outcome:
@@ -196,7 +196,7 @@ export const lots: Lot[] = [
     summary:
       "Phase 7 AI storytelling and archive experience built around verified historical sources.",
     condition:
-      "Arrived as an archival storytelling experience that had to stay faithful to verified historical sources, with the source-attribution and audit layer still open: translating historical-source structure into an interface people can actually navigate.",
+      "Came in as an archival storytelling experience that had to stay faithful to verified historical sources, with the source-attribution and audit layer still open: translating historical-source structure into an interface people can actually navigate.",
     dataLines: [
       { label: "Client", value: "Mythos Archive" },
       { label: "Status", value: "Shipped" },
@@ -206,7 +206,7 @@ export const lots: Lot[] = [
     grade: {
       state: "incomplete",
       grade: "sound",
-      label: "Incomplete on arrival",
+      label: "Incomplete",
       date: "Aug 2026",
     },
     outcome:
@@ -235,7 +235,7 @@ export const lots: Lot[] = [
     summary:
       "A comprehensive, unbiased SBA 504 loan information hub for small-business owners.",
     condition:
-      "Arrived as a small-business loan-information product that still needed its technical SEO, lead capture, and a clean ownership handover before it could stand as a comprehensive, unbiased hub.",
+      "Came in as a small-business loan-information product that still needed its technical SEO, lead capture, and a clean ownership handover before it could stand as a comprehensive, unbiased hub.",
     dataLines: [
       { label: "Client", value: "SBA 504 Loan Hub" },
       { label: "Status", value: "Shipped" },
@@ -245,7 +245,7 @@ export const lots: Lot[] = [
     grade: {
       state: "incomplete",
       grade: "sound",
-      label: "Incomplete on arrival",
+      label: "Incomplete",
     },
     outcome:
       "A live loan-information platform, deployed with full technical SEO, lead capture, and a clean ownership handover.",
@@ -273,7 +273,7 @@ export const lots: Lot[] = [
     summary:
       "An AI platform automating clearance processes for enterprise clients.",
     condition:
-      "Arrived with the AI pipeline functional but the compliance and deployment layers still open. The core model worked; the production wrapper did not.",
+      "Came in with the AI pipeline functional but the compliance and production layers still open. The core model worked; the production wrapper did not.",
     dataLines: [
       { label: "Client", value: "Clearance.ai" },
       { label: "Status", value: "Shipped" },
@@ -283,10 +283,10 @@ export const lots: Lot[] = [
     grade: {
       state: "incomplete",
       grade: "sound",
-      label: "Incomplete on arrival",
+      label: "Incomplete",
     },
     outcome:
-      "A production-ready clearance automation platform with compliance paths and deployment hardening completed.",
+      "A production-ready clearance automation platform with compliance paths and release hardening completed.",
     limits: [
       "Client-reported figures not available in the source.",
     ],
@@ -309,7 +309,7 @@ export const lots: Lot[] = [
     summary:
       "A platform for managing, tracking, and presenting digital evidence in legal and compliance contexts.",
     condition:
-      "Arrived with the data model solid but the presentation layer and user workflows unfinished. The hard part was done; the last mile was not.",
+      "Came in with the data model solid but the presentation layer and user workflows unfinished. The hard part was done; the last mile was not.",
     dataLines: [
       { label: "Client", value: "Evidero" },
       { label: "Status", value: "Shipped" },
@@ -319,7 +319,7 @@ export const lots: Lot[] = [
     grade: {
       state: "incomplete",
       grade: "sound",
-      label: "Incomplete on arrival",
+      label: "Incomplete",
     },
     outcome:
       "A live evidence management platform with complete user workflows and presentation layer.",
@@ -345,7 +345,7 @@ export const lots: Lot[] = [
     summary:
       "Designed and built healthcare product workflows for supplement recommendations, lab ordering, and patient adherence tracking.",
     condition:
-      "Arrived with the supplement catalog solid but the lab integration and adherence tracking layers still needed work. The product logic was there; the connections were not.",
+      "Came in with the supplement catalog solid but the lab integration and adherence tracking layers still needed work. The product logic was there; the connections were not.",
     dataLines: [
       { label: "Client", value: "Fullscript" },
       { label: "Status", value: "Shipped" },
@@ -355,7 +355,7 @@ export const lots: Lot[] = [
     grade: {
       state: "incomplete",
       grade: "sound",
-      label: "Incomplete on arrival",
+      label: "Incomplete",
     },
     outcome:
       "Production-ready healthcare product workflows with lab integration and adherence tracking.",
@@ -422,8 +422,18 @@ export function getFieldLogFigures(): FieldLogFigure[] {
 
 const lotMap = new Map(lots.map((lot) => [lot.slug, lot]));
 
+/** Public case number. The LOT prefix stays in the data, not on the glass. */
+export function caseNumber(lot: { lotNumber: string } | string): string {
+  const raw = typeof lot === "string" ? lot : lot.lotNumber;
+  return raw.replace(/^LOT\s+/i, "");
+}
+
+export function findLot(slug: string): Lot | undefined {
+  return lotMap.get(slug);
+}
+
 export function getLot(slug: string): Lot {
-  const lot = lotMap.get(slug);
+  const lot = findLot(slug);
   if (!lot) throw new Error(`Unknown lot: ${slug}`);
   return lot;
 }

@@ -35,12 +35,12 @@ export function FieldLog({ density = "full", figures }: FieldLogProps) {
     >
       {density === "full" && (
         <div className="grid-container mb-12">
-          <h2 className="font-plex-mono text-data tracking-[0.08em] text-ink/70 uppercase">
+          <h2 className="font-plex-mono text-data tracking-[0.08em] text-quill/70 uppercase">
             The field log
           </h2>
-          <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-ink">
-            Sourced figures from the lots. Every number below is traceable to a
-            client site or engagement record. Where we do not have a number, we
+          <p className="mt-4 max-w-measure font-newsreader text-reading leading-reading text-quill">
+            Sourced figures from the work. Every number below points at a
+            client site or engagement. Where we do not have a number, we
             say so.
           </p>
         </div>
@@ -51,7 +51,7 @@ export function FieldLog({ density = "full", figures }: FieldLogProps) {
           {items.map((fig) => (
             <div key={fig.label} className="flex flex-col gap-1">
               <DataLine label={fig.label} value={fig.value} />
-              <p className="font-plex-mono text-caption text-ink/70">
+              <p className="font-plex-mono text-caption text-quill/70">
                 {fig.source}
               </p>
             </div>

@@ -114,7 +114,7 @@ export const checkQuestions = [
   },
   {
     q: "You're in Lahore. Why should I trust this?",
-    a: "The studio is in Lahore. The engineer who would read your repo is named on this page, with a public record you can open. The price is published. The report is yours to take anywhere. If the verdict is keep, we say so and refund. Distance is real. The work is the same: one senior engineer reads the build and writes what they found.",
+    a: "The studio is in Lahore. The engineer who would read your repo is named on this page, with a profile you can open. The price is published. The report is yours to take anywhere. If the verdict is keep, we say so and refund. Distance is real. The work is the same: one senior engineer reads the build and writes what they found.",
   },
 ] as const;
 

@@ -19,7 +19,7 @@ export function AboutWhere() {
         {aboutWhere.map((row) => (
           <Item key={row.fact}>
             <ObjectRow
-              tone="iron"
+              tone="ink"
               className="grid gap-2 md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] md:items-baseline"
             >
               <p className="font-newsreader text-[20px] leading-[1.3]">{row.fact}</p>

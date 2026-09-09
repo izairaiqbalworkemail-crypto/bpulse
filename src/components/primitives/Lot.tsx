@@ -80,19 +80,19 @@ export function Lot({
   const content = (
     <>
       <div className="flex items-baseline justify-between gap-6 pb-6">
-        <span className="font-plex-mono text-data text-ink/60">
+        <span className="font-plex-mono text-data text-quill/60">
           {lotNumber}
         </span>
         {href && (
-          <span className="font-plex-sans text-sm text-ink/60">View lot</span>
+          <span className="font-plex-sans text-sm text-quill/60">View lot</span>
         )}
       </div>
 
-      <h2 className="font-newsreader text-lot-title leading-title text-iron">
+      <h2 className="font-newsreader text-lot-title leading-title text-ink">
         {href ? (
           <Link
             href={href}
-            className="transition-colors duration-200 hover:text-ink"
+            className="transition-colors duration-200 hover:text-quill"
           >
             {title}
           </Link>
@@ -101,7 +101,7 @@ export function Lot({
         )}
       </h2>
 
-      <p className="mt-6 max-w-measure font-newsreader text-reading leading-reading text-ink">
+      <p className="mt-6 max-w-measure font-newsreader text-reading leading-reading text-quill">
         {condition}
       </p>
 
@@ -112,14 +112,14 @@ export function Lot({
       </dl>
 
       {outcome && (
-        <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
-          <span className="font-plex-mono text-data text-ink/60">Shipped: </span>
+        <p className="mt-4 font-newsreader text-reading leading-reading text-quill">
+          <span className="font-plex-mono text-data text-quill/60">Shipped: </span>
           {outcome}
         </p>
       )}
 
       {limit && (
-        <p className="mt-4 font-plex-mono text-caption text-ink/60">{limit}</p>
+        <p className="mt-4 font-plex-mono text-caption text-quill/60">{limit}</p>
       )}
 
       <div className="mt-8 flex items-center justify-between gap-6">
@@ -129,7 +129,7 @@ export function Lot({
           date={conditionGrade.date}
         />
         {specialist && (
-          <div className="font-plex-sans text-sm text-ink/70">{specialist}</div>
+          <div className="font-plex-sans text-sm text-quill/70">{specialist}</div>
         )}
       </div>
     </>
@@ -138,19 +138,19 @@ export function Lot({
   return (
     <article
       ref={ref}
-      className={`hover-lot group border-t border-iron/15 pb-16 pt-12 transition-colors duration-200 ${
+      className={`hover-lot group border-t border-ink/15 pb-16 pt-12 transition-colors duration-200 ${
         isInView ? "" : ""
       }`}
     >
       {/* top rule draws on */}
       <div
-        className={`lot-rule mb-10 h-px w-full bg-iron/15 transition-transform duration-400 ${
+        className={`lot-rule mb-10 h-px w-full bg-ink/15 transition-transform duration-400 ${
           isInView ? "is-visible" : ""
         }`}
         style={{ transitionDelay: `${delayMs}ms` }}
       />
       {content}
-      <div className="mt-16 border-b border-iron/15" />
+      <div className="mt-16 border-b border-ink/15" />
     </article>
   );
 }

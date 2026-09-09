@@ -3,6 +3,7 @@ import { BrowserShot } from "@/components/catalog/BrowserShot";
 import { Surface } from "@/components/primitives/Surface";
 import { Trace } from "@/components/trace/Trace";
 import type { Lot } from "@/content/types";
+import { caseNumber } from "@/content/lots";
 import { specFromLot, verifiedFigures } from "@/lib/lot-trace";
 
 type LotPlateProps = {
@@ -14,14 +15,14 @@ type LotPlateProps = {
 function FigureLine({ value, label }: Readonly<{ value: string; label: string }>) {
   return (
     <p className="flex items-baseline gap-3">
-      <span className="shrink-0 font-plex-mono text-[15px] tabular-nums text-iron">
+      <span className="shrink-0 font-plex-mono text-[15px] tabular-nums text-ink">
         {value}
       </span>
       <span
-        className="min-w-4 grow border-b border-dotted border-iron/20"
+        className="min-w-4 grow border-b border-dotted border-ink/20"
         aria-hidden="true"
       />
-      <span className="shrink-0 font-newsreader text-[15px] text-ink">{label}</span>
+      <span className="shrink-0 font-newsreader text-[15px] text-quill">{label}</span>
     </p>
   );
 }
@@ -40,10 +41,10 @@ export function LotPlate({
     <Surface as="article" hover className="h-full">
       <Link href={href} className="group flex h-full min-w-0 flex-col p-8">
         <div className="flex items-baseline justify-between gap-3">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">
-            {lot.lotNumber}
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
+            {caseNumber(lot)}
           </p>
-          <p className="font-plex-mono text-[12px] text-ink/70">
+          <p className="font-plex-mono text-[12px] text-quill/70">
             {gradeWord}
             <span
               className="ml-2 inline-block h-1.5 w-1.5 rounded-full"
@@ -61,23 +62,23 @@ export function LotPlate({
         <div className={`relative ${compact ? "mt-5" : "mt-6"}`}>
           <Trace spec={spec} size={compact ? "card" : "full"} surface="paper" />
           {proof ? (
-            <p className="absolute bottom-2 left-0 rounded-[12px] bg-rag/95 px-3 py-2 shadow-[var(--shadow-card)]">
-              <span className="block font-plex-mono text-[18px] leading-none text-iron">
+            <p className="absolute bottom-2 left-0 rounded-[12px] bg-paper/95 px-3 py-2 shadow-[var(--shadow-card)]">
+              <span className="block font-plex-mono text-[18px] leading-none text-ink">
                 {proof.value}
               </span>
-              <span className="mt-1 block font-plex-sans text-[11px] text-ink">
+              <span className="mt-1 block font-plex-sans text-[11px] text-quill">
                 {proof.label}
               </span>
             </p>
           ) : null}
         </div>
 
-        <div className="mt-6 h-px w-full bg-iron/[0.08]" aria-hidden="true" />
+        <div className="mt-6 h-px w-full bg-ink/[0.08]" aria-hidden="true" />
 
-        <h3 className="mt-5 font-newsreader text-[24px] leading-[1.1] text-iron underline decoration-iron/25 underline-offset-4 group-hover:decoration-iron">
+        <h3 className="mt-5 font-newsreader text-[24px] leading-[1.1] text-ink underline decoration-ink/25 underline-offset-4 group-hover:decoration-ink">
           {lot.client}
         </h3>
-        <p className="mt-2 font-newsreader text-[16px] leading-[1.4] text-ink">
+        <p className="mt-2 font-newsreader text-[16px] leading-[1.4] text-quill">
           {lot.summary}
         </p>
 

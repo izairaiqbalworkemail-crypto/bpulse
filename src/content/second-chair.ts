@@ -27,7 +27,7 @@ export const secondChair = {
   promiseWhat: [
     "A named engineer, the one who deployed into your product or one who knows it.",
     "They teach your team to maintain what was built and build the next thing themselves.",
-    "Not a course. Not a platform. Capability transfer, after a deployment.",
+    "Not a course. Not a platform. Capability transfer, after a project.",
     "Cancel any month. If it is working, you will stop needing it. That is the point.",
   ],
   teachLine:
@@ -91,7 +91,7 @@ export const secondChairTiers = [
     id: "handover",
     name: "Handover",
     price: "Included",
-    meter: "Every deployment",
+    meter: "Every project",
     body: "Two weeks with the engineer who built it. Recorded. Your team can run what we shipped.",
   },
   {

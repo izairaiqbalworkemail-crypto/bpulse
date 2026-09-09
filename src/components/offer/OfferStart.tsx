@@ -36,7 +36,7 @@ export function OfferStart({
       >
         {children}
       </div>
-      <div className="mt-16 text-iron">
+      <div className="mt-16 text-ink">
         <PricingLadder highlight={highlight} onGold />
       </div>
     </Episode>

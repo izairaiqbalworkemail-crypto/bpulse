@@ -7,7 +7,7 @@ type SignalFrameProps = {
 };
 
 /**
- * Cream sides. One gold plate. The Check rooms use this, not a full-bleed yellow wall.
+ * Cream sides. One cocoa plate. Iris stays on the button, not the field.
  */
 export function SignalFrame({
   id,

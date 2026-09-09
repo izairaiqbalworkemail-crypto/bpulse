@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="11.5" ry="11.5" fill="#0D1218"/>
-  <g transform="translate(16.84,12.16) scale(0.05511)">
-    <path d="M0 0 H320 A175 175 0 0 1 320 350 H365 A185 185 0 0 1 365 720 H0 Z M150 92 H300 A83 83 0 0 1 300 258 H150 Z M150 442 H345 A93 93 0 0 1 345 628 H150 Z" fill-rule="evenodd" fill="#F5F1E6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" role="img" aria-label="bpulse">
+  <rect width="64" height="64" rx="14" ry="14" fill="#0C100E"/>
+  <g transform="scale(2)">
+    <path fill="#E6EBE3" d="M27.9996 12.8743A12.4 12.4 0 1 1 21.1619 4.7255L18.8099 9.8627A6.75 6.75 0 1 0 22.532 14.2985Z"/>
+    <path fill="#D6FF2A" d="M21.8214 5.0514A12.4 12.4 0 0 1 27.7931 12.1682L22.4196 13.9141A6.75 6.75 0 0 0 19.1689 10.0401Z"/>
   </g>
 </svg>

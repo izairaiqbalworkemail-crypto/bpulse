@@ -48,10 +48,10 @@ export function buildRepairReport(): CheckReport {
       id,
       line: getSignal(id).says,
     })),
-    takes: `${lot.outcome} Duration is not on the public record.`,
+    takes: `${lot.outcome} Duration is not published.`,
     limits,
     sourceNote:
-      "Redacted from a public engagement on the record. The client name is removed. Findings are the arrival signals on that file — not a rewritten sample.",
+      "Redacted from a published case. The client name is removed. Findings are what we found on that file, not a rewritten sample.",
   };
 }
 
@@ -64,7 +64,7 @@ export function buildKeepReport(): CheckReport {
   return {
     id: "keep",
     tab: "You don't need us",
-    verdict: "keep — you don't need us",
+    verdict: "Keep. You do not need us.",
     prepared: null,
     preparedNote: null,
     clientLine: "No public engagement file · keep",
@@ -72,7 +72,7 @@ export function buildKeepReport(): CheckReport {
     findings: [],
     takes: "Nothing from us. A week of senior cleanup on your side, if you want it.",
     limits: [
-      "No public Check on the record concluded keep. A redacted company name and invented findings would be a sample template.",
+      "No public Check we have published concluded keep. A redacted company name and invented findings would be a sample template.",
       "The fee is credited on a Close invoice within 30 days, or returned if you do not take a Close.",
     ],
     sourceNote:

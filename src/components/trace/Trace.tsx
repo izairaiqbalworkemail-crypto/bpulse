@@ -8,13 +8,17 @@ import {
   type TraceSize,
   type TraceSpec,
 } from "@/lib/lot-trace";
+import { palette } from "@/lib/brand/palette";
 
 type TraceProps = {
   spec: TraceSpec;
   size?: TraceSize;
-  surface?: "iron" | "paper";
+  surface?: "ink" | "paper";
   labelled?: boolean;
   className?: string;
+  /** When set, the line waits for this instead of scrolling into view. */
+  armed?: boolean;
+  stroke?: string;
 };
 
 export function Trace({
@@ -23,17 +27,20 @@ export function Trace({
   surface = "paper",
   labelled = false,
   className,
+  armed,
+  stroke: strokeProp,
 }: Readonly<TraceProps>) {
   const reduce = useReducedMotion();
   const titleId = useId();
   const [entered, setEntered] = useState(false);
   const box = TRACE_SIZES[size];
   const built = buildLotTrace(spec, box.width, box.height);
-  const stroke = surface === "iron" ? "#f2c230" : "#10161c";
-  const drawn = Boolean(reduce) || entered;
+  const stroke = strokeProp ?? (surface === "ink" ? palette.gold : palette.ink);
+  const controlled = armed !== undefined;
+  const drawn = controlled ? Boolean(armed) : Boolean(reduce) || entered;
 
   useEffect(() => {
-    if (reduce) return;
+    if (controlled || reduce) return;
     const node = document.getElementById(titleId);
     const svg = node?.closest("svg");
     if (!svg) return;
@@ -48,7 +55,7 @@ export function Trace({
     );
     observer.observe(svg);
     return () => observer.disconnect();
-  }, [reduce, titleId]);
+  }, [controlled, reduce, titleId]);
 
   return (
     <figure className={className}>
@@ -81,7 +88,8 @@ export function Trace({
           strokeDasharray={1}
           strokeDashoffset={drawn ? 0 : 1}
           style={{
-            transition: reduce ? undefined : "stroke-dashoffset 900ms ease-out",
+            transition:
+              reduce || !drawn ? undefined : "stroke-dashoffset 900ms ease-out",
           }}
         />
         {labelled

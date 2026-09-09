@@ -2,7 +2,7 @@ export const crewJourney: Record<string, string> = {
   aneeb: "Led the Sully.ai hospital build through HIPAA production.",
   zaira: "Led full-stack architecture across the Sully and DeepIDV builds.",
   fizza:
-    "Ships full-stack products end to end: ten live client builds, AI integrations, and the SEO that gets them found.",
+    "Ships full-stack products end to end. Four published cases, integrations, and the SEO that gets them found.",
   mehak: "Specced the DeepIDV agentic compliance workflows.",
   hassan: "Built the pipelines that keep every deploy green.",
   suhaib: "Shipped client features on the ground for Sully.",
@@ -32,7 +32,7 @@ export const crewAttach: Record<string, string[]> = {
     "Chairs the requirement walk-through so your team signs off once, not five times.",
   ],
   hassan: [
-    "Gives you a private sandbox and a deployment timeline you can verify yourself.",
+    "Gives you a private sandbox and a project timeline you can verify yourself.",
     "Shows you production health directly, with no middleman explaining it away.",
   ],
   suhaib: [

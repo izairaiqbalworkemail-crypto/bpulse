@@ -347,7 +347,7 @@ function evidenceFor(args: {
           quoted
             ? `You said “${quoted}.”`
             : "What you described sits next to a lot we already took."
-        } ${lot.client} arrived the same way — ${lot.condition.split(".")[0]!.trim()}.`,
+        } ${lot.client} came to us the same way. ${lot.condition.split(".")[0]!.trim()}.`,
       });
     }
   } else if (signal && !signal.quote && args.addressed.length > 0) {
@@ -374,7 +374,7 @@ function evidenceFor(args: {
   if (args.stackHits.length > 0) {
     lines.push({
       kind: "stack",
-      claim: `Their stack on the record includes ${args.stackHits.slice(0, 3).join(", ")}.`,
+      claim: `Their stack on published work includes ${args.stackHits.slice(0, 3).join(", ")}.`,
     });
   }
 
@@ -395,7 +395,7 @@ function shapeFor(
   if (!lead) return undefined;
   if (outcome.confidence === "exploratory") {
     return {
-      estimate: "No sound shape from the record — nothing on file comes close.",
+      estimate: "No sound shape from published work. Nothing on file comes close.",
       consequence: "Aneeb reads it himself, then shapes it by hand before anything ships.",
     };
   }
@@ -411,8 +411,8 @@ function shapeFor(
         : "A month, aiming at the first shippable slice";
   const dominant = dominantComparison(outcome.comparisons);
   const consequence = dominant
-    ? `${name} closes these conditions by the book — ${dominant.client} arrived the same way and shipped.`
-    : `${name} closes these conditions on record. The scope narrows before it widens.`;
+    ? `${name} closes these conditions by the book. ${dominant.client} came to us the same way and shipped.`
+    : `${name} closes these conditions in published work. The scope narrows before it widens.`;
   return { estimate, consequence };
 }
 

@@ -13,20 +13,20 @@ export function PassAlong() {
   );
 
   return (
-    <aside className="signal-plate lift-card px-8 py-10 text-iron">
-      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-iron/70">
+    <aside className="mt-14 border-t border-ink/10 pt-10">
+      <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">
         Not your call?
       </p>
-      <p className="mt-2 max-w-[22ch] font-newsreader text-[24px] leading-[1.12] tracking-[-0.03em]">
+      <p className="mt-2 max-w-[22ch] font-newsreader text-[24px] leading-[1.12] tracking-[-0.03em] text-ink">
         Send the Check to whoever owns the repo.
       </p>
-      <p className="mt-3 max-w-[36ch] font-newsreader text-[15px] leading-[1.45] text-iron/80">
+      <p className="mt-3 max-w-[36ch] font-newsreader text-[15px] leading-[1.45] text-quill">
         Most products die in a Slack thread. This is the same link, with the
         price and the five days already written.
       </p>
       <a
         href={`mailto:?subject=${subject}&body=${body}`}
-        className="btn btn-iron mt-6 px-5 text-[14px]"
+        className="btn btn-gold mt-6 px-5 text-[14px]"
       >
         Open a mail to them
       </a>

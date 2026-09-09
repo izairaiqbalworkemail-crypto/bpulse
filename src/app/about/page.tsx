@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { BreadcrumbJsonLd } from "@/lib/JsonLd";
+import { PageHero } from "@/components/PageHero";
 import { Episode, EpisodeHead } from "@/components/episode/Episode";
 import { StartPlate } from "@/components/objects/StartPlate";
-import { AboutWhat } from "@/components/about/AboutWhat";
 import { AboutBeliefs } from "@/components/about/AboutBeliefs";
 import { AboutOrigin } from "@/components/about/AboutOrigin";
 import { AboutCrew } from "@/components/about/AboutCrew";
 import { AboutWhere } from "@/components/about/AboutWhere";
 import { AboutNot } from "@/components/about/AboutNot";
-import { aboutStart } from "@/content/about";
+import { aboutStart, aboutWhat } from "@/content/about";
 import { pageFrame } from "@/content/platform";
 import { brand } from "@/config/brand";
 
@@ -24,9 +24,12 @@ export default function AboutPage() {
     <>
       <BreadcrumbJsonLd items={[{ name: "About", url: `${brand.url}/about` }]} />
 
-      <Episode labelledBy="what" tone="cocoa">
-        <AboutWhat />
-      </Episode>
+      <PageHero
+        kicker="About · Lahore"
+        title={aboutWhat.heading}
+        dek={aboutWhat.dek}
+        cut="Studio"
+      />
 
       <Episode labelledBy="believe" tone="paper">
         <AboutBeliefs />

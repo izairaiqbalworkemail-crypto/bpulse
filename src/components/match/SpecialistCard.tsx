@@ -42,7 +42,7 @@ export function SpecialistCard({
     person.availability === "available"
       ? "Free to take this on"
       : person.availability === "on an engagement"
-        ? "Already on an engagement — the fit is as a handoff"
+        ? "Already on an engagement. The fit is as a handoff"
         : "Not taking new work right now";
   const isFounder = row.specialistId === "aneeb";
 
@@ -54,9 +54,9 @@ export function SpecialistCard({
   return (
     <article className={`card p-6 ${featured ? "card-hover" : ""}`}>
       <div className="flex gap-4">
-        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-[16px] bg-iron">
+        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-[16px] bg-ink">
           {absent ? (
-            <span className="grid h-full place-items-center font-newsreader text-[22px] text-rag">
+            <span className="grid h-full place-items-center font-newsreader text-[22px] text-paper">
               {person.name[0]}
             </span>
           ) : (
@@ -71,10 +71,10 @@ export function SpecialistCard({
           )}
         </div>
         <div className="min-w-0">
-          <p className="font-newsreader text-[22px] leading-[1.15] text-iron">
+          <p className="font-newsreader text-[22px] leading-[1.15] text-ink">
             {person.name}
           </p>
-          <p className="mt-1 font-newsreader text-[15px] text-ink">{person.role}</p>
+          <p className="mt-1 font-newsreader text-[15px] text-quill">{person.role}</p>
 <p className="mt-1 kicker">
           Lane · {row.capability} ·{" "}
           {person.domains.length > 0 ? person.domains.join(", ") : "generalist"}
@@ -82,7 +82,7 @@ export function SpecialistCard({
         <p className="mt-2 kicker">
           <Link
             href={gate.href}
-            className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+            className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
           >
             {gate.label}
           </Link>
@@ -103,7 +103,7 @@ export function SpecialistCard({
             {open.map((hit) => (
               <li
                 key={hit.signalId}
-                className="chip chip-line text-ink/70"
+                className="chip chip-line text-quill/70"
               >
                 {hit.signalId.replaceAll("-", " ")}
               </li>
@@ -117,7 +117,7 @@ export function SpecialistCard({
         {row.evidence.map((line) => (
           <li
             key={line.claim}
-            className="font-newsreader text-[16px] leading-[1.45] text-ink"
+            className="font-newsreader text-[16px] leading-[1.45] text-quill"
           >
             {line.claim}
             {line.lotSlug ? (
@@ -125,9 +125,9 @@ export function SpecialistCard({
                 {" "}
                 <Link
                   href={`/work/${line.lotSlug}`}
-                  className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+                  className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
                 >
-                  See the lot
+                  See the case
                 </Link>
               </>
             ) : null}
@@ -141,7 +141,7 @@ export function SpecialistCard({
         <Link
           href={`/direct/${person.id}`}
           onClick={book}
-          className="btn btn-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+          className="btn btn-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
         >
           Book 20 minutes · write {first}
         </Link>
@@ -152,7 +152,7 @@ export function SpecialistCard({
             storeMatchBrief(description, eventId ?? undefined);
             logOutcome(eventId, "became_check");
           }}
-          className="min-h-11 font-plex-sans text-[14px] text-iron underline decoration-iron/30 underline-offset-4 hover:decoration-iron focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-iron"
+          className="min-h-11 font-plex-sans text-[14px] text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
         >
           {isFounder ? "Or start the Check" : "Or start a Check"}
         </Link>

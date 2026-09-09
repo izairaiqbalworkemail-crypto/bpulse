@@ -31,7 +31,8 @@ export default function FirstSlicePage() {
         kicker={`The First Slice · ${money(offer.slice.price)}`}
         title={slicePage.title}
         dek={pageFrame.slice}
-        hideAction
+        actionHref="#intake"
+        actionLabel="Start my First Slice"
       />
 
       <Episode tone="paper">
@@ -44,13 +45,13 @@ export default function FirstSlicePage() {
           {slicePage.dek}
         </EpisodeHead>
         <div className="price-object mt-12 max-w-[36rem]">
-          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+          <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
             Two weeks. Fixed scope.
           </p>
-          <p className="mt-3 font-newsreader type-display text-[48px] leading-none tabular-nums text-iron">
+          <p className="mt-3 font-newsreader type-display text-[48px] leading-none tabular-nums text-ink">
             {money(offer.slice.price)}
           </p>
-          <p className="mt-4 max-w-[40ch] font-newsreader text-[18px] leading-[1.45] text-iron">
+          <p className="mt-4 max-w-[40ch] font-newsreader text-[18px] leading-[1.45] text-ink">
             One thing that works, in production, that you can show someone.
           </p>
         </div>
@@ -60,11 +61,11 @@ export default function FirstSlicePage() {
           outLabel="What it is not"
           outLines={slicePage.out}
         />
-        <p className="mt-12 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-ink">
+        <p className="mt-12 max-w-[48ch] font-plex-sans text-[16px] leading-[1.55] text-quill">
           If the thing already exists and is stuck, start with{" "}
           <Link
             href="/check"
-            className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+            className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
           >
             the Check · {money(offer.check.price)}
           </Link>

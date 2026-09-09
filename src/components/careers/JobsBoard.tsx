@@ -80,18 +80,18 @@ export function JobsBoard({ roles }: Readonly<Props>) {
             const active = role.id === roleId;
             const isOpen = role.status === "open";
             return (
-              <li key={role.id} className="card p-6">
-                <p className="font-newsreader text-[21px] text-iron">{role.title}</p>
-                <p className="mt-1 font-newsreader text-[16px] text-ink">
+              <li key={role.id} className={`letter-object${active ? " is-here" : ""}`}>
+                <p className="font-newsreader text-[21px] text-ink">{role.title}</p>
+                <p className="mt-1 font-newsreader text-[16px] text-quill">
                   {role.band} · {role.location} · {role.summary}
                 </p>
                 <div className="mt-3 flex items-center gap-4">
-                  <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">{role.status}</p>
+                  <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">{role.status}</p>
                   {isOpen ? (
                     <button
                       type="button"
                       onClick={() => setRoleId(role.id)}
-                      className="font-plex-sans text-[13px] underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+                      className="font-plex-sans text-[13px] underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
                     >
                       {active ? "Selected" : "Apply to this role"}
                     </button>
@@ -103,8 +103,8 @@ export function JobsBoard({ roles }: Readonly<Props>) {
         </ul>
       </section>
 
-      <section id="intake" className="card p-6">
-        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-ink/70">Apply to a role</p>
+      <section id="intake" className="border-t border-ink/10 pt-6">
+        <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-quill/70">Apply to a role</p>
         {done ? (
           <div className="mt-4">
             <SubmissionSuccess
@@ -116,20 +116,20 @@ export function JobsBoard({ roles }: Readonly<Props>) {
               }
               referenceId={done.id}
             />
-            <p className="mt-4 font-newsreader text-[16px] text-ink">
+            <p className="mt-4 font-newsreader text-[16px] text-quill">
               Status link: <a className="underline" href={`/careers/status/${done.statusToken}`}>{`/careers/status/${done.statusToken}`}</a>
             </p>
           </div>
         ) : openRoles.length === 0 ? (
-          <p className="mt-4 font-newsreader text-[17px] text-ink">No open roles right now.</p>
+          <p className="mt-4 font-newsreader text-[17px] text-quill">No open roles right now.</p>
         ) : (
           <div className="mt-4 space-y-3">
             <label className="block">
-              <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">Role</span>
+              <span className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">Role</span>
               <select
                 value={roleId}
                 onChange={(event) => setRoleId(event.target.value)}
-                className="mt-1 w-full border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+                className="mt-1 w-full border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
                 disabled={saving}
               >
                 {openRoles.map((role) => (
@@ -138,7 +138,7 @@ export function JobsBoard({ roles }: Readonly<Props>) {
               </select>
             </label>
             {selectedRole ? (
-              <p className="font-newsreader text-[15px] text-ink/80">
+              <p className="font-newsreader text-[15px] text-quill/80">
                 {selectedRole.band} · {selectedRole.location}
               </p>
             ) : null}
@@ -146,21 +146,21 @@ export function JobsBoard({ roles }: Readonly<Props>) {
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Your name"
-              className="w-full border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+              className="w-full border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
               disabled={saving}
             />
             <input
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Email"
-              className="w-full border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+              className="w-full border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
               disabled={saving}
             />
             <input
               value={link}
               onChange={(event) => setLink(event.target.value)}
               placeholder="Portfolio / GitHub / Resume link"
-              className="w-full border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+              className="w-full border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
               disabled={saving}
             />
             <textarea
@@ -168,15 +168,15 @@ export function JobsBoard({ roles }: Readonly<Props>) {
               onChange={(event) => setDetail(event.target.value)}
               placeholder="What you would bring to this role"
               rows={4}
-              className="w-full border border-iron/25 bg-rag px-3 py-2 font-newsreader text-[16px]"
+              className="w-full border border-ink/25 bg-paper px-3 py-2 font-newsreader text-[16px]"
               disabled={saving}
             />
-            {error ? <p className="font-newsreader text-[15px] text-signal-ink">{error}</p> : null}
+            {error ? <p className="font-newsreader text-[15px] text-stuck">{error}</p> : null}
             <button
               type="button"
               onClick={() => void submit()}
               disabled={saving}
-              className="border border-iron/25 px-4 py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron"
+              className="border border-ink/25 px-4 py-2 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink"
             >
               {saving ? "Submitting..." : "Submit application"}
             </button>

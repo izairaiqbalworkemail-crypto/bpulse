@@ -39,7 +39,7 @@ export function LegalIndex({
       aria-label="Sections"
       className="legal-chrome sticky top-28 hidden md:block"
     >
-      <p className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
+      <p className="font-plex-mono text-[11px] uppercase tracking-[0.1em] text-quill/70">
         On this page
       </p>
       <ol className="mt-5">
@@ -48,14 +48,14 @@ export function LegalIndex({
           return (
             <li
               key={item.id}
-              className="border-t border-iron/8 py-2.5 first:border-t-0 first:pt-0"
+              className="border-t border-ink/8 py-2.5 first:border-t-0 first:pt-0"
             >
               <a
                 href={item.href}
                 className={`block font-plex-sans text-[14px] leading-[1.35] underline-offset-4 transition-colors duration-200 ${
                   on
-                    ? "text-iron underline decoration-iron/40"
-                    : "text-ink/70 decoration-transparent hover:text-iron hover:underline hover:decoration-iron/30"
+                    ? "text-ink underline decoration-ink/40"
+                    : "text-quill/70 decoration-transparent hover:text-ink hover:underline hover:decoration-ink/30"
                 }`}
               >
                 {item.label}

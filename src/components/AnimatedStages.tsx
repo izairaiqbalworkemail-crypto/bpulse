@@ -10,19 +10,19 @@ export function AnimatedStages({
   stages,
 }: Readonly<{ stages: readonly Stage[] }>) {
   return (
-    <ol className="mt-12 border-t border-iron/10">
+    <ol className="mt-12 border-t border-ink/10">
       {stages.map((stage, index) => {
         const href = "href" in stage ? stage.href : undefined;
         const hrefLabel = "hrefLabel" in stage ? stage.hrefLabel : undefined;
         const demoHref = "demoHref" in stage ? stage.demoHref : undefined;
 
         return (
-          <li key={stage.id} className="border-b border-iron/10 py-10">
+          <li key={stage.id} className="border-b border-ink/10 py-10">
             <Reveal delay={index * 0.04}>
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+              <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h2 className="mt-2 font-newsreader text-[28px] leading-[1.15] text-iron md:text-[32px]">
+              <h2 className="mt-2 font-newsreader text-[28px] leading-[1.15] text-ink md:text-[32px]">
                 {stage.label}
               </h2>
               <dl className="mt-6 grid gap-6 sm:grid-cols-2">
@@ -34,31 +34,31 @@ export function AnimatedStages({
                   ] as const
                 ).map(([label, text]) => (
                   <div key={label}>
-                    <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
+                    <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
                       {label}
                     </dt>
-                    <dd className="mt-1.5 font-newsreader text-[16px] leading-[1.45] text-ink">
+                    <dd className="mt-1.5 font-newsreader text-[16px] leading-[1.45] text-quill">
                       {text}
                     </dd>
                   </div>
                 ))}
                 <div>
-                  <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/70">
+                  <dt className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/70">
                     What you can see
                   </dt>
-                  <dd className="mt-1.5 font-newsreader text-[16px] leading-[1.45] text-ink">
+                  <dd className="mt-1.5 font-newsreader text-[16px] leading-[1.45] text-quill">
                     {stage.see}{" "}
                     {demoHref ? (
                       <Link
                         href={demoHref}
-                        className="underline decoration-iron/40 underline-offset-4 hover:decoration-iron"
+                        className="underline decoration-ink/40 underline-offset-4 hover:decoration-ink"
                       >
                         Open the sample {stage.label.toLowerCase()} view
                       </Link>
                     ) : href ? (
                       <Link
                         href={href}
-                        className="underline decoration-iron/40 underline-offset-4 hover:decoration-iron"
+                        className="underline decoration-ink/40 underline-offset-4 hover:decoration-ink"
                       >
                         {hrefLabel ?? stage.label}
                       </Link>

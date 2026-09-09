@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/lib/JsonLd";
+import { Desk } from "@/components/conversation/Desk";
 import { Episode, EpisodeHead } from "@/components/episode/Episode";
 import { ReadOffer } from "@/components/read/ReadOffer";
 import { ReadSample } from "@/components/read/ReadSample";
-import { readAfter, readStart, readWhy } from "@/content/read";
 import { offer } from "@/content/offer";
 import { pageFrame } from "@/content/platform";
+import { readAfter, readOffer, readStart, readWhy } from "@/content/read";
 
 export const metadata: Metadata = buildMetadata({
   title: "The Read",
@@ -24,69 +24,77 @@ export default function ReadLandingPage() {
         price={0}
       />
 
-      <Episode labelledBy="offer" tone="signal" size="tall">
-        <ReadOffer />
+      <ReadOffer />
+
+      <Episode tone="paper">
+        <ul className="letter-folio-facts text-ink" aria-label="Read commitments">
+          <li>free</li>
+          <li>one business day</li>
+          <li>a real person writes it</li>
+          <li>a sentence is enough</li>
+        </ul>
+        <p className="mt-12 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
+          What it is
+        </p>
+        <p className="mt-3 max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+          {readOffer.what}
+        </p>
+        <p className="mt-10 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
+          Who it is for
+        </p>
+        <p className="mt-3 max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+          {readOffer.who}
+        </p>
+        <p className="mt-4 max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-quill">
+          {readOffer.idea}
+        </p>
+        <p className="mt-10 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
+          What it is not
+        </p>
+        <p className="mt-3 max-w-[52ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+          {readOffer.not}
+        </p>
       </Episode>
 
-      <Episode labelledBy="sample" tone="cocoa" size="tall">
-        <ReadSample />
-      </Episode>
+      <ReadSample />
 
-      <Episode labelledBy="why" tone="paper" size="short">
-        <EpisodeHead n="03" kicker="WHY IT IS FREE" id="why" heading={readWhy.heading}>
-          {readWhy.body}
+      <Episode tone="paper">
+        <EpisodeHead n={readWhy.n} kicker={readWhy.kicker} id="why" heading={readWhy.heading}>
+          {readWhy.body} {readWhy.next}
         </EpisodeHead>
-        <p className="mt-10 max-w-[36ch] font-newsreader text-[20px] leading-[1.4] text-iron">
-          {readWhy.next}
+        <p className="mt-16 font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
+          {readAfter.n} · {readAfter.kicker}
         </p>
-        <p className="mt-5">
-          <Link
-            href="/check"
-            className="font-plex-sans text-[15px] underline decoration-iron/25 underline-offset-4"
-          >
-            The Check
-          </Link>
+        <p className="mt-3 max-w-[20ch] font-newsreader text-[28px] leading-[1.15] text-ink">
+          {readAfter.heading}
         </p>
-      </Episode>
-
-      <Episode labelledBy="after" tone="cocoa">
-        <EpisodeHead
-          n="04"
-          kicker="WHAT HAPPENS AFTER"
-          id="after"
-          tone="cocoa"
-          heading="Then we stop."
-        />
-        <ol className="mt-12 flex flex-col">
-          {readAfter.steps.map((step, index) => (
+        <ol className="mt-8 max-w-[48ch] border-t border-ink/12">
+          {readAfter.steps.map((step) => (
             <li
               key={step}
-              className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-baseline gap-4 border-t border-rag/12 py-5 first:border-t-0 first:pt-0"
+              className="border-b border-ink/10 py-4 font-newsreader text-[17px] leading-[1.45] text-ink"
             >
-              <span className="font-plex-mono text-[13px] tabular-nums text-rag/50">
-                {index + 1}
-              </span>
-              <p className="max-w-[40ch] font-newsreader text-[20px] leading-[1.35] text-rag">
-                {step}
-              </p>
+              {step}
             </li>
           ))}
         </ol>
-        <p className="mt-10 max-w-[36ch] font-newsreader text-[20px] leading-[1.4] text-rag/80">
+        <p className="mt-6 max-w-[46ch] font-newsreader text-[17px] leading-[1.5] text-quill">
           {readAfter.pledge}
         </p>
       </Episode>
 
-      <Episode labelledBy="start" tone="paper" size="short">
-        <EpisodeHead n="05" kicker="START" id="start" heading={readStart.heading} />
-        <p className="mt-10">
-          <Link
-            href={readStart.href}
-            className="font-plex-sans text-[16px] underline decoration-iron/30 underline-offset-4"
-          >
-            {readStart.label}
-          </Link>
-        </p>
+      <Episode labelledBy="start" tone="paper">
+        <EpisodeHead
+          n={readStart.n}
+          kicker={readStart.kicker}
+          id="start"
+          heading={readStart.heading}
+        >
+          Five short questions. A written reply in one business day.
+        </EpisodeHead>
+        <div id="intake" className="mt-12 scroll-mt-[5.75rem] md:scroll-mt-28">
+          <Desk scriptId="read" ending="read" />
+        </div>
       </Episode>
     </>
   );

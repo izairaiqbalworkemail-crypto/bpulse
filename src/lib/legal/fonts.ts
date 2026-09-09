@@ -52,7 +52,7 @@ export function legalLogoDataUri(): string {
     "public",
     "bpulse-brand",
     "mark",
-    "bpulse-mark-dark-1024.png"
+    "bpulse-mark-light-1024.png"
   );
   const data = readFileSync(file);
   logoDataUriCache = `data:image/png;base64,${data.toString("base64")}`;

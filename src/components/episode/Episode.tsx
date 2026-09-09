@@ -4,38 +4,31 @@ import { Reveal, Rise } from "@/components/landing/Reveal";
 export type EpisodeTone = "paper" | "milk" | "cocoa" | "signal";
 
 const surface: Record<EpisodeTone, string> = {
-  paper: "bg-rag text-iron",
-  milk: "bg-rag text-iron",
-  cocoa: "on-iron bg-iron-2 text-rag",
-  signal: "bg-signal text-iron",
+  paper: "bg-paper text-ink",
+  milk: "bg-paper text-ink",
+  cocoa: "on-ink bg-ink text-read",
+  signal: "on-ink bg-ink text-read",
 };
 
 const kickerTone: Record<EpisodeTone, string> = {
-  paper: "text-ink/70",
-  milk: "text-ink/70",
-  cocoa: "text-rag/70",
-  signal: "text-iron/70",
+  paper: "text-label",
+  milk: "text-label",
+  cocoa: "text-label",
+  signal: "text-label",
 };
 
 const headingTone: Record<EpisodeTone, string> = {
-  paper: "text-iron",
-  milk: "text-iron",
-  cocoa: "text-rag",
-  signal: "text-iron",
+  paper: "text-headline",
+  milk: "text-headline",
+  cocoa: "text-paper",
+  signal: "text-paper",
 };
 
 const dekTone: Record<EpisodeTone, string> = {
-  paper: "text-ink",
-  milk: "text-ink",
-  cocoa: "text-rag/80",
-  signal: "text-iron/80",
-};
-
-const ruleTone: Record<EpisodeTone, string> = {
-  paper: "text-iron",
-  milk: "text-iron",
-  cocoa: "text-rag",
-  signal: "text-iron",
+  paper: "text-quill",
+  milk: "text-quill",
+  cocoa: "text-read",
+  signal: "text-read",
 };
 
 type EpisodeSize = "short" | "default" | "tall";
@@ -49,13 +42,12 @@ type EpisodeProps = {
 
 const roomPad: Record<EpisodeSize, string> = {
   short: "py-20 md:py-24",
-  default: "py-28 md:py-36",
-  tall: "py-32 md:py-44",
+  default: "py-24 md:py-32",
+  tall: "py-28 md:py-36",
 };
 
 /**
- * One room on the ribbon.
- * First cocoa, second signal, third paper. Black stays behind.
+ * One room on the ribbon. Cream or ink. Yellow never fills the room.
  */
 export function Episode({
   labelledBy,
@@ -98,16 +90,15 @@ export function EpisodeHead({
       <div className="min-w-0">
         <Reveal>
           <p
-            className={`font-plex-mono text-[12px] uppercase tracking-[0.14em] ${kickerTone[tone]}`}
+            className={`font-plex-mono text-[11px] uppercase tracking-[0.06em] ${kickerTone[tone]}`}
           >
             {n} · {kicker}
           </p>
         </Reveal>
-        <div className={`episode-rule ${ruleTone[tone]}`} aria-hidden="true" />
         <Rise delay={0.06}>
           <h2
             id={`${id}-heading`}
-            className={`mt-5 max-w-[16ch] font-newsreader type-display-m text-[34px] leading-[1.1] md:text-[44px] ${headingTone[tone]}`}
+            className={`type-display mt-6 max-w-[16ch] font-newsreader text-[clamp(2rem,4vw,3.5rem)] ${headingTone[tone]}`}
           >
             {heading}
           </h2>
@@ -115,7 +106,7 @@ export function EpisodeHead({
         {children ? (
           <Reveal delay={0.1}>
             <p
-              className={`mt-4 max-w-[42ch] font-newsreader text-[18px] leading-[1.5] md:text-[20px] ${dekTone[tone]}`}
+              className={`mt-5 max-w-[42ch] font-plex-sans text-[17px] leading-[1.5] ${dekTone[tone]}`}
             >
               {children}
             </p>

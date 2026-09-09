@@ -93,7 +93,7 @@ export const specialists: Specialist[] = [
     ],
     photoStatus: "Photo pending",
     availability: "available",
-    writeAbout: "Architecture — what you refuse to build, and why.",
+    writeAbout: "Architecture. What you refuse to build, and why.",
     stack: ["React", "Node.js", "TypeScript", "PostgreSQL", "AWS", "REST"],
     focus: ["full-stack architecture", "system design", "TypeScript"],
     signalsAddressed: ["env-drift", "no-observability", "legacy-coupling", "scope-unbounded"],
@@ -136,7 +136,7 @@ export const specialists: Specialist[] = [
     photo: "/team/fizza.jpg",
     photoStatus: "Photo",
     availability: "available",
-    writeAbout: "Getting a build across the line — the last twenty percent.",
+    writeAbout: "Getting a build across the line. The last twenty percent.",
     stack: ["Next.js", "React", "Astro", "Node", "Firebase", "Python", "TypeScript"],
     focus: ["full-stack", "SEO lead-gen", "AI integrations", "architecture"],
     signalsAddressed: [
@@ -280,7 +280,7 @@ export const specialists: Specialist[] = [
     record: [
       {
         org: "Sully.ai",
-        line: "Built the pipelines and AWS infrastructure that keep hospital AI deployments green.",
+        line: "Built the pipelines and AWS infrastructure that keep hospital AI projects green.",
         url: "https://sully.ai",
       },
       {
@@ -417,12 +417,12 @@ export const specialists: Specialist[] = [
     photo: "/team/moiz.webp",
     photoStatus: "Photo",
     availability: "available",
-    writeAbout: "Full-stack delivery — APIs, the page, and the change that has to ship.",
+    writeAbout: "Full-stack delivery. APIs, the page, and the change that has to ship.",
     stack: ["React", "Node.js", "TypeScript", "PostgreSQL", "Next.js"],
     focus: ["full-stack", "frontend", "API design"],
     signalsAddressed: ["no-deploy-path", "staging-only", "no-observability"],
     domains: ["full-stack", "infrastructure"],
-    philosophy: "Clean code is not about style — it is about speed of change.",
+    philosophy: "Clean code is not about style. It is about speed of change.",
     funFacts: [
       "Refactors for fun on weekends",
       "Types everything twice",
@@ -445,7 +445,7 @@ export const specialists: Specialist[] = [
     record: [
       {
         org: "Breakthrough Pulse",
-        line: "Built and maintained backend services across multiple production deployments.",
+        line: "Built and maintained backend services across multiple production projects.",
       },
     ],
     photo: "/team/hamza.jpg",
@@ -485,7 +485,7 @@ export const specialists: Specialist[] = [
     photo: "/team/abdullah.jpg",
     photoStatus: "Photo",
     availability: "available",
-    writeAbout: "The interface — what people see, and what they cannot use.",
+    writeAbout: "The interface. What people see, and what they cannot use.",
     stack: ["React", "TypeScript", "Tailwind", "Next.js", "Framer Motion"],
     focus: ["frontend", "UI/UX", "accessibility", "performance"],
     signalsAddressed: ["staging-only", "no-observability"],
@@ -524,7 +524,7 @@ export const specialists: Specialist[] = [
     focus: ["operations", "hiring", "client success"],
     signalsAddressed: [],
     domains: ["operations", "people"],
-    philosophy: "The best operations are invisible — everything just works.",
+    philosophy: "The best operations are invisible. Everything just works.",
     funFacts: [
       "Reads every message herself",
       "Keeps the team fed and focused",
@@ -541,8 +541,12 @@ export const specialists: Specialist[] = [
 
 const specialistMap = new Map(specialists.map((s) => [s.id, s]));
 
+export function findSpecialist(id: string): Specialist | undefined {
+  return specialistMap.get(id);
+}
+
 export function getSpecialist(id: string): Specialist {
-  const s = specialistMap.get(id);
+  const s = findSpecialist(id);
   if (!s) throw new Error(`Unknown specialist: ${id}`);
   return s;
 }

@@ -11,13 +11,13 @@ export function PeopleRail({
   people,
   line,
   tone = "ink",
-}: Readonly<{ people: Specialist[]; line?: string; tone?: "ink" | "rag" }>) {
+}: Readonly<{ people: Specialist[]; line?: string; tone?: "ink" | "paper" }>) {
   const nameClass =
-    tone === "rag"
-      ? "text-rag/90"
-      : "text-iron";
+    tone === "paper"
+      ? "text-paper/90"
+      : "text-ink";
   const lineClass =
-    tone === "rag" ? "text-rag/60" : "text-ink/70";
+    tone === "paper" ? "text-paper/60" : "text-quill/70";
 
   return (
     <div>
@@ -40,9 +40,9 @@ export function PeopleRail({
               <Reveal delay={index * 0.05}>
                 <Tilt intensity={6}>
                   <Link href={`/team/${person.id}`} className="group block w-[4.5rem]">
-                    <span className="relative block aspect-square overflow-hidden rounded-full bg-iron">
+                    <span className="relative block aspect-square overflow-hidden rounded-full bg-ink">
                       {absent ? (
-                        <span className="grid h-full place-items-center font-newsreader text-[18px] text-rag">
+                        <span className="grid h-full place-items-center font-newsreader text-[18px] text-paper">
                           {initials}
                         </span>
                       ) : (

@@ -99,20 +99,12 @@ export const sessionFields: Record<IntakeType, FieldConfig[]> = {
     nameField,
     emailField,
     {
-      name: "stage",
-      label: "Where it is",
-      type: "radio",
-      options: ["Rough idea", "Spec written", "Already building"],
-      required: true,
-    },
-    {
       name: "build",
-      label: "What you are sitting on",
+      label: "What do you need",
       type: "textarea",
       required: true,
-      placeholder: "One or two lines",
+      placeholder: "A couple of lines is enough",
     },
-    budgetField,
   ],
   about: [
     nameField,

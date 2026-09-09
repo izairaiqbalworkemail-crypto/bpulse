@@ -1,21 +1,13 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import { BriefIntake } from "@/components/intake/BriefIntake";
-import { PassAlong } from "@/components/PassAlong";
-import { VettedPay } from "@/components/VettedPay";
-import { Credit } from "@/components/primitives/Credit";
-import { PeopleRail } from "@/components/PeopleRail";
-import {
-  Atmosphere,
-  AtmosphereNote,
-} from "@/components/landing/Atmosphere";
-import { Reveal } from "@/components/landing/Reveal";
 import { brand } from "@/config/brand";
 import { addressLine } from "@/config/site";
-import { checkRunner } from "@/content/check";
 import { pageFrame } from "@/content/platform";
-import { getSpecialist, specialists } from "@/content/specialists";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
@@ -24,76 +16,58 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ContactPage() {
-  const runner = getSpecialist(checkRunner.id);
-
   return (
     <>
       <PageHero
-        kicker="Intake"
-        title="Aneeb Iqbal reads it within one business day."
-        dek={pageFrame.contact}
+        kicker="Contact"
+        title="Write us."
+        dek="Name, email, what you need. Aneeb reads it within one business day."
         hideAction
       />
 
-      <section className="relative w-full overflow-hidden bg-rag pb-24">
-        <Atmosphere kind="paper" opacity={0.16} />
-        <div className="relative grid-container pt-12 md:pt-16">
-          <PeopleRail
-            people={specialists}
-            line="The platform routes it. Aneeb reads it."
-          />
-          <div className="mt-3">
-            <AtmosphereNote />
-          </div>
-          <Reveal className="mt-10">
-            <Credit
-              name={runner.name}
-              capability={runner.role}
-              line={checkRunner.line}
-              portraitSrc={runner.photo}
-              portraitAlt={runner.name}
-            />
-          </Reveal>
-
-          <div id="intake" className="mt-12 scroll-mt-[5.75rem] md:scroll-mt-28">
+      <Episode tone="paper">
+        <div id="start" className="scroll-mt-[5.75rem] md:scroll-mt-28">
+          <div id="intake" className="scroll-mt-[5.75rem] md:scroll-mt-28">
             <BriefIntake type="contact" source="contact" />
-            <div className="mt-8">
-              <VettedPay />
-            </div>
-            <div className="mt-8">
-              <PassAlong />
-            </div>
           </div>
-
-          <address className="mt-16 not-italic">
-            <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-              Studio
-            </p>
-            <p className="mt-3 font-newsreader text-[18px] leading-[1.5] text-iron">
-              {brand.legalName}
-              <br />
-              {addressLine}
-              <br />
-              <a
-                href={`mailto:${brand.contact.email}`}
-                className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
-              >
-                {brand.contact.email}
-              </a>
-            </p>
-            <p className="mt-4 max-w-[48ch] font-newsreader text-[17px] leading-[1.5] text-ink">
-              Legal enquiries route to Hamza Khan, Legal & Risk: {" "}
-              <a
-                href="mailto:hamza@bpulse.dev"
-                className="underline decoration-iron/30 underline-offset-4 hover:decoration-iron"
-              >
-                hamza@bpulse.dev
-              </a>
-              .
-            </p>
-          </address>
         </div>
-      </section>
+
+        <p className="mt-12 max-w-[42ch] font-newsreader text-[18px] leading-[1.45] text-ink">
+          If you have a stuck build, the{" "}
+          <Link
+            href="/read"
+            className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
+          >
+            Read is faster
+          </Link>
+          .
+        </p>
+
+        <address className="mt-16 not-italic">
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
+            Direct
+          </p>
+          <div className="mt-6">
+            <LetterLedger
+              lines={[
+                {
+                  id: "email",
+                  kicker: "Studio",
+                  title: brand.contact.email,
+                  href: `mailto:${brand.contact.email}`,
+                  ask: "Write",
+                },
+                {
+                  id: "studio",
+                  kicker: "Legal name",
+                  title: brand.legalName,
+                  body: addressLine,
+                },
+              ]}
+            />
+          </div>
+        </address>
+      </Episode>
     </>
   );
 }

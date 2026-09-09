@@ -64,14 +64,14 @@ export function Reading() {
                   type="button"
                   aria-pressed={on}
                   onClick={() => toggle(row.signal)}
-                  className={`flex min-h-[3.25rem] w-full items-center justify-between gap-4 border-b border-rag/10 py-3 text-left ${
-                    on ? "text-rag" : "text-rag/70 hover:text-rag"
+                  className={`flex min-h-[3.25rem] w-full items-center justify-between gap-4 border-b border-paper/10 py-3 text-left ${
+                    on ? "text-paper" : "text-paper/70 hover:text-paper"
                   }`}
                 >
                   <span className="font-newsreader text-[18px] leading-[1.25]">
                     {row.label}
                   </span>
-                  <span className="shrink-0 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-rag/70">
+                  <span className="shrink-0 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-paper/70">
                     {row.verdict}
                   </span>
                 </button>
@@ -80,7 +80,7 @@ export function Reading() {
           })}
         </Stagger>
 
-        <div className="relative min-h-[420px] overflow-hidden rounded-[24px] border border-rag/10 bg-iron-card px-6 py-6">
+        <div className="relative min-h-[420px] overflow-hidden rounded-[12px] border border-line-ink bg-ink-card px-6 py-6">
           {match?.lot.imageUrl ? (
             <Image
               src={match.lot.imageUrl}
@@ -93,7 +93,7 @@ export function Reading() {
           <div className="relative z-10">
             {match ? (
               <div className="pointer-events-none absolute inset-x-0 top-0 opacity-35">
-                <Trace spec={specFromLot(match.lot)} size="full" surface="iron" />
+                <Trace spec={specFromLot(match.lot)} size="full" surface="ink" />
               </div>
             ) : null}
 
@@ -106,7 +106,7 @@ export function Reading() {
                 d={visitorPath}
                 fill="none"
                 stroke="currentColor"
-                className="text-rag/50"
+                className="text-paper/50"
                 strokeWidth="1.5"
                 strokeLinecap="round"
               />
@@ -123,30 +123,30 @@ export function Reading() {
               >
                 {match ? (
                   <>
-                    <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/70">
+                    <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-paper/70">
                       {match.lot.grade.label.replace(/ on arrival$/i, "")}
                     </p>
-                    <p className="mt-2 font-newsreader text-[22px] leading-[1.15] text-rag">
-                      Closest: {match.lot.client} · shares {match.shared} of your{" "}
-                      {match.selected} signals
+                    <p className="mt-2 font-newsreader text-[22px] leading-[1.15] text-paper">
+                      Closest: {match.lot.client} · shares {match.shared} of{" "}
+                      {match.selected} things we have seen
                     </p>
-                    <p className="mt-2 max-w-[42ch] font-newsreader text-[15px] leading-[1.4] text-rag/80">
+                    <p className="mt-2 max-w-[42ch] font-newsreader text-[15px] leading-[1.4] text-paper/80">
                       {match.lot.summary}
                     </p>
                     <p className="mt-4">
                       <Link
                         href={`/work/${match.lot.slug}`}
-                        className="font-plex-sans text-[14px] text-rag underline decoration-rag/25 underline-offset-4 hover:decoration-rag"
+                        className="font-plex-sans text-[14px] text-paper underline decoration-paper/25 underline-offset-4 hover:decoration-paper"
                       >
-                        See the record →
+                        See the work →
                       </Link>
                     </p>
                   </>
                 ) : (
-                  <p className="max-w-[36ch] font-newsreader text-[16px] leading-[1.4] text-rag/80">
+                  <p className="max-w-[36ch] font-newsreader text-[16px] leading-[1.4] text-paper/80">
                     {selected.length === 0
                       ? "Six conditions we have already seen. Two or more can sit next to a real lot."
-                      : "No lot on the record shares two of these signals yet."}
+                      : "No case we have published shares two of these yet."}
                   </p>
                 )}
               </motion.div>
@@ -155,17 +155,25 @@ export function Reading() {
         </div>
       </div>
 
-      <p className="mt-10">
+      <p className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
         <Link
-          href={checkHrefFromReading(
-            readingSymptoms
-              .filter((row) => selected.includes(row.signal))
-              .map((row) => ({ signal: row.signal, label: row.label })),
-          )}
-          className="font-plex-sans text-[15px] text-rag underline decoration-rag/25 underline-offset-4 hover:decoration-rag"
+          href="/read"
+          className="font-plex-sans text-[15px] text-paper underline decoration-paper/25 underline-offset-4 hover:decoration-paper"
         >
-          Five days. A verdict.
+          Get my free read.
         </Link>
+        {selected.length > 0 ? (
+          <Link
+            href={checkHrefFromReading(
+              readingSymptoms
+                .filter((row) => selected.includes(row.signal))
+                .map((row) => ({ signal: row.signal, label: row.label })),
+            )}
+            className="font-plex-sans text-[15px] text-paper/70 underline decoration-paper/20 underline-offset-4 hover:text-paper hover:decoration-paper"
+          >
+            Or reserve the Check
+          </Link>
+        ) : null}
       </p>
     </Episode>
   );

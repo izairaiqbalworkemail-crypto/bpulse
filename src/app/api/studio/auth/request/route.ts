@@ -47,8 +47,8 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
-      console.info("[studio-auth] dev magic link", url.toString());
-      return NextResponse.json({ ok: true, devLink: url.toString() });
+      console.info("[studio-auth] magic link", url.toString());
+      return NextResponse.json({ ok: true });
     }
     console.error("[studio-auth] failed to send magic link", error);
     return NextResponse.json({ ok: false, error: "Email failed to send." }, { status: 500 });

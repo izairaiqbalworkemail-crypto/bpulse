@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/lib/JsonLd";
+import { PageHero } from "@/components/PageHero";
 import { Episode, EpisodeHead } from "@/components/episode/Episode";
 import { Desk } from "@/components/conversation/Desk";
-import { ChairProblem } from "@/components/chair/ChairProblem";
 import { ChairPromise } from "@/components/chair/ChairPromise";
 import { TeacherObject } from "@/components/chair/TeacherObject";
 import { WeekSpine } from "@/components/chair/WeekSpine";
@@ -12,6 +12,7 @@ import { CompareLedger } from "@/components/chair/CompareLedger";
 import { ChairQuestions } from "@/components/chair/ChairQuestions";
 import { ChairTiers } from "@/components/chair/ChairTiers";
 import { Reveal } from "@/components/landing/Reveal";
+import { afterCopy } from "@/content/home";
 import { secondChair } from "@/content/second-chair";
 import { ladderPrices } from "@/content/ladder";
 import { pageFrame } from "@/content/platform";
@@ -39,9 +40,13 @@ export default function SecondChairPage() {
         price={ladderPrices.standingMin}
       />
 
-      <Episode labelledBy="problem" tone="cocoa" size="tall">
-        <ChairProblem />
-      </Episode>
+      <PageHero
+        kicker="Second Chair"
+        title={secondChair.problem[0]}
+        dek={secondChair.problemDek}
+        actionHref="#start"
+        actionLabel={afterCopy.open}
+      />
 
       <Episode labelledBy="promise" tone="paper" size="short">
         <ChairPromise />
@@ -72,7 +77,7 @@ export default function SecondChairPage() {
           id="month"
           heading="Your repository. Not a syllabus."
         >
-          A syllabus means the content was written before they arrived.
+          A syllabus means the content was written before they started.
         </EpisodeHead>
         <WeekSpine />
       </Episode>

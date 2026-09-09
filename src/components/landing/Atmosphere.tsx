@@ -5,7 +5,7 @@ type AtmosphereProps = {
 };
 
 /**
- * Paper grain belongs on heroes (`paper-ground` in HeroFrame).
+ * Paper grain used to live on heroes. The first window is cream + plate now.
  * This stays as a no-op so leftover calls do not load missing images.
  */
 export function Atmosphere({ className }: Readonly<AtmosphereProps>) {
@@ -15,11 +15,11 @@ export function Atmosphere({ className }: Readonly<AtmosphereProps>) {
 
 export function AtmosphereNote({
   tone = "ink",
-}: Readonly<{ tone?: "ink" | "rag" }>) {
+}: Readonly<{ tone?: "ink" | "paper" }>) {
   return (
     <p
       className={`font-plex-mono text-[11px] uppercase tracking-[0.08em] ${
-        tone === "rag" ? "text-rag/60" : "text-ink/70"
+        tone === "paper" ? "text-paper/60" : "text-quill/70"
       }`}
     >
       Named crew · no stock faces

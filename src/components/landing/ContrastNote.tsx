@@ -1,7 +1,7 @@
 type ContrastNoteProps = {
   they: string;
   we: string;
-  surface?: "rag" | "iron" | "signal";
+  surface?: "paper" | "ink" | "gold";
 };
 
 /**
@@ -10,12 +10,12 @@ type ContrastNoteProps = {
 export function ContrastNote({
   they,
   we,
-  surface = "rag",
+  surface = "paper",
 }: Readonly<ContrastNoteProps>) {
   const mute =
-    surface === "iron" ? "text-rag/70" : "text-ink/70";
-  const live = surface === "iron" ? "text-rag" : "text-iron";
-  const mark = surface === "iron" ? "text-signal" : "text-iron";
+    surface === "ink" ? "text-paper/70" : "text-quill/70";
+  const live = surface === "ink" ? "text-paper" : "text-ink";
+  const mark = surface === "ink" ? "text-paper" : "text-headline";
 
   return (
     <dl className="contrast-plate" data-surface={surface}>

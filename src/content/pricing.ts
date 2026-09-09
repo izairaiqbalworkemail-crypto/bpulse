@@ -17,7 +17,7 @@ export const pricingLadder = [
     name: "The Read",
     price: "Free",
     href: "/read",
-    body: "Describe what is stuck. We write back a real read in one business day. No call, no form beyond your email.",
+    body: "Five short questions. A written reply in one business day.",
   },
   {
     id: "session",
@@ -45,11 +45,11 @@ export const pricingLadder = [
     name: "The Close",
     price: closeRange,
     href: "/how-it-works",
-    body: "The full deployment. Fixed scope agreed in writing before any code.",
+    body: "The full project. Fixed scope agreed in writing before any code.",
   },
   {
     id: "standing",
-    name: "Standing",
+    name: "Second Chair",
     price: standingRange,
     href: "/second-chair",
     body: "After launch, until you do not need us.",
@@ -65,8 +65,9 @@ export const pricingRule = {
 } as const;
 
 export const pricingRoute = [
+  { if: "Not sure yet. Start here.", start: "The Read", href: "/read" },
   { if: "An idea and no code", start: "The Session", href: "/session" },
-  { if: "A build that will not deploy", start: "The Check", href: "/check" },
+  { if: "A build that will not ship", start: "The Check", href: "/check" },
   {
     if: "A prototype that needs to become real",
     start: "The First Slice",
@@ -75,10 +76,9 @@ export const pricingRoute = [
   { if: "A finished scope and a deadline", start: "The Close", href: "/how-it-works" },
   {
     if: "Something we shipped, and questions",
-    start: "Standing",
+    start: "Second Chair",
     href: "/second-chair",
   },
-  { if: "No idea where you are", start: "The Read", href: "/read" },
 ] as const;
 
 export const pricingIncluded = {
@@ -90,7 +90,7 @@ export const pricingIncluded = {
     "Live progress in the portal, read from the repository",
     "IP assigned in writing",
     "Access revoked at handover, with a dated log",
-    "Handover training in every deployment",
+    "Handover training in every project"
   ],
 } as const;
 
@@ -122,7 +122,7 @@ export const pricingPay = {
 export const pricingQuestions = [
   {
     q: "Why credited and not refunded?",
-    a: "The Session and the Check credit against anything you buy in 30 days because the work is used if you continue. If the Check says keep and you do not build, the fee is returned. Credit is the default. A refund is the honest exit.",
+    a: "The Session credits against anything you buy in 30 days. The Check credits in full against a build in 30 days. If the Check says keep and you do not build, the fee is returned. Credit is the default. A refund is the honest exit.",
   },
   {
     q: "What happens if the scope changes?",
@@ -144,9 +144,9 @@ export const pricingQuestions = [
 
 export const pricingStart = {
   heading: "The Read.",
-  line: "If you do not know which rung, start free.",
+  line: "If you do not know which, start free.",
   href: "/read",
-  label: "Start",
+  label: "Get my free read",
 } as const;
 
 export const pricingRungIds = pricingLadder.map((rung) => rung.id);

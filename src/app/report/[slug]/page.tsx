@@ -21,7 +21,7 @@ export async function generateMetadata({
   const report = getReport(slug);
   if (!report) return { robots: { index: false, follow: false } };
   return {
-    title: `${report.company} — bpulse report`,
+    title: `${report.company}. bpulse report`,
     description: report.theRead,
     robots: { index: false, follow: false },
     alternates: { canonical: `https://report.bpulse.dev/${report.slug}` },
@@ -37,34 +37,34 @@ export default async function ReportPage({ params }: PageProps) {
   const specialist = getSpecialist(report.specialistId);
 
   return (
-    <article className="report-page bg-rag text-ink">
+    <article className="report-page bg-paper text-quill">
       <TrackOnMount event="report.opened" props={{ slug: report.slug }} />
       <div className="mx-auto max-w-[720px] px-6 py-16 md:py-24">
-        <header className="border-b border-iron/15 pb-8">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
+        <header className="border-b border-ink/15 pb-8">
+          <p className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
             Private diagnostic · not for index
           </p>
-          <p className="mt-3 font-plex-sans text-sm text-ink/70">
+          <p className="mt-3 font-plex-sans text-sm text-quill/70">
             Prepared for {report.company} · {report.preparedOn} ·{" "}
             {report.preparedBy}
           </p>
         </header>
 
         <section className="mt-10">
-          <h1 className="font-newsreader text-[25px] leading-[1.35] text-iron">
+          <h1 className="font-newsreader text-[25px] leading-[1.35] text-ink">
             {report.theRead}
           </h1>
         </section>
 
         <section className="mt-12">
-          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
+          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
             Surfaces read
           </h2>
           <ul className="mt-4 flex flex-col gap-2">
             {report.surfacesRead.map((surface) => (
               <li
                 key={surface}
-                className="font-plex-sans text-sm leading-relaxed text-ink"
+                className="font-plex-sans text-sm leading-relaxed text-quill"
               >
                 {surface}
               </li>
@@ -73,33 +73,33 @@ export default async function ReportPage({ params }: PageProps) {
         </section>
 
         <section className="mt-14">
-          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
+          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
             Findings
           </h2>
           <FindingLedger findings={[...report.findings]} />
         </section>
 
-        <section className="card mt-14 px-8 py-8">
-          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
+        <section className="mt-14 border-t border-ink/10 pt-8">
+          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
             What it takes
           </h2>
-          <p className="mt-2 font-plex-sans text-sm text-ink/60">
+          <p className="mt-2 font-plex-sans text-sm text-quill/60">
             An estimate, not a quote. The Check is what turns this into a number
             we will stand behind.
           </p>
-          <p className="mt-4 font-newsreader text-reading leading-reading text-iron">
+          <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
             {report.whatItTakes.scope}
           </p>
-          <p className="mt-4 font-plex-mono text-data text-iron">
+          <p className="mt-4 font-plex-mono text-data text-ink">
             {report.whatItTakes.weeks} · {report.whatItTakes.band}
           </p>
         </section>
 
-        <section className="card mt-14 px-8 py-8">
-          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
+        <section className="mt-14 border-t border-ink/10 pt-8">
+          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
             Who would do it
           </h2>
-          <p className="mt-4 font-newsreader text-reading leading-reading text-iron">
+          <p className="mt-4 font-newsreader text-reading leading-reading text-ink">
             <Link
               href={`${brand.url}/team/${specialist.id}`}
               className="underline-offset-4 hover:underline"
@@ -110,18 +110,18 @@ export default async function ReportPage({ params }: PageProps) {
           </p>
         </section>
 
-        <section className="card mt-14 px-8 py-8">
-          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-ink/60">
+        <section className="mt-14 border-t border-ink/10 pt-8">
+          <h2 className="font-plex-mono text-[13px] uppercase tracking-[0.14em] text-quill/60">
             Limits
           </h2>
-          <p className="mt-2 font-plex-sans text-sm text-ink/60">
+          <p className="mt-2 font-plex-sans text-sm text-quill/60">
             Equal weight to everything above. This is what we could not see.
           </p>
           <ul className="mt-4 flex flex-col gap-3">
             {report.limits.map((limit) => (
               <li
                 key={limit}
-                className="font-newsreader text-reading leading-reading text-iron"
+                className="font-newsreader text-reading leading-reading text-ink"
               >
                 {limit}
               </li>
@@ -129,15 +129,15 @@ export default async function ReportPage({ params }: PageProps) {
           </ul>
         </section>
 
-        <div className="report-cta mt-16 border-t border-iron/15 pt-8">
+        <div className="report-cta mt-16 border-t border-ink/15 pt-8">
           <Link
             href={`${brand.url}/check`}
-            className="inline-flex items-center gap-2 rounded-full bg-signal px-6 py-3 font-plex-sans text-[15px] font-medium text-iron"
+            className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-plex-sans text-[15px] font-medium text-ink"
           >
-            Book the Check
+            Book my Check
             <span aria-hidden="true">→</span>
           </Link>
-          <p className="mt-4 font-plex-sans text-sm text-ink/70">
+          <p className="mt-4 font-plex-sans text-sm text-quill/70">
             If you move forward, onboarding and delivery run in the portal on{" "}
             <a href="https://app.bpulse.dev" className="underline underline-offset-4">
               app.bpulse.dev
@@ -146,7 +146,7 @@ export default async function ReportPage({ params }: PageProps) {
           </p>
         </div>
 
-        <p className="report-print-url mt-16 hidden font-plex-mono text-[12px] text-ink/60">
+        <p className="report-print-url mt-16 hidden font-plex-mono text-[12px] text-quill/60">
           https://report.bpulse.dev/{report.slug}
         </p>
       </div>

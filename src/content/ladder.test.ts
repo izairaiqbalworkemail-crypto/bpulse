@@ -25,6 +25,35 @@ describe("pricing ladder", () => {
     );
   });
 
+  it("fails if a paid published price is zero or missing", () => {
+    const paid = [
+      ladderPrices.session,
+      ladderPrices.check,
+      ladderPrices.slice,
+      ladderPrices.closeMin,
+      ladderPrices.closeMax,
+      ladderPrices.standingMin,
+      ladderPrices.standingMax,
+      offer.session.price,
+      offer.check.price,
+      offer.slice.price,
+    ];
+    for (const amount of paid) {
+      expect(amount).toBeGreaterThan(0);
+    }
+    expect(offer.session.price).toBe(ladderPrices.session);
+    expect(offer.check.price).toBe(ladderPrices.check);
+    expect(offer.slice.price).toBe(ladderPrices.slice);
+    for (const rung of ladder) {
+      if (rung.id === "read") {
+        expect(rung.price).toBe("Free");
+        continue;
+      }
+      expect(rung.price).toMatch(/\$[1-9]/);
+      expect(rung.price).not.toMatch(/\$0\b/);
+    }
+  });
+
   it("keeps the Read free and the Session and Check credited", () => {
     expect(offer.read.price).toBe(0);
     expect(ladder[0]?.price).toBe("Free");

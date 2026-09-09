@@ -12,12 +12,12 @@ export function Tagline() {
   return (
     <section
       ref={ref}
-      className="relative w-full bg-rag overflow-hidden"
+      className="relative w-full bg-paper overflow-hidden"
     >
       <div className="py-16 md:py-24">
         <div className="grid-container">
           <h1
-            className={`font-newsreader text-[clamp(3rem,8vw+1rem,7rem)] leading-[0.95] tracking-tighter text-iron transition-all duration-700 ease-out ${
+            className={`font-newsreader text-[clamp(3rem,8vw+1rem,7rem)] leading-[0.95] tracking-tighter text-ink transition-all duration-700 ease-out ${
               isInView
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-6"
@@ -25,13 +25,13 @@ export function Tagline() {
           >
             We finish
             <br />
-            <span className="text-iron/40">what starts.</span>
+            <span className="text-ink/40">what starts.</span>
           </h1>
         </div>
       </div>
 
       {/* Subtle gradient line at bottom */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-iron/20 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-ink/20 to-transparent" />
     </section>
   );
 }

@@ -18,7 +18,7 @@ function Initials({ name }: Readonly<{ name: string }>) {
     .map((part) => part[0]?.toUpperCase() ?? "")
     .join("");
   return (
-    <span className="grid h-full w-full place-items-center bg-iron-card font-newsreader text-[48px] text-rag">
+    <span className="grid h-full w-full place-items-center bg-ink-card font-newsreader text-[48px] text-paper">
       {initials}
     </span>
   );
@@ -45,7 +45,7 @@ export function CheckRunner() {
 
       <div className="mt-14 grid items-start gap-12 md:grid-cols-[16rem_minmax(0,1fr)]">
         <Reveal>
-          <div className="aspect-square overflow-hidden bg-iron-card">
+          <div className="aspect-square overflow-hidden bg-ink-card">
             {absent ? (
               <Initials name={person.name} />
             ) : (
@@ -63,51 +63,51 @@ export function CheckRunner() {
 
         <div>
           <Reveal>
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-rag/70">
-              Admission
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-paper/70">
+              Years shipping
             </p>
-            <p className="mt-3 font-newsreader text-[24px] leading-[1.2] text-rag">
-              {line.standing}
+            <p className="mt-3 font-newsreader text-[24px] leading-[1.2] text-paper">
+              {person.years}
             </p>
-            <p className="mt-2 max-w-[46ch] font-newsreader text-[17px] leading-[1.45] text-rag/80">
+            <p className="mt-2 max-w-[46ch] font-newsreader text-[17px] leading-[1.45] text-paper/80">
               {line.review} {line.dateNote}
             </p>
           </Reveal>
 
           <Reveal delay={0.08} className="mt-10">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-rag/70">
-              Deployments led
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-paper/70">
+              Products led
             </p>
           </Reveal>
           <Stagger className="mt-3" gap={0.05}>
             {led.map((row) => (
               <Item
                 key={row.lot.slug}
-                className="border-t border-rag/12 py-3 font-newsreader text-[17px] text-rag first:border-t-0 first:pt-0"
+                className="border-t border-paper/12 py-3 font-newsreader text-[17px] text-paper first:border-t-0 first:pt-0"
               >
                 <Link
                   href={`/work/${row.lot.slug}`}
-                  className="underline decoration-rag/25 underline-offset-4 hover:decoration-rag"
+                  className="underline decoration-paper/25 underline-offset-4 hover:decoration-paper"
                 >
                   {row.lot.client}
                 </Link>
                 {row.status ? (
-                  <span className="text-rag/70"> · {row.status}</span>
+                  <span className="text-paper/70"> · {row.status}</span>
                 ) : null}
               </Item>
             ))}
           </Stagger>
 
           <Reveal delay={0.1} className="mt-10">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-rag/70">
-              Signals closed
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-paper/70">
+              What they fixed
             </p>
           </Reveal>
           <Stagger className="mt-3" gap={0.04}>
             {closed.map((id) => (
               <Item
                 key={id}
-                className="border-t border-rag/12 py-3 font-newsreader text-[17px] leading-[1.4] text-rag first:border-t-0 first:pt-0"
+                className="border-t border-paper/12 py-3 font-newsreader text-[17px] leading-[1.4] text-paper first:border-t-0 first:pt-0"
               >
                 {getSignal(id).says}
               </Item>
@@ -115,21 +115,21 @@ export function CheckRunner() {
           </Stagger>
 
           <Reveal delay={0.12} className="mt-10">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-rag/70">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-paper/70">
               Philosophy
             </p>
-            <p className="mt-3 max-w-[42ch] font-newsreader text-[22px] leading-[1.3] text-rag">
+            <p className="mt-3 max-w-[42ch] font-newsreader text-[22px] leading-[1.3] text-paper">
               {person.philosophy}
             </p>
-            <p className="mt-8 max-w-[46ch] border-t border-rag/12 pt-8 font-newsreader text-[18px] leading-[1.45] text-rag">
+            <p className="mt-8 max-w-[46ch] border-t border-paper/12 pt-8 font-newsreader text-[18px] leading-[1.45] text-paper">
               {checkNoHandoff}
             </p>
             <p className="mt-6">
               <Link
                 href={`/team/${person.id}`}
-                className="font-plex-sans text-[15px] text-rag underline decoration-rag/25 underline-offset-4 hover:decoration-rag"
+                className="font-plex-sans text-[15px] text-paper underline decoration-paper/25 underline-offset-4 hover:decoration-paper"
               >
-                The full record →
+                The full profile →
               </Link>
             </p>
           </Reveal>

@@ -33,14 +33,14 @@ export function FindingsFilter() {
       />
       <ul className="mt-10 flex flex-col gap-3">
         {rows.map((finding) => (
-          <li key={finding.observed} className="card p-6">
-            <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/60">
+          <li key={finding.observed} className="letter-object">
+            <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/60">
               {finding.status} · {finding.owner} · {finding.date} · sample
             </p>
-            <p className="mt-3 font-newsreader text-reading leading-reading text-iron">
+            <p className="mt-3 font-newsreader text-reading leading-reading text-ink">
               {finding.observed}
             </p>
-            <p className="mt-3 font-newsreader text-reading leading-reading text-ink">
+            <p className="mt-3 font-newsreader text-reading leading-reading text-quill">
               {finding.closing}
             </p>
           </li>

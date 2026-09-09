@@ -5,7 +5,7 @@ export const closeStages = [
     id: "read",
     label: "The Read",
     href: "/read",
-    hrefLabel: "Start the Read",
+    hrefLabel: "Get my free read",
     happens:
       "You describe what is stuck. A senior engineer writes back: what we think is happening, what we would look at, and what we could not tell from your description.",
     receive: "A written read, delivered at a private URL, within one business day.",
@@ -16,7 +16,7 @@ export const closeStages = [
     id: "session",
     label: "The Session",
     href: "/session",
-    hrefLabel: "Book the Session",
+    hrefLabel: "Book my session",
     happens:
       "Ninety minutes with a senior engineer, on your actual problem. Not a sales call.",
     receive: "A written scope and a range.",
@@ -77,13 +77,13 @@ export const closeStages = [
   },
   {
     id: "standing",
-    label: "Standing",
+    label: "Second Chair",
     demoHref: "/demo",
     happens:
-      `Optional post-launch support, priced from ${money(ladderPrices.standingMin)} a month. You can run it without us. Standing is if you want us, not because you have to.`,
-    receive: "A written standing agreement, or nothing. Both are fine.",
-    sign: "Only if you take Standing.",
-    see: "The stage tracker moves to Standing. The revocation log stays.",
+      `Optional post-launch support, priced from ${money(ladderPrices.standingMin)} a month. You can run it without us. Second Chair is if you want us, not because you have to.`,
+    receive: "A written after-launch agreement, or nothing. Both are fine.",
+    sign: "Only if you take Second Chair.",
+    see: "The stage tracker moves to Second Chair. The revocation log stays.",
   },
 ] as const;
 
@@ -131,10 +131,10 @@ export const crewGates = [
 ] as const;
 
 export const standingReview =
-  "Quarterly standing review against real delivered work, not a self-assessment, not a pulse survey.";
+  "Quarterly review against real delivered work, not a self-assessment, not a pulse survey.";
 
 export const standingConsequence =
-  "If standing falls below the bar: paused placement and mentored work. Not dismissal. The person stays admitted until they hold again, or they leave the standard in writing.";
+  "If they fall below the bar: paused placement and mentored work. Not dismissal. The person stays on the bench until they hold again, or they leave the standard in writing.";
 
 export const crewCommitments = [
   "Candidates are never charged a fee at any stage.",
@@ -144,24 +144,3 @@ export const crewCommitments = [
 
 export const passRateNote =
   "Gate 0 pass threshold: tracking from our first cohort - published once we have enough scored submissions.";
-
-export const edpulseTracks = [
-  {
-    name: "Explorer",
-    price: "$0",
-    body: "The open path. Learn the Close discipline — arrival state, limits, a written scope — without paying to sit in a room.",
-  },
-  {
-    name: "Accelerator",
-    price: "$4,900",
-    body: "A paid cohort that works a real-scope sample. Completing it does not skip the gates. It is practice for them.",
-  },
-  {
-    name: "Mastery",
-    price: "Custom",
-    body: "For people already shipping. Scoped to the gap, priced in writing. Still the same five gates to join the crew.",
-  },
-] as const;
-
-export const edpulseJoinNote =
-  "Graduates who clear the five gates join the crew. Handover training is bundled into every Close — it is not an Edpulse upsell.";

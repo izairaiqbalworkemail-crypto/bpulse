@@ -41,10 +41,10 @@ export function AboutCrew() {
         if (people.length === 0) return null;
         return (
           <div key={group} className="mt-14">
-            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-ink/70">
+            <p className="font-plex-mono text-[12px] uppercase tracking-[0.1em] text-quill/70">
               {group}
             </p>
-            <p className="mt-2 font-newsreader text-[16px] text-ink">
+            <p className="mt-2 font-newsreader text-[16px] text-quill">
               {crewCapabilityLine[group]}
             </p>
             <Stagger className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" gap={0.07}>
@@ -54,11 +54,11 @@ export function AboutCrew() {
                 const absent = person.photoStatus === "Photo pending" || !person.photo;
                 return (
                   <Item key={person.id}>
-                    <ObjectPlate href={`/team/${person.id}`} tone="iron" flush>
+                    <ObjectPlate href={`/team/${person.id}`} tone="ink" flush>
                       <figure>
                         {absent ? (
                           <div className="grid aspect-square place-items-center">
-                            <span className="font-newsreader text-[48px] leading-none text-rag">
+                            <span className="font-newsreader text-[48px] leading-none text-paper">
                               {initials(person.name)}
                             </span>
                           </div>
@@ -73,14 +73,14 @@ export function AboutCrew() {
                           />
                         )}
                       </figure>
-                      <div className="border-t border-rag/12 px-5 py-4">
-                        <p className="font-plex-sans text-[16px] underline decoration-rag/25 underline-offset-4">
+                      <div className="border-t border-paper/12 px-5 py-4">
+                        <p className="font-plex-sans text-[16px] underline decoration-paper/25 underline-offset-4">
                           {person.name}
                         </p>
-                        <p className="mt-1 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-rag/60">
+                        <p className="mt-1 font-plex-mono text-[12px] uppercase tracking-[0.08em] text-paper/60">
                           {line.standing}
                         </p>
-                        <p className="mt-1 font-plex-sans text-[14px] text-rag/75">{status}</p>
+                        <p className="mt-1 font-plex-sans text-[14px] text-paper/75">{status}</p>
                       </div>
                     </ObjectPlate>
                   </Item>
@@ -91,11 +91,11 @@ export function AboutCrew() {
         );
       })}
 
-      <p className="mt-16 max-w-[48ch] font-newsreader text-[18px] leading-[1.45] text-iron">
+      <p className="mt-16 max-w-[48ch] font-newsreader text-[18px] leading-[1.45] text-ink">
         {aboutCrewLine}{" "}
         <Link
           href="/standard"
-          className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
+          className="underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
         >
           The standard
         </Link>

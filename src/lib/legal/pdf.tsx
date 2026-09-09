@@ -10,8 +10,8 @@ registerLegalFonts();
 const LOGO = legalLogoDataUri();
 const FONT_SANS = "Plex Sans";
 const FONT_MONO = "Plex Mono";
-const IRON = "#161614";
-const INK = "#3f3e39";
+const INK = "#0F1117";
+const QUILL = "#5C6070";
 
 const styles = StyleSheet.create({
   page: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_SANS,
     fontSize: 10.5,
     lineHeight: 1.45,
-    color: IRON,
+    color: INK,
   },
   brandRow: {
     flexDirection: "row",
@@ -31,25 +31,25 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   logo: {
-    width: 14,
-    height: 18,
+    width: 16,
+    height: 16,
   },
   wordmark: {
     fontFamily: FONT_SANS,
     fontSize: 11,
     letterSpacing: 1.2,
     textTransform: "uppercase",
-    color: IRON,
+    color: INK,
   },
   rule: {
     borderBottomWidth: 0.75,
-    borderBottomColor: IRON,
+    borderBottomColor: INK,
     marginBottom: 14,
   },
   draftBanner: {
     marginBottom: 10,
     borderWidth: 0.75,
-    borderColor: INK,
+    borderColor: QUILL,
     paddingVertical: 6,
     paddingHorizontal: 8,
   },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_SANS,
     fontSize: 16,
     lineHeight: 1.25,
-    color: IRON,
+    color: INK,
     textTransform: "uppercase",
     marginBottom: 12,
   },
@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
   metaValue: {
     fontFamily: FONT_SANS,
     fontSize: 10,
-    color: IRON,
+    color: INK,
     marginTop: 1,
   },
   h2: {
     fontFamily: FONT_SANS,
     fontSize: 11,
-    color: IRON,
+    color: INK,
     textTransform: "uppercase",
     letterSpacing: 0.4,
     marginTop: 14,
@@ -114,21 +114,21 @@ const styles = StyleSheet.create({
     fontFamily: FONT_SANS,
     fontSize: 10.5,
     lineHeight: 1.45,
-    color: IRON,
+    color: INK,
     textAlign: "justify",
   },
   signatures: {
     marginTop: 28,
     paddingTop: 12,
     borderTopWidth: 0.75,
-    borderTopColor: IRON,
+    borderTopColor: INK,
   },
   signTitle: {
     fontFamily: FONT_MONO,
     fontSize: 8,
     letterSpacing: 0.8,
     textTransform: "uppercase",
-    color: IRON,
+    color: INK,
     marginBottom: 14,
   },
   signRow: {
@@ -141,12 +141,12 @@ const styles = StyleSheet.create({
   signName: {
     fontFamily: FONT_SANS,
     fontSize: 10,
-    color: IRON,
+    color: INK,
   },
   signLine: {
     marginTop: 36,
     borderBottomWidth: 0.75,
-    borderBottomColor: IRON,
+    borderBottomColor: INK,
     paddingBottom: 2,
     fontFamily: FONT_MONO,
     fontSize: 8,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 22,
     borderWidth: 0.75,
-    borderColor: IRON,
+    borderColor: QUILL,
   },
   initialLabel: {
     fontFamily: FONT_MONO,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     paddingTop: 12,
     borderTopWidth: 0.75,
-    borderTopColor: IRON,
+    borderTopColor: INK,
   },
   changeEntry: {
     marginBottom: 5,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_SANS,
     fontSize: 9,
     lineHeight: 1.4,
-    color: IRON,
+    color: INK,
   },
   footer: {
     position: "absolute",

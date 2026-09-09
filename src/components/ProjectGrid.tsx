@@ -33,7 +33,7 @@ export function ProjectGrid({ lots }: ProjectGridProps) {
   return (
     <div>
       {/* Filter tabs */}
-      <div className="mb-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-iron/15 pt-6">
+      <div className="mb-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-ink/15 pt-6">
         {filters.map((f) => (
           <button
             key={f.value}
@@ -41,8 +41,8 @@ export function ProjectGrid({ lots }: ProjectGridProps) {
             onClick={() => setActive(f.value)}
             className={`border-b pb-2 font-plex-sans text-[14px] ${
               active === f.value
-                ? "border-iron text-iron"
-                : "border-transparent text-ink/70 hover:text-iron"
+                ? "border-ink text-ink"
+                : "border-transparent text-quill/70 hover:text-ink"
             }`}
           >
             {f.label}

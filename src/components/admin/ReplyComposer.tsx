@@ -48,29 +48,29 @@ export function ReplyComposer({ to, subject, submissionId }: Readonly<Props>) {
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="border border-iron/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-iron hover:border-iron"
+        className="border border-ink/25 px-2.5 py-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink hover:border-ink"
       >
         {open ? "Close reply" : "Reply"}
       </button>
       {open ? (
-        <div className="mt-2 w-[24rem] max-w-[68vw] border border-iron/20 bg-rag p-3">
-          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">To {to}</p>
-          <p className="mt-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-ink/65">{subject}</p>
+        <div className="mt-2 w-[24rem] max-w-[68vw] border border-ink/20 bg-paper p-3">
+          <p className="font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">To {to}</p>
+          <p className="mt-1 font-plex-mono text-[11px] uppercase tracking-[0.08em] text-quill/65">{subject}</p>
           <textarea
             value={message}
             onChange={(event) => setMessage(event.target.value)}
             rows={5}
-            className="mt-2 w-full border border-iron/25 bg-rag px-2 py-1 font-newsreader text-[15px] text-ink"
+            className="mt-2 w-full border border-ink/25 bg-paper px-2 py-1 font-newsreader text-[15px] text-quill"
           />
           <button
             type="button"
             onClick={() => void send()}
             disabled={pending}
-            className="mt-2 bg-signal px-3 py-1.5 font-plex-sans text-[13px] text-iron disabled:opacity-70"
+            className="mt-2 bg-gold px-3 py-1.5 font-plex-sans text-[13px] text-ink disabled:opacity-70"
           >
             {pending ? "Sending" : "Send reply"}
           </button>
-          {status ? <p className="mt-1 font-plex-sans text-[12px] text-ink/70">{status}</p> : null}
+          {status ? <p className="mt-1 font-plex-sans text-[12px] text-quill/70">{status}</p> : null}
         </div>
       ) : null}
     </div>

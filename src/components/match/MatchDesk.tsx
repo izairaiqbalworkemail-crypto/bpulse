@@ -153,7 +153,7 @@ export function MatchDesk({
           <button
             type="button"
             onClick={again}
-            className="mt-10 font-plex-sans text-[14px] text-ink/55 underline decoration-iron/20 underline-offset-4 hover:text-iron"
+            className="mt-10 font-plex-sans text-[14px] text-quill/55 underline decoration-ink/20 underline-offset-4 hover:text-ink"
           >
             Describe it again
           </button>

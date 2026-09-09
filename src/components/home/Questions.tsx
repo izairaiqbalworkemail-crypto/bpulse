@@ -1,43 +1,47 @@
 import Link from "next/link";
-import { Episode, EpisodeHead } from "@/components/episode/Episode";
-import { homeQuestions } from "@/content/home";
+import { doubtCopy, homeQuestions } from "@/content/home";
 
 /**
- * 08 · THE QUESTIONS — paper. Two columns of type. No cards, no accordion.
+ * Doubt, then the ask. One window. Two columns. No accordion.
  */
 export function Questions() {
   return (
-    <Episode labelledBy="questions" tone="paper">
-      <EpisodeHead
-        n="08"
-        kicker="THE QUESTIONS"
-        id="questions"
-        heading="Including the parts that hurt."
-      >
-        Visible. No accordion. The last one is a real constraint.
-      </EpisodeHead>
+    <section
+      id="questions"
+      aria-labelledby="questions-heading"
+      className="letter-doubt"
+    >
+      <div className="letter-doubt-desk">
+        <div className="letter-doubt-lead">
+          <p className="kicker">
+            {doubtCopy.n} · {doubtCopy.kicker}
+          </p>
+          <h2 id="questions-heading" className="letter-doubt-title">
+            {doubtCopy.heading}
+          </h2>
+          <p className="letter-doubt-dek">{doubtCopy.dek}</p>
+        </div>
 
-      <div className="mt-16 grid gap-x-16 gap-y-12 md:grid-cols-2">
-        {homeQuestions.map((item) => (
-          <article key={item.q} className="border-t border-iron/10 pt-6">
-            <h3 className="max-w-[28ch] font-newsreader text-[24px] leading-[1.2] text-iron">
-              {item.q}
-            </h3>
-            <p className="mt-3 max-w-[42ch] font-newsreader text-[17px] leading-[1.5] text-ink">
-              {item.a}
-            </p>
-          </article>
-        ))}
+        <ul className="letter-asks">
+          {homeQuestions.map((item) => (
+            <li key={item.q}>
+              <h3>{item.q}</h3>
+              <p>{item.a}</p>
+            </li>
+          ))}
+        </ul>
+
+        <aside className="letter-doubt-ask" aria-label={doubtCopy.band}>
+          <p>{doubtCopy.band}</p>
+          <p>{doubtCopy.bandNote}</p>
+          <Link
+            href={doubtCopy.askHref}
+            className="btn btn-ink letter-ask min-h-12 px-8 text-[15px]"
+          >
+            {doubtCopy.ask}
+          </Link>
+        </aside>
       </div>
-
-      <p className="mt-20 font-newsreader text-[22px] text-iron">
-        <Link
-          href="/check"
-          className="underline decoration-iron/25 underline-offset-4 hover:decoration-iron"
-        >
-          The Read is free. The Check is $1,500.
-        </Link>
-      </p>
-    </Episode>
+    </section>
   );
 }

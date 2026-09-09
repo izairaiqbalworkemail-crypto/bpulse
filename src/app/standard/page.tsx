@@ -5,10 +5,8 @@ import { GateCard } from "@/components/GateCard";
 import { BeliefBlock } from "@/components/BeliefBlock";
 import { PageClose } from "@/components/PageClose";
 import { PeopleRail } from "@/components/PeopleRail";
-import {
-  Atmosphere,
-  AtmosphereNote,
-} from "@/components/landing/Atmosphere";
+import { Episode } from "@/components/episode/Episode";
+import { LetterLedger } from "@/components/letter/LetterLedger";
 import {
   crewCommitments,
   crewGates,
@@ -30,61 +28,56 @@ export const metadata: Metadata = buildMetadata({
 
 export default function StandardPage() {
   return (
-    <section className="w-full bg-rag">
+    <>
       <TrackOnMount event="standard.opened" props={{ surface: "standard" }} />
       <PageHero
         kicker="Admission"
-        title="Five gates. Then standing review."
+        title="Five gates. Then a quarterly review."
         dek={pageFrame.standard}
-        hideAction
       />
 
-      <div className="relative overflow-hidden">
-        <Atmosphere kind="paper" opacity={0.16} />
-        <div className="relative grid-container pb-24 pt-6 md:pb-32">
+      <Episode tone="paper">
         <PeopleRail
           people={specialists}
-          line="Admitted. Client-facing only after Gate 4."
+          line="Our engineers. Client-facing only after Gate 4."
         />
-        <div className="mt-3 mb-10">
-          <AtmosphereNote />
-        </div>
-        {crewGates.map((gate) => (
-          <GateCard key={gate.n} {...gate} />
-        ))}
 
-        <div className="card mt-12 p-8">
-          <p className="font-plex-mono text-[13px] uppercase tracking-[0.08em] text-ink/70">
-            Gate 0 rubric (0-3 each)
-          </p>
-          <ul className="mt-4 grid gap-3 md:grid-cols-2">
-            {diagnosticRubric.map((item, index) => (
-              <li key={item.key} className="border-l-2 border-iron/20 pl-3">
-                <p className="font-newsreader text-[17px] text-iron">
-                  {index + 1}. {item.label}
-                </p>
-                <p className="font-newsreader text-[15px] leading-[1.45] text-ink">
-                  A 3 looks like: {item.looksLike}
-                </p>
-              </li>
-            ))}
-          </ul>
+        <div className="mt-14">
+          {crewGates.map((gate) => (
+            <GateCard key={gate.n} {...gate} />
+          ))}
         </div>
 
-        <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-ink">
+        <p className="mt-4 font-plex-mono text-[13px] uppercase tracking-[0.08em] text-quill/70">
+          Gate 0 rubric
+        </p>
+        <p className="mt-3 max-w-[40ch] font-newsreader text-[20px] leading-[1.3] text-ink">
+          Scored 0 to 3 on each line.
+        </p>
+        <div className="mt-8">
+          <LetterLedger
+            lines={diagnosticRubric.map((item, index) => ({
+              id: item.key,
+              kicker: String(index + 1).padStart(2, "0"),
+              title: item.label,
+              body: `A 3 looks like: ${item.looksLike}`,
+            }))}
+          />
+        </div>
+
+        <p className="mt-12 max-w-[60ch] font-newsreader text-[18px] leading-[1.5] text-quill">
           {standingReview} {standingConsequence}
         </p>
 
-        <ul className="mt-10 max-w-[60ch] border-t border-iron/12 pt-8">
-          {crewCommitments.map((line) => (
-            <li
-              key={line}
-              className="border-b border-iron/10 py-3 font-newsreader text-[17px] leading-[1.45] text-iron"
-            >
-              {line}
-            </li>
-          ))}
-        </ul>
+        <div className="mt-10">
+          <LetterLedger
+            lines={crewCommitments.map((line, index) => ({
+              id: `commitment-${index}`,
+              kicker: String(index + 1).padStart(2, "0"),
+              title: line,
+            }))}
+          />
+        </div>
 
         <div className="mt-16">
           {crewBeliefs.map((belief) => (
@@ -92,12 +85,11 @@ export default function StandardPage() {
           ))}
         </div>
 
-        <p className="mt-16 font-newsreader text-[16px] text-ink/80">
+        <p className="mt-16 font-newsreader text-[16px] text-quill/80">
           {passRateNote}
         </p>
         <PageClose line="The people who pass these gates are the ones on your Close." />
-        </div>
-      </div>
-    </section>
+      </Episode>
+    </>
   );
 }

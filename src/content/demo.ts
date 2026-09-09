@@ -3,7 +3,7 @@ export const demoBanner =
 
 export const demoClient = {
   name: "Northline Payroll",
-  engagement: "Close — registration harden + launch sentence",
+  engagement: "Close. Registration harden and launch sentence",
   band: "$18k–$40k",
   lockedScopeVersion: "2.1",
 };
@@ -14,7 +14,7 @@ export const stages = [
   { id: "scope", label: "Scope locked", done: true },
   { id: "build", label: "Build", done: false, current: true },
   { id: "handover", label: "Handover", done: false },
-  { id: "standing", label: "Standing", done: false },
+  { id: "standing", label: "Second Chair", done: false },
 ] as const;
 
 export const demoClock = {
@@ -49,7 +49,7 @@ export const documents = [
   },
   {
     slug: "change-order",
-    name: "Change order 01 — password-reset tokens",
+    name: "Change order 01. Password-reset tokens",
     dated: "28 Aug 2026",
     status: "signed",
     href: "/demo/stubs/co-01.txt",
@@ -103,8 +103,8 @@ export const progress = {
   ],
   deploys: [
     { env: "staging", status: "green", at: "3 Sep 16:12" },
-    { env: "preview", status: "not connected", at: "—" },
-    { env: "production", status: "not connected", at: "—" },
+    { env: "preview", status: "not connected", at: "not dated" },
+    { env: "production", status: "not connected", at: "not dated" },
   ],
   burndown: "11 of 23 locked days used. Sample.",
 };
@@ -130,7 +130,7 @@ export const demoFindings = [
   finding("closed", "Hassan Saulat", "25 Aug 2026", "Error page leaked stack frames.", "Generic 500 copy in staging."),
   finding("closed", "Hassan Saulat", "26 Aug 2026", "CORS allow-list included localhost in the staging build.", "Removed."),
   finding("closed", "Aneeb Iqbal", "27 Aug 2026", "Admin route had no audit line.", "Write path now logs actor + time. Sample."),
-  finding("open", "Hassan Saulat", "1 Sep 2026", "Production TLS cert is the client's — we cannot rotate it.", "Not connected. Waiting on their DNS."),
+  finding("open", "Hassan Saulat", "1 Sep 2026", "Production TLS cert is the client's. We cannot rotate it.", "Not connected. Waiting on their DNS."),
   finding("open", "Hassan Saulat", "2 Sep 2026", "Backup restore has not been rehearsed on staging.", "In the remaining locked days."),
   finding("open", "Aneeb Iqbal", "3 Sep 2026", "One-time reset is on staging only.", "Production remains not connected."),
   finding("open", "Hassan Saulat", "4 Sep 2026", "Sentry DSN is not connected.", "Unwired integration. Shows as not connected."),
@@ -160,25 +160,25 @@ export const updates = [
 ];
 
 export const demoCrew = [
-  { id: "hassan", role: "Delivery — named on the Close" },
-  { id: "aneeb", role: "Integration — scope lock" },
+  { id: "hassan", role: "Delivery. Named on the Close" },
+  { id: "aneeb", role: "Integration. Scope lock" },
 ];
 
 export const handover = {
   runbook: "Not started. Handover is two stages out. Sample.",
   credentials: [
-    { item: "Staging deploy key", heldBy: "bpulse", until: "handover day" },
-    { item: "Production deploy key", heldBy: "client", until: "—" },
+    { item: "Staging access", heldBy: "bpulse", until: "handover day" },
+    { item: "Production access", heldBy: "client", until: "not dated" },
   ],
   revocation: [
     {
-      item: "GitHub deploy key (staging)",
-      revokedOn: "—",
-      note: "Will be revoked the day handover is signed. Sample — no live key is held.",
+      item: "GitHub staging access",
+      revokedOn: "not dated",
+      note: "Will be revoked the day handover is signed. Sample. No live key is held.",
     },
     {
       item: "Vercel team invite",
-      revokedOn: "—",
+      revokedOn: "not dated",
       note: "Invite is client-owned. Nothing to revoke. Sample.",
     },
   ],

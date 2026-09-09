@@ -9,10 +9,10 @@ export function PriceRoute() {
   return (
     <>
       <EpisodeHead
-        n="03"
-        kicker="WHICH RUNG"
+        n="01"
+        kicker="START HERE"
         id="which"
-        tone="cocoa"
+        tone="paper"
         heading="Which one are you."
       />
       <Stagger className="mt-12 flex flex-col gap-3" gap={0.07}>
@@ -22,8 +22,8 @@ export function PriceRoute() {
               href={row.href}
               className="grid grid-cols-[minmax(0,1fr)_8rem] items-baseline gap-4 md:grid-cols-[minmax(0,1fr)_12rem]"
             >
-              <p className="font-newsreader text-[20px] leading-[1.3] text-iron">{row.if}</p>
-              <p className="font-plex-sans text-[16px] text-iron underline decoration-iron/25 underline-offset-4">
+              <p className="font-newsreader text-[20px] leading-[1.3] text-ink">{row.if}</p>
+              <p className="font-plex-sans text-[16px] text-ink underline decoration-ink/25 underline-offset-4">
                 {row.start}
               </p>
             </ObjectRow>

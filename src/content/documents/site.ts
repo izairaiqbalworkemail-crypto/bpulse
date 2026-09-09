@@ -154,7 +154,7 @@ export const sitePrivacy: LegalDoc = {
       clauses: [
         { text: "Submission data is saved to managed Postgres (Neon) when configured, and to a local development store when no database is configured." },
         { text: "Rate limiting and view counters are backed by Upstash Redis. Email notifications are sent through Resend when enabled." },
-        { text: "Public analytics runs on a self-hosted Umami deployment on bpulse infrastructure. No visitor analytics request is sent to a third-party analytics host." },
+        { text: "Public analytics runs on a self-hosted Umami instance on bpulse infrastructure. No visitor analytics request is sent to a third-party analytics host." },
         { text: "The site is hosted on Vercel." },
         {
           text: `Named sub-processors: ${subProcessors.map((row) => row.name).join(", ")}. Regions and roles are on /legal/sub-processors and /legal/data.`,

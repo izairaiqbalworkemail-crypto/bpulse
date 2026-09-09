@@ -1,24 +1,25 @@
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { Episode } from "@/components/episode/Episode";
 
 export default function NotFound() {
   return (
     <>
       <PageHero
         kicker="404"
-        title="This lot is not in the catalogue."
-        dek="The page you asked for does not exist. Check the address, or start from the top."
-        actionHref="/"
-        actionLabel="Back to the catalogue"
+        title="This page is not here."
+        dek="The address does not match anything we publish. Start from home, or send the Read."
+        actionHref="/read"
+        actionLabel="Get my free read"
       />
-      <div className="grid-container py-16">
+      <Episode tone="paper" size="short">
         <Link
-          href="/work"
-          className="font-plex-sans text-sm text-ink/60 underline-offset-4 hover:underline"
+          href="/"
+          className="font-plex-sans text-sm text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
         >
-          Or browse the work →
+          Back home
         </Link>
-      </div>
+      </Episode>
     </>
   );
 }

@@ -31,21 +31,21 @@ export function StandardRail() {
         {passRateNote} {standingReview}
       </EpisodeHead>
 
-      <ol className="mt-14 border-l border-rag/12">
+      <ol className="mt-14 border-l border-paper/12">
         {crewGates.map((gate) => (
           <li key={gate.n} className="grid gap-2 py-7 pl-6 md:grid-cols-[4rem_minmax(0,1fr)]">
-            <p className="font-plex-mono text-[12px] text-rag/70">{gate.n}</p>
+            <p className="font-plex-mono text-[12px] text-paper/70">{gate.n}</p>
             <div>
-              <h3 className="font-newsreader text-[24px] leading-[1.15] text-rag">
+              <h3 className="font-newsreader text-[24px] leading-[1.15] text-paper">
                 {gate.title}
               </h3>
-              <p className="mt-2 max-w-[50ch] font-newsreader text-[16px] leading-[1.5] text-rag/80">
+              <p className="mt-2 max-w-[50ch] font-newsreader text-[16px] leading-[1.5] text-paper/80">
                 {gate.mechanism}
               </p>
-              <p className="mt-3 max-w-[50ch] font-newsreader text-[15px] text-rag/70">
+              <p className="mt-3 max-w-[50ch] font-newsreader text-[15px] text-paper/70">
                 Costs us: {gate.costs}
               </p>
-              <p className="mt-1 max-w-[50ch] font-newsreader text-[15px] text-rag/70">
+              <p className="mt-1 max-w-[50ch] font-newsreader text-[15px] text-paper/70">
                 Proves: {gate.proves}
               </p>
             </div>
@@ -57,7 +57,7 @@ export function StandardRail() {
         {crewCommitments.map((line) => (
           <li
             key={line}
-            className="font-newsreader text-[15px] leading-[1.45] text-rag/80"
+            className="font-newsreader text-[15px] leading-[1.45] text-paper/80"
           >
             {line}
           </li>

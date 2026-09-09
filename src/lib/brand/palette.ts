@@ -1,0 +1,42 @@
+/**
+ * Night studio. Ivory page. Brass lamp on the ask.
+ */
+export const palette = {
+  paper: "#F4EFE6",
+  paperCard: "#FBF7F0",
+  ink: "#161310",
+  ink2: "#211C18",
+  inkCard: "#211C18",
+  ground: "#161310",
+  ground2: "#211C18",
+  card: "#211C18",
+  void: "#161310",
+  void2: "#211C18",
+  voidCard: "#211C18",
+  page: "#F4EFE6",
+  pageCard: "#FBF7F0",
+  carbon: "#161310",
+  dust: "#3F3A33",
+  mist: "#F4EFE6",
+  text: "#F4EFE6",
+  quill: "#3F3A33",
+  mute: "#6B645A",
+  sub: "#3F3A33",
+  read: "#3F3A33",
+  label: "#6B645A",
+  line: "#D4CDBF",
+  lineInk: "#3A342C",
+  headline: "#161310",
+  gold: "#C9A24A",
+  strike: "#C9A24A",
+  ember: "#B23B34",
+  tape: "#D9A62B",
+  comment: "#D9A62B",
+  after: "#4A6B57",
+  stuck: "#B23B34",
+  diag: "#D9A62B",
+  build: "#D9A62B",
+  ship: "#4A6B57",
+} as const;
+
+export type Palette = typeof palette;

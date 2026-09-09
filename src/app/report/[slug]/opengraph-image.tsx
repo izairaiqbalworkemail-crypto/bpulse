@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { getReport } from "@/content/reports";
+import { palette } from "@/lib/brand/palette";
 
 export const alt = "bpulse report";
 export const size = { width: 1200, height: 630 };
@@ -28,7 +29,7 @@ export default async function ReportOgImage({ params }: Props) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "#f4eee6",
+          backgroundColor: palette.paper,
           padding: 64,
         }}
       >
@@ -43,7 +44,7 @@ export default async function ReportOgImage({ params }: Props) {
           style={{
             fontSize: 20,
             fontFamily: "Arial, sans-serif",
-            color: "#3f3e39",
+            color: palette.ink,
             marginBottom: 16,
           }}
         >
@@ -54,7 +55,7 @@ export default async function ReportOgImage({ params }: Props) {
             fontSize: 36,
             fontFamily: "Georgia, serif",
             lineHeight: 1.25,
-            color: "#161614",
+            color: palette.ink,
             maxWidth: 1000,
           }}
         >

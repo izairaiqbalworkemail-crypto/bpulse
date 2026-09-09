@@ -4,6 +4,6 @@
 export const heroCopy = {
   kicker: "Lahore studio",
   claim: ["It looks finished.", "It will not ship."] as const,
-  dek: "We take the last twenty and put it in production.",
-  action: "Tell us where it stops",
+  dek: "Last twenty percent. In production. A login you can watch.",
+  action: "Get my free read",
 } as const;
