@@ -10,13 +10,6 @@ const surface: Record<EpisodeTone, string> = {
   signal: "on-ink bg-ink text-read",
 };
 
-const kickerTone: Record<EpisodeTone, string> = {
-  paper: "text-label",
-  milk: "text-label",
-  cocoa: "text-label",
-  signal: "text-label",
-};
-
 const headingTone: Record<EpisodeTone, string> = {
   paper: "text-headline",
   milk: "text-headline",
@@ -90,7 +83,9 @@ export function EpisodeHead({
       <div className="min-w-0">
         <Reveal>
           <p
-            className={`font-plex-mono text-[11px] uppercase tracking-[0.06em] ${kickerTone[tone]}`}
+            className={`lp-section-label ${
+              tone === "cocoa" || tone === "signal" ? "lp-section-label-ink" : ""
+            }`}
           >
             {n} · {kicker}
           </p>

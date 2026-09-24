@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { Episode, EpisodeHead } from "@/components/episode/Episode";
-import { StartPlate } from "@/components/objects/StartPlate";
-import { PriceLadder } from "@/components/pricing/PriceLadder";
-import { PriceRule } from "@/components/pricing/PriceRule";
+import { PriceCards } from "@/components/pricing/PriceCards";
 import { PriceRoute } from "@/components/pricing/PriceRoute";
+import { PriceRule } from "@/components/pricing/PriceRule";
 import { PriceIncluded } from "@/components/pricing/PriceIncluded";
 import { PriceExcluded } from "@/components/pricing/PriceExcluded";
 import { PricePay } from "@/components/pricing/PricePay";
 import { PriceQuestions } from "@/components/pricing/PriceQuestions";
+import { ClosingAsk } from "@/components/landing/ClosingAsk";
 import { TrackOnMount } from "@/components/analytics/TrackOnMount";
 import { termsCopy } from "@/content/home";
 import { pricingStart } from "@/content/pricing";
@@ -31,46 +30,21 @@ export default function PricingPage() {
         dek={pageFrame.pricing}
       />
 
-      <Episode labelledBy="which" tone="paper">
-        <PriceRoute />
-      </Episode>
+      <PriceCards />
+      <PriceRoute />
+      <PriceRule />
+      <PriceIncluded />
+      <PriceExcluded />
+      <PricePay />
+      <PriceQuestions />
 
-      <Episode labelledBy="ladder" tone="signal" size="tall">
-        <PriceLadder />
-      </Episode>
-
-      <Episode labelledBy="rule" tone="paper" size="short">
-        <PriceRule />
-      </Episode>
-
-      <Episode labelledBy="included" tone="paper">
-        <PriceIncluded />
-      </Episode>
-
-      <Episode labelledBy="excluded" tone="cocoa">
-        <PriceExcluded />
-      </Episode>
-
-      <Episode labelledBy="pay" tone="paper">
-        <PricePay />
-      </Episode>
-
-      <Episode labelledBy="questions" tone="cocoa">
-        <PriceQuestions />
-      </Episode>
-
-      <Episode labelledBy="start" tone="paper" size="short">
-        <EpisodeHead n="08" kicker="START" id="start" heading={pricingStart.heading}>
-          {pricingStart.line}
-        </EpisodeHead>
-        <StartPlate
-          heading={pricingStart.heading}
-          line={pricingStart.line}
-          href={pricingStart.href}
-          label={pricingStart.label}
-          tone="paper"
-        />
-      </Episode>
+      <ClosingAsk
+        heading={pricingStart.heading}
+        href={pricingStart.href}
+        ctaLabel={pricingStart.label}
+        label="Start"
+        line={pricingStart.line}
+      />
     </>
   );
 }

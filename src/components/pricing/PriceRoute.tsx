@@ -1,35 +1,35 @@
 "use client";
 
+import Link from "next/link";
 import { Item, Stagger } from "@/components/landing/Reveal";
-import { EpisodeHead } from "@/components/episode/Episode";
-import { ObjectRow } from "@/components/objects/ObjectRow";
+import { SectionHead } from "@/components/landing/SectionHead";
 import { pricingRoute } from "@/content/pricing";
 
 export function PriceRoute() {
   return (
-    <>
-      <EpisodeHead
-        n="01"
-        kicker="START HERE"
-        id="which"
-        tone="paper"
-        heading="Which one are you."
-      />
-      <Stagger className="mt-12 flex flex-col gap-3" gap={0.07}>
-        {pricingRoute.map((row) => (
-          <Item key={row.if}>
-            <ObjectRow
-              href={row.href}
-              className="grid grid-cols-[minmax(0,1fr)_8rem] items-baseline gap-4 md:grid-cols-[minmax(0,1fr)_12rem]"
-            >
-              <p className="font-newsreader text-[20px] leading-[1.3] text-ink">{row.if}</p>
-              <p className="font-plex-sans text-[16px] text-ink underline decoration-ink/25 underline-offset-4">
-                {row.start}
-              </p>
-            </ObjectRow>
-          </Item>
-        ))}
-      </Stagger>
-    </>
+    <section className="lp-section" id="which">
+      <div className="lp-shell">
+        <SectionHead
+          label="Start here"
+          heading="Which one are you."
+          dek="If you are not sure, start at the Read."
+        />
+        <Stagger className="flex flex-col gap-2.5" gap={0.06}>
+          {pricingRoute.map((row) => (
+            <Item key={row.if}>
+              <Link className="lp-row-card" href={row.href}>
+                <span className="lp-row-if">{row.if}</span>
+                <span className="lp-row-start">
+                  {row.start}
+                  <span aria-hidden className="lp-arrow">
+                    →
+                  </span>
+                </span>
+              </Link>
+            </Item>
+          ))}
+        </Stagger>
+      </div>
+    </section>
   );
 }

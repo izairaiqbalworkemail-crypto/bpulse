@@ -1,33 +1,17 @@
-"use client";
-
-import { Item, Stagger } from "@/components/landing/Reveal";
-import { EpisodeHead } from "@/components/episode/Episode";
+import { FaqSection } from "@/components/landing/FaqSection";
+import { pricingFaqIcons } from "@/content/landing-sections";
 import { pricingQuestions } from "@/content/pricing";
 
 export function PriceQuestions() {
   return (
-    <>
-      <EpisodeHead
-        n="07"
-        kicker="THE QUESTIONS"
-        id="questions"
-        tone="cocoa"
-        heading="The questions."
-      />
-      <Stagger className="mt-12 grid gap-5 md:grid-cols-2" gap={0.07}>
-        {pricingQuestions.map((item) => (
-          <Item key={item.q}>
-            <article className="h-full border-t border-ink/10 pt-6">
-              <h3 className="max-w-[28ch] font-newsreader text-[24px] leading-[1.2]">
-                {item.q}
-              </h3>
-              <p className="mt-3 max-w-[42ch] font-newsreader text-[17px] leading-[1.5] text-quill">
-                {item.a}
-              </p>
-            </article>
-          </Item>
-        ))}
-      </Stagger>
-    </>
+    <FaqSection
+      dek="Straight answers about money."
+      heading="The questions."
+      icons={pricingFaqIcons}
+      id="questions"
+      idPrefix="pricing-faq"
+      items={pricingQuestions}
+      label="Questions"
+    />
   );
 }

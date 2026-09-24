@@ -164,6 +164,9 @@ export function Masthead() {
           ) : (
             <Link href={askHref} onClick={goAsk} className="letter-pill-ask">
               {cta.label}
+              <span aria-hidden className="lp-arrow">
+                →
+              </span>
             </Link>
           )}
           <button

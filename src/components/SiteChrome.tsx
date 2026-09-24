@@ -18,29 +18,21 @@ export function SiteChrome({ children }: { children: ReactNode }) {
     pathname.startsWith("/careers/diagnostic/") ||
     pathname.startsWith("/careers/status/");
   const home = pathname === "/";
-  const bleed = !report && !home;
+  const bleed = !report;
   const strip =
     pathname === "/about" ||
     pathname.startsWith("/work") ||
     pathname.startsWith("/team");
   const mainClass = report
     ? "min-h-screen"
-    : home
-      ? "letter-desk letter-night min-h-screen bg-transparent"
-      : "letter-bleed min-h-screen bg-paper";
+    : "letter-bleed min-h-screen bg-paper";
 
   useLayoutEffect(() => {
-    document.documentElement.classList.toggle("letter-desk", home);
-    document.documentElement.classList.toggle("letter-night", home);
     document.documentElement.classList.toggle("letter-bleed", bleed);
     return () => {
-      document.documentElement.classList.remove(
-        "letter-desk",
-        "letter-night",
-        "letter-bleed",
-      );
+      document.documentElement.classList.remove("letter-bleed");
     };
-  }, [bleed, home]);
+  }, [bleed]);
 
   useLayoutEffect(() => {
     if ("scrollRestoration" in history) {

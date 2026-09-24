@@ -6,13 +6,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "motion/react";
-import {
-  useEffect,
-  useRef,
-  useState,
-  type PointerEvent,
-  type ReactNode,
-} from "react";
+import { useRef, type PointerEvent, type ReactNode } from "react";
 
 export const landSpring = { type: "spring" as const, stiffness: 160, damping: 22 };
 

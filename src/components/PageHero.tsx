@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { HeroFrame } from "@/components/HeroFrame";
+import { Reveal, Rise } from "@/components/landing/Reveal";
 import { cta } from "@/config/site";
 
 type PageHeroProps = {
@@ -15,7 +15,8 @@ type PageHeroProps = {
 };
 
 /**
- * Interior chapter. Index on a spine. Claim on the page. Then paper.
+ * Interior opening. Label pill, heavy title, one line of dek, one ask.
+ * Centred on paper — the same shape as the home hero, quieter.
  */
 export function PageHero({
   kicker,
@@ -28,26 +29,32 @@ export function PageHero({
   const label = actionLabel ?? cta.label;
 
   return (
-    <HeroFrame labelledBy="page-hero-heading">
-      <div className="letter-folio-open">
-        <p className="letter-folio-index">{kicker}</p>
-        <div className="letter-folio-body">
-          <h1 id="page-hero-heading" className="letter-window-claim">
+    <section className="lp-page-hero">
+      <div className="lp-shell">
+        <Reveal>
+          <p className="lp-section-label">{kicker}</p>
+        </Reveal>
+        <Rise delay={0.06}>
+          <h1 className="lp-page-title" id="page-hero-heading">
             {title}
           </h1>
-          {dek ? <div className="letter-window-dek">{dek}</div> : null}
-          {hideAction ? null : (
-            <div className="letter-cta">
-              <Link
-                href={actionHref}
-                className="btn btn-gold letter-ask min-h-12 px-8 text-[15px]"
-              >
-                {label}
-              </Link>
-            </div>
-          )}
-        </div>
+        </Rise>
+        {dek ? (
+          <Reveal delay={0.12}>
+            <p className="lp-page-dek">{dek}</p>
+          </Reveal>
+        ) : null}
+        {hideAction ? null : (
+          <Reveal delay={0.18}>
+            <Link className="lp-btn-primary" href={actionHref}>
+              {label}
+              <span aria-hidden className="lp-arrow">
+                →
+              </span>
+            </Link>
+          </Reveal>
+        )}
       </div>
-    </HeroFrame>
+    </section>
   );
 }

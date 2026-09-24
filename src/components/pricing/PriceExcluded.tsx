@@ -1,31 +1,30 @@
-"use client";
-
-import { Item, Stagger } from "@/components/landing/Reveal";
-import { EpisodeHead } from "@/components/episode/Episode";
+import { Reveal } from "@/components/landing/Reveal";
+import { SectionHead } from "@/components/landing/SectionHead";
 import { pricingExcluded } from "@/content/pricing";
 
+/** The dark plate: what we do not sell, said plainly. */
 export function PriceExcluded() {
   return (
-    <>
-      <EpisodeHead
-        n="05"
-        kicker="WHAT IS NOT INCLUDED"
-        id="excluded"
-        tone="cocoa"
-        heading="What we do not sell."
-      />
-      <Stagger className="mt-12 grid gap-5 md:grid-cols-3" gap={0.07}>
-        {pricingExcluded.map((row) => (
-          <Item key={row.title}>
-            <article className="h-full border-l-2 border-paper/20 pl-5">
-              <p className="font-plex-mono text-[12px] uppercase tracking-[0.08em] text-paper/60">
-                {row.title}
-              </p>
-              <p className="mt-4 font-newsreader text-[20px] leading-[1.35] text-paper">{row.body}</p>
-            </article>
-          </Item>
-        ))}
-      </Stagger>
-    </>
+    <section className="lp-section" id="excluded">
+      <div className="lp-shell">
+        <div className="lp-stuck-section">
+          <div className="relative z-[1]">
+            <SectionHead
+              tone="ink"
+              label="Not included"
+              heading="What we do not sell."
+            />
+            <div className="lp-excl-grid">
+              {pricingExcluded.map((row) => (
+                <Reveal key={row.title}>
+                  <p className="lp-excl-title">{row.title}</p>
+                  <p className="lp-excl-body">{row.body}</p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

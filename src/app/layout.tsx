@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Serif_4 } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { rootMetadata } from "@/lib/seo";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/JsonLd";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -12,25 +12,9 @@ export const viewport: Viewport = {
   interactiveWidget: "resizes-content",
 };
 
-const display = Source_Serif_4({
+const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
-  display: "swap",
-});
-
-const sans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex-sans",
-  display: "swap",
-});
-
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex-mono",
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -44,7 +28,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      data-scroll-behavior="smooth"
+      className={manrope.variable}
     >
       <body className="bg-paper text-quill">
         <OrganizationJsonLd />
